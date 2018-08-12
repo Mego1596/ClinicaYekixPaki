@@ -22,8 +22,9 @@
 
     <!-- Custom styles for this template-->
     <link href="{{ asset('css/sb-admin.css') }}" rel="stylesheet">
-     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 
 
   </head>
@@ -31,32 +32,16 @@
   <body id="page-top">
 
     <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
-
+ 
       <a class="navbar-brand mr-1" href="index.html">Clinica Odontologica YekixPaki</a>
 
       <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
         <i class="fa fa-navicon"></i>
       </button>
 
-      <!-- Navbar Search -->
-      <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
-        <!--<div class="input-group">
-          <input type="text" class="form-control" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-          <div class="input-group-append">
-            <button class="btn btn-primary" type="button">
-              <i class="fas fa-search"></i>
-            </button>
-          </div>
-        </div>-->
-      </form>
-
-
       <!-- Navbar -->
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav mr-auto">
-
-                    </ul>
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
@@ -98,7 +83,7 @@
       <!-- Sidebar -->
       <ul class="sidebar navbar-nav">
         <li class="nav-item">
-          <a class="nav-link" href="">
+          <a class="nav-link" href="/home">
             <i class="fa fa-home"></i>
             <span>Inicio</span>
           </a>
@@ -120,13 +105,45 @@
           <!-- Breadcrumbs-->
           <ol class="breadcrumb">
             <li class="breadcrumb-item">
-              <a href="index.html">Dashboard</a>
+              <a href="/home">Inicio</a>
             </li>
             <li class="breadcrumb-item active">Blank Page</li>
           </ol>
 
           <!-- Page Content -->
+          <div>
+                <nav class="navbar navbar-expand-sm bg-info navbar-dark">
+                <ul class="navbar-nav">
+                  @can('procedimiento.index')
+                    <li class="nav-item">
+                      <a class="nav-link" href="{{route('procedimiento.index')}}">Procedimientos</a>
+                    </li>
+                  @endcan
+                  @can('user.index')
+                    <li class="nav-item">
+                      <a class="nav-link" href="{{route('user.index')}}">Usuarios</a>
+                    </li>
+                  @endcan
+                  @can('roles.index')
+                    <li class="nav-item">
+                      <a class="nav-link" href="{{route('roles.index')}}">Roles</a>
+                    </li>
+                  @endcan
+                </nav>
+          </div>
+          @if(session('info'))
+          <div>
+            <div class="row">
+              <div class="col-md-12 col-md-offset-2">
+                <div class="alert alert-success">
+                  {{session('info')}}
+                </div>
+              </div>
+            </div>
+          </div>
+          @endif
           @yield('content')
+          
         </div>
         <!-- /.container-fluid -->
 
@@ -147,27 +164,9 @@
 
     <!-- Scroll to Top Button-->
     <a class="scroll-to-top rounded" href="#page-top">
-      <i class="fas fa-angle-up"></i>
+      <i class="fa fa-angle-double-up"></i>
     </a>
 
-    <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Cerrar Sesión?</h5>
-            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">×</span>
-            </button>
-          </div>
-          <div class="modal-body">Seleccione "Cerrar Sesión" a continuación si está listo para finalizar su sesión actual.</div>
-          <div class="modal-footer">
-            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
-            <a class="btn btn-primary" href="/">Cerrar Sesión</a> <!--AQUIIIIIIIIIIIIIIIIIIIIIIIII-->
-          </div>
-        </div>
-      </div>
-    </div>
 
     <!-- Bootstrap core JavaScript-->
     <script src="{{ asset('js/jquery.min.js') }}"></script>

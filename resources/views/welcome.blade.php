@@ -66,18 +66,16 @@
     </head>
     <body>
         <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @auth
-                        <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a  class="btn btn-primary" href="{{ route('login') }}">Iniciar Sesion</a>
-                        <a  class="btn btn-primary" href="{{ route('register') }}">Registro</a>
-                    @endauth
-                </div>
-            @endif
-
             <div class="content">
+                 @if (Route::has('login'))
+                    <div class="container">
+                        @auth
+                            <a href="{{ url('/home') }}">Home</a>
+                        @else
+                            <a  class="btn btn-primary" href="{{ route('login') }}">Iniciar Sesion</a>
+                        @endauth
+                    </div>
+                 @endif
                 <div class="title m-b-md">
                     Clinica Odontologica YekixPaki
                 </div>

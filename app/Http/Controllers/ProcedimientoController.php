@@ -14,7 +14,8 @@ class ProcedimientoController extends Controller
      */
     public function index()
     {
-        //
+        $procedimientos = Procedimiento::paginate();
+        return view('procedimiento.index', compact('procedimientos'));
     }
 
     /**
@@ -24,7 +25,7 @@ class ProcedimientoController extends Controller
      */
     public function create()
     {
-        //
+        return view('procedimiento.create');
     }
 
     /**
@@ -35,7 +36,9 @@ class ProcedimientoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
+        $procedimiento = Procedimiento::create($request->all());
+        return redirect()->route('procedimiento.edit',$procedimiento->id)->with('info','Proceso guardado con exito');
     }
 
     /**
@@ -45,8 +48,8 @@ class ProcedimientoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(Procedimiento $procedimiento)
-    {
-        //
+    {      
+        return view('procedimiento.show', compact('procedimiento'));
     }
 
     /**
@@ -55,9 +58,10 @@ class ProcedimientoController extends Controller
      * @param  \App\Procedimiento  $procedimiento
      * @return \Illuminate\Http\Response
      */
-    public function edit(Procedimiento $procedimiento)
-    {
-        //
+    public function edit($id)
+    {   
+        $procedimiento = Procedimiento::find($id);
+        return view('procedimiento.edit', compact('procedimiento'));
     }
 
     /**
@@ -69,7 +73,8 @@ class ProcedimientoController extends Controller
      */
     public function update(Request $request, Procedimiento $procedimiento)
     {
-        //
+        $procedimiento->update($request->all());
+        return redirect()->route('procedimiento.edit',$procedimiento->id)->with('info','Proceso actualizado con exito');
     }
 
     /**
@@ -80,6 +85,7 @@ class ProcedimientoController extends Controller
      */
     public function destroy(Procedimiento $procedimiento)
     {
-        //
+        $procedimiento->delete();
+        return back()->with('info','Eliminado Correctamente');
     }
 }

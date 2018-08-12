@@ -43,10 +43,8 @@
                         <!-- Authentication Links -->
                         @guest
                             <li class="nav-item">
-                                <a class="btn btn-primary" href="{{ route('login') }}">{{ __('Iniciar Sesion') }}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="btn btn-primary" href="{{ route('register') }}">{{ __('Registrar') }}</a>
                             </li>
                         @else
                             <li class="nav-item dropdown">
