@@ -39,33 +39,42 @@ Route::middleware(['auth'])->group(function(){
 	Route::get('roles/{role}/edit', 'RoleController@edit')->name('roles.edit')->middleware('permission:roles.edit');
 
 	//Procedimientos
-	Route::post('procedimiento/store', 'ProcedimientoController@store')->name('procedimiento.store')->middleware('permission:procedimiento.create');
+	Route::post('procedimiento/store', 'ProcedimientoController@store')->name('procedimiento.store')->middleware('permission:procedimientos.create');
 
-	Route::get('procedimiento', 'ProcedimientoController@index')->name('procedimiento.index')->middleware('permission:procedimiento.index');
+	Route::get('procedimiento', 'ProcedimientoController@index')->name('procedimiento.index')->middleware('permission:procedimientos.index');
 
-	Route::get('procedimiento/create', 'ProcedimientoController@create')->name('procedimiento.create')->middleware('permission:procedimiento.create');
+	Route::get('procedimiento/create', 'ProcedimientoController@create')->name('procedimiento.create')->middleware('permission:procedimientos.create');
 
-	Route::put('procedimiento/{procedimiento}', 'ProcedimientoController@update')->name('procedimiento.update')->middleware('permission:procedimiento.edit');
+	Route::put('procedimiento/{procedimiento}', 'ProcedimientoController@update')->name('procedimiento.update')->middleware('permission:procedimientos.edit');
 
-	Route::get('procedimiento/{procedimiento}', 'ProcedimientoController@show')->name('procedimiento.show')->middleware('permission:procedimiento.show');
+	Route::get('procedimiento/{procedimiento}', 'ProcedimientoController@show')->name('procedimiento.show')->middleware('permission:procedimientos.show');
 
-	Route::delete('procedimiento/{procedimiento}', 'ProcedimientoController@destroy')->name('procedimiento.destroy')->middleware('permission:procedimiento.destroy');
+	Route::delete('procedimiento/{procedimiento}', 'ProcedimientoController@destroy')->name('procedimiento.destroy')->middleware('permission:procedimientos.destroy');
 
-	Route::get('procedimiento/edit/{procedimiento}', 'ProcedimientoController@edit')->name('procedimiento.edit')->middleware('permission:procedimiento.edit');
+	Route::get('procedimiento/edit/{procedimiento}', 'ProcedimientoController@edit')->name('procedimiento.edit')->middleware('permission:procedimientos.edit');
 
 
 	//Usuarios
-	Route::post('user/store', 'UserController@store')->name('user.store')->middleware('permission:user.create');
+	Route::post('user/store', 'UserController@store')->name('user.store')->middleware('permission:users.create');
 
-	Route::get('user', 'UserController@index')->name('user.index')->middleware('permission:user.index');
+	Route::get('user', 'UserController@index')->name('user.index')->middleware('permission:users.index');
 
-	Route::get('user/create', 'UserController@create')->name('user.create')->middleware('permission:user.create');
+	Route::get('user/create', 'UserController@create')->name('user.create')->middleware('permission:users.create');
 
-	Route::put('user/{user}', 'UserController@update')->name('user.update')->middleware('permission:user.edit');
+	Route::put('user/{user}', 'UserController@update')->name('user.update')->middleware('permission:users.edit');
 	
-	Route::get('user/{user}', 'UserController@show')->name('user.show')->middleware('permission:user.show');
+	Route::get('user/{user}', 'UserController@show')->name('user.show')->middleware('permission:users.show');
 
-	Route::delete('user/{user}', 'UserController@destroy')->name('user.destroy')->middleware('permission:user.destroy');
+	Route::delete('user/{user}', 'UserController@destroy')->name('user.destroy')->middleware('permission:users.destroy');
 
-	Route::get('user/{user}/edit', 'UserController@edit')->name('user.edit')->middleware('permission:user.edit');
+	Route::get('user/{user}/edit', 'UserController@edit')->name('user.edit')->middleware('permission:users.edit');
+
+	Route::get('paciente', 'UserController@pacientes')->name('user.paciente')->middleware('permission:users.paciente');
+
+
+	//Full Calendar
+
+	Route::get('events', 'EventsController@index')->name('events.index');
+	Route::post('events', 'EventsController@addEvent')->name('events.add');
+
 });

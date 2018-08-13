@@ -24,8 +24,21 @@
     <link href="{{ asset('css/sb-admin.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.2.7/fullcalendar.min.css">
 
-
+    <!-- Full Calendar -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link href='https://use.fontawesome.com/releases/v5.0.6/css/all.css' rel='stylesheet'>
+    <script type="text/javascript" src="{{ asset('js/jquery.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/moment.min.js') }}"></script>
+    <!-- Full Calendar -->
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/fullcalendar.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap-clockpicker.css')}}">
+    <script type="text/javascript" src="{{ asset('js/fullcalendar.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/es.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="{{ asset('js/bootstrap-clockpicker.js') }}"></script>
 
   </head>
 
@@ -114,14 +127,19 @@
           <div>
                 <nav class="navbar navbar-expand-sm bg-info navbar-dark">
                 <ul class="navbar-nav">
-                  @can('procedimiento.index')
+                  @can('procedimientos.index')
                     <li class="nav-item">
                       <a class="nav-link" href="{{route('procedimiento.index')}}">Procedimientos</a>
                     </li>
                   @endcan
-                  @can('user.index')
+                  @can('users.index')
                     <li class="nav-item">
-                      <a class="nav-link" href="{{route('user.index')}}">Usuarios</a>
+                      <a class="nav-link" href="{{route('user.index')}}">Doctores</a>
+                    </li>
+                  @endcan
+                  @can('users.paciente')
+                    <li class="nav-item">
+                      <a class="nav-link" href="{{route('user.paciente')}}">Pacientes</a>
                     </li>
                   @endcan
                   @can('roles.index')
@@ -148,7 +166,7 @@
         <!-- /.container-fluid -->
 
         <!-- Sticky Footer -->
-        <footer class="sticky-footer">
+        <footer class="footer">
           <div class="container my-auto">
             <div class="copyright text-center my-auto">
               <span>Copyright © Clinica Dental de Atencion Integral y Preventiva Yekixpaki 2018 </span>
@@ -167,7 +185,7 @@
       <i class="fa fa-angle-double-up"></i>
     </a>
 
-
+    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
     <!-- Bootstrap core JavaScript-->
     <script src="{{ asset('js/jquery.min.js') }}"></script>
     <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
@@ -177,7 +195,12 @@
 
     <!-- Custom scripts for all pages-->
     <script src="{{ asset('js/sb-admin.min.js')}}"></script>
-
+    <script>
+      @yield('pageScript')
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.2.7/fullcalendar.min.js"></script>
+    @yield('calendar')
   </body>
 
 </html>

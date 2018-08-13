@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\User;
 use Caffeinated\Shinobi\Models\Role;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -15,10 +16,16 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::paginate();
+         
+         $users = DB::table('users')->join('role_user', 'users.id', '=', 'role_user.user_id')->where('role_user.role_id', '=', 1)->select('users.id' , 'users.name')->paginate();
         return view('user.index', compact('users'));
     }
 
+     public function pacientes()
+    {
+        $users = DB::table('users')->join('role_user', 'users.id', '=', 'role_user.user_id')->where('role_user.role_id', '=', 2)->select('users.id' , 'users.name')->paginate();
+        return view('user.paciente', compact('users'));
+    }
     /**
      * Show the form for creating a new resource.
      *

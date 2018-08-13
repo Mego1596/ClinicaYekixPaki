@@ -9,9 +9,9 @@
 					Procedimiento
 					</div>
 					<div class="panel-body">
-						{!! Form::open(['route' => 'role.store']) !!}
+						{!! Form::open(['route' => 'procedimiento.store']) !!}
 
-							@include('role.partials.form')
+							@include('procedimiento.partials.form')
 
 						{!! Form::close() !!}
 					</div>

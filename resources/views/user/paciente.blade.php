@@ -6,9 +6,9 @@
 			<div class="col-md-12 col-md-offset-2">
 				<div class="panel panel-default">
 					<div class="panel-heading">
-						Procedimientos
-						@can('procedimientos.create')
-						<a href="{{ route('procedimiento.create') }}" class="btn btn-sm btn-success pull-right">
+						Usuarios
+						@can('users.create')
+						<a href="{{ route('user.create') }}" class="btn btn-sm btn-success pull-right">
 							Crear
 						</a>
 						@endcan
@@ -22,24 +22,24 @@
 								</tr>
 							</thead>
 							<tbody>
-								@foreach($procedimientos as $proceso)
+								@foreach($users as $userr)
 								<tr>
-									<td>{{$proceso->id}}</td>
-									<td>{{$proceso->nombre}}</td>
+									<td>{{$userr->id}}</td>
+									<td>{{$userr->name}}</td>
 									<td width="10px">
-										@can('procedimientos.show')
-											<a href="{{ route('procedimiento.show', $proceso->id) }}" class="btn btn-sm btn-default bg-info" style="color: white">Ver
+										@can('users.show')
+											<a href="{{ route('user.show', $userr->id) }}" class="btn btn-sm btn-default bg-info" style="color: white">Ver
 											</a>
 										@endcan
 									</td>
 									<td width="10px">
-										@can('procedimientos.edit')
-											<a href="{{ route('procedimiento.edit', $proceso->id) }}" class="btn btn-sm btn-default bg-success" style="color: white">Editar</a>
+										@can('users.edit')
+											<a href="{{ route('user.edit', $userr->id) }}" class="btn btn-sm btn-default bg-success" style="color: white">Editar</a>
 										@endcan
 									</td>
 									<td width="10px">
-										@can('procedimientos.destroy')
-											{!! Form::open(['route' => ['procedimiento.destroy', $proceso->id],
+										@can('users.destroy')
+											{!! Form::open(['route' => ['user.destroy', $userr->id],
 											'method' => 'DELETE']) !!}
 												<button class="btn btn-sm btn-default bg-danger" style="color: white">
 													Eliminar
@@ -51,7 +51,7 @@
 								@endforeach
 							</tbody>
 						</table>
-						{{$procedimientos->render()}}
+						{{$users->render()}}
 					</div>
 				</div>
 			</div>

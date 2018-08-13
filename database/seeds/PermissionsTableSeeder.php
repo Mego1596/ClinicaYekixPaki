@@ -43,6 +43,11 @@ class PermissionsTableSeeder extends Seeder
         	'description' => 'Eeliminar cualquier dato de un usuario del sistema',
         ]);
 
+        Permission::create([
+            'name' => 'Navegar pacientes',
+            'slug' => 'users.paciente',
+            'description' => 'Lista y Navega todos los usuarios paciente del Sistema',
+        ]);
 
 
 

@@ -7,7 +7,7 @@
 				<div class="panel panel-default">
 					<div class="panel-heading">
 						Usuarios
-						@can('user.create')
+						@can('users.create')
 						<a href="{{ route('user.create') }}" class="btn btn-sm btn-success pull-right">
 							Crear
 						</a>
@@ -27,18 +27,18 @@
 									<td>{{$user->id}}</td>
 									<td>{{$user->name}}</td>
 									<td width="10px">
-										@can('user.show')
+										@can('users.show')
 											<a href="{{ route('user.show', $user->id) }}" class="btn btn-sm btn-default bg-info" style="color: white">Ver
 											</a>
 										@endcan
 									</td>
 									<td width="10px">
-										@can('user.edit')
+										@can('users.edit')
 											<a href="{{ route('user.edit', $user->id) }}" class="btn btn-sm btn-default bg-success" style="color: white">Editar</a>
 										@endcan
 									</td>
 									<td width="10px">
-										@can('user.destroy')
+										@can('users.destroy')
 											{!! Form::open(['route' => ['user.destroy', $user->id],
 											'method' => 'DELETE']) !!}
 												<button class="btn btn-sm btn-default bg-danger" style="color: white">
