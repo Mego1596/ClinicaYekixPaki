@@ -67,11 +67,7 @@
 		<div class="panel-heading">
 			<h3 align="center">Citas:</h3></div>
 			<div class="panel-body">
-				<div class="container">
-					<div class="row">
-						<div>
-								<div id="calendar"></div>
-						</div>
+				{!! $calendar_details->calendar() !!}
 					</div>
 				</div>
 			</div>
@@ -82,25 +78,5 @@
 
 
 @section('calendar')
-	<script>
-    $(document).ready(function() {
-        // page is now ready, initialize the calendar...
-        $('#calendar').fullCalendar({
-            // put your options and callbacks here
-
-             events : [
-                @foreach($events_procedimiento as $task)
-                {	
-                	
-                    title 		: '{{ $task->event_name }}',
-                    start 		: '{{ $task->start_date }}',
-             		end   		: '{{ $task->end_date}}',
-             		textColor	: '{{ $task->textcolor}}',
-             		color 		: '{{ $task->color}}',
-                },
-                @endforeach
-            ]
-        })
-    });
-</script>
+    {!! $calendar_details->script() !!}
 @endsection

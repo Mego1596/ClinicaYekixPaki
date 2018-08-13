@@ -8,17 +8,41 @@ use App\Procedimiento;
 use App\Events;
 use Calendar;
 use Validator;
-use Illuminate\Support\Facades\DB;
 
 class EventsController extends Controller
 {
     public function index(){
 
-    	 $events_procedimiento = DB::table('events')->join('procedimientos', 'events.procedimiento_id', '=', 'procedimientos.id')->select('events.event_name' , 'events.start_date', 'events.end_date', 'events.textcolor','procedimientos.nombre', 'procedimientos.color')->get();
     	$procedimiento = Procedimiento::pluck('nombre', 'id')->toArray();
-    	
+    	$events = Events::get();
+    	$event_list= [];
+    	foreach ($events as $key => $event) {
+    		$proceso = Procedimiento::find($event->procedimiento_id);
+    		var_dump($proceso);
+    		$event_list[] =Calendar::event(
+    			$event->event_name,
+    			false,
+    			new \DateTime($event->start_date),
+    			new \DateTime($event->end_date.' +1 day'),
+    			null,
+    			[
+    			'color' => $proceso->color,
+    			'description' => $proceso->nombre,
+    			'textColor' => $event->textcolor,
+    			]
+    		);
+    	}
 
-    	return view('events',compact('procedimiento','events_procedimiento'));
+
+    	$calendar_details = Calendar::addEvents($event_list)->setOptions(['firstDay' => 7, 'editable' => true, 'eventLimit' => true, 'header' => array('left' => 'prev,next today', 'center' => 'title', 'right' => 'month,basicWeek,basicDay')])->setCallbacks([
+    		'eventClick' => 'function(calEvent, jsEvent, view) {
+       			$("#modalTitle").html(calEvent.title);
+          		$("#modalBody").html(calEvent.description);
+          		$("#eventUrl").attr("href",calEvent.linkurl);
+          		$("#fullCalModal").modal();
+   }']);
+
+    	return view('events',compact('procedimiento','calendar_details'));
     }
 
     public function addEvent(Request $request){
