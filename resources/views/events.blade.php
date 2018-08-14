@@ -73,7 +73,70 @@
 			</div>
 		</div>
 	</div>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="tituloEvento"></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      	<input type="hidden" name="txtID" id="txtID"/>
+      	<input type="hidden" name="txtFecha" id="txtFecha"/>
 
+      	<div class="form-row">	
+      		<div class="form-group col-md-12">
+      			<label>Titulo:</label>
+      		 	<input type="text" id="txtTitulo" class="form-control" placeholder="Titulo del Evento">
+      		</div>
+      	</div>
+      	<div class="form-group">
+      		<label>Hora Inicio de la Cita:</label>
+      		<div class="input-group clockpicker" data-autoclose="true">
+      			<input type="time" id="txtHora" value="00:00" class="form-control" />
+      		</div>
+      	</div>
+      	<div class="form-group">
+      		<label>Hora Fin de la Cita:</label>
+      		<div class="input-group clockpicker" data-autoclose="true">
+      			<input type="time" id="txtHora2" value="01:00" class="form-control" />
+      		</div>
+      	</div>
+      	<div class="form-group">
+      		<label>Descripcion:</label>
+      		<textarea id="txtDescripcion" rows="3" class="form-control"></textarea>	
+      	</div>
+      	<!--<div class="form-group">
+      		   <label>Color:</label>
+      		   <input type="color" value="#FF0000" id="txtColor" class="form-control" style="height: 36px;">	
+      	</div>
+      	-->
+      		<label>Tipo de Consulta:</label>
+  			<select name="cars" id="txtColor">
+  			  <option value="#2e9724">Obturaciones Esteticas (Rellenos)</option>
+  			  <option value="#26837c">Endodoncia</option>
+  			  <option value="#603bfe">Guardas Oclusales</option>
+  			  <option value="#042cfc">Protesis Parciales Fijas</option>
+  			  <option value="#000000">Protesis Removibles Parciales y Totales</option>
+  			  <option value="#ec6103">Profilaxis y Detartrajes con Ultrasonido (limpiezas)</option>
+  			  <option value="#f9096a">Extracciones</option>
+  			  <option value="#b49410">Cirujia de Cordales</option>
+  			  <option value="#1c7f94">Pulpotomias y Pulpectomias</option>
+  			  <option value="#a183dd">Otras</option>
+  			</select>
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="btnAgregar" class="btn btn-success">Agregar</button>
+      	<button type="button" id="btnModificar" class="btn btn-success">Modificar</button>
+      	<button type="button" id="btnEliminar" class="btn btn-danger">Borrar</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+      </div>
+    </div>
+  </div>
+</div>
 @endsection
 
 

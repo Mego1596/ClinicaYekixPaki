@@ -18,7 +18,6 @@ class EventsController extends Controller
     	$event_list= [];
     	foreach ($events as $key => $event) {
     		$proceso = Procedimiento::find($event->procedimiento_id);
-    		var_dump($proceso);
     		$event_list[] =Calendar::event(
     			$event->event_name,
     			false,
@@ -34,13 +33,22 @@ class EventsController extends Controller
     	}
 
 
-    	$calendar_details = Calendar::addEvents($event_list)->setOptions(['firstDay' => 7, 'editable' => true, 'eventLimit' => true, 'header' => array('left' => 'prev,next today', 'center' => 'title', 'right' => 'month,basicWeek,basicDay')])->setCallbacks([
-    		'eventClick' => 'function(calEvent, jsEvent, view) {
-       			$("#modalTitle").html(calEvent.title);
-          		$("#modalBody").html(calEvent.description);
-          		$("#eventUrl").attr("href",calEvent.linkurl);
-          		$("#fullCalModal").modal();
-   }']);
+    	$calendar_details = Calendar::addEvents($event_list)->setOptions([
+    		'firstDay' => 7,
+    		'lang' => '',
+    		'editable' => true,
+    		'themeSystem'=>'bootstrap4',
+    	    'header' => array('left' => 'prev,next today', 'center' => 'title', 'right' => 'month,agendaWeek,agendaDay'),
+    	    'businessHours' => array('dow:' => '[0,1,2,3,4,5,6]' , 'start' => '14:00', 'end' => '17:30')
+    		])->setCallbacks([
+			'dayClick'=> 'function(date,jsEvent,view){
+					$("#btnAgregar").prop("disabled",false);
+					$("#btnEliminar").prop("disabled",true);
+					$("#btnModificar").prop("disabled",true);
+					$("#txtFecha").val(date.format());
+					$("#exampleModal").modal();
+				}',
+			]);
 
     	return view('events',compact('procedimiento','calendar_details'));
     }

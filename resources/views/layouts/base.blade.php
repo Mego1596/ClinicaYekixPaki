@@ -11,34 +11,21 @@
     <meta name="author" content="">
 
     <title>YekixPaki</title>
-    <!-- Bootstrap core CSS-->
-    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
 
-    <!-- Custom fonts for this template-->
-    <link href="{{ asset('css/all.min.css') }}" rel="stylesheet" type="text/css">
-
-    <!-- Page level plugin CSS-->
-    <link href="{{ asset('css/dataTables.bootstrap4.css') }}" rel="stylesheet">
 
     <!-- Custom styles for this template-->
     <link href="{{ asset('css/sb-admin.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.2.7/fullcalendar.min.css">
 
     <!-- Full Calendar -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <link href='https://use.fontawesome.com/releases/v5.0.6/css/all.css' rel='stylesheet'>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script type="text/javascript" src="{{ asset('js/jquery.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/moment.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/es.js') }}"></script>
     <!-- Full Calendar -->
     <link rel="stylesheet" type="text/css" href="{{ asset('css/fullcalendar.min.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap-clockpicker.css')}}">
-    <script type="text/javascript" src="{{ asset('js/fullcalendar.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/es.js') }}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="{{ asset('js/bootstrap-clockpicker.js') }}"></script>
 
   </head>
 
@@ -103,7 +90,7 @@
         </li>
         <li class="nav-item">
           <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class=" fa fa-folder-open-o "></i>
+            <i class=" fa fa-folder-open"></i>
             <span>Pages</span>
           </a>
           <div class="dropdown-menu" aria-labelledby="pagesDropdown">
@@ -185,16 +172,27 @@
       <i class="fa fa-angle-double-up"></i>
     </a>
 
+
+<!--
     <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
-    <!-- Bootstrap core JavaScript-->
     <script src="{{ asset('js/jquery.min.js') }}"></script>
     <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
-
-    <!-- Core plugin JavaScript-->
     <script src="{{ asset('js/jquery.easing.min.js') }}"></script>
+-->
+
+
+
+
+
+ 
 
     <!-- Custom scripts for all pages-->
     <script src="{{ asset('js/sb-admin.min.js')}}"></script>
+
+    <script type="text/javascript" src="{{ asset('js/fullcalendar.min.js') }}"></script>
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="{{ asset('js/bootstrap-clockpicker.js') }}"></script>
     <script>
       @yield('pageScript')
     </script>
