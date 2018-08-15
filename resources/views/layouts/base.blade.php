@@ -151,7 +151,7 @@
         <!-- /.container-fluid -->
 
         <!-- Sticky Footer -->
-        <footer class="footer">
+        <footer class="sticky-footer">
           <div class="container my-auto">
             <div class="copyright text-center my-auto">
               <span>Copyright © Clinica Dental de Atencion Integral y Preventiva Yekixpaki 2018 </span>
@@ -182,13 +182,11 @@
     <script src="{{ asset('js/sb-admin.min.js')}}"></script>
 
     <script type="text/javascript" src="{{ asset('js/fullcalendar.min.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('js/es.js') }}"></script>
-
+    <script type="text/javascript" src="{{ asset('js/es.js') }}"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script>
       @yield('pageScript')
     </script>
-
     @yield('calendar')
   </body>
 

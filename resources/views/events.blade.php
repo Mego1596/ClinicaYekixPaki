@@ -2,7 +2,7 @@
 
 @section('content')
 	<div class="container">
-	<!-- DESDE AQUI EL FORMULARIO PARA INGRESAR UN EVENTO-->
+	<!-- DESDE AQUI EL FORMULARIO PARA INGRESAR UN EVENTO
 		<div class="panel panel-primary">
 			<div class="panel-heading"> 
 				<div class="panel-body">
@@ -62,7 +62,7 @@
 			</div>
 		</div>
 	</div>
-	<!-- HASTA AQUI EL FORMULARIO PARA INGRESAR UN EVENTO-->
+	HASTA AQUI EL FORMULARIO PARA INGRESAR UN EVENTO-->
 	<div class="panel panel-primary">
 		<div class="panel-heading">
 			<h3 align="center">Citas:</h3></div>
@@ -74,11 +74,12 @@
 		</div>
 	</div>
 <!-- Modal -->
+{!! Form::open(array('route' => 'events.add', 'method' => 'POST') ) !!}
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="tituloEvento"></h5>
+        <h5 class="modal-title" id="tituloEvento">Descripcion de la Cita</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -87,52 +88,41 @@
       	<input type="hidden" name="txtID" id="txtID"/>
       	<input type="hidden" name="txtFecha" id="txtFecha"/>
 
+
       	<div class="form-row">	
       		<div class="form-group col-md-12">
       			{!! Form::label('event_name', 'Titulo:') !!}
-      			{!! Form::text('event_name', null, ['class' => 'form-control', 'placeholder' => 'Titulo del Evento']) !!}
+      			{!! Form::text('event_name', null, ['class' => 'form-control', 'placeholder' => 'Titulo del Evento', 'id' => 'txtTitulo']) !!}
+      			{!! $errors->first('event_name','<p class="alert alert-danger">El titulo de la cita es requerido</p>') !!}
       		</div>
       	</div>
       	<div class="form-group">
-      		<label>Hora Inicio de la Cita:</label>
+      		{!! Form::label('start_date','Hora Inicio de la Cita:')!!}
       		<div class="input-group clockpicker" data-autoclose="true">
-      			<input type="time" id="txtHora" value="00:00" class="form-control" />
+      			{!! Form::time('start_date', null, ['value'=> '00:00', 'class' => 'form-control'] ) !!}
+      			{!! $errors->first('start_date','<p class="alert alert-danger">La Fecha de Inicio es requerida</p>') !!}
+      			
       		</div>
       	</div>
       	<div class="form-group">
-      		<label>Hora Fin de la Cita:</label>
+      		{!! Form::label('end_date','Hora Fin de la Cita:')!!}
       		<div class="input-group clockpicker" data-autoclose="true">
-      			<input type="time" id="txtHora2" value="01:00" class="form-control" />
-      		</div>
+      			{!! Form::time('end_date', null, ['value'=> '00:00', 'class' => 'form-control'] ) !!}
+      			{!! $errors->first('end_date','<p class="alert alert-danger">La Fecha de Fin es requerida</p>') !!}
       	</div>
       	<div class="form-group">
-      		<label>Descripcion:</label>
-      		<textarea id="txtDescripcion" rows="3" class="form-control"></textarea>	
+      		{!! Form::label('txtDescripcion', 'Descripcion:')!!}
+      		{!! Form::textarea('txtDescripcion', null, ['class' => 'form-control', 'rows' => '3'])!!}
       	</div>
-      	<!--<div class="form-group">
-      		   <label>Color:</label>
-      		   <input type="color" value="#FF0000" id="txtColor" class="form-control" style="height: 36px;">	
-      	</div>
-      	-->
-      		<label>Tipo de Consulta:</label>
-  			<select name="cars" id="txtColor">
-  			  <option value="#2e9724">Obturaciones Esteticas (Rellenos)</option>
-  			  <option value="#26837c">Endodoncia</option>
-  			  <option value="#603bfe">Guardas Oclusales</option>
-  			  <option value="#042cfc">Protesis Parciales Fijas</option>
-  			  <option value="#000000">Protesis Removibles Parciales y Totales</option>
-  			  <option value="#ec6103">Profilaxis y Detartrajes con Ultrasonido (limpiezas)</option>
-  			  <option value="#f9096a">Extracciones</option>
-  			  <option value="#b49410">Cirujia de Cordales</option>
-  			  <option value="#1c7f94">Pulpotomias y Pulpectomias</option>
-  			  <option value="#a183dd">Otras</option>
-  			</select>
-      </div>
+      	{!! Form::label('procedimiento_id', 'Procedimiento:')!!}
+      	{!! Form::select('procedimiento_id', $procedimiento, null, ['placeholder' => 'Elija un procedimiento'])!!}
+
       <div class="modal-footer">
-        <button type="button" id="btnAgregar" class="btn btn-success">Agregar</button>
-      	<button type="button" id="btnModificar" class="btn btn-success">Modificar</button>
-      	<button type="button" id="btnEliminar" class="btn btn-danger">Borrar</button>
+		{!! Form::submit('Añadir Cita', ['class' => 'btn btn-success','id' => 'btnAgregar']) !!}
+		{!! Form::submit('Modificar Cita', ['class' => 'btn btn-success','id' => 'btnModificar','value' => 'btnModificar']) !!}
+		{!! Form::submit('Borrar', ['class' => 'btn btn-danger ','id' => 'btnEliminar','value' => 'btnEliminar'])!!}
         <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+        {!! Form::close() !!}
       </div>
     </div>
   </div>
@@ -142,4 +132,63 @@
 
 @section('calendar')
     {!! $calendar_details->script() !!}
+
+    <script type="text/javascript">
+	var NuevoEvento;
+	$('#btnAgregar').click(function(){                          
+		RecolectarDatosGUI(); 
+		//EnviarInformacion('agregar',NuevoEvento);
+	});
+
+	$('#btnEliminar').click(function(){
+		RecolectarDatosGUI(); 
+		//EnviarInformacion('eliminar',NuevoEvento);
+	});
+
+	$('#btnModificar').click(function(){
+		RecolectarDatosGUI(); 
+		//EnviarInformacion('modificar',NuevoEvento);
+	});
+
+
+	function RecolectarDatosGUI(){
+		NuevoEvento = {
+			id:$('#txtID').val(),
+			title:$('#txtTitulo').val(),
+			start:$('#txtFecha').val()+" "+$('#txtHora').val(),
+			color:$('#txtColor').val(),
+			descripcion:$('#txtDescripcion').val(),
+			textColor:"#FFFFFF",
+			fin:$('#txtFecha').val()+" "+$('#txtHora2').val()
+		};
+	}
+
+	function EnviarInformacion(accion,objEvento,modal){
+		$.ajax({
+			type:'POST',
+			url:'eventos.php?accion='+accion,
+			data:objEvento,
+			success:function(msg){
+				if(msg){
+					$('#CalendarioWeb').fullCalendar('refetchEvents');
+					if(!modal){
+						$('#exampleModal').modal('toggle');
+					}
+				}
+			},
+			error:function(){
+				alert('Hay un error...');
+			}
+		});
+	}
+
+	$('.clockpicker').clockpicker();
+	
+	function limpiarFormulario(){
+		$('#txtID').val("");
+		$('#txtDescripcion').val("");
+		$('#txtTitulo').val("");
+		$('#txtColor').val("");
+	}
+</script>
 @endsection
