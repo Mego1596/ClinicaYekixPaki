@@ -89,8 +89,8 @@
 
       	<div class="form-row">	
       		<div class="form-group col-md-12">
-      			<label>Titulo:</label>
-      		 	<input type="text" id="txtTitulo" class="form-control" placeholder="Titulo del Evento">
+      			{!! Form::label('event_name', 'Titulo:') !!}
+      			{!! Form::text('event_name', null, ['class' => 'form-control', 'placeholder' => 'Titulo del Evento']) !!}
       		</div>
       	</div>
       	<div class="form-group">

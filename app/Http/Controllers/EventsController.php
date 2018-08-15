@@ -34,12 +34,15 @@ class EventsController extends Controller
 
 
     	$calendar_details = Calendar::addEvents($event_list)->setOptions([
-    		'firstDay' => 7,
-    		'lang' => '',
+    		'firstDay' => 1,
     		'editable' => true,
     		'themeSystem'=>'bootstrap4',
-    	    'header' => array('left' => 'prev,next today', 'center' => 'title', 'right' => 'month,agendaWeek,agendaDay'),
-    	    'businessHours' => array('dow:' => '[0,1,2,3,4,5,6]' , 'start' => '14:00', 'end' => '17:30')
+            'locale' => 'es',
+    	    'header' => array(
+                'left' => 'prev,next today', 
+                'center' => 'title', 
+                'right' => 'month,agendaWeek,agendaDay'
+                )
     		])->setCallbacks([
 			'dayClick'=> 'function(date,jsEvent,view){
 					$("#btnAgregar").prop("disabled",false);

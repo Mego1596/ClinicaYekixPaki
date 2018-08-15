@@ -16,14 +16,12 @@
     <!-- Custom styles for this template-->
     <link href="{{ asset('css/sb-admin.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.2.7/fullcalendar.min.css">
-
     <!-- Full Calendar -->
     <link href='https://use.fontawesome.com/releases/v5.0.6/css/all.css' rel='stylesheet'>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script type="text/javascript" src="{{ asset('js/jquery.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/moment.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/es.js') }}"></script>
+
     <!-- Full Calendar -->
     <link rel="stylesheet" type="text/css" href="{{ asset('css/fullcalendar.min.css') }}">
 
@@ -180,24 +178,17 @@
     <script src="{{ asset('js/jquery.easing.min.js') }}"></script>
 -->
 
-
-
-
-
- 
-
     <!-- Custom scripts for all pages-->
     <script src="{{ asset('js/sb-admin.min.js')}}"></script>
 
     <script type="text/javascript" src="{{ asset('js/fullcalendar.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/es.js') }}"></script>
 
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="{{ asset('js/bootstrap-clockpicker.js') }}"></script>
     <script>
       @yield('pageScript')
     </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.2.7/fullcalendar.min.js"></script>
+
     @yield('calendar')
   </body>
 
