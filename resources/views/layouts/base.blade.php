@@ -25,7 +25,13 @@
     <!-- Full Calendar -->
     <link rel="stylesheet" type="text/css" href="{{ asset('css/fullcalendar.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap-clockpicker.css') }}">
-
+    <style type="text/css">
+    .fc th{
+      padding: 5px 0px;
+      vertical-align: middle;
+      background: #F2F2F2;
+    }
+  </style>
   </head>
 
   <body id="page-top">
