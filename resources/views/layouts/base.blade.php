@@ -24,6 +24,7 @@
 
     <!-- Full Calendar -->
     <link rel="stylesheet" type="text/css" href="{{ asset('css/fullcalendar.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap-clockpicker.css') }}">
 
   </head>
 
@@ -34,7 +35,7 @@
       <a class="navbar-brand mr-1" href="index.html">Clinica Odontologica YekixPaki</a>
 
       <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
-        <i class="fa fa-navicon"></i>
+        <i class="fa fa-bars"></i>
       </button>
 
       <!-- Navbar -->
@@ -49,7 +50,6 @@
                                 <a class="btn btn-primary" href="{{ route('login') }}">{{ __('Iniciar Sesion') }}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="btn btn-primary" href="{{ route('register') }}">{{ __('Registrar') }}</a>
                             </li>
                         @else
                             <li class="nav-item ">
@@ -184,6 +184,7 @@
     <script type="text/javascript" src="{{ asset('js/fullcalendar.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/es.js') }}"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap-clockpicker.js"></script>
     <script>
       @yield('pageScript')
     </script>

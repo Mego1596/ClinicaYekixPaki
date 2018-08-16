@@ -33,8 +33,8 @@ class EventsController extends Controller
     			]
     		);
     	}
-
-
+    	
+    	
 
     	$calendar_details = Calendar::addEvents($event_list)->setOptions([
     		'firstDay' => 1,

@@ -135,36 +135,8 @@
     {!! $calendar_details->script() !!}
 
     <script type="text/javascript">
-	var NuevoEvento;
-	$('#btnAgregar').click(function(){                          
-		RecolectarDatosGUI(); 
-		//EnviarInformacion('agregar',NuevoEvento);
-	});
 
-	$('#btnEliminar').click(function(){
-		RecolectarDatosGUI(); 
-		//EnviarInformacion('eliminar',NuevoEvento);
-	});
-
-	$('#btnModificar').click(function(){
-		RecolectarDatosGUI(); 
-		//EnviarInformacion('modificar',NuevoEvento);
-	});
-
-
-	function RecolectarDatosGUI(){
-		NuevoEvento = {
-			id:$('#txtID').val(),
-			title:$('#txtTitulo').val(),
-			start:$('#txtFecha').val()+" "+$('#txtHora').val(),
-			color:$('#txtColor').val(),
-			descripcion:$('#txtDescripcion').val(),
-			textColor:"#FFFFFF",
-			fin:$('#txtFecha').val()+" "+$('#txtHora2').val()
-		};
-	}
-
-	function EnviarInformacion(accion,objEvento,modal){
+	/*function EnviarInformacion(accion,objEvento,modal){
 		$.ajax({
 			type:'POST',
 			url:'eventos.php?accion='+accion,
@@ -181,7 +153,7 @@
 				alert('Hay un error...');
 			}
 		});
-	}
+	}*/
 
 	$('.clockpicker').clockpicker();
 		
