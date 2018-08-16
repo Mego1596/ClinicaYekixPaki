@@ -29,6 +29,7 @@ class EventsController extends Controller
     			'color' => $proceso->color,
     			'descripcion' => $proceso->nombre,
     			'textColor' => $event->textcolor,
+    			'procedimiento' => $proceso->id,
     			]
     		);
     	}
@@ -69,7 +70,22 @@ class EventsController extends Controller
 				 	$("#txtFecha").val(FechaHora[0]);
 				 	$("#start_date").val(horaInicio[0]);
 				 	$("#end_date").val(horaFin[0]);
+				 	$("#procedimiento_id").val(calEvent.procedimiento);
 				 	$("#exampleModal").modal(); 	
+				 }',
+
+			'eventDrop'=> 'function(calEvent,jsEvent,view){
+				 	$("#txtID").val(calEvent.id);
+				 	$("#txtTitulo").val(calEvent.title);
+				 	$("#txtColor").val(calEvent.color);
+				 	$("#txtDescripcion").val(calEvent.descripcion);
+				 	var fechaHora 	= calEvent.start.format().split("T");
+				 	var fechaHora2 	= calEvent.end.format().split("T");
+				 	$("#txtFecha").val(fechaHora[0]);
+				 	$("#start_date").val(fechaHora[1]);
+				 	$("#end_date").val(fechaHora2[1]);
+				 	$("#procedimiento_id").val(calEvent.procedimiento);
+				 	document.getElementById("btnModificar").click();
 				 }',
 			]);
 
@@ -88,17 +104,32 @@ class EventsController extends Controller
     		\Session::flash('warnning', 'Porfavor ingrese datos validos');
     		return Redirect::to('/events')->withInput()->withErrors($validator);
     	}
-
+    	if(isset($_POST["btnAgregar"])){
     	$event = new Events();
-
     	$event->event_name			= $request['event_name'];
     	$event->start_date			= $request['txtFecha']." ".$request['start_date'];
     	$event->end_date			= $request['txtFecha']." ".$request['end_date'];
-    	$event->procedimiento_id 	=$request['procedimiento_id'];
+    	$event->procedimiento_id 	= $request['procedimiento_id'];
     	$event->save();
-
     	\Session::flash('success','Cita añadida exitosamente');
     	return Redirect::to('events');
 
+    	}elseif (isset($_POST["btnModificar"])) {
+    		$event = Events::find($request["txtID"]);
+    		$event->event_name			= $request['event_name'];
+    		$event->start_date			= $request['txtFecha']." ".$request['start_date'];
+    		$event->end_date			= $request['txtFecha']." ".$request['end_date'];
+    		$event->procedimiento_id 	= $request['procedimiento_id'];
+    		$event->save();
+    		return Redirect::to('events');
+    	}elseif (isset($_POST['btnEliminar'])) {
+    		$event = Events::find($request["txtID"]);
+    		$event->delete();
+    		return Redirect::to('events');
+
+    	}
+
+    	
     }
+
 }

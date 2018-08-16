@@ -10,7 +10,6 @@
 					</div>
 					<div class="panel-body">
 						{!! Form::model($user, ['route' => ['user.update', $user->id], 'method' => 'PUT']) !!}
-
 							@include('user.partials.formEdit')
 
 						{!! Form::close() !!}

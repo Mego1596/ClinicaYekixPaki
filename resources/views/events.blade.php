@@ -74,7 +74,7 @@
 		</div>
 	</div>
 <!-- Modal -->
-{!! Form::open(array('route' => 'events.add', 'method' => 'POST') ) !!}
+{!! Form::open(array('route' => 'events.add','id'=> 'form', 'method' => 'POST') ) !!}
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -118,9 +118,10 @@
       	{!! Form::select('procedimiento_id', $procedimiento, null, ['placeholder' => 'Elija un procedimiento'])!!}
 
       <div class="modal-footer">
-		{!! Form::submit('Añadir Cita', ['class' => 'btn btn-success','id' => 'btnAgregar']) !!}
-		{!! Form::submit('Modificar Cita', ['class' => 'btn btn-success','id' => 'btnModificar','value' => 'btnModificar']) !!}
-		{!! Form::submit('Borrar', ['class' => 'btn btn-danger ','id' => 'btnEliminar','value' => 'btnEliminar'])!!}
+		{!! Form::submit('Añadir Cita', ['class' => 'btn btn-success','id' => 'btnAgregar', 'name' => 'btnAgregar']) !!}
+		{!! Form::submit('Modificar Cita', ['class' => 'btn btn-success','id' => 'btnModificar','name' => 'btnModificar']) !!}
+		{!! Form::submit('Borrar', ['class' => 'btn btn-danger ','id' => 'btnEliminar','name' => 'btnEliminar']) !!}
+
         <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
         {!! Form::close() !!}
       </div>
@@ -183,12 +184,13 @@
 	}
 
 	$('.clockpicker').clockpicker();
-	
+		
 	function limpiarFormulario(){
 		$('#txtID').val("");
 		$('#txtDescripcion').val("");
 		$('#txtTitulo').val("");
 		$('#txtColor').val("");
 	}
+
 </script>
 @endsection

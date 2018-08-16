@@ -76,5 +76,6 @@ Route::middleware(['auth'])->group(function(){
 
 	Route::get('events', 'EventsController@index')->name('events.index');
 	Route::post('events', 'EventsController@addEvent')->name('events.add');
+	Route::delete('events', 'EventsController@destroy')->name('events.destroy');
 
 });
