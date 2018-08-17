@@ -129,5 +129,38 @@ class PermissionsTableSeeder extends Seeder
         ]);
 
 
+    //Pacientes
+        Permission::create([
+            'name' => 'Navegar Pacientes',
+            'slug' => 'pacientes.index',
+            'description' => 'Lista y Navega todos los Pacientes del Sistema',
+        ]);
+
+        Permission::create([
+            'name' => 'Ver Detalle de Paciente',
+            'slug' => 'pacientes.show',
+            'description' => 'Ver en detalle cada Paciente del sistema',
+        ]);
+
+        Permission::create([
+            'name' => 'Creacion de Pacientes',
+            'slug' => 'pacientes.create',
+            'description' => 'Editar cualquier dato de un Paciente del sistema',
+        ]);
+
+        Permission::create([
+            'name' => 'Edicion de Pacientes',
+            'slug' => 'pacientes.edit',
+            'description' => 'Editar cualquier dato de un Paciente del sistema',
+        ]);
+
+        Permission::create([
+            'name' => 'Eliminar Paciente',
+            'slug' => 'pacientes.destroy',
+            'description' => 'Eeliminar cualquier dato de un Paciente del sistema',
+        ]);
+
+
+
     }
 }
