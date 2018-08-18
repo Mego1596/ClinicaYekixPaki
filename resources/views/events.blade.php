@@ -162,6 +162,9 @@
 		$('#txtDescripcion').val("");
 		$('#txtTitulo').val("");
 		$('#txtColor').val("");
+		$('#start_date').val("");
+		$('#end_date').val("");
+		$('#procedimiento_id').val("");
 	}
 
 </script>
