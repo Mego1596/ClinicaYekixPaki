@@ -15,7 +15,6 @@ class CreateEventsTable extends Migration
     {
         Schema::create('events', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('event_name');
             $table->dateTime('start_date');
             $table->dateTime('end_date');
             $table->string('textcolor',255)->default('#FFFFFF');
@@ -23,6 +22,8 @@ class CreateEventsTable extends Migration
             $table->timestamps();
             $table->integer('procedimiento_id')->unsigned();
             $table->foreign('procedimiento_id')->references('id')->on('procedimientos');
+            $table->integer('paciente_id')->unsigned();
+            $table->foreign('paciente_id')->references('id')->on('pacientes');
         });
     }
 

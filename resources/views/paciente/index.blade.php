@@ -6,9 +6,9 @@
 			<div class="col-md-12 col-md-offset-2">
 				<div class="panel panel-default">
 					<div class="panel-heading">
-						Usuarios
-						@can('users.create')
-						<a href="{{ route('user.create') }}" class="btn btn-sm btn-success pull-right">
+						Pacientes
+						@can('pacientes.create')
+						<a href="{{ route('paciente.create') }}" class="btn btn-sm btn-success pull-right">
 							Crear
 						</a>
 						@endcan
@@ -22,24 +22,24 @@
 								</tr>
 							</thead>
 							<tbody>
-								@foreach($users as $userr)
+								@foreach($pacientes as $paciente)
 								<tr>
-									<td>{{$userr->id}}</td>
-									<td>{{$userr->name}}</td>
+									<td>{{$paciente->id}}</td>
+									<td>{{$paciente->nombre}}</td>
 									<td width="10px">
-										@can('users.show')
-											<a href="{{ route('user.show', $userr->id) }}" class="btn btn-sm btn-default bg-info" style="color: white">Ver
+										@can('pacientes.show')
+											<a href="{{ route('paciente.show', $paciente->id) }}" class="btn btn-sm btn-default bg-info" style="color: white">Ver
 											</a>
 										@endcan
 									</td>
 									<td width="10px">
-										@can('users.edit')
-											<a href="{{ route('user.edit', $userr->id) }}" class="btn btn-sm btn-default bg-success" style="color: white">Editar</a>
+										@can('pacientes.edit')
+											<a href="{{ route('paciente.edit', $paciente->id) }}" class="btn btn-sm btn-default bg-success" style="color: white">Editar</a>
 										@endcan
 									</td>
 									<td width="10px">
-										@can('users.destroy')
-											{!! Form::open(['route' => ['user.destroy', $userr->id],
+										@can('pacientes.destroy')
+											{!! Form::open(['route' => ['paciente.destroy', $paciente->id],
 											'method' => 'DELETE']) !!}
 												<button class="btn btn-sm btn-default bg-danger" style="color: white">
 													Eliminar
@@ -51,7 +51,7 @@
 								@endforeach
 							</tbody>
 						</table>
-						{{$users->render()}}
+						{{$pacientes->render()}}
 					</div>
 				</div>
 			</div>

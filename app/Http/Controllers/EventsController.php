@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use App\Procedimiento;
 use App\Events;
+use App\Paciente;
 use Calendar;
 use Validator;
 
@@ -14,20 +15,22 @@ class EventsController extends Controller
     public function index(){
 
     	$procedimiento = Procedimiento::pluck('nombre', 'id')->toArray();
-    	$events = Events::select('id','event_name','start_date','end_date','procedimiento_id','descripcion')->get();
+
+    	$events = Events::select('id','paciente_id','start_date','end_date','procedimiento_id','descripcion')->get();
     	$event_list= [];
     	foreach ($events as $key => $event) {
     		$proceso = Procedimiento::find($event->procedimiento_id);
+            $paciente = Paciente::find($event->paciente_id);
     		//poner aqui el paciente asociado a la cita
     		$event_list[] =Calendar::event(
-    			$event->event_name,
+    			$paciente->nombre,
     			false,
     			new \DateTime($event->start_date),
     			new \DateTime($event->end_date),
     			$event->id,
     			[
     			'color' => $proceso->color,
-    			'descripcion' => $proceso->nombre,
+    			'descripcion' => $event->descripcion,
     			'textColor' => $event->textcolor,
     			'procedimiento' => $proceso->id,
     			]
@@ -51,6 +54,8 @@ class EventsController extends Controller
 					$("#btnAgregar").prop("disabled",false);
 					$("#btnEliminar").prop("disabled",true);
 					$("#btnModificar").prop("disabled",true);
+                    //$("#tit").hide();
+                    //$("#txtTitulo").hide();
 					limpiarFormulario();
 					$("#txtFecha").val(date.format());
 					$("#exampleModal").modal();
@@ -74,7 +79,7 @@ class EventsController extends Controller
 				 	$("#exampleModal").modal(); 	
 				 }',
 
-			'eventDrop'=> 'function(calEvent,jsEvent,view){
+			'eventDrop' => 'function(calEvent,jsEvent,view){
 				 	$("#txtID").val(calEvent.id);
 				 	$("#txtTitulo").val(calEvent.title);
 				 	$("#txtColor").val(calEvent.color);
@@ -94,10 +99,10 @@ class EventsController extends Controller
 
     public function addEvent(Request $request){
     	$validator = Validator::make($request->all(), [
-    		'event_name' 		=> 'required',
+    		'paciente_id' 		=> 'required',
     		'start_date' 		=> 'required',
     		'end_date' 			=> 'required',
-    		'procedimiento_id' 	=>'required' 
+    		'procedimiento_id' 	=> 'required' 
     	]);
 
     	if($validator->fails()){
@@ -106,26 +111,27 @@ class EventsController extends Controller
     	}
     	if(isset($_POST["btnAgregar"])){
     	$event = new Events();
-    	$event->event_name			= $request['event_name'];
+    	$event->paciente_id			= $request['paciente_id'];
     	$event->start_date			= $request['txtFecha']." ".$request['start_date'];
     	$event->end_date			= $request['txtFecha']." ".$request['end_date'];
     	$event->procedimiento_id 	= $request['procedimiento_id'];
+        $event->descripcion         = $request['txtDescripcion'];
     	$event->save();
     	\Session::flash('success','Cita añadida exitosamente');
-    	return Redirect::to('events');
+    	return Redirect::to('events')->with('info','Cita guardada con exito');
 
     	}elseif (isset($_POST["btnModificar"])) {
     		$event = Events::find($request["txtID"]);
-    		$event->event_name			= $request['event_name'];
+    		$event->paciente_id			= $request['paciente_id'];
     		$event->start_date			= $request['txtFecha']." ".$request['start_date'];
     		$event->end_date			= $request['txtFecha']." ".$request['end_date'];
     		$event->procedimiento_id 	= $request['procedimiento_id'];
     		$event->save();
-    		return Redirect::to('events');
+    		return Redirect::to('events')->with('info','Cita actualizada con exito');;
     	}elseif (isset($_POST['btnEliminar'])) {
     		$event = Events::find($request["txtID"]);
     		$event->delete();
-    		return Redirect::to('events');
+    		return Redirect::to('events')->with('info','Cita eliminada con exito');;
 
     	}
 

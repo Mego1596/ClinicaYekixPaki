@@ -69,13 +69,29 @@ Route::middleware(['auth'])->group(function(){
 
 	Route::get('user/{user}/edit', 'UserController@edit')->name('user.edit')->middleware('permission:users.edit');
 
-	Route::get('paciente', 'UserController@pacientes')->name('user.paciente')->middleware('permission:users.paciente');
 
 
 	//Full Calendar
 
 	Route::get('events', 'EventsController@index')->name('events.index');
 	Route::post('events', 'EventsController@addEvent')->name('events.add');
-	Route::delete('events', 'EventsController@destroy')->name('events.destroy');
+
+	//Pacientes
+	Route::post('paciente/store', 'PacienteController@store')->name('paciente.store')->middleware('permission:pacientes.create');
+
+	Route::get('paciente', 'PacienteController@index')->name('paciente.index')->middleware('permission:pacientes.index');
+
+	Route::get('paciente/create', 'PacienteController@create')->name('paciente.create')->middleware('permission:pacientes.create');
+
+	Route::put('paciente/{paciente}', 'PacienteController@update')->name('paciente.update')->middleware('permission:pacientes.edit');
+
+	Route::get('paciente/{paciente}', 'PacienteController@show')->name('paciente.show')->middleware('permission:pacientes.show');
+
+	Route::delete('paciente/{paciente}', 'PacienteController@destroy')->name('paciente.destroy')->middleware('permission:pacientes.destroy');
+
+	Route::get('paciente/edit/{paciente}', 'PacienteController@edit')->name('paciente.edit')->middleware('permission:pacientes.edit');
+
+	//Route::get('paciente/{paciente}/events', 'PacienteController@agendar')->name('paciente.agenda');
+	//Route::post('paciente/events', 'PacienteController@addEvent')->name('events.add');
 
 });

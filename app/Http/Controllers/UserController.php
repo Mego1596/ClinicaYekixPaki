@@ -17,13 +17,13 @@ class UserController extends Controller
     public function index()
     {
          
-         $users = DB::table('users')->join('role_user', 'users.id', '=', 'role_user.user_id')->where('role_user.role_id', '=', 1)->select('users.id' , 'users.name')->paginate();
+         $users = DB::table('users')->join('role_user', 'users.id', '=', 'role_user.user_id')->where('role_user.role_id', '=', 2)->select('users.id' , 'users.name')->paginate();
         return view('user.index', compact('users'));
     }
 
      public function pacientes()
     {
-        $users = DB::table('users')->join('role_user', 'users.id', '=', 'role_user.user_id')->where('role_user.role_id', '=', 2)->select('users.id' , 'users.name')->paginate();
+        $users = DB::table('users')->join('role_user', 'users.id', '=', 'role_user.user_id')->where('role_user.role_id', '=', 1)->select('users.id' , 'users.name')->paginate();
         return view('user.paciente', compact('users'));
     }
     /**
