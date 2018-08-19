@@ -4,14 +4,21 @@
 	<div>
 		<div class="row">
 			<div class="col-md-12 col-md-offset-2">
-				<div class="panel panel-default">
-					<div class="panel-heading">
-					Paciente
+				<div class="card">
+					<div class="card-header text-center">
+						<div class="row">
+							<div class="col-md-1">
+								<a href="{{ route('paciente.index') }}" class="btn btn-block btn-secondary">
+								Atrás</a>
+							</div>
+							<div class="col-md-10">
+								<h4>Paciente</h4>
+							</div>
+						</div>
 					</div>
-					<div class="panel-body">
+					<div class="card-body">
 						{!! Form::model($paciente, ['route' => ['paciente.update', $paciente->id], 'method' => 'PUT']) !!}
 							@include('paciente.partials.form')
-
 						{!! Form::close() !!}
 					</div>
 				</div>

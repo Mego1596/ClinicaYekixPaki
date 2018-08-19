@@ -42,11 +42,38 @@ class PacienteController extends Controller
      */
     public function store(Request $request)
     {
-        $paciente = new Paciente();
-        $paciente->nombre1 = $request->nombre;
-        if($paciente->save()){
+        //dd($request->all());
+        $valores = $request->all();
+        //Verificando si estan todos los campos obligatorios
+        if(is_null($valores['nombre1']) or is_null($valores['nombre2']) or is_null($valores['apellido1']) or is_null($valores['apellido2'])
+            or is_null($valores['fechaNacimiento']) or is_null($valores['telefono']) or is_null($valores['Sexo'])
+            or is_null($valores['domicilio']) or is_null($valores['ocupacion'])){
 
-         return redirect()->route('paciente.index',$paciente->id)->with('info','Proceso guardado con exito');
+            return redirect()->route('paciente.create')
+                ->with('info', 'Complete los campos obligatorios')
+                ->with('tipo', 'danger');
+        }
+
+        $paciente = new Paciente();
+        $paciente->nombre1 = $request->nombre1;
+        $paciente->nombre2 = $request->nombre2;
+        $paciente->apellido1 = $request->apellido1;
+        $paciente->apellido2 = $request->apellido2;
+        $paciente->fechaNacimiento = $request->fechaNacimiento;
+        $paciente->telefono = $request->telefono;
+        $paciente->Sexo = $request->Sexo;
+        $paciente->domicilio = $request->domicilio;
+        $paciente->ocupacion = $request->ocupacion;
+        //campos opcionales
+        if(!is_null($valores['direccion_de_trabajo']))
+            $paciente->direccion_de_trabajo = $request->direccion_de_trabajo;
+        if(!is_null($valores['responsable']))
+            $paciente->responsable = $request->responsable;
+
+        if($paciente->save()){
+            return redirect()->route('paciente.index',$paciente->id)
+                ->with('info','Paciente guardado con exito')
+                ->with('tipo', 'success');
         }
     }
 
@@ -82,8 +109,29 @@ class PacienteController extends Controller
      */
     public function update(Request $request, Paciente $paciente)
     {
+        $valores = $request->all();
+        //Verificando si estan todos los campos obligatorios
+        if(is_null($valores['nombre1']) or is_null($valores['nombre2']) or is_null($valores['apellido1']) or is_null($valores['apellido2'])
+            or is_null($valores['fechaNacimiento']) or is_null($valores['telefono']) or is_null($valores['Sexo'])
+            or is_null($valores['domicilio']) or is_null($valores['ocupacion'])){
+
+            return redirect()
+                    ->route('paciente.edit')
+                    ->with('info', 'Complete los campos obligatorios')
+                    ->with('tipo', 'danger');
+        }
+
+        if(is_null($request['direccion_de_trabajo']))
+            $request['direccion_de_trabajo'] = "Sin direccion de trabajo";
+        if(is_null($request['responsable']))
+            $request['responsable'] = "Sin responsable";
+
+        
+
         $paciente->update($request->all());
-        return redirect()->route('paciente.edit',$paciente->id)->with('info','Proceso actualizado con exito');
+        return redirect()->route('paciente.edit',$paciente->id)
+            ->with('info','Paciente actualizado con exito')
+            ->with('tipo', 'success');
     }
 
     /**
@@ -95,7 +143,9 @@ class PacienteController extends Controller
     public function destroy(Paciente $paciente)
     {
         $paciente->delete();
-        return back()->with('info','Eliminado Correctamente');
+        return back()
+            ->with('info','Eliminado Correctamente')
+            ->with('tipo', 'success');
     }
 
     public function agendar(Paciente $paciente)

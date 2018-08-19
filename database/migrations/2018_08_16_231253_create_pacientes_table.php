@@ -21,8 +21,8 @@ class CreatePacientesTable extends Migration
             $table->string('apellido2');
             $table->date('fechaNacimiento');
             $table->string('ocupacion');
-            $table->string('responsable')->nullable();
-            $table->string('direccion de trabajo')->nullable();
+            $table->string('responsable')->nullable()->default("Sin responsable");
+            $table->string('direccion_de_trabajo')->nullable()->default("Sin direccion de trabajo");
             $table->string('domicilio');
             $table->string('telefono');
             $table->string('Sexo',1);
