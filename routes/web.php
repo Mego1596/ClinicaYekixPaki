@@ -69,7 +69,7 @@ Route::middleware(['auth'])->group(function(){
 
 	Route::get('user/{user}/edit', 'UserController@edit')->name('user.edit')->middleware('permission:users.edit');
 
-
+	Route::get('asistente', 'UserController@asistentes')->name('user.asistente')->middleware('permission:users.asistente');
 
 	//Full Calendar
 
@@ -91,7 +91,7 @@ Route::middleware(['auth'])->group(function(){
 
 	Route::get('paciente/edit/{paciente}', 'PacienteController@edit')->name('paciente.edit')->middleware('permission:pacientes.edit');
 
-	//Route::get('paciente/{paciente}/events', 'PacienteController@agendar')->name('paciente.agenda');
-	//Route::post('paciente/events', 'PacienteController@addEvent')->name('events.add');
+	Route::get('paciente/{paciente}/events', 'PacienteController@agendar')->name('paciente.agenda');
+	Route::post('paciente/events', 'PacienteController@addEvent')->name('paciente.add');
 
 });

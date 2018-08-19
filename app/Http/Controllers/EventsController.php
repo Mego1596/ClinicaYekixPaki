@@ -50,22 +50,14 @@ class EventsController extends Controller
                 'right' => 'month,agendaWeek,agendaDay'
                 )
     		])->setCallbacks([
-			'dayClick' => 'function(date,jsEvent,view){
-					$("#btnAgregar").prop("disabled",false);
-					$("#btnEliminar").prop("disabled",true);
-					$("#btnModificar").prop("disabled",true);
-                    //$("#tit").hide();
-                    //$("#txtTitulo").hide();
-					limpiarFormulario();
-					$("#txtFecha").val(date.format());
-					$("#exampleModal").modal();
-				}',
 			'eventClick' => 'function(calEvent,jsEvent,view){
-				 	$("#btnAgregar").prop("disabled",true);
-				 	$("#btnEliminar").prop("disabled",false);
-					$("#btnModificar").prop("disabled",false);
+					$("#btnAgregar").hide();
+					$("#btnEliminar").hide();
+					$("#btnModificar").hide();
 				 	$("#txtDescripcion").val(calEvent.descripcion);
+				 	$("#txtDescripcion").prop("disabled",true);
 				 	$("#txtTitulo").val(calEvent.title);
+				 	$("#txtTitulo").prop("disabled",true);
 				 	$("#txtID").val(calEvent.id);
 				 	$("#txtColor").val(calEvent.color);
 				 	FechaHora= calEvent.start._i.split("T");
@@ -74,8 +66,11 @@ class EventsController extends Controller
 				 	horaFin=FechaHora2[1].split("+");
 				 	$("#txtFecha").val(FechaHora[0]);
 				 	$("#start_date").val(horaInicio[0]);
+				 	$("#start_date").prop("disabled",true);
 				 	$("#end_date").val(horaFin[0]);
+				 	$("#end_date").prop("disabled",true);
 				 	$("#procedimiento_id").val(calEvent.procedimiento);
+				 	$("#procedimiento_id").prop("disabled",true);
 				 	$("#exampleModal").modal(); 	
 				 }',
 
@@ -109,33 +104,15 @@ class EventsController extends Controller
     		\Session::flash('warnning', 'Porfavor ingrese datos validos');
     		return Redirect::to('/events')->withInput()->withErrors($validator);
     	}
-    	if(isset($_POST["btnAgregar"])){
-    	$event = new Events();
-    	$event->paciente_id			= $request['paciente_id'];
-    	$event->start_date			= $request['txtFecha']." ".$request['start_date'];
-    	$event->end_date			= $request['txtFecha']." ".$request['end_date'];
-    	$event->procedimiento_id 	= $request['procedimiento_id'];
-        $event->descripcion         = $request['txtDescripcion'];
-    	$event->save();
-    	\Session::flash('success','Cita añadida exitosamente');
-    	return Redirect::to('events')->with('info','Cita guardada con exito');
 
-    	}elseif (isset($_POST["btnModificar"])) {
+    	if (isset($_POST["btnModificar"])) {
+
     		$event = Events::find($request["txtID"]);
-    		$event->paciente_id			= $request['paciente_id'];
     		$event->start_date			= $request['txtFecha']." ".$request['start_date'];
     		$event->end_date			= $request['txtFecha']." ".$request['end_date'];
     		$event->procedimiento_id 	= $request['procedimiento_id'];
     		$event->save();
-    		return Redirect::to('events')->with('info','Cita actualizada con exito');;
-    	}elseif (isset($_POST['btnEliminar'])) {
-    		$event = Events::find($request["txtID"]);
-    		$event->delete();
-    		return Redirect::to('events')->with('info','Cita eliminada con exito');;
-
+    		return Redirect::to('events')->with('info','Cita actualizada con exito');	
     	}
-
-    	
     }
-
 }

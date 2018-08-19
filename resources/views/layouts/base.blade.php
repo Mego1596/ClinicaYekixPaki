@@ -16,15 +16,17 @@
     <!-- Custom styles for this template-->
     <link href="{{ asset('css/sb-admin.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap-clockpicker.css') }}">
+
     <!-- Full Calendar -->
     <link href='https://use.fontawesome.com/releases/v5.0.6/css/all.css' rel='stylesheet'>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script type="text/javascript" src="{{ asset('js/jquery.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/moment.min.js') }}"></script>
+    
 
     <!-- Full Calendar -->
     <link rel="stylesheet" type="text/css" href="{{ asset('css/fullcalendar.min.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap-clockpicker.css') }}">
     <style type="text/css">
     .fc th{
       padding: 5px 0px;
@@ -38,7 +40,7 @@
 
     <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
  
-      <a class="navbar-brand mr-1" href="index.html">Clinica Odontologica YekixPaki</a>
+      <a class="navbar-brand mr-1" href="/home">Clinica Odontologica YekixPaki</a>
 
       <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
         <i class="fa fa-bars"></i>
@@ -95,9 +97,10 @@
         <li class="nav-item">
           <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class=" fa fa-folder-open"></i>
-            <span>Pages</span>
+            <span>Calendario</span>
           </a>
           <div class="dropdown-menu" aria-labelledby="pagesDropdown">
+            <a class="dropdown-item" href="/events">Citas</a>
           </div>
         </li>
       </ul>
@@ -126,6 +129,11 @@
                   @can('users.index')
                     <li class="nav-item">
                       <a class="nav-link" href="{{route('user.index')}}">Doctores</a>
+                    </li>
+                  @endcan
+                  @can('users.asistente')
+                    <li class="nav-item">
+                      <a class="nav-link" href="{{route('user.asistente')}}">Asistente</a>
                     </li>
                   @endcan
                   @can('pacientes.index')
@@ -190,7 +198,7 @@
     <script type="text/javascript" src="{{ asset('js/fullcalendar.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/es.js') }}"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="js/bootstrap-clockpicker.js"></script>
+    <script type="text/javascript" src="{{ asset('js/bootstrap-clockpicker.js')}}"></script>
     <script>
       @yield('pageScript')
     </script>

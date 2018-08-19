@@ -9,7 +9,7 @@
 					Paciente
 					</div>
 					<div class="panel-body">
-						{!! Form::model($paciente, ['route' => ['user.update', $paciente->id], 'method' => 'PUT']) !!}
+						{!! Form::model($paciente, ['route' => ['paciente.update', $paciente->id], 'method' => 'PUT']) !!}
 							@include('paciente.partials.form')
 
 						{!! Form::close() !!}

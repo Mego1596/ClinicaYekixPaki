@@ -10,6 +10,8 @@
 					</div>
 					<div class="panel-body">
 					<p align="justify"><strong>Nombre: </strong><br>{{ $paciente->nombre }}</p>
+					<a href="{{ route('paciente.agenda', $paciente->id) }}" class="btn btn-sm btn-default bg-info" style="color: white">Agendar Cita
+					</a>
 					</div>
 				</div>
 			</div>

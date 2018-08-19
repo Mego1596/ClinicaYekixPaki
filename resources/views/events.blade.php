@@ -26,8 +26,6 @@
       <div class="modal-body">
       	<input type="hidden" name="txtID" id="txtID"/>
       	<input type="hidden" name="txtFecha" id="txtFecha"/>
-
-
       	<div class="form-row">	
       		<div class="form-group col-md-12">
       			{!! Form::label('paciente_id', 'Paciente:',['id' => 'tit']) !!}
