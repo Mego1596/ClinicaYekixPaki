@@ -38,17 +38,21 @@
 						</div>
 
 						<div class="row">
-							<div class="col-md-4">
+							<div class="col-md-3">
 								{{ Form::label('fechaNacimiento', 'Fecha de nacimiento') }}
 								{{ Form::date('fechaNacimiento', \Carbon\Carbon::now(), ['class' => 'form-control', 'type'=>'date', 'style'=>'height: 38px', 'disabled']) }}
 							</div>
-							<div class="col-md-4">
+							<div class="col-md-2">
 								{{ Form::label('telefono', 'Telefono') }}
 								{{ Form::text('telefono', null, ['class'=>'form-control', 'disabled']) }}
 							</div>
-							<div class="col-md-4">
+							<div class="col-md-2">
 								{{ Form::label('sexo', 'Sexo') }}
 								{{ Form::text('sexo', null, ['class'=>'form-control', 'disabled']) }}
+							</div>
+							<div class="col-md-5">
+								{{ Form::label('email', 'Correo Electronico') }}
+								{{ Form::email('email', null, ['class'=>'form-control', 'disabled']) }}
 							</div>
 						</div>
 

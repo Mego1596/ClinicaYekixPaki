@@ -69,6 +69,8 @@ class PacienteController extends Controller
             $paciente->direccion_de_trabajo = $request->direccion_de_trabajo;
         if(!is_null($valores['responsable']))
             $paciente->responsable = $request->responsable;
+        if(!is_null($valores['email']))
+            $paciente->email = $request->email;
 
         if($paciente->save()){
             return redirect()->route('paciente.index',$paciente->id)
@@ -97,6 +99,7 @@ class PacienteController extends Controller
      */
     public function edit(Paciente $paciente)
     {
+        //dd(compact('paciente'));
         return view('paciente.edit', compact('paciente'));
     }
 
@@ -125,9 +128,9 @@ class PacienteController extends Controller
             $request['direccion_de_trabajo'] = "Sin direccion de trabajo";
         if(is_null($request['responsable']))
             $request['responsable'] = "Sin responsable";
-
+        if(is_null($request['email']))
+            $request['email'] = "Sin correo electronico";
         
-
         $paciente->update($request->all());
         return redirect()->route('paciente.edit',$paciente->id)
             ->with('info','Paciente actualizado con exito')
