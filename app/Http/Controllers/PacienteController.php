@@ -43,7 +43,7 @@ class PacienteController extends Controller
     public function store(Request $request)
     {
         $paciente = new Paciente();
-        $paciente->nombre = $request->nombre;
+        $paciente->nombre1 = $request->nombre;
         if($paciente->save()){
 
          return redirect()->route('paciente.index',$paciente->id)->with('info','Proceso guardado con exito');
@@ -109,7 +109,7 @@ class PacienteController extends Controller
             $paciente = Paciente::find($event->paciente_id);
             //poner aqui el paciente asociado a la cita
             $event_list[] =Calendar::event(
-                $paciente->nombre,
+                $paciente->nombre1,
                 false,
                 new \DateTime($event->start_date),
                 new \DateTime($event->end_date),
