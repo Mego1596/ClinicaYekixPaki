@@ -52,7 +52,7 @@
       	</div>
       	<div class="form-group">
       		{!! Form::label('txtDescripcion', 'Descripcion:')!!}
-      		{!! Form::textarea('txtDescripcion', null, ['class' => 'form-control', 'rows' => '2'])!!}
+      		{!! Form::textarea('txtDescripcion', null, ['class' => 'form-control', 'rows' => '2', 'id' => 'txtDescripcion'])!!}
       	</div>
       	{!! Form::label('procedimiento_id', 'Procedimiento:')!!}
       	{!! Form::select('procedimiento_id', $procedimiento, null, ['placeholder' => 'Elija un procedimiento'])!!}

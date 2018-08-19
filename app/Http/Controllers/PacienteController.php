@@ -169,6 +169,7 @@ class PacienteController extends Controller
                 'descripcion' => $event->descripcion,
                 'textColor' => $event->textcolor,
                 'procedimiento' => $proceso->id,
+                'durationEditable' => false,
                 ]
             );
         }
@@ -184,7 +185,7 @@ class PacienteController extends Controller
                 'left' => 'prev,next today', 
                 'center' => 'title', 
                 'right' => 'month,agendaWeek,agendaDay'
-                )
+                ),
             ])->setCallbacks([
             'dayClick' => 'function(date,jsEvent,view){
                     $("#btnAgregar").prop("disabled",false);
@@ -194,8 +195,15 @@ class PacienteController extends Controller
                     $("#txtTitulo").hide();
                     limpiarFormulario();
                     $("#txtFecha").val(date.format());
+                    var horaInicio=String(date).substring(16,24);
+                    if(horaInicio == "00:00:00"){
+                    }else{
+                           $("#start_date").val(horaInicio);
+                    }
                     $("#exampleModal").modal();
                 }',
+
+
             'eventClick' => 'function(calEvent,jsEvent,view){
                     $("#btnAgregar").prop("disabled",true);
                     $("#btnEliminar").prop("disabled",false);
@@ -229,7 +237,6 @@ class PacienteController extends Controller
                     document.getElementById("btnModificar").click();
                  }',
 
-            
             ]);
 
         return view('paciente.agenda',compact('procedimiento','calendar_details','paciente'));
@@ -249,8 +256,14 @@ class PacienteController extends Controller
         if(isset($_POST["btnAgregar"])){
         $event = new Events();
         $event->paciente_id         = $request['pacienteID'];
-        $event->start_date          = $request['txtFecha']." ".$request['start_date'];
-        $event->end_date            = $request['txtFecha']." ".$request['end_date'];
+        if(strpos($request["txtFecha"], "T")){
+            $event->start_date          = str_replace("T", " ", $request['txtFecha']);
+            $str = substr($request['txtFecha'],0,-8);
+            $event->end_date            = $str." ".$request['end_date'];
+        }else{
+            $event->start_date          = $request['txtFecha']." ".$request['start_date'];
+            $event->end_date            = $request['txtFecha']." ".$request['end_date'];
+        }
         $event->procedimiento_id    = $request['procedimiento_id'];
         $event->descripcion         = $request['txtDescripcion'];
         $event->save();

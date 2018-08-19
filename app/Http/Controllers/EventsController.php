@@ -33,6 +33,7 @@ class EventsController extends Controller
     			'descripcion' => $event->descripcion,
     			'textColor' => $event->textcolor,
     			'procedimiento' => $proceso->id,
+                'durationEditable' => false,
     			]
     		);
     	}
@@ -44,6 +45,7 @@ class EventsController extends Controller
     		'editable' => true,
     		'themeSystem'=>'bootstrap4',
             'locale' => 'es',
+            'defaultView' => 'agendaDay',
     	    'header' => array(
                 'left' => 'prev,next today', 
                 'center' => 'title', 
