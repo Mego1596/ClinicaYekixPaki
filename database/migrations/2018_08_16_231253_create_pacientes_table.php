@@ -25,7 +25,7 @@ class CreatePacientesTable extends Migration
             $table->string('direccion_de_trabajo')->nullable()->default("Sin direccion de trabajo");
             $table->string('domicilio');
             $table->string('telefono');
-            $table->string('Sexo',1);
+            $table->string('sexo',1);
             $table->timestamps();
         });
     }

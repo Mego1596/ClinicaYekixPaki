@@ -46,7 +46,7 @@ class PacienteController extends Controller
         $valores = $request->all();
         //Verificando si estan todos los campos obligatorios
         if(is_null($valores['nombre1']) or is_null($valores['nombre2']) or is_null($valores['apellido1']) or is_null($valores['apellido2'])
-            or is_null($valores['fechaNacimiento']) or is_null($valores['telefono']) or is_null($valores['Sexo'])
+            or is_null($valores['fechaNacimiento']) or is_null($valores['telefono']) or is_null($valores['sexo'])
             or is_null($valores['domicilio']) or is_null($valores['ocupacion'])){
 
             return redirect()->route('paciente.create')
@@ -61,7 +61,7 @@ class PacienteController extends Controller
         $paciente->apellido2 = $request->apellido2;
         $paciente->fechaNacimiento = $request->fechaNacimiento;
         $paciente->telefono = $request->telefono;
-        $paciente->Sexo = $request->Sexo;
+        $paciente->sexo = $request->sexo;
         $paciente->domicilio = $request->domicilio;
         $paciente->ocupacion = $request->ocupacion;
         //campos opcionales
@@ -112,7 +112,7 @@ class PacienteController extends Controller
         $valores = $request->all();
         //Verificando si estan todos los campos obligatorios
         if(is_null($valores['nombre1']) or is_null($valores['nombre2']) or is_null($valores['apellido1']) or is_null($valores['apellido2'])
-            or is_null($valores['fechaNacimiento']) or is_null($valores['telefono']) or is_null($valores['Sexo'])
+            or is_null($valores['fechaNacimiento']) or is_null($valores['telefono']) or is_null($valores['sexo'])
             or is_null($valores['domicilio']) or is_null($valores['ocupacion'])){
 
             return redirect()
@@ -159,7 +159,7 @@ class PacienteController extends Controller
             $paciente = Paciente::find($event->paciente_id);
             //poner aqui el paciente asociado a la cita
             $event_list[] =Calendar::event(
-                $paciente->nombre1,
+                $paciente->nombre1." ".$paciente->nombre2." ".$paciente->apellido1." ".$paciente->apellido2,
                 false,
                 new \DateTime($event->start_date),
                 new \DateTime($event->end_date),
@@ -228,6 +228,8 @@ class PacienteController extends Controller
                     $("#procedimiento_id").val(calEvent.procedimiento);
                     document.getElementById("btnModificar").click();
                  }',
+
+            
             ]);
 
         return view('paciente.agenda',compact('procedimiento','calendar_details','paciente'));

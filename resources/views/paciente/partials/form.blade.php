@@ -35,8 +35,8 @@
 		{{ Form::text('telefono', null, ['class'=>'form-control']) }}
 	</div>
 	<div class="col-md-4">
-		{{ Form::label('Sexo', 'Sexo *') }}
-		{{ Form::select('Sexo', ['M'=>'Masculino', 'F'=>'Femenino'], null, ['placeholder'=>'Seleccione una opcion', 'class'=>'form-control']) }}
+		{{ Form::label('sexo', 'Sexo *') }}
+		{{ Form::select('sexo', ['M'=>'Masculino', 'F'=>'Femenino'], null, ['placeholder'=>'Seleccione una opcion', 'class'=>'form-control']) }}
 	</div>
 </div>
 

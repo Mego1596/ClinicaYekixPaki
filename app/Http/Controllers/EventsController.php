@@ -23,7 +23,7 @@ class EventsController extends Controller
             $paciente = Paciente::find($event->paciente_id);
     		//poner aqui el paciente asociado a la cita
     		$event_list[] =Calendar::event(
-    			$paciente->nombre1,
+    			$paciente->nombre1." ".$paciente->nombre2." ".$paciente->apellido1." ".$paciente->apellido2,
     			false,
     			new \DateTime($event->start_date),
     			new \DateTime($event->end_date),
