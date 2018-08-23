@@ -14,13 +14,23 @@
 								<tr>
 									<th width="10px">ID</th>
 									<th>Nombre</th>
-									<th colspan="3">
-										@can('pacientes.create')
-										<a href="{{ route('paciente.create') }}" class="btn btn-success btn-block">
-											Crear paciente
-										</a>
-										@endcan
-									</th>
+									@if (sizeof($pacientes) == 0)
+										<th width="237">
+											@can('pacientes.create')
+											<a href="{{ route('paciente.create') }}" class="btn btn-success btn-block">
+												Crear paciente
+											</a>
+											@endcan
+										</th>
+									@else
+										<th colspan="3" width="237">
+											@can('pacientes.create')
+											<a href="{{ route('paciente.create') }}" class="btn btn-success btn-block">
+												Crear paciente
+											</a>
+											@endcan
+										</th>
+									@endif
 								</tr>
 							</thead>
 							<tbody>

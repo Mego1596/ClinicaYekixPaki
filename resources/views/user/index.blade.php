@@ -4,21 +4,33 @@
 	<div>
 		<div class="row">
 			<div class="col-md-12 col-md-offset-2">
-				<div class="panel panel-default">
-					<div class="panel-heading">
-						Usuarios
-						@can('users.create')
-						<a href="{{ route('user.create') }}" class="btn btn-sm btn-success pull-right">
-							Crear
-						</a>
-						@endcan
+				<div class="card card-default">
+					<div class="card-header text-center">
+						<h4>Lista de doctores</h4>
 					</div>
-					<div class="panel-body">
+					<div class="card-body">
 						<table class="table table-striped table-hover">
 							<thead>
 								<tr>
 									<th width="10px">ID</th>
 									<th>Nombre</th>
+									@if(sizeof($users) == 0)
+									<th width="237">
+										@can('users.create')
+										<a href="{{ route('user.create') }}" class="btn btn-block btn-success pull-right">
+											Crear
+										</a>
+										@endcan
+									</th>
+									@else
+									<th colspan="3" width="237">
+										@can('users.create')
+										<a href="{{ route('user.create') }}" class="btn btn-block btn-success pull-right">
+											Crear
+										</a>
+										@endcan
+									</th>
+									@endif
 								</tr>
 							</thead>
 							<tbody>

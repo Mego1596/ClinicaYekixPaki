@@ -4,21 +4,33 @@
 	<div>
 		<div class="row">
 			<div class="col-md-12 col-md-offset-2">
-				<div class="panel panel-default">
-					<div class="panel-heading">
-						Procedimientos
-						@can('procedimientos.create')
-						<a href="{{ route('procedimiento.create') }}" class="btn btn-sm btn-success pull-right">
-							Crear
-						</a>
-						@endcan
+				<div class="card panel-default">
+					<div class="card-header text-center">
+						<h4>Lista de procedimientos</h4>
 					</div>
-					<div class="panel-body">
-						<table class="table table-striped table-hover">
+					<div class="card-body">
+						<table class="table table-striped table-hover" >
 							<thead>
 								<tr>
 									<th width="10px">ID</th>
 									<th>Nombre</th>
+									@if (sizeof($procedimientos) == 0)
+									<th width="237">
+										@can('procedimientos.create')
+										<a href="{{ route('procedimiento.create') }}" class="btn btn-block btn-success pull-right">
+											Crear
+										</a>
+										@endcan
+									</th>
+									@else
+									<th colspan="3" width="237">
+										@can('procedimientos.create')
+										<a href="{{ route('procedimiento.create') }}" class="btn btn-block btn-success pull-right">
+											Crear
+										</a>
+										@endcan
+									</th>
+									@endif
 								</tr>
 							</thead>
 							<tbody>

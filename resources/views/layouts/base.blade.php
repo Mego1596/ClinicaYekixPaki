@@ -17,6 +17,7 @@
     <link href="{{ asset('css/sb-admin.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap-clockpicker.css') }}">
+    <link rel="stylesheet" href="text/css" href="{{ asset('css/estilos.css') }}">
 
     <!-- Full Calendar -->
     <link href='https://use.fontawesome.com/releases/v5.0.6/css/all.css' rel='stylesheet'>
@@ -80,7 +81,6 @@
                         @endguest
                     </ul>
                 </div>
-            </div>
 
     </nav>
 
@@ -105,7 +105,7 @@
         </li>
       </ul>
 
-      <div id="content-wrapper">
+      <div class="container" id="content-wrapper">
 
         <div class="container-fluid">
 
@@ -146,6 +146,7 @@
                       <a class="nav-link" href="{{route('roles.index')}}">Roles</a>
                     </li>
                   @endcan
+                </ul>
                 </nav>
           </div>
           @if(session('info'))
@@ -172,7 +173,6 @@
             </div>
           </div>
         </footer>
-
       </div>
       <!-- /.content-wrapper -->
 
