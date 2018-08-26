@@ -1,5 +1,13 @@
 @extends('layouts.base')
 
+@section('bread')
+<li class="breadcrumb-item">
+  <a class="breadcrumb-item active">Paciente</a>
+</li>
+
+@endsection
+
+
 @section('content')
 	<div>
 		<div class="row">

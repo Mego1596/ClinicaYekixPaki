@@ -97,10 +97,31 @@
         <li class="nav-item">
           <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class=" fa fa-folder-open"></i>
-            <span>Calendario</span>
+            <span>Navegar</span>
           </a>
           <div class="dropdown-menu" aria-labelledby="pagesDropdown">
             <a class="dropdown-item" href="/events">Citas</a>
+
+            @can('procedimientos.index')
+            <a class="dropdown-item" href="{{route('procedimiento.index')}}">Procedimientos</a>
+            @endcan
+
+            @can('users.index')
+            <a class="dropdown-item" href="{{route('user.index')}}">Doctores</a>
+            @endcan
+
+            @can('users.asistente')
+            <a class="dropdown-item" href="{{route('user.asistente')}}">Asistente</a>
+            @endcan
+
+            @can('pacientes.index')
+            <a class="dropdown-item" href="{{route('paciente.index')}}">Pacientes</a>
+            @endcan
+
+            @can('roles.index')
+            <a class="dropdown-item" href="{{route('roles.index')}}">Roles</a>
+            @endcan
+
           </div>
         </li>
       </ul>
@@ -114,41 +135,11 @@
             <li class="breadcrumb-item">
               <a href="/home">Inicio</a>
             </li>
-            <li class="breadcrumb-item active">Blank Page</li>
+            @yield('bread')
           </ol>
 
           <!-- Page Content -->
-          <div>
-                <nav class="navbar navbar-expand-sm bg-info navbar-dark">
-                <ul class="navbar-nav">
-                  @can('procedimientos.index')
-                    <li class="nav-item">
-                      <a class="nav-link" href="{{route('procedimiento.index')}}">Procedimientos</a>
-                    </li>
-                  @endcan
-                  @can('users.index')
-                    <li class="nav-item">
-                      <a class="nav-link" href="{{route('user.index',1)}}">Doctores</a>
-                    </li>
-                  @endcan
-                  @can('users.asistente')
-                    <li class="nav-item">
-                      <a class="nav-link" href="{{route('user.asistente',2)}}">Asistente</a>
-                    </li>
-                  @endcan
-                  @can('pacientes.index')
-                    <li class="nav-item">
-                      <a class="nav-link" href="{{route('paciente.index')}}">Pacientes</a>
-                    </li>
-                  @endcan
-                  @can('roles.index')
-                    <li class="nav-item">
-                      <a class="nav-link" href="{{route('roles.index')}}">Roles</a>
-                    </li>
-                  @endcan
-                </ul>
-                </nav>
-          </div>
+          
           @if(session('info'))
           <div>
             <div class="row">

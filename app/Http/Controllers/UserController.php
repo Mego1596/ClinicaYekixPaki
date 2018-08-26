@@ -14,28 +14,28 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($id)
+    public function index()
     {
         
         $users = DB::table('users')->join('role_user', 'users.id', '=', 'role_user.user_id')->where('role_user.role_id', '=', 2)->select('users.id' , 'users.name')->paginate();
         $roles = Role::get();
-        return view('user.index', compact('users','id'));
+        return view('user.index', compact('users'));
     }
 
-     public function asistentes($id)
+     public function asistentes()
     {
         $users = DB::table('users')->join('role_user', 'users.id', '=', 'role_user.user_id')->where('role_user.role_id', '=', 3)->select('users.id' , 'users.name')->paginate();
-        return view('user.asistente', compact('users','id'));
+        return view('user.asistente', compact('users'));
     }
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($id)
+    public function create()
     {
         $roles = Role::get();
-        return view('user.create',compact('roles','id'));
+        return view('user.create',compact('roles'));
     }
 
     /**
@@ -52,11 +52,7 @@ class UserController extends Controller
         $user->password =bcrypt($request->password);
         if($user->save()){
             $user->roles()->sync($request->get('roles'));
-            if($request['idIndex']==1){
-                return redirect()->route('user.index',$user->id)->with('info','Usuario guardado con exito');
-            }elseif ($request['idIndex']==2) {
-                return redirect()->route('user.asistente',$user->id)->with('info','Usuario guardado con exito');
-            }    
+            return redirect()->route('user.index',$user->id)->with('info','Usuario guardado con exito');
         }
     }
 

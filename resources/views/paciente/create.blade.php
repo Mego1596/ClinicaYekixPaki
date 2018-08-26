@@ -1,4 +1,16 @@
-@extends('layouts.base')
+@extends('layouts.base').
+
+@section('bread')
+<li class="breadcrumb-item">
+  <a href="/paciente">Paciente</a>
+</li>
+
+<li class="breadcrumb-item">
+  <a class="breadcrumb-item active">Crear Paciente</a>
+</li>
+
+@endsection
+
 @section('content')
 	<div class="row">
 		<div class="col-md-12">

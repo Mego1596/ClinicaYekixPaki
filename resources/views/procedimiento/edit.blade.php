@@ -1,5 +1,14 @@
 @extends('layouts.base')
 
+@section('bread')
+<li class="breadcrumb-item">
+  <a href="/procedimiento/">Procedimientos</a>
+</li>
+<li class="breadcrumb-item">
+  <a class="breadcrumb-item active">Editar Procedimiento</a>
+</li>
+@endsection
+
 @section('content')
 	<div>
 		<div class="row">

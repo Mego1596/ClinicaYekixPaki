@@ -1,5 +1,19 @@
 @extends('layouts.base')
 
+@section('bread')
+<li class="breadcrumb-item">
+  <a href="/paciente">Paciente</a>
+</li>
+
+<li class="breadcrumb-item">
+  <a href="/paciente/{{$paciente->id}}">Detalle Paciente</a>
+</li>
+
+<li class="breadcrumb-item">
+  <a class="breadcrumb-item active" ">Citas</a>
+</li>
+@endsection
+
 @section('content')
 	<div class="container">
 	<div class="panel panel-primary">
