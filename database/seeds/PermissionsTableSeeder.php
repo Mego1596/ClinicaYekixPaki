@@ -40,20 +40,8 @@ class PermissionsTableSeeder extends Seeder
         Permission::create([
         	'name' => 'Eliminar usuarios',
         	'slug' => 'users.destroy',
-        	'description' => 'Eeliminar cualquier dato de un usuario del sistema',
+        	'description' => 'Eliminar cualquier dato de un usuario del sistema',
         ]);
-
-        Permission::create([
-            'name' => 'Navegar pacientes',
-            'slug' => 'users.asistente',
-            'description' => 'Lista y Navega todos los usuarios Asistente del Sistema',
-        ]);
-
-        
-
-
-
-
 
 
         //Roles
@@ -84,19 +72,8 @@ class PermissionsTableSeeder extends Seeder
         Permission::create([
         	'name' => 'Eliminar rol',
         	'slug' => 'roles.destroy',
-        	'description' => 'Eeliminar cualquier dato de un rol del sistema',
+        	'description' => 'Eliminar cualquier dato de un rol del sistema',
         ]);
-
-
-
-
-
-
-
-
-
-
-
 
 
         //Procedimientos
@@ -127,7 +104,7 @@ class PermissionsTableSeeder extends Seeder
         Permission::create([
         	'name' => 'Eliminar Procedimiento',
         	'slug' => 'procedimientos.destroy',
-        	'description' => 'Eeliminar cualquier dato de un Procedimiento del sistema',
+        	'description' => 'Eliminar cualquier dato de un Procedimiento del sistema',
         ]);
 
 
@@ -159,7 +136,7 @@ class PermissionsTableSeeder extends Seeder
         Permission::create([
             'name' => 'Eliminar Paciente',
             'slug' => 'pacientes.destroy',
-            'description' => 'Eeliminar cualquier dato de un Paciente del sistema',
+            'description' => 'Eliminar cualquier dato de un Paciente del sistema',
         ]);
 
         Permission::create([

@@ -55,15 +55,15 @@ class PacienteController extends Controller
         }
 
         $paciente = new Paciente();
-        $paciente->nombre1 = $request->nombre1;
-        $paciente->nombre2 = $request->nombre2;
-        $paciente->apellido1 = $request->apellido1;
-        $paciente->apellido2 = $request->apellido2;
-        $paciente->fechaNacimiento = $request->fechaNacimiento;
-        $paciente->telefono = $request->telefono;
-        $paciente->sexo = $request->sexo;
-        $paciente->domicilio = $request->domicilio;
-        $paciente->ocupacion = $request->ocupacion;
+        $paciente->nombre1               = $request->nombre1;
+        $paciente->nombre2               = $request->nombre2;
+        $paciente->apellido1             = $request->apellido1;
+        $paciente->apellido2             = $request->apellido2;
+        $paciente->fechaNacimiento       = $request->fechaNacimiento;
+        $paciente->telefono              = $request->telefono;
+        $paciente->sexo                  = $request->sexo;
+        $paciente->domicilio             = $request->domicilio;
+        $paciente->ocupacion             = $request->ocupacion;
         //campos opcionales
         if(!is_null($valores['direccion_de_trabajo']))
             $paciente->direccion_de_trabajo = $request->direccion_de_trabajo;
@@ -168,11 +168,11 @@ class PacienteController extends Controller
                 new \DateTime($event->end_date),
                 $event->id,
                 [
-                'color' => $proceso->color,
-                'descripcion' => $event->descripcion,
-                'textColor' => $event->textcolor,
-                'procedimiento' => $proceso->id,
-                'durationEditable' => false,
+                'color'             => $proceso->color,
+                'descripcion'       => $event->descripcion,
+                'textColor'         => $event->textcolor,
+                'procedimiento'     => $proceso->id,
+                'durationEditable'  => false,
                 ]
             );
         }
@@ -180,15 +180,16 @@ class PacienteController extends Controller
         
 
         $calendar_details = Calendar::addEvents($event_list)->setOptions([
-            'firstDay' => 1,
-            'editable' => true,
-            'themeSystem'=>'bootstrap4',
-            'locale' => 'es',
-            'header' => array(
-                'left' => 'prev,next today', 
-                'center' => 'title', 
-                'right' => 'month,agendaWeek,agendaDay'
-                ),
+            'firstDay'      => 1,
+            'editable'      => true,
+            'themeSystem'   => 'bootstrap4',
+            'locale'        => 'es',
+            'header'        => array(
+                        'left' => 'prev,next today', 
+                      'center' => 'title', 
+                       'right' => 'month,agendaWeek,agendaDay'
+            ),
+
             ])->setCallbacks([
             'dayClick' => 'function(date,jsEvent,view){
                     $("#btnAgregar").prop("disabled",false);
@@ -247,7 +248,7 @@ class PacienteController extends Controller
 
     public function addEvent(Request $request){
         $validator = Validator::make($request->all(), [
-            'pacienteID'       => 'required',
+            'pacienteID'        => 'required',
             'start_date'        => 'required',
             'end_date'          => 'required',
             'procedimiento_id'  => 'required' 

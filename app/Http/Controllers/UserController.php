@@ -14,26 +14,28 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($id)
     {
-         
-        $users = DB::table('users')->join('role_user', 'users.id', '=', 'role_user.user_id')->where('role_user.role_id', '=', 3)->select('users.id' , 'users.name')->paginate();
-        return view('user.index', compact('users'));
+        
+        $users = DB::table('users')->join('role_user', 'users.id', '=', 'role_user.user_id')->where('role_user.role_id', '=', 2)->select('users.id' , 'users.name')->paginate();
+        $roles = Role::get();
+        return view('user.index', compact('users','id'));
     }
 
-     public function asistentes()
+     public function asistentes($id)
     {
-        $users = DB::table('users')->join('role_user', 'users.id', '=', 'role_user.user_id')->where('role_user.role_id', '=', 2)->select('users.id' , 'users.name')->paginate();
-        return view('user.asistente', compact('users'));
+        $users = DB::table('users')->join('role_user', 'users.id', '=', 'role_user.user_id')->where('role_user.role_id', '=', 3)->select('users.id' , 'users.name')->paginate();
+        return view('user.asistente', compact('users','id'));
     }
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
-        return view('user.create');
+        $roles = Role::get();
+        return view('user.create',compact('roles','id'));
     }
 
     /**
@@ -48,12 +50,14 @@ class UserController extends Controller
         $user->name = $request->name;
         $user->email = $request->email;
         $user->password =bcrypt($request->password);
-
         if($user->save()){
-
-         return redirect()->route('user.index',$user->id)->with('info','Proceso guardado con exito');
+            $user->roles()->sync($request->get('roles'));
+            if($request['idIndex']==1){
+                return redirect()->route('user.index',$user->id)->with('info','Usuario guardado con exito');
+            }elseif ($request['idIndex']==2) {
+                return redirect()->route('user.asistente',$user->id)->with('info','Usuario guardado con exito');
+            }    
         }
-       
     }
 
     /**

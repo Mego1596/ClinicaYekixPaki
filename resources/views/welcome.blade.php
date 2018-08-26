@@ -5,11 +5,13 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Laravel</title>
+        <title>YekixPaki</title>
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <!-- Styles -->
         <style>
             html, body {
@@ -62,6 +64,11 @@
             .m-b-md {
                 margin-bottom: 30px;
             }
+
+            .carousel-caption{
+                font-size: 25px;
+                margin-bottom: 25px;
+            }
         </style>
     </head>
     <body>
@@ -69,6 +76,47 @@
             <div class="content">
                  @if (Route::has('login'))
                     <div class="container">
+                        <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+                        <!-- Indicators -->
+                        <ol class="carousel-indicators">
+                          <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                          <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+                          <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+                        </ol>
+                        
+                        <!-- Wrapper for slides -->
+                        <div class="carousel-inner" role="listbox">
+                            <div class="item active">
+                                <img src="/img/op1.jpg" alt="">
+                                <div class="carousel-caption">
+                                    Primera Imagen
+                                </div>
+                            </div>
+                            <div class="item">
+                                <img src="/img/op2.jpg" alt="">
+                                <div class="carousel-caption">
+                                    Segunda Imagen
+                                </div>
+                            </div>
+                            <div class="item">
+                                <img src="/img/op3.jpg" alt="">
+                                <div class="carousel-caption">
+                                    Tercera Imagen
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Controls -->
+                            <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+                                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                            <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+                                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </div>
+
                         @auth
                             <a href="{{ url('/home') }}">Home</a>
                         @else
@@ -77,9 +125,15 @@
                     </div>
                  @endif
                 <div class="title m-b-md">
-                    Clinica Odontologica YekixPaki
+                    Clinica Dental YekixPaki
                 </div>
             </div>
         </div>
+
+        <script type="text/javascript">
+            $('.carousel').carousel({
+                interval: 5000
+            })
+        </script>
     </body>
 </html>

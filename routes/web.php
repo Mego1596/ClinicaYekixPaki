@@ -57,9 +57,9 @@ Route::middleware(['auth'])->group(function(){
 	//Usuarios
 	Route::post('user/store', 'UserController@store')->name('user.store')->middleware('permission:users.create');
 
-	Route::get('user', 'UserController@index')->name('user.index')->middleware('permission:users.index');
+	Route::get('user/{id}', 'UserController@index')->name('user.index')->middleware('permission:users.index');
 
-	Route::get('user/create', 'UserController@create')->name('user.create')->middleware('permission:users.create');
+	Route::get('user/create/{id}', 'UserController@create')->name('user.create')->middleware('permission:users.create');
 
 	Route::put('user/{user}', 'UserController@update')->name('user.update')->middleware('permission:users.edit');
 	
@@ -69,7 +69,7 @@ Route::middleware(['auth'])->group(function(){
 
 	Route::get('user/{user}/edit', 'UserController@edit')->name('user.edit')->middleware('permission:users.edit');
 
-	Route::get('asistente', 'UserController@asistentes')->name('user.asistente')->middleware('permission:users.asistente');
+	Route::get('asistente/{id}', 'UserController@asistentes')->name('user.asistente')->middleware('permission:users.asistente');
 
 	//Full Calendar
 

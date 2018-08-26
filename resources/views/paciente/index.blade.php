@@ -18,7 +18,7 @@
 										<th width="237">
 											@can('pacientes.create')
 											<a href="{{ route('paciente.create') }}" class="btn btn-success btn-block">
-												Crear paciente
+												Crear
 											</a>
 											@endcan
 										</th>

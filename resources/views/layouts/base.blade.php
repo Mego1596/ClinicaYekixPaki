@@ -105,7 +105,7 @@
         </li>
       </ul>
 
-      <div class="container" id="content-wrapper">
+      <div  id="content-wrapper">
 
         <div class="container-fluid">
 
@@ -128,12 +128,12 @@
                   @endcan
                   @can('users.index')
                     <li class="nav-item">
-                      <a class="nav-link" href="{{route('user.index')}}">Doctores</a>
+                      <a class="nav-link" href="{{route('user.index',1)}}">Doctores</a>
                     </li>
                   @endcan
                   @can('users.asistente')
                     <li class="nav-item">
-                      <a class="nav-link" href="{{route('user.asistente')}}">Asistente</a>
+                      <a class="nav-link" href="{{route('user.asistente',2)}}">Asistente</a>
                     </li>
                   @endcan
                   @can('pacientes.index')
@@ -166,7 +166,7 @@
         <!-- /.container-fluid -->
 
         <!-- Sticky Footer -->
-        <footer class="footer">
+        <footer class="sticky-footer">
           <div class="container my-auto">
             <div class="copyright text-center my-auto">
               <span>Copyright © Clinica Dental de Atencion Integral y Preventiva Yekixpaki 2018 </span>

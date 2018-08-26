@@ -17,7 +17,7 @@
 									@if(sizeof($users) == 0)
 									<th width="237">
 										@can('users.create')
-										<a href="{{ route('user.create') }}" class="btn btn-block btn-success pull-right">
+										<a href="{{ route('user.create',$id) }}" class="btn btn-block btn-success pull-right">
 											Crear
 										</a>
 										@endcan
@@ -25,7 +25,7 @@
 									@else
 									<th colspan="3" width="237">
 										@can('users.create')
-										<a href="{{ route('user.create') }}" class="btn btn-block btn-success pull-right">
+										<a href="{{ route('user.create',$id) }}" class="btn btn-block btn-success pull-right">
 											Crear
 										</a>
 										@endcan

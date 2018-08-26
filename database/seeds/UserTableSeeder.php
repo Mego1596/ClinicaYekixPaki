@@ -21,9 +21,42 @@ class UserTableSeeder extends Seeder
     	]);
 
     	Role::create([
-    		'name' 		=> 'Admin',
-    		'slug' 		=> 'admin',
-    		'special' 	=> 'all-access',
+    		'name' 		     => 'Admin',
+    		'slug' 		     => 'admin',
+            'description'    => 'Rol de Administrador',
+    		'special' 	     => 'all-access',
     	]);
+        Role::create([
+            'name'           => 'Dentista',
+            'slug'           => 'doctor',
+            'description'    => 'Rol de Dentista',
+        ]);
+        Role::create([
+            'name'           => 'Asistente',
+            'slug'           => 'asistente',
+            'description'    => 'Rol de Asistente',
+        ]);
+
+
+        DB::table('role_user')->insert(['role_id' => '1','user_id'=>'1']);
+        //Permisos de Dentista
+        DB::table('permission_role')->insert(['permission_id' => '1' ,  'role_id'=>'2']);
+        DB::table('permission_role')->insert(['permission_id' => '2' ,  'role_id'=>'2']);
+        DB::table('permission_role')->insert(['permission_id' => '11' , 'role_id'=>'2']);
+        DB::table('permission_role')->insert(['permission_id' => '12' , 'role_id'=>'2']);
+        DB::table('permission_role')->insert(['permission_id' => '16' , 'role_id'=>'2']);
+        DB::table('permission_role')->insert(['permission_id' => '17' , 'role_id'=>'2']);
+
+        //Permisos Asistente
+        DB::table('permission_role')->insert(['permission_id' => '11' , 'role_id'=>'3']);
+        DB::table('permission_role')->insert(['permission_id' => '12' , 'role_id'=>'3']);
+        DB::table('permission_role')->insert(['permission_id' => '13' , 'role_id'=>'3']);
+        DB::table('permission_role')->insert(['permission_id' => '14' , 'role_id'=>'3']);
+        DB::table('permission_role')->insert(['permission_id' => '16' , 'role_id'=>'3']);
+        DB::table('permission_role')->insert(['permission_id' => '17' , 'role_id'=>'3']);
+        DB::table('permission_role')->insert(['permission_id' => '18' , 'role_id'=>'3']);
+        DB::table('permission_role')->insert(['permission_id' => '19' , 'role_id'=>'3']);
+        DB::table('permission_role')->insert(['permission_id' => '21' , 'role_id'=>'3']);
+
     }
 }
