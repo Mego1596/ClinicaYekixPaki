@@ -117,10 +117,12 @@
                             </a>
                         </div>
 
-                        @auth
+                        @auth  
+                            <br/>
                             <a href="{{ url('/home') }}">Home</a>
                         @else
-                            <a  class="btn btn-primary" href="{{ route('login') }}">Iniciar Sesion</a>
+                            <br/>
+                            <a style="font-size: 25px" class="btn btn-primary" href="{{ route('login') }}">Iniciar Sesion</a>
                         @endauth
                     </div>
                  @endif
