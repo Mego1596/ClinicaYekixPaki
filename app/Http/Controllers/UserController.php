@@ -18,24 +18,29 @@ class UserController extends Controller
     {
         
         $users = DB::table('users')->join('role_user', 'users.id', '=', 'role_user.user_id')->where('role_user.role_id', '=', 2)->select('users.id' , 'users.name')->paginate();
-        $roles = Role::get();
-        return view('user.index', compact('users'));
+        $result = DB::table('roles')->where('slug','doctor')->select('name')->get();
+        $datos= json_encode($result);
+        $sub = substr($datos, 10,-3);
+        return view('user.index', compact('users','sub'));
     }
 
      public function asistentes()
     {
         $users = DB::table('users')->join('role_user', 'users.id', '=', 'role_user.user_id')->where('role_user.role_id', '=', 3)->select('users.id' , 'users.name')->paginate();
-        return view('user.asistente', compact('users'));
+        $result = DB::table('roles')->where('slug','asistente')->select('name')->get();
+        $datos= json_encode($result);
+        $sub = substr($datos, 10,-3);
+        return view('user.asistente', compact('users','sub'));
     }
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($idRole)
     {
         $roles = Role::get();
-        return view('user.create',compact('roles'));
+        return view('user.create',compact('roles','idRole'));
     }
 
     /**
@@ -52,7 +57,11 @@ class UserController extends Controller
         $user->password =bcrypt($request->password);
         if($user->save()){
             $user->roles()->sync($request->get('roles'));
-            return redirect()->route('user.index',$user->id)->with('info','Usuario guardado con exito');
+            if($request['role']=='Dentista'){
+                return redirect()->route('user.index')->with('info','Usuario guardado con exito');
+            }elseif ($request['role']=='Asistente') {
+                return redirect()->route('user.asistente')->with('info','Usuario guardado con exito');
+            }
         }
     }
 
@@ -62,9 +71,9 @@ class UserController extends Controller
      * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show(User $user,$idRole)
     {      
-        return view('user.show', compact('user'));
+        return view('user.show', compact('user','idRole'));
     }
 
     /**
@@ -73,11 +82,11 @@ class UserController extends Controller
      * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id,$idRole)
     {   
         $user = User::find($id);
         $roles = Role::get();
-        return view('user.edit', compact('user','roles'));
+        return view('user.edit', compact('user','roles','idRole'));
     }
 
     /**

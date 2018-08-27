@@ -59,15 +59,15 @@ Route::middleware(['auth'])->group(function(){
 
 	Route::get('user', 'UserController@index')->name('user.index')->middleware('permission:users.index');
 
-	Route::get('user/create/', 'UserController@create')->name('user.create')->middleware('permission:users.create');
+	Route::get('user/create/{idrol}', 'UserController@create')->name('user.create')->middleware('permission:users.create');
 
 	Route::put('user/{user}', 'UserController@update')->name('user.update')->middleware('permission:users.edit');
 	
-	Route::get('user/{user}', 'UserController@show')->name('user.show')->middleware('permission:users.show');
+	Route::get('user/{user}/{idrol}', 'UserController@show')->name('user.show')->middleware('permission:users.show');
 
 	Route::delete('user/{user}', 'UserController@destroy')->name('user.destroy')->middleware('permission:users.destroy');
 
-	Route::get('user/{user}/edit', 'UserController@edit')->name('user.edit')->middleware('permission:users.edit');
+	Route::get('user/{user}/edit/{idrol}', 'UserController@edit')->name('user.edit')->middleware('permission:users.edit');
 
 	Route::get('asistente/', 'UserController@asistentes')->name('user.asistente')->middleware('permission:users.asistente');
 

@@ -22,9 +22,22 @@
 				@foreach($roles as $role)
 					<li>
 						<label>
-							{{ Form::checkbox('roles[]',$role->id,null) }}
-							{{ $role->name }}
-							<em>({{ $role->description ?:'N/A' }})</em>
+							@if($idRole == 'Dentista')
+								@if($role->slug != 'asistente' && $role->slug != 'admin')
+								<p>{{ $role->name }}
+									{{ Form::checkbox('roles[]',$role->id,null) }}
+									<em>({{ $role->description ?:'N/A' }})</em>
+								</p>
+								@endif
+							@endif
+							@if($idRole == 'Asistente')
+								@if($role->slug != 'doctor' && $role->slug != 'admin')
+								<p>{{ $role->name }}
+									{{ Form::checkbox('roles[]',$role->id,null) }}
+									<em>({{ $role->description ?:'N/A' }})</em>
+								</p>
+								@endif
+							@endif
 						</label>
 					</li>
 				@endforeach

@@ -1,5 +1,22 @@
 @extends('layouts.base')
 
+@section('bread')
+@if($idRole == 'Dentista')
+	<li class="breadcrumb-item">
+	  <a href="/user">Dentista</a>
+	</li>
+@endif
+@if($idRole == 'Asistente')
+	<li class="breadcrumb-item">
+	  <a href="/asistente">Asistente</a>
+	</li>
+@endif
+<li class="breadcrumb-item">
+  <a class="breadcrumb-item active">Editar Usuario</a>
+</li>
+
+@endsection
+
 @section('content')
 	<div>
 		<div class="row">

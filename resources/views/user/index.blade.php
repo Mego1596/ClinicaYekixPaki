@@ -23,7 +23,7 @@
 									@if(sizeof($users) == 0)
 									<th width="237">
 										@can('users.create')
-										<a href="{{ route('user.create') }}" class="btn btn-block btn-success pull-right">
+										<a href="{{ route('user.create',$sub) }}" class="btn btn-block btn-success pull-right">
 											Crear
 										</a>
 										@endcan
@@ -31,7 +31,7 @@
 									@else
 									<th colspan="3" width="237">
 										@can('users.create')
-										<a href="{{ route('user.create') }}" class="btn btn-block btn-success pull-right">
+										<a href="{{ route('user.create',$sub) }}" class="btn btn-block btn-success pull-right">
 											Crear
 										</a>
 										@endcan
@@ -46,13 +46,13 @@
 									<td>{{$user->name}}</td>
 									<td width="10px">
 										@can('users.show')
-											<a href="{{ route('user.show', $user->id) }}" class="btn btn-sm btn-default bg-info" style="color: white">Ver
+											<a href="{{ route('user.show', ['user' => $user->id, 'idrol' => $sub]) }}" class="btn btn-sm btn-default bg-info" style="color: white">Ver
 											</a>
 										@endcan
 									</td>
 									<td width="10px">
 										@can('users.edit')
-											<a href="{{ route('user.edit', $user->id) }}" class="btn btn-sm btn-default bg-success" style="color: white">Editar</a>
+											<a href="{{ route('user.edit', ['user' => $user->id, 'idrol' => $sub]) }}" class="btn btn-sm btn-default bg-success" style="color: white">Editar</a>
 										@endcan
 									</td>
 									<td width="10px">

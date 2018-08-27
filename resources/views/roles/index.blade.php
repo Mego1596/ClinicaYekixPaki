@@ -44,7 +44,7 @@
 								@foreach($roles as $role)
 								<tr>
 									<td>{{$role->id}}</td>
-									<td>{{$role->slug}}</td>
+									<td>{{$role->name}}</td>
 									<td width="10px">
 										@can('roles.show')
 											<a href="{{ route('roles.show', $role->id) }}" class="btn btn-sm btn-default bg-info" style="color: white">Ver

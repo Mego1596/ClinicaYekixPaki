@@ -21,7 +21,7 @@ class UserTableSeeder extends Seeder
     	]);
 
     	Role::create([
-    		'name' 		     => 'Admin',
+    		'name' 		     => 'Administrador',
     		'slug' 		     => 'admin',
             'description'    => 'Rol de Administrador',
     		'special' 	     => 'all-access',
@@ -37,8 +37,14 @@ class UserTableSeeder extends Seeder
             'description'    => 'Rol de Asistente',
         ]);
 
+        Role::create([
+            'name'           => 'Suspendido',
+            'slug'           => 'suspendido',
+            'description'    => 'Rol de Suspendido',
+        ]);
 
         DB::table('role_user')->insert(['role_id' => '1','user_id'=>'1']);
+
         //Permisos de Dentista
         DB::table('permission_role')->insert(['permission_id' => '1' ,  'role_id'=>'2']);
         DB::table('permission_role')->insert(['permission_id' => '2' ,  'role_id'=>'2']);
