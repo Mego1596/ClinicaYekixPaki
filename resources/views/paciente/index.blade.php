@@ -22,6 +22,7 @@
 								<tr>
 									<th width="10px">ID</th>
 									<th>Nombre</th>
+									<th>No. Expediente</th>
 									@if (sizeof($pacientes) == 0)
 										<th width="237">
 											@can('pacientes.create')
@@ -46,6 +47,7 @@
 								<tr>
 									<td>{{$paciente->id}}</td>
 									<td>{{$paciente->nombre1." ".$paciente->nombre2." ".$paciente->apellido1." ".$paciente->apellido2}}</td>
+									<td>{{$paciente->expediente}}</td>
 									<td width="10px">
 										@can('pacientes.show')
 											<a href="{{ route('paciente.show', $paciente->id) }}" class="btn btn-sm btn-default bg-info" style="color: white">Ver

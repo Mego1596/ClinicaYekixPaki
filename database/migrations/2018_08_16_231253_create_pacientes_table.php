@@ -27,6 +27,7 @@ class CreatePacientesTable extends Migration
             $table->string('domicilio');
             $table->string('responsable')->nullable()->default("Sin responsable");
             $table->string('direccion_de_trabajo')->nullable()->default("Sin direccion de trabajo");
+            $table->string('expediente')->unique();
             $table->timestamps();
         });
     }

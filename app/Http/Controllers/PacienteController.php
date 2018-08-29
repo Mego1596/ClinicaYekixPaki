@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\DB;
 use App\Procedimiento;
 use App\Events;
 use App\Paciente;
@@ -57,13 +58,27 @@ class PacienteController extends Controller
         $paciente = new Paciente();
         $paciente->nombre1               = $request->nombre1;
         $paciente->nombre2               = $request->nombre2;
-        $paciente->apellido1             = $request->apellido1;
+        $apellido = $request->apellido1;
+        $inicio = strtoupper($request->apellido1[0]);
+        $apellido[0]=$inicio;
+        $inicio=$inicio."%";
+        $string = "SELECT expediente FROM pacientes WHERE expediente LIKE '".$inicio."' AND id IN (SELECT MAX(id) FROM pacientes WHERE expediente LIKE '".$inicio."')";
+        $query = DB::select( DB::raw($string));
+        if($query != NULL){
+            foreach ($query as $key => $value) {
+            $paciente->expediente =$apellido[0]. strval((int) substr($value->expediente,1)+1);
+            }
+        }else{
+            $paciente->expediente = $apellido[0]."1";
+        }
+        $paciente->apellido1             = $apellido;
         $paciente->apellido2             = $request->apellido2;
         $paciente->fechaNacimiento       = $request->fechaNacimiento;
         $paciente->telefono              = $request->telefono;
         $paciente->sexo                  = $request->sexo;
         $paciente->domicilio             = $request->domicilio;
         $paciente->ocupacion             = $request->ocupacion;
+
         //campos opcionales
         if(!is_null($valores['direccion_de_trabajo']))
             $paciente->direccion_de_trabajo = $request->direccion_de_trabajo;
@@ -160,7 +175,6 @@ class PacienteController extends Controller
         foreach ($events as $key => $event) {
             $proceso = Procedimiento::find($event->procedimiento_id);
             $paciente = Paciente::find($event->paciente_id);
-            //poner aqui el paciente asociado a la cita
             $event_list[] =Calendar::event(
                 $paciente->nombre1." ".$paciente->nombre2." ".$paciente->apellido1." ".$paciente->apellido2,
                 false,

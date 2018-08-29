@@ -61,9 +61,13 @@
 								{{ Form::label('sexo', 'Sexo') }}
 								{{ Form::text('sexo', null, ['class'=>'form-control', 'disabled']) }}
 							</div>
-							<div class="col-md-5">
+							<div class="col-md-3">
 								{{ Form::label('email', 'Correo Electronico') }}
 								{{ Form::email('email', null, ['class'=>'form-control', 'disabled']) }}
+							</div>
+							<div class="col-md-2">
+								{{ Form::label('expediente', 'No. Expediente') }}
+								{{ Form::text('expediente', null, ['class' => 'form-control','disabled' ])}}
 							</div>
 						</div>
 
