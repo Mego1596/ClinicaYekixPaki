@@ -46,8 +46,7 @@ class PacienteController extends Controller
         //dd($request->all());
         $valores = $request->all();
         //Verificando si estan todos los campos obligatorios
-        if(is_null($valores['nombre1']) or is_null($valores['nombre2']) or is_null($valores['apellido1']) or is_null($valores['apellido2'])
-            or is_null($valores['fechaNacimiento']) or is_null($valores['telefono']) or is_null($valores['sexo'])
+        if(is_null($valores['nombre1']) or is_null($valores['apellido1']) or is_null($valores['fechaNacimiento']) or is_null($valores['telefono']) or is_null($valores['sexo'])
             or is_null($valores['domicilio']) or is_null($valores['ocupacion'])){
 
             return redirect()->route('paciente.create')
@@ -57,22 +56,21 @@ class PacienteController extends Controller
 
         $paciente = new Paciente();
         $paciente->nombre1               = $request->nombre1;
-        $paciente->nombre2               = $request->nombre2;
-        $apellido = $request->apellido1;
-        $inicio = strtoupper($request->apellido1[0]);
-        $apellido[0]=$inicio;
-        $inicio=$inicio."%";
+        $apellido                        = $request->apellido1;
+        $inicio                          = strtoupper($request->apellido1[0]);
+        $apellido[0]                     =$inicio;
+        $inicio                          =$inicio."%";
         $string = "SELECT expediente FROM pacientes WHERE expediente LIKE '".$inicio."' AND id IN (SELECT MAX(id) FROM pacientes WHERE expediente LIKE '".$inicio."')";
-        $query = DB::select( DB::raw($string));
+        $query                           = DB::select( DB::raw($string));
         if($query != NULL){
             foreach ($query as $key => $value) {
-            $paciente->expediente =$apellido[0]. strval((int) substr($value->expediente,1)+1);
+            $paciente->expediente        =$apellido[0]. strval((int) substr($value->expediente,1)+1);
             }
         }else{
-            $paciente->expediente = $apellido[0]."1";
+            $paciente->expediente        = $apellido[0]."1";
         }
+
         $paciente->apellido1             = $apellido;
-        $paciente->apellido2             = $request->apellido2;
         $paciente->fechaNacimiento       = $request->fechaNacimiento;
         $paciente->telefono              = $request->telefono;
         $paciente->sexo                  = $request->sexo;
@@ -86,7 +84,12 @@ class PacienteController extends Controller
             $paciente->responsable = $request->responsable;
         if(!is_null($valores['email']))
             $paciente->email = $request->email;
-
+        if(!is_null($valores['nombre2']))
+            $paciente->nombre2 = $request->nombre2;
+        if(!is_null($valores['nombre3']))
+            $paciente->nombre3 = $request->nombre3;
+         if(!is_null($valores['apellido2']))
+            $paciente->apellido2 = $request->apellido2;
         if($paciente->save()){
             return redirect()->route('paciente.index',$paciente->id)
                 ->with('info','Paciente guardado con exito')

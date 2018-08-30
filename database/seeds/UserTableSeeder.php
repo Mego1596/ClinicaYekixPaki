@@ -14,10 +14,12 @@ class UserTableSeeder extends Seeder
     {
         //Users
     	User::create([
-    		'name' => 'Administrador',
-    		'email'=> 'maurigranados1596@gmail.com',
-    		'password' => bcrypt('admin'),
+    		'name'           => 'Administrador',
+    		'email'          => 'maurigranados1596@gmail.com',
+    		'password'       => bcrypt('admin'),
     		'remember_token' => 'qwertyuiop',
+            'nombre1'        => 'Mauricio',
+            'apellido1'      => 'Granados'
     	]);
 
     	Role::create([

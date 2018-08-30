@@ -22,25 +22,37 @@
 					<div class="panel-body">
 						{!! Form::model($paciente, ['route' => ['paciente.update', $paciente->id]]) !!}
 						<div class="row">
-							<div class="col-md-3">
+							<div class="col-md-2">
+								{{ Form::label('expediente', 'No. Expediente') }}
+								{{ Form::text('expediente', null, ['class' => 'form-control','disabled' ])}}
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-2">
 								<div class="form-group">
 									{{ Form::label('nombre1', 'Primer nombre') }}
 									{{ Form::text('nombre1', null, ['class' => 'form-control', 'disabled'])}}
 								</div>
 							</div>
-							<div class="col-md-3">
+							<div class="col-md-2">
 								<div class="form-group">
 									{{ Form::label('nombre2', 'Segundo nombre') }}
 									{{ Form::text('nombre2', null, ['class' => 'form-control', 'disabled'])}}
 								</div>
 							</div>
-							<div class="col-md-3">
+							<div class="col-md-2">
+								<div class="form-group">
+									{{ Form::label('nombre3', 'Tercer nombre') }}
+									{{ Form::text('nombre3', null, ['class' => 'form-control', 'disabled'])}}
+								</div>
+							</div>
+							<div class="col-md-2">
 								<div class="form-group">
 									{{ Form::label('apellido1', 'Primer apellido') }}
 									{{ Form::text('apellido1', null, ['class' => 'form-control', 'disabled'])}}
 								</div>
 							</div>
-							<div class="col-md-3">
+							<div class="col-md-2">
 								<div class="form-group">
 									{{ Form::label('apellido2', 'Segundo apellido') }}
 									{{ Form::text('apellido2', null, ['class' => 'form-control', 'disabled'])}}
@@ -49,7 +61,7 @@
 						</div>
 
 						<div class="row">
-							<div class="col-md-3">
+							<div class="col-md-2">
 								{{ Form::label('fechaNacimiento', 'Fecha de nacimiento') }}
 								{{ Form::date('fechaNacimiento', \Carbon\Carbon::now(), ['class' => 'form-control', 'type'=>'date', 'style'=>'height: 38px', 'disabled']) }}
 							</div>
@@ -57,17 +69,15 @@
 								{{ Form::label('telefono', 'Telefono') }}
 								{{ Form::text('telefono', null, ['class'=>'form-control', 'disabled']) }}
 							</div>
-							<div class="col-md-2">
+							<div class="col-md-1">
 								{{ Form::label('sexo', 'Sexo') }}
 								{{ Form::text('sexo', null, ['class'=>'form-control', 'disabled']) }}
+							</div>
+							<div class="col-md-1">
 							</div>
 							<div class="col-md-3">
 								{{ Form::label('email', 'Correo Electronico') }}
 								{{ Form::email('email', null, ['class'=>'form-control', 'disabled']) }}
-							</div>
-							<div class="col-md-2">
-								{{ Form::label('expediente', 'No. Expediente') }}
-								{{ Form::text('expediente', null, ['class' => 'form-control','disabled' ])}}
 							</div>
 						</div>
 

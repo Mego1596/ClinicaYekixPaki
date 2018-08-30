@@ -46,7 +46,36 @@
 								@foreach($pacientes as $paciente)
 								<tr>
 									<td>{{$paciente->id}}</td>
+
+									@if($paciente->nombre2 == 'N/A' && $paciente->nombre3 == 'N/A' && $paciente->apellido2 == 'N/A')
+									<td>{{$paciente->nombre1." ".$paciente->apellido1}}</td>
+									@endif
+
+
+									@if($paciente->nombre2 == 'N/A' && $paciente->nombre3 == 'N/A' && $paciente->apellido2 != 'N/A')
+									<td>{{$paciente->nombre1." ".$paciente->apellido1." ".$paciente->apellido2}}</td>
+									@endif
+
+
+									@if($paciente->nombre2 != 'N/A' && $paciente->nombre3 == 'N/A' && $paciente->apellido2 == 'N/A')
+									<td>{{$paciente->nombre1." ".$paciente->nombre2." ".$paciente->apellido1}}</td>
+									@endif
+
+
+									@if($paciente->nombre2 != 'N/A' && $paciente->nombre3 == 'N/A' && $paciente->apellido2 != 'N/A')
 									<td>{{$paciente->nombre1." ".$paciente->nombre2." ".$paciente->apellido1." ".$paciente->apellido2}}</td>
+									@endif
+
+
+									@if($paciente->nombre2 != 'N/A' && $paciente->nombre3 != 'N/A' && $paciente->apellido2 == 'N/A')
+									<td>{{$paciente->nombre1." ".$paciente->nombre2." ".$paciente->nombre3." ".$paciente->apellido1}}</td>
+									@endif
+
+									@if($paciente->nombre2 != 'N/A' && $paciente->nombre3 != 'N/A' && $paciente->apellido2 != 'N/A')
+									<td>{{$paciente->nombre1." ".$paciente->nombre2." ".$paciente->nombre3." ".$paciente->apellido1." ".$paciente->apellido2}}</td>
+									@endif
+
+
 									<td>{{$paciente->expediente}}</td>
 									<td width="10px">
 										@can('pacientes.show')

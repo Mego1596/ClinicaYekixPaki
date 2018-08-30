@@ -17,7 +17,7 @@ class UserController extends Controller
     public function index()
     {
         
-        $users = DB::table('users')->join('role_user', 'users.id', '=', 'role_user.user_id')->where('role_user.role_id', '=', 2)->select('users.id' , 'users.name')->paginate();
+        $users = DB::table('users')->join('role_user', 'users.id', '=', 'role_user.user_id')->where('role_user.role_id', '=', 2)->select('users.id' , 'users.nombre1','users.nombre2','users.nombre3','users.apellido1','users.apellido2')->paginate();
         $result = DB::table('roles')->where('slug','doctor')->select('name')->get();
         $datos= json_encode($result);
         $sub = substr($datos, 10,-3);
@@ -52,9 +52,18 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $user = new User();
-        $user->name = $request->name;
+        $user->nombre1 = $request->nombre1;
+        $user->apellido1 = $request->apellido1;
+        $user->name = $request->nombre1.".".$request->apellido1;
         $user->email = $request->email;
         $user->password =bcrypt($request->password);
+
+        if(!is_null($request['nombre2']))
+            $user->nombre2 = $request->nombre2;
+        if(!is_null($request['nombre3']))
+            $user->nombre3 = $request->nombre3;
+         if(!is_null($request['apellido2']))
+            $user->apellido2 = $request->apellido2;
         if($user->save()){
             $user->roles()->sync($request->get('roles'));
             if($request['role']=='Dentista'){

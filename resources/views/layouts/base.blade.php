@@ -25,7 +25,6 @@
     <script type="text/javascript" src="{{ asset('js/jquery.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/moment.min.js') }}"></script>
     
-
     <!-- Full Calendar -->
     <link rel="stylesheet" type="text/css" href="{{ asset('css/fullcalendar.min.css') }}">
     <style type="text/css">
@@ -35,6 +34,7 @@
       background: #F2F2F2;
     }
   </style>
+        @yield('javascript')
   </head>
 
   <body id="page-top">

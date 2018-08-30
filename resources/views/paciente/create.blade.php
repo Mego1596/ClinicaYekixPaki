@@ -1,4 +1,29 @@
-@extends('layouts.base').
+@extends('layouts.base')
+
+@section('javascript')
+<script>
+$(document).ready(function(){
+    $("#cosa").click(function(){
+        document.getElementById('nombre3').style.display = 'block';
+        document.getElementById('nombre3.2').style.display = 'block';
+       	$("#cosa2").prop('checked',false);
+       	$("#cosa").prop('disabled',true);
+       	$("#cosa2").prop('disabled',false);
+       	$("#nombre3").focus();
+    });
+    $("#cosa2").click(function(){
+        document.getElementById('nombre3').style.display = 'none';
+        document.getElementById('nombre3.2').style.display = 'none';
+       	$("#cosa").prop('checked',false);
+       	$("#cosa2").prop('disabled',true);
+       	$("#cosa").prop('disabled',false);
+       	$("#nombre3").val("");
+    });
+
+});
+</script>
+@endsection
+
 
 @section('bread')
 <li class="breadcrumb-item">

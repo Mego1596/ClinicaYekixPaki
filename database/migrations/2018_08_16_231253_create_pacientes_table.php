@@ -16,9 +16,10 @@ class CreatePacientesTable extends Migration
         Schema::create('pacientes', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nombre1');
-            $table->string('nombre2');
+            $table->string('nombre2')->nullable()->default('N/A');
+            $table->string('nombre3')->nullable()->default('N/A');
             $table->string('apellido1');
-            $table->string('apellido2');
+            $table->string('apellido2')->nullable()->default('N/A');
             $table->date('fechaNacimiento');
             $table->string('email')->unique()->nullable()->default('Sin correo electronico');
             $table->string('ocupacion');
