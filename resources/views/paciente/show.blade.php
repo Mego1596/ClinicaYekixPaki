@@ -75,9 +75,13 @@
 							</div>
 							<div class="col-md-1">
 							</div>
-							<div class="col-md-3">
+							<div class="col-md-2">
 								{{ Form::label('email', 'Correo Electronico') }}
 								{{ Form::email('email', null, ['class'=>'form-control', 'disabled']) }}
+							</div>
+							<div class="col-md-2">
+								{{ Form::label('recomendado', 'Recomendado por') }}
+								{{ Form::email('recomendado', null, ['class'=>'form-control', 'disabled']) }}
 							</div>
 						</div>
 

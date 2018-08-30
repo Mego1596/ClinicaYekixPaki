@@ -90,6 +90,8 @@ class PacienteController extends Controller
             $paciente->nombre3 = $request->nombre3;
          if(!is_null($valores['apellido2']))
             $paciente->apellido2 = $request->apellido2;
+         if(!is_null($valores['recomendado']))
+            $paciente->recomendado = $request->recomendado;
         if($paciente->save()){
             return redirect()->route('paciente.index',$paciente->id)
                 ->with('info','Paciente guardado con exito')

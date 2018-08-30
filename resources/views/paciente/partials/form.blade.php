@@ -17,17 +17,20 @@
 			{{ Form::text('nombre3', null, ['class' => 'form-control', 'style'=>'display:none', 'id' => 'nombre3'])}}
 		</div>
 	</div>
-	<div class="col-md-2">
+	<div class="col-sm-2">
 		<div class="form-group">
-		{{ Form::label('nombres', 'Agregar un 3° Nombre? ', ['style' => 'visibility:visible', 'id'=>'nombres']) }}
-		<input type="checkbox" name="cosa" value="1" id="cosa" >
-		{{ Form::label('radio', 'Si ', ['style' => 'visibility:visible','id' => 'radio']) }}
-		<input type="checkbox" name="cosa2" value="2" id="cosa2" >
-		{{ Form::label('radio2', 'No ', ['style' => 'visibility:visible','id' => 'radio2']) }}
+			{{ Form::label('nombres', 'Agregar un 3° Nombre? ', ['style' => 'visibility:visible', 'id'=>'nombres']) }}
+			<br/>
+			<input type="checkbox" name="cosa" value="1" id="cosa" >
+			{{ Form::label('radio', 'Si ', ['style' => 'visibility:visible','id' => 'radio']) }}
+			<input type="checkbox" name="cosa2" value="2" id="cosa2" >
+			{{ Form::label('radio2', 'No ', ['style' => 'visibility:visible','id' => 'radio2']) }}
 		</div>
 	</div>
 	<div class="col-md-3">
 		<div class="form-group">
+			{{ Form::label('recomendado','Recomendado Por')}}
+			{{ Form::text('recomendado',null,['class' => 'form-control'])}}
 		</div>
 	</div>
 

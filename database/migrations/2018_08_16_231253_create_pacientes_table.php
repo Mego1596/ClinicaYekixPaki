@@ -20,6 +20,7 @@ class CreatePacientesTable extends Migration
             $table->string('nombre3')->nullable()->default('N/A');
             $table->string('apellido1');
             $table->string('apellido2')->nullable()->default('N/A');
+            $table->string('recomendado')->nullable()->default('-');
             $table->date('fechaNacimiento');
             $table->string('email')->unique()->nullable()->default('Sin correo electronico');
             $table->string('ocupacion');
