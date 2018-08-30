@@ -47,7 +47,7 @@ $(document).ready(function(){
 							Atrás</a>
 						</div>
 						<div class="col-md-10">
-							<h4>Datos del usuario</h4>
+							<h4>Crear paciente</h4>
 						</div>
 					</div>
 				</div>

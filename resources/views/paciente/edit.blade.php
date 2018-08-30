@@ -23,7 +23,7 @@
 								Atrás</a>
 							</div>
 							<div class="col-md-10">
-								<h4>Paciente</h4>
+								<h4>Editar paciente</h4>
 							</div>
 						</div>
 					</div>

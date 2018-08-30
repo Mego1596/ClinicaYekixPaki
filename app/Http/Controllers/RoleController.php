@@ -39,9 +39,20 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        $role = Role::create($request->all());
-        $role->permissions()->sync($request->get('permissions'));
-        return redirect()->route('roles.index',$role->id)->with('info','Role guardado con exito'); 
+        $valores = $request->all();
+        if(is_null($valores['name']) or is_null($valores['slug']))
+        {
+            return redirect()
+                ->route('roles.create')
+                ->withInput($request->all())
+                ->with('error', 'Complete los campos obligatorios');
+        }
+        else 
+        {
+            $role = Role::create($request->all());
+            $role->permissions()->sync($request->get('permissions'));
+            return redirect()->route('roles.index')->with('info','Rol guardado con exito'); 
+        }
     }
 
     /**
@@ -77,10 +88,21 @@ class RoleController extends Controller
      */
     public function update(Request $request, Role $role)
     {
-        $role->update($request->all());
-
-        $role->permissions()->sync($request->get('permissions'));
-        return redirect()->route('roles.index',$role->id)->with('info','Role actualizado con exito');
+        $valores = $request->all();
+        if(is_null($valores['name']) or is_null($valores['slug']))
+        {
+            return redirect()
+                ->route('roles.create')
+                ->withInput($request->all())
+                ->with('error', 'Complete los campos obligatorios');
+        }
+        else 
+        {
+            $role->update($request->all());
+            $role->permissions()->sync($request->get('permissions'));
+            return redirect()->route('roles.index',$role->id)
+                ->with('info','Rol actualizado con exito');
+        }
     }
 
     /**

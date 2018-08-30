@@ -15,11 +15,19 @@
 	<div>
 		<div class="row">
 			<div class="col-md-12 col-md-offset-2">
-				<div class="panel panel-default">
-					<div class="panel-heading" align="center">
-					<h3>Datos del Paciente</h3>
+				<div class="card card-default">
+					<div class="card-header text-center">
+					<div class="row">
+							<div class="col-md-1">
+								<a href="{{ route('paciente.index') }}" class="btn btn-block btn-secondary">
+								Atrás</a>
+							</div>
+							<div class="col-md-10">
+								<h4>Datos del paciente</h4>
+							</div>
+						</div>
 					</div>
-					<div class="panel-body">
+					<div class="card-body">
 						{!! Form::model($paciente, ['route' => ['paciente.update', $paciente->id]]) !!}
 						<div class="row">
 							<div class="col-md-2">
