@@ -44,7 +44,33 @@
 								@foreach($users as $user)
 								<tr>
 									<td>{{$user->id}}</td>
-									<td>{{$user->name}}</td>
+									@if($user->nombre2 == 'N/A' && $user->nombre3 == 'N/A' && $user->apellido2 == 'N/A')
+									<td>{{$user->nombre1." ".$user->apellido1}}</td>
+									@endif
+
+
+									@if($user->nombre2 == 'N/A' && $user->nombre3 == 'N/A' && $user->apellido2 != 'N/A')
+									<td>{{$user->nombre1." ".$user->apellido1." ".$user->apellido2}}</td>
+									@endif
+
+
+									@if($user->nombre2 != 'N/A' && $user->nombre3 == 'N/A' && $user->apellido2 == 'N/A')
+									<td>{{$user->nombre1." ".$user->nombre2." ".$user->apellido1}}</td>
+									@endif
+
+
+									@if($user->nombre2 != 'N/A' && $user->nombre3 == 'N/A' && $user->apellido2 != 'N/A')
+									<td>{{$user->nombre1." ".$user->nombre2." ".$user->apellido1." ".$user->apellido2}}</td>
+									@endif
+
+
+									@if($user->nombre2 != 'N/A' && $user->nombre3 != 'N/A' && $user->apellido2 == 'N/A')
+									<td>{{$user->nombre1." ".$user->nombre2." ".$user->nombre3." ".$user->apellido1}}</td>
+									@endif
+
+									@if($user->nombre2 != 'N/A' && $user->nombre3 != 'N/A' && $user->apellido2 != 'N/A')
+									<td>{{$user->nombre1." ".$user->nombre2." ".$user->nombre3." ".$user->apellido1." ".$user->apellido2}}</td>
+									@endif
 									<td width="10px">
 										@can('users.show')
 											<a href="{{ route('user.show', ['user' => $user->id, 'idrol' => $sub]) }}" class="btn btn-sm btn-default bg-info" style="color: white">Ver

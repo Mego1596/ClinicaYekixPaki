@@ -1,5 +1,30 @@
 @extends('layouts.base')
 
+@section('javascript')
+
+<script>
+$(document).ready(function(){
+    $("#cosa").click(function(){
+        document.getElementById('nombre3').style.display = 'block';
+        document.getElementById('nombre3.2').style.display = 'block';
+       	$("#cosa2").prop('checked',false);
+       	$("#cosa").prop('disabled',true);
+       	$("#cosa2").prop('disabled',false);
+       	$("#nombre3").focus();
+    });
+    $("#cosa2").click(function(){
+        document.getElementById('nombre3').style.display = 'none';
+        document.getElementById('nombre3.2').style.display = 'none';
+       	$("#cosa").prop('checked',false);
+       	$("#cosa2").prop('disabled',true);
+       	$("#cosa").prop('disabled',false);
+    });
+
+});
+</script>
+
+@endsection
+
 @section('bread')
 @if($idRole == 'Dentista')
 	<li class="breadcrumb-item">
@@ -18,14 +43,27 @@
 @endsection
 
 @section('content')
-	<div>
-		<div class="row">
-			<div class="col-md-12 col-md-offset-2">
-				<div class="panel panel-default">
-					<div class="panel-heading">
-					Usuario
+	<div class="row">
+		<div class="col-md-12">
+			<div class="card">
+				<div class="card-header text-center">
+					<div class="row">
+						<div class="col-md-1">
+						@if($idRole == 'Dentista')
+							<a href="{{ route('user.index') }}" class="btn btn-block btn-secondary">
+							Atrás</a>
+						@endif
+						@if($idRole == 'Asistente')
+							<a href="{{ route('user.asistente') }}" class="btn btn-block btn-secondary">
+							Atrás</a>
+						@endif
+						</div>
+						<div class="col-md-10">
+							<h4>Datos del usuario</h4>
+						</div>
 					</div>
-					<div class="panel-body">
+				</div>
+				<div class="card-body justify-content-center">
 						{!! Form::model($user, ['route' => ['user.update', $user->id], 'method' => 'PUT']) !!}
 							@include('user.partials.formEdit')
 						{!! Form::close() !!}

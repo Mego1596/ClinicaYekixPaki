@@ -20,6 +20,7 @@
 								<tr>
 									<th width="10px">ID</th>
 									<th>Nombre</th>
+									<th>Numero de Junta</th>
 									@if(sizeof($users) == 0)
 									<th width="237">
 										@can('users.create')
@@ -70,7 +71,7 @@
 									@if($user->nombre2 != 'N/A' && $user->nombre3 != 'N/A' && $user->apellido2 != 'N/A')
 									<td>{{$user->nombre1." ".$user->nombre2." ".$user->nombre3." ".$user->apellido1." ".$user->apellido2}}</td>
 									@endif
-
+									<td>{{$user->numeroJunta}}</td>
 									<td width="10px">
 										@can('users.show')
 											<a href="{{ route('user.show', ['user' => $user->id, 'idrol' => $sub]) }}" class="btn btn-sm btn-default bg-info" style="color: white">Ver

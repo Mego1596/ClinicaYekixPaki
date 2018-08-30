@@ -17,7 +17,7 @@ class UserController extends Controller
     public function index()
     {
         
-        $users = DB::table('users')->join('role_user', 'users.id', '=', 'role_user.user_id')->where('role_user.role_id', '=', 2)->select('users.id' , 'users.nombre1','users.nombre2','users.nombre3','users.apellido1','users.apellido2')->paginate();
+        $users = DB::table('users')->join('role_user', 'users.id', '=', 'role_user.user_id')->where('role_user.role_id', '=', 2)->select('users.id' , 'users.nombre1','users.nombre2','users.nombre3','users.apellido1','users.apellido2','users.numeroJunta')->paginate();
         $result = DB::table('roles')->where('slug','doctor')->select('name')->get();
         $datos= json_encode($result);
         $sub = substr($datos, 10,-3);
@@ -26,7 +26,7 @@ class UserController extends Controller
 
      public function asistentes()
     {
-        $users = DB::table('users')->join('role_user', 'users.id', '=', 'role_user.user_id')->where('role_user.role_id', '=', 3)->select('users.id' , 'users.name')->paginate();
+        $users = DB::table('users')->join('role_user', 'users.id', '=', 'role_user.user_id')->where('role_user.role_id', '=', 3)->select('users.id' , 'users.nombre1','users.nombre2','users.nombre3','users.apellido1','users.apellido2')->paginate();
         $result = DB::table('roles')->where('slug','asistente')->select('name')->get();
         $datos= json_encode($result);
         $sub = substr($datos, 10,-3);
@@ -51,13 +51,27 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+        if($request['idRole'] == 'Dentista'){
+            if(is_null($request['nombre1']) or is_null($request['apellido1']) or $request['numeroJunta'] == 'JVPO-' or is_null($request['email']) or is_null($request['password']) or is_null($request['roles'])){
+                return redirect()->route('user.create',$request->idRole)
+                ->with('info', 'Complete los Campos Obligatorios o digite correctamente el Numero de Junta')
+                ->with('tipo', 'danger');
+            }
+        }else{
+            if(is_null($request['nombre1']) or is_null($request['apellido1']) or is_null($request['email']) or is_null($request['password']) or is_null($request['roles'])){
+                return redirect()->route('user.create',$request->idRole)
+                ->with('info', 'Complete los Campos Obligatorios o digite correctamente el Numero de Junta')
+                ->with('tipo', 'danger');
+            }
+        }
+
         $user = new User();
         $user->nombre1 = $request->nombre1;
         $user->apellido1 = $request->apellido1;
         $user->name = $request->nombre1.".".$request->apellido1;
         $user->email = $request->email;
         $user->password =bcrypt($request->password);
-
+        $user->numeroJunta = $request->numeroJunta;
         if(!is_null($request['nombre2']))
             $user->nombre2 = $request->nombre2;
         if(!is_null($request['nombre3']))

@@ -2,7 +2,7 @@
 	<div class="col-md-2">
 		{{ Form::hidden('idRole', $idRole , ['class' => 'form-control'])}}
 		<div class="form-group">
-			{{ Form::label('nombre1', 'Primer Nombre') }}
+			{{ Form::label('nombre1', 'Primer Nombre*') }}
 			{{ Form::text('nombre1', null, ['class' => 'form-control'])}}
 		</div>
 	</div>
@@ -21,6 +21,7 @@
 	<div class="col-md-2">
 		<div class="form-group">
 		{{ Form::label('nombres', 'Agregar un 3° Nombre? ', ['style' => 'visibility:visible', 'id'=>'nombres']) }}
+		<br/>
 		<input type="checkbox" name="cosa" value="1" id="cosa" >
 		{{ Form::label('radio', 'Si ', ['style' => 'visibility:visible','id' => 'radio']) }}
 		<input type="checkbox" name="cosa2" value="2" id="cosa2" >
@@ -42,25 +43,33 @@
 			{{ Form::text('apellido2', null, ['class' => 'form-control'])}}
 		</div>
 	</div>
+	@if($idRole=='Dentista')
+	<div class="col-md-2">
+		<div class="form-group">
+			{{ Form::label('numeroJunta', 'Numero de Junta*') }}
+			{{ Form::text('numeroJunta', 'JVPO-', ['class' => 'form-control'])}}
+		</div>
+	</div>
+	@endif
 </div>
 
 <div class="row">
 	<div class="col-md-3">
 		<div class="form-group">
-			{{ Form::label('description', 'E-Mail') }}
+			{{ Form::label('description', 'E-Mail*') }}
 			{{ Form::text('email', null, ['class' => 'form-control'])}}
 		</div>
 	</div>
 	<div class="col-md-3">
 		<div class="form-group">
-			{{ Form::label('password', 'Contraseña') }}
+			{{ Form::label('password', 'Contraseña*') }}
 			{{ Form::password('password', ['class' => 'form-control','id'=>'password'])}}
 		</div>
 	</div>
 </div>
 
-<div class="container" align="center">
-	<div class="col-md-4 ">
+<div class="row">
+	<div class="col-md-3 ">
 		<div class="form-group">
 			<h3>Lista de Roles:</h3><br>
 			<ul class="navbar-nav ml-auto">
@@ -68,18 +77,18 @@
 					<li>
 						<label>
 							@if($idRole == 'Dentista')
-								@if($role->slug != 'asistente' && $role->slug != 'admin')
+								@if($role->slug != 'asistente' && $role->slug != 'admin' && $role->slug != 'suspendido')
 								<p>{{ $role->name }}
 									{{ Form::checkbox('roles[]',$role->id,null) }}
-									<em>({{ $role->description ?:'N/A' }})</em>
+									<em>({{ $role->description ?:'N/A' }})</em>*
 								</p>
 								@endif
 							@endif
 							@if($idRole == 'Asistente')
-								@if($role->slug != 'doctor' && $role->slug != 'admin')
+								@if($role->slug != 'doctor' && $role->slug != 'admin' && $role->slug != 'suspendido')
 								<p>{{ $role->name }}
 									{{ Form::checkbox('roles[]',$role->id,null) }}
-									<em>({{ $role->description ?:'N/A' }})</em>
+									<em>({{ $role->description ?:'N/A' }})</em>*
 								</p>
 								@endif
 							@endif
@@ -90,10 +99,13 @@
 		</div>
 	</div>
 </div>
-<div class="container" align="center">
-	<div class="col-md-4 col-md-offset-2">
+<div class="row pt-3">
+	<div class="col-md-4">
+		*Campos obligatorios
+	</div>
+	<div class="col-md-4">
 		<div class="form-group">
-			{{ Form::submit('Guardar', ['class' => 'btn btn-sm btn-success']) }}
+			{{ Form::submit('Guardar', ['class' => 'btn btn-block btn-lg btn-success']) }}
 		</div>
 	</div>
 </div>

@@ -22,6 +22,7 @@ class CreateUsersTable extends Migration
             $table->string('nombre3')->nullable()->default('N/A');
             $table->string('apellido1');
             $table->string('apellido2')->nullable()->default('N/A');
+            $table->string('numeroJunta')->nullable();
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
