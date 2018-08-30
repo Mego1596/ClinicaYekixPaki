@@ -151,6 +151,17 @@
             </div>
           </div>
           @endif
+          @if(session('error'))
+          <div>
+            <div class="row">
+              <div class="col-md-12 pt-3">
+                <div class="alert alert-danger">
+                  {{session('error')}}
+                </div>
+              </div>
+            </div>
+          </div>
+          @endif
           @yield('content')
           
         </div>

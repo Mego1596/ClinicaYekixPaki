@@ -36,9 +36,39 @@ class ProcedimientoController extends Controller
      */
     public function store(Request $request)
     {
-        
-        $procedimiento = Procedimiento::create($request->all());
-        return redirect()->route('procedimiento.edit',$procedimiento->id)->with('info','Proceso guardado con exito');
+        $valores = $request->all();
+        $colores_guardados = Procedimiento::get()->all();
+        $existe = false;
+
+        //validacion de si color existe
+        foreach ($colores_guardados as $valor)
+        {
+            if($valores['color'] == $valor['color'])    
+                $existe = true;
+        }
+        //validacion de dos primeros campos
+        if(is_null($valores['nombre']) or is_null($valores['descripcion']))
+        {
+            if($existe) //si existe el color elegido muestra el error
+                return redirect()->route('procedimiento.create')
+                ->withInput($request->all())
+                ->with('error', 'Complete los campos obligatorios y cambie de color de identificador');
+            else
+                return redirect()->route('procedimiento.create')
+                ->withInput($request->all())
+                ->with('error', 'Complete los campos obligatorios');
+        } 
+        else if ($existe) //validacion de solo color aun cuando los demas campos tengan valor
+        {
+            return redirect()->route('procedimiento.create')
+            ->withInput($request->all())
+            ->with('error', 'Cambie de color de identificador');
+        }
+        else //validacion aprobada
+        {
+            $procedimiento = Procedimiento::create($request->all());
+            return redirect()->route('procedimiento.index')->with('info','Proceso guardado con exito');
+        }
     }
 
     /**
@@ -73,6 +103,42 @@ class ProcedimientoController extends Controller
      */
     public function update(Request $request, Procedimiento $procedimiento)
     {
+        $valores = $request->all();
+        $colores_guardados = Procedimiento::get()->all();
+        $existe = false;
+
+        //validacion de si color existe
+        foreach ($colores_guardados as $valor)
+        {
+            if($valores['color'] == $valor['color'])    
+                $existe = true;
+        }
+        //validacion de dos primeros campos
+        if(is_null($valores['nombre']) or is_null($valores['descripcion']))
+        {
+            if($existe) //si existe el color elegido muestra el error
+                return redirect()->route('procedimiento.create')
+                ->withInput($request->all())
+                ->with('error', 'Complete los campos obligatorios y cambie de color de identificador');
+            else
+                return redirect()->route('procedimiento.create')
+                ->withInput($request->all())
+                ->with('error', 'Complete los campos obligatorios');
+        } 
+        else if ($existe) //validacion de solo color aun cuando los demas campos tengan valor
+        {
+            return redirect()->route('procedimiento.create')
+            ->withInput($request->all())
+            ->with('error', 'Cambie de color de identificador');
+        }
+        else //validacion aprobada
+        {
+            $procedimiento->update($request->all());
+            return redirect()->route('procedimiento.index')->with('info','Edicion guardada con exito');
+        }
+
+
+
         $procedimiento->update($request->all());
         return redirect()->route('procedimiento.edit',$procedimiento->id)->with('info','Proceso actualizado con exito');
     }

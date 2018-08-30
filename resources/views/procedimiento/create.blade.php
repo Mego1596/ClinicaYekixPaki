@@ -11,11 +11,11 @@
 	<div>
 		<div class="row">
 			<div class="col-md-12 col-md-offset-2">
-				<div class="panel panel-default">
-					<div class="panel-heading">
-					Procedimiento
+				<div class="card card-default">
+					<div class="card-header text-center">
+					<h4>Crear procedimiento</h4>
 					</div>
-					<div class="panel-body">
+					<div class="card-body">
 						{!! Form::open(['route' => 'procedimiento.store']) !!}
 
 							@include('procedimiento.partials.form')
