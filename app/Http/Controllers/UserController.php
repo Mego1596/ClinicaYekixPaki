@@ -54,13 +54,13 @@ class UserController extends Controller
         if($request['idRole'] == 'Dentista'){
             if(is_null($request['nombre1']) or is_null($request['apellido1']) or $request['numeroJunta'] == 'JVPO-' or is_null($request['email']) or is_null($request['password']) or is_null($request['roles'])){
                 return redirect()->route('user.create',$request->idRole)
-                ->with('info', 'Complete los Campos Obligatorios o digite correctamente el Numero de Junta')
+                ->with('error', 'Complete los Campos Obligatorios o digite correctamente el Numero de Junta')
                 ->with('tipo', 'danger');
             }
         }else{
             if(is_null($request['nombre1']) or is_null($request['apellido1']) or is_null($request['email']) or is_null($request['password']) or is_null($request['roles'])){
                 return redirect()->route('user.create',$request->idRole)
-                ->with('info', 'Complete los Campos Obligatorios o digite correctamente el Numero de Junta')
+                ->with('error', 'Complete los Campos Obligatorios')
                 ->with('tipo', 'danger');
             }
         }
