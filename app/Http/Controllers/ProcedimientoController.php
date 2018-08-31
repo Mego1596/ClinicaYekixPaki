@@ -51,17 +51,14 @@ class ProcedimientoController extends Controller
         {
             if($existe) //si existe el color elegido muestra el error
                 return redirect()->route('procedimiento.create')
-                ->withInput($request->all())
                 ->with('error', 'Complete los campos obligatorios y cambie de color de identificador');
             else
                 return redirect()->route('procedimiento.create')
-                ->withInput($request->all())
                 ->with('error', 'Complete los campos obligatorios');
         } 
         else if ($existe) //validacion de solo color aun cuando los demas campos tengan valor
         {
             return redirect()->route('procedimiento.create')
-            ->withInput($request->all())
             ->with('error', 'Cambie de color de identificador');
         }
         else //validacion aprobada
@@ -118,17 +115,14 @@ class ProcedimientoController extends Controller
         {
             if($existe) //si existe el color elegido muestra el error
                 return redirect()->route('procedimiento.create')
-                ->withInput($request->all())
                 ->with('error', 'Complete los campos obligatorios y cambie de color de identificador');
             else
                 return redirect()->route('procedimiento.create')
-                ->withInput($request->all())
                 ->with('error', 'Complete los campos obligatorios');
         } 
         else if ($existe) //validacion de solo color aun cuando los demas campos tengan valor
         {
             return redirect()->route('procedimiento.create')
-            ->withInput($request->all())
             ->with('error', 'Cambie de color de identificador');
         }
         else //validacion aprobada

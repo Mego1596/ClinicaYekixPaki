@@ -44,7 +44,6 @@ class RoleController extends Controller
         {
             return redirect()
                 ->route('roles.create')
-                ->withInput($request->all())
                 ->with('error', 'Complete los campos obligatorios');
         }
         else 
@@ -93,7 +92,6 @@ class RoleController extends Controller
         {
             return redirect()
                 ->route('roles.create')
-                ->withInput($request->all())
                 ->with('error', 'Complete los campos obligatorios');
         }
         else 
