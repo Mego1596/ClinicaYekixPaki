@@ -32,7 +32,7 @@
 						<div class="row">
 							<div class="col-md-2">
 								{{ Form::label('created_at', 'Fecha:') }}
-								{{ Form::datetime('created_at', null, ['class' => 'form-control','disabled' ])}}
+								{{ Form::datetime('created_at', null, ['class' => 'form-control','disabled'])}}
 							</div>
 							<div class="col-md-2">
 								{{ Form::label('expediente', 'No. Expediente') }}
