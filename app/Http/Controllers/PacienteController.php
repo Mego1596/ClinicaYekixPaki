@@ -92,6 +92,8 @@ class PacienteController extends Controller
             $paciente->apellido2 = $request->apellido2;
          if(!is_null($valores['recomendado']))
             $paciente->recomendado = $request->recomendado;
+         if(!is_null($valores['historiaOdontologica']))
+            $paciente->historiaOdontologica = $request->historiaOdontologica;        
         if($paciente->save()){
             return redirect()->route('paciente.index',$paciente->id)
                 ->with('info','Paciente guardado con exito')
@@ -119,7 +121,6 @@ class PacienteController extends Controller
      */
     public function edit(Paciente $paciente)
     {
-        //dd(compact('paciente'));
         return view('paciente.edit', compact('paciente'));
     }
 

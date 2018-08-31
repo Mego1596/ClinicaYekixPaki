@@ -31,10 +31,15 @@
 						{!! Form::model($paciente, ['route' => ['paciente.update', $paciente->id]]) !!}
 						<div class="row">
 							<div class="col-md-2">
+								{{ Form::label('created_at', 'Fecha:') }}
+								{{ Form::datetime('created_at', null, ['class' => 'form-control','disabled' ])}}
+							</div>
+							<div class="col-md-2">
 								{{ Form::label('expediente', 'No. Expediente') }}
 								{{ Form::text('expediente', null, ['class' => 'form-control','disabled' ])}}
 							</div>
 						</div>
+						<br/>
 						<div class="row">
 							<div class="col-md-2">
 								<div class="form-group">
@@ -54,20 +59,20 @@
 									{{ Form::text('nombre3', null, ['class' => 'form-control', 'disabled'])}}
 								</div>
 							</div>
-							<div class="col-md-2">
+							<div class="col-md-3">
 								<div class="form-group">
 									{{ Form::label('apellido1', 'Primer apellido') }}
 									{{ Form::text('apellido1', null, ['class' => 'form-control', 'disabled'])}}
 								</div>
 							</div>
-							<div class="col-md-2">
+							<div class="col-md-3">
 								<div class="form-group">
 									{{ Form::label('apellido2', 'Segundo apellido') }}
 									{{ Form::text('apellido2', null, ['class' => 'form-control', 'disabled'])}}
 								</div>
 							</div>
 						</div>
-
+						<br/>
 						<div class="row">
 							<div class="col-md-2">
 								{{ Form::label('fechaNacimiento', 'Fecha de nacimiento') }}
@@ -83,41 +88,54 @@
 							</div>
 							<div class="col-md-1">
 							</div>
-							<div class="col-md-2">
+							<div class="col-md-3">
 								{{ Form::label('email', 'Correo Electronico') }}
 								{{ Form::email('email', null, ['class'=>'form-control', 'disabled']) }}
 							</div>
-							<div class="col-md-2">
-								{{ Form::label('recomendado', 'Recomendado por') }}
-								{{ Form::email('recomendado', null, ['class'=>'form-control', 'disabled']) }}
+							<div class="col-md-3">
+								{{ Form::label('ocupacion', 'Ocupacion') }}
+								{{ Form::text('ocupacion', null, ['class' => 'form-control', 'disabled']) }}
 							</div>
 						</div>
-
+						<br/>
 						<div class="row">
 							<div class="col-md-12">
 								{{ Form::label('domicilio', 'Domicilio') }}
 								{{ Form::text('domicilio', null, ['class'=>'form-control', 'disabled']) }}
 							</div>
 						</div>
+						<br/>
 						<div class="row">
 							<div class="col-md-12">
 								{{ Form::label('direccion_de_trabajo', 'Direccion de trabajo') }}
 								{{ Form::text('direccion_de_trabajo', null, ['class'=>'form-control', 'disabled']) }}
 							</div>
 						</div>
+						<br/>
 						<div class="row">
-							<div class="col-md-4">
-								{{ Form::label('ocupacion', 'Ocupacion') }}
-								{{ Form::text('ocupacion', null, ['class' => 'form-control', 'disabled']) }}
-							</div>
-							<div class="col-md-8">
+							<div class="col-md-12">
 								{{ Form::label('responsable', 'Responsable') }}
 								{{ Form::text('responsable', null, ['class'=>'form-control', 'disabled']) }}
 							</div>
 						</div>
-						<br/>
+							<br/>
+						<div class="row">	
+							<div class="col-md-12">
+								{{ Form::label('recomendado', 'Recomendado por') }}
+								{{ Form::email('recomendado', null, ['class'=>'form-control', 'disabled']) }}
+							</div>
+						</div>
+							<br/>
+						<div class="row">
+							<div class="col-md-12">
+								{{ Form::label('historiaOdontologica','Historia Odontologica')}}
+								{{ Form::textarea('historiaOdontologica',null,['class' => 	'form-control','disabled','rows' => '3'])}}
+							</div>
+						</div>
+							<br/>
 						<a href="{{ route('paciente.agenda', $paciente->id) }}" class="btn btn-sm btn-default bg-info" style="color: white">Agendar Cita
-					</a>
+						</a>
+					</div>
 					{!! Form::close() !!}
 					</div>
 				</div>

@@ -27,20 +27,19 @@
 			{{ Form::label('radio2', 'No ', ['style' => 'visibility:visible','id' => 'radio2']) }}
 		</div>
 	</div>
-	<div class="col-md-3">
+	<div class="col-md-1">
 		<div class="form-group">
-			{{ Form::label('recomendado','Recomendado Por')}}
-			{{ Form::text('recomendado',null,['class' => 'form-control'])}}
 		</div>
 	</div>
+	<div class="col-md-2"></div>
 
-	<div class="col-md-3">
+	<div class="col-md-2">
 		<div class="form-group">
 			{{ Form::label('apellido1', 'Primer apellido *') }}
 			{{ Form::text('apellido1', null, ['class' => 'form-control'])}}
 		</div>
 	</div>
-	<div class="col-md-3">
+	<div class="col-md-2">
 		<div class="form-group">
 			{{ Form::label('apellido2', 'Segundo apellido ') }}
 			{{ Form::text('apellido2', null, ['class' => 'form-control'])}}
@@ -50,7 +49,7 @@
 		{{ Form::label('fechaNacimiento', 'Fecha de nacimiento *') }}
 		{{ Form::date('fechaNacimiento', null, ['class' => 'form-control', 'type'=>'date', 'style'=>'height: 38px']) }}
 	</div>
-	<div class="col-md-2">
+	<div class="col-md-3">
 		{{ Form::label('telefono', 'Telefono *') }}
 		{{ Form::text('telefono', null, ['class'=>'form-control']) }}
 	</div>
@@ -61,13 +60,26 @@
 		{{ Form::label('ocupacion', 'Ocupacion *') }}
 		{{ Form::text('ocupacion', null, ['class' => 'form-control']) }}
 	</div>
-	<div class="col-md-2">
+	<div class="col-md-3">
 		{{ Form::label('sexo', 'Sexo *') }}
 		{{ Form::select('sexo', ['M'=>'Masculino', 'F'=>'Femenino'], null, ['placeholder'=>'Seleccione...', 'class'=>'form-control']) }}
 	</div>
-	<div class="col-md-4">
+
+	<div class="col-md-3">
 		{{ Form::label('email', 'Correo Electronico') }}
 		{{ Form::email('email', null, ['class'=>'form-control']) }}
+	</div>
+	<div class="col-md-12">
+		<div class="form-group">
+			{{ Form::label('recomendado','Recomendado Por')}}
+			{{ Form::text('recomendado',null,['class' => 'form-control'])}}
+		</div>
+	</div>
+	<div class="col-md-12">
+		<div class="form-group">
+			{{ Form::label('historiaOdontologica','Historia Odontologica')}}
+			{{ Form::text('historiaOdontologica',null,['class' => 'form-control'])}}
+		</div>
 	</div>
 </div>
 
@@ -82,7 +94,7 @@
 	</div>
 	<div class="col-md-4">
 		{{ Form::label('responsable', 'Responsable') }}
-		{{ Form::textarea('responsable', null, ['class'=>'form-control','rows'=>'2']) }}
+		{{ Form::textarea('responsable', null, ['class'=>'form-control','rows'=>'3']) }}
 	</div>
 </div>
 <div class="row">
