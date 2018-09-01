@@ -21,9 +21,6 @@
 								<tr>
 									<th width="10px">ID</th>
 									<th>Nombre</th>
-									<th></th>
-									<th></th>
-									<th></th>
 									@if(sizeof($users) == 0)
 									<th width="237">
 										@can('users.create')
@@ -33,7 +30,7 @@
 										@endcan
 									</th>
 									@else
-									<th colspan="3" width="237">
+									<th colspan="4" width="237">
 										@can('users.create')
 										<a href="{{ route('user.create',$sub) }}" class="btn btn-block btn-success pull-right">
 											Crear

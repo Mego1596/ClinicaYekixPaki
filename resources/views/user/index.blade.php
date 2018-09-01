@@ -21,9 +21,7 @@
 									<th width="10px">ID</th>
 									<th>Nombre</th>
 									<th>Numero de Junta</th>
-									<th></th>
-									<th></th>
-									<th></th>
+
 									@if(sizeof($users) == 0)
 									<th width="237">
 										@can('users.create')
@@ -33,7 +31,7 @@
 										@endcan
 									</th>
 									@else
-									<th colspan="3" width="237">
+									<th colspan="4" width="237">
 										@can('users.create')
 										<a href="{{ route('user.create',$sub) }}" class="btn btn-block btn-success pull-right">
 											Crear
@@ -96,10 +94,12 @@
 											{!! Form::close() !!}
 										@endcan
 									</td>
+									@can('admin.revoke')
 									<td width="10px">
 										<a href="{{ route('user.revoke', ['user' =>$user->id, 'idrol' => $sub]) }}" class="btn btn-sm btn-default bg-warning" style="color: white">Revocar Permisos
 										</a>
 									</td>
+									@endcan
 								</tr>
 								@endforeach
 							</tbody>

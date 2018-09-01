@@ -164,5 +164,29 @@ class PermissionsTableSeeder extends Seeder
             'description' => 'Activacion de campo Historia Medica para Pacientes'
             ]);
 
+        Permission::create([
+            'name' => 'Crear Historia Medica',
+            'slug' => 'admin.crearHistoria',
+            'description' => 'Activacion de boton crear Historia para Pacientes',
+        ]);
+
+        Permission::create([
+            'name' => 'Editar Historia Medica',
+            'slug' => 'admin.editarHistoria',
+            'description' => 'Activacion de boton editar Historia para Pacientes'
+            ]);
+
+        Permission::create([
+            'name' => 'Eliminar Historia Medica',
+            'slug' => 'admin.eliminarHistoria',
+            'description' => 'Activacion de campo eliminar Historia Medica para Pacientes'
+            ]);
+
+        Permission::create([
+            'name' => 'Revocar Permiso',
+            'slug' => 'admin.revoke',
+            'description' => 'Habilitar Eliminar Grupo de Privilegios al usuario'
+            ]);
+
     }
 }

@@ -96,11 +96,11 @@ Route::middleware(['auth'])->group(function(){
 	Route::post('paciente/events', 'PacienteController@addEvent')->name('paciente.add');
 
 	//Historia Medica
-	Route::post('historiaMedica/store', 'HistoriaMedicaController@store')->name('historia.store')->middleware('permission:pacientes.create');
+	Route::post('historiaMedica/store', 'HistoriaMedicaController@store')->name('historia.store')->middleware('permission:admin.crearHistoria');
 
-	Route::put('historiaMedica/{historia}', 'HistoriaMedicaController@update')->name('historia.update')->middleware('permission:pacientes.edit');
+	Route::put('historiaMedica/{historia}', 'HistoriaMedicaController@update')->name('historia.update')->middleware('permission:admin.editarHistoria');
 
-	Route::delete('historiaMedica/{historia}', 'HistoriaMedicaController@destroy')->name('historia.destroy');
+	Route::delete('historiaMedica/{historia}', 'HistoriaMedicaController@destroy')->name('historia.destroy')->middleware('permission:admin.eliminarHistoria');
 
 
 });

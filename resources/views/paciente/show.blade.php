@@ -135,10 +135,12 @@
 						<br/>
 						<a href="{{ route('paciente.agenda', $paciente->id) }}" class="btn btn-sm btn-default bg-primary" style="color: white;width: 105px;font-size: 15pt">Calendario</a>
 
+						@can('admin.crearHistoria')
 						<!-- Button trigger modal -->
 						<button type="button" class="btn btn-success" data-toggle="modal" data-target="#Modal2" style="width: 195px;font-size: 14pt">
 						  Crear Historia Medica
 						</button>
+						@endcan
 					</div>
 					{!! Form::close() !!}
 
@@ -158,7 +160,7 @@
 						        		<input type="hidden" name="paciente_id" id="paciente_id" value="{{$paciente->id}}">
 						      		</div>
 						      		<div class="modal-footer">
-						        		<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						        		<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
 						        		<button type="submit" class="btn btn-success">Guardar</button>
 						      		</div>
 						    	</div>
@@ -192,10 +194,12 @@
 		        							
 		        						</td>
 		        						<td width="10px">
+											@can('admin.editarHistoria')
 											<!-- Button trigger modal -->
 											<button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal{{$key->id}}" style="height: 33px">
 											  Editar
 											</button>
+											@endcan
 											{!! Form::model($key, ['route' => ['historia.update', $key->id], 'method'=> 'PUT' ] ) !!}
 											<!-- Modal -->
 											<div class="modal fade" id="exampleModal{{$key->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -208,11 +212,11 @@
 											        </button>
 											      </div>
 											      <div class="modal-body">
-											      	<input type="text" name="id" id="id" value="{{$key->id}}">
+											      	<input type="hidden" name="id" id="id" value="{{$key->id}}">
 											        <input type="text" name="descripcion" id="descripcion" value="{{$key->descripcion}}">
 											      </div>
 											      <div class="modal-footer">
-											        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+											        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
 											        <button type="submit" class="btn btn-primary">Modificar</button>
 											      </div>
 											    </div>
@@ -220,6 +224,7 @@
 											</div>
 											{!! Form::close() !!}
 										</td>
+										@can('admin.eliminarHistoria')
 										<td>
 										{!! Form::open(['route' => ['historia.destroy', $key->id],
 												'method' => 'DELETE']) !!}
@@ -228,6 +233,7 @@
 													</button>
 												{!! Form::close() !!}
 		        						</td>
+		        						@endcan
 	        						</tr>
 						    		@endforeach
 								</table>
