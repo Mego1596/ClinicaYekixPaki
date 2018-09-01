@@ -12,6 +12,6 @@ class Paciente extends Model
         'fechaNacimiento', 'email', 'ocupacion', 
         'domicilio', 'telefono', 'sexo', 
         //no obligatorios
-        'responsable', 'direccion_de_trabajo'
+        'responsable', 'direccion_de_trabajo','recomendado','historiaOdontologica'
     ];
 }

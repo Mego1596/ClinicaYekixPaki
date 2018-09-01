@@ -158,5 +158,11 @@ class PermissionsTableSeeder extends Seeder
             'description' => 'Activacion de campo Historia Odontologica para Pacientes'
             ]);
 
+        Permission::create([
+            'name' => 'Historia Medica',
+            'slug' => 'admin.historiaM',
+            'description' => 'Activacion de campo Historia Medica para Pacientes'
+            ]);
+
     }
 }

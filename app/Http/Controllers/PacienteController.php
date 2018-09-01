@@ -12,6 +12,7 @@ use App\Procedimiento;
 use App\Events;
 use App\Paciente;
 use App\User;
+use App\HistoriaMedica;
 use Calendar;
 use Validator;
 
@@ -59,13 +60,20 @@ class PacienteController extends Controller
     {
         $valores = $request->all();
         //Verificando si estan todos los campos obligatorios
-        if(is_null($valores['nombre1']) or is_null($valores['apellido1']) or is_null($valores['fechaNacimiento']) or is_null($valores['telefono']) or is_null($valores['sexo'])
-            or is_null($valores['domicilio']) or is_null($valores['ocupacion'])){
 
-            return redirect()->route('paciente.create')
-                ->with('info', 'Complete los campos obligatorios')
-                ->with('tipo', 'danger');
-        }
+            if(is_null($valores['nombre1']) or is_null($valores['apellido1']) or is_null($valores['fechaNacimiento']) or is_null($valores['telefono']) or is_null($valores['sexo']) or is_null($valores['domicilio']) or is_null($valores['ocupacion']) or is_null($valores['password']) or is_null($valores['confirmPassword']) or  is_null($valores['email']) ){
+                
+                return redirect()->route('paciente.create')
+                        ->with('error', 'Complete los campos obligatorios')
+                        ->with('tipo', 'danger');
+                
+            }
+
+            if($valores['password'] != $valores['confirmPassword']){
+                    return redirect()->route('paciente.create')
+                        ->with('error', 'Verifique que la Contraseña este correcta')
+                        ->with('tipo', 'danger');
+                }
 
         $fecha_actual = \Carbon::now();
         $anio = substr($fecha_actual,2,2);
@@ -99,14 +107,12 @@ class PacienteController extends Controller
         $paciente->sexo                   = $request->sexo;
         $paciente->domicilio              = $request->domicilio;
         $paciente->ocupacion              = $request->ocupacion;
-
+        $paciente->email                  = $request->email;
         //campos opcionales
         if(!is_null($valores['direccion_de_trabajo']))
             $paciente->direccion_de_trabajo = $request->direccion_de_trabajo;
         if(!is_null($valores['responsable']))
             $paciente->responsable = $request->responsable;
-        if(!is_null($valores['email']))
-            $paciente->email = $request->email;
         if(!is_null($valores['nombre2']))
             $paciente->nombre2 = $request->nombre2;
         if(!is_null($valores['nombre3']))
@@ -134,7 +140,15 @@ class PacienteController extends Controller
             $user->apellido2 = $request->apellido2;
             $user->save();
             $user->roles()->sync(5);
-            return redirect()->route('paciente.index',$paciente->id)
+
+
+            if(!is_null($valores['historiaMedica'])){
+                $historiaMed = new HistoriaMedica();
+                $historiaMed->descripcion = $request->historiaMedica;
+                $historiaMed->paciente_id = $paciente->id;
+                $historiaMed->save();
+            }
+            return redirect()->route('paciente.show',$paciente->id)
                 ->with('info','Paciente guardado con exito')
                 ->with('tipo', 'success');
         }
@@ -147,9 +161,14 @@ class PacienteController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(Paciente $paciente)
-    {
+    {   
+        $string ="SELECT id,descripcion FROM historia_medicas WHERE paciente_id=".$paciente->id;
+        $historias = DB::select(DB::raw($string));
 
-        return view('paciente.show', compact('paciente'));
+        foreach ($historias as $key => $value) {
+            $value->descripcion;
+        }
+        return view('paciente.show', compact('paciente','historias'));
     }
 
     /**
@@ -174,23 +193,47 @@ class PacienteController extends Controller
     {
         $valores = $request->all();
         //Verificando si estan todos los campos obligatorios
-        if(is_null($valores['nombre1']) or is_null($valores['nombre2']) or is_null($valores['apellido1']) or is_null($valores['apellido2'])
+        if(is_null($valores['nombre1']) or is_null($valores['apellido1'])
             or is_null($valores['fechaNacimiento']) or is_null($valores['telefono']) or is_null($valores['sexo'])
-            or is_null($valores['domicilio']) or is_null($valores['ocupacion'])){
+            or is_null($valores['domicilio']) or is_null($valores['ocupacion']) or is_null($valores['email']) ){
 
             return redirect()
-                    ->route('paciente.edit')
-                    ->with('info', 'Complete los campos obligatorios')
+                    ->route('paciente.edit',$paciente->id)
+                    ->with('error', 'Complete los campos obligatorios')
                     ->with('tipo', 'danger');
         }
 
         if(is_null($request['direccion_de_trabajo']))
             $request['direccion_de_trabajo'] = "Sin direccion de trabajo";
+
         if(is_null($request['responsable']))
             $request['responsable'] = "Sin responsable";
-        if(is_null($request['email']))
-            $request['email'] = "Sin correo electronico";
-        
+
+        if(is_null($valores['nombre2']))
+            $request['nombre2'] = "N/A";
+        else
+            $request['nombre2'] = $request->nombre2;
+
+        if(is_null($valores['nombre3']))
+            $request['nombre3'] = "N/A";
+        else
+            $request['nombre3'] = $request->nombre3;
+
+         if(is_null($valores['apellido2']))
+            $request['apellido2'] = "N/A";
+        else
+            $request['apellido2'] = $request->apellido2;
+
+         if(is_null($valores['recomendado']))
+            $request['recomendado'] = "-";
+        else
+            $request['recomendado'] = $request->recomendado;
+
+         if(is_null($valores['historiaOdontologica']))
+            $request['historiaOdontologica'] = "-";
+        else
+            $request['historiaOdontologica'] = $request->historiaOdontologica;
+
         $paciente->update($request->all());
         return redirect()->route('paciente.index')
             ->with('info','Paciente actualizado con exito')
@@ -204,7 +247,10 @@ class PacienteController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy(Paciente $paciente)
-    {
+    {   
+        $user = User::select('id')->where('email',$paciente->email)->value('id');
+        $aux = User::find($user);
+        $aux->delete();
         $paciente->delete();
         return back()
             ->with('info','Eliminado Correctamente')

@@ -66,25 +66,25 @@
 	</div>
 
 	<div class="col-md-3">
-		{{ Form::label('email', 'Correo Electronico') }}
+		{{ Form::label('email', 'Correo Electronico*') }}
 		{{ Form::email('email', null, ['class'=>'form-control']) }}
 	</div>
-	<div class="col-md-6">
+	<div class="col-md-4">
 		<div class="form-group">
 			{{ Form::label('recomendado','Recomendado Por')}}
 			{{ Form::text('recomendado',null,['class' => 'form-control'])}}
 		</div>
 	</div>
-	<div class="col-md-6">
+	<div class="col-md-4">
 		<div class="form-group">
 			{{ Form::label('historiaOdontologica','Historia Odontologica')}}
 			{{ Form::text('historiaOdontologica',null,['class' => 'form-control'])}}
 		</div>
 	</div>
-	<div class="col-md-3">
+	<div class="col-md-4">
 		<div class="form-group">
-			{{ Form::label('password', 'Contraseña*') }}
-			{{ Form::password('password', ['class' => 'form-control','id'=>'password'])}}
+			{{ Form::label('historiaMedica','Historia Medica')}}
+			{{ Form::text('historiaMedica',null,['class' => 'form-control'])}}
 		</div>
 	</div>
 </div>
@@ -103,8 +103,20 @@
 		{{ Form::textarea('responsable', null, ['class'=>'form-control','rows'=>'3']) }}
 	</div>
 </div>
+<br/>
 <div class="row">
-
+<div class="col-md-3">
+		<div class="form-group">
+			{{ Form::label('password', 'Contraseña*') }}
+			{{ Form::password('password', ['class' => 'form-control','id'=>'password'])}}
+		</div>
+	</div>
+<div class="col-md-3">
+		<div class="form-group">
+			{{ Form::label('confirmPassword', 'Confirmar Contraseña*') }}
+			{{ Form::password('confirmPassword', ['class' => 'form-control','id'=>'confirmPassword'])}}
+		</div>
+	</div>
 </div>
 <div class="row">
 	

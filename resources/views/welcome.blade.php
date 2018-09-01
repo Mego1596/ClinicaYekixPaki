@@ -119,7 +119,7 @@
 
                         @auth  
                             <br/>
-                            <a href="{{ url('/home') }}">Home</a>
+                            <a class="btn btn-primary" href="{{ url('/home') }}">Home</a>
                         @else
                             <br/>
                             <a style="font-size: 25px" class="btn btn-primary" href="{{ route('login') }}">Iniciar Sesion</a>

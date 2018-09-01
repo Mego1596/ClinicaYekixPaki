@@ -7,25 +7,6 @@ use Illuminate\Http\Request;
 
 class HistoriaMedicaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -35,30 +16,16 @@ class HistoriaMedicaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $historia = new HistoriaMedica();
+        $historia->descripcion = $request->descripcion;
+        $historia->paciente_id = $request->paciente_id;
+        $historia->save();
+        return back()
+                ->with('info','Creado Correctamente')
+                ->with('tipo', 'success');
+
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\HistoriaMedica  $historiaMedica
-     * @return \Illuminate\Http\Response
-     */
-    public function show(HistoriaMedica $historiaMedica)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\HistoriaMedica  $historiaMedica
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(HistoriaMedica $historiaMedica)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
@@ -67,9 +34,13 @@ class HistoriaMedicaController extends Controller
      * @param  \App\HistoriaMedica  $historiaMedica
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, HistoriaMedica $historiaMedica)
+    public function update(Request $request,$id)
     {
-        //
+        $historiaMedica = HistoriaMedica::find($id);
+        $historiaMedica->update($request->all());
+        return back()
+                ->with('info','Modificado Correctamente')
+                ->with('tipo', 'success');
     }
 
     /**
@@ -78,8 +49,13 @@ class HistoriaMedicaController extends Controller
      * @param  \App\HistoriaMedica  $historiaMedica
      * @return \Illuminate\Http\Response
      */
-    public function destroy(HistoriaMedica $historiaMedica)
+    public function destroy($id)
     {
-        //
+        $historiaMedica = HistoriaMedica::find($id);
+        if($historiaMedica->delete()){
+        return back()
+            ->with('info','Eliminado Correctamente')
+            ->with('tipo', 'success');
+        }
     }
 }

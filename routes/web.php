@@ -95,4 +95,12 @@ Route::middleware(['auth'])->group(function(){
 	Route::get('paciente/{paciente}/events', 'PacienteController@agendar')->name('paciente.agenda');
 	Route::post('paciente/events', 'PacienteController@addEvent')->name('paciente.add');
 
+	//Historia Medica
+	Route::post('historiaMedica/store', 'HistoriaMedicaController@store')->name('historia.store')->middleware('permission:pacientes.create');
+
+	Route::put('historiaMedica/{historia}', 'HistoriaMedicaController@update')->name('historia.update')->middleware('permission:pacientes.edit');
+
+	Route::delete('historiaMedica/{historia}', 'HistoriaMedicaController@destroy')->name('historia.destroy');
+
+
 });
