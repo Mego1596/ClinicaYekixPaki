@@ -20,18 +20,34 @@ $(document).ready(function(){
        	$("#cosa").prop('disabled',false);
     });
 
+     $("#cosa3").click(function(){
+        document.getElementById('numeroJunta').style.display = 'block';
+        document.getElementById('numeroJunta2').style.display = 'block';
+       	$("#cosa4").prop('checked',false);
+       	$("#cosa3").prop('disabled',true);
+       	$("#cosa4").prop('disabled',false);
+       	$("#numeroJunta").focus();
+    });
+    $("#cosa4").click(function(){
+        document.getElementById('numeroJunta').style.display = 'none';
+        document.getElementById('numeroJunta2').style.display = 'none';
+       	$("#cosa3").prop('checked',false);
+       	$("#cosa4").prop('disabled',true);
+       	$("#cosa3").prop('disabled',false);
+    });
+
 });
 </script>
 
 @endsection
 
 @section('bread')
-@if($idRole == 'Dentista')
+@if($idRole == 'doctor')
 	<li class="breadcrumb-item">
 	  <a href="/user">Dentista</a>
 	</li>
 @endif
-@if($idRole == 'Asistente')
+@if($idRole == 'asistente')
 	<li class="breadcrumb-item">
 	  <a href="/asistente">Asistente</a>
 	</li>
@@ -49,11 +65,11 @@ $(document).ready(function(){
 				<div class="card-header text-center">
 					<div class="row">
 						<div class="col-md-1">
-						@if($idRole == 'Dentista')
+						@if($idRole == 'doctor')
 							<a href="{{ route('user.index') }}" class="btn btn-block btn-secondary">
 							Atrás</a>
 						@endif
-						@if($idRole == 'Asistente')
+						@if($idRole == 'asistente')
 							<a href="{{ route('user.asistente') }}" class="btn btn-block btn-secondary">
 							Atrás</a>
 						@endif

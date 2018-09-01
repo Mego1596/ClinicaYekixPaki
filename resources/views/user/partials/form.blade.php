@@ -43,11 +43,29 @@
 			{{ Form::text('apellido2', null, ['class' => 'form-control'])}}
 		</div>
 	</div>
-	@if($idRole=='Dentista')
+	@if($idRole=='doctor')
 	<div class="col-md-2">
 		<div class="form-group">
 			{{ Form::label('numeroJunta', 'Numero de Junta*') }}
 			{{ Form::text('numeroJunta', 'JVPO-', ['class' => 'form-control'])}}
+		</div>
+	</div>
+	@endif
+		@if($idRole=='asistente')
+	<div class="col-md-2">
+		<div class="form-group">
+			{{ Form::label('numeroJunta', 'Numero de Junta ', ['style' => 'display:none','id'=>'numeroJunta2']) }}
+			{{ Form::text('numeroJunta', null, ['class' => 'form-control', 'style'=>'display:none', 'id' => 'numeroJunta'])}}
+		</div>
+	</div>
+	<div class="col-md-3">
+		<div class="form-group">
+		{{ Form::label('nombres', 'Agregar Numero de Junta? ', ['style' => 'visibility:visible', 'id'=>'nombres']) }}
+		<br/>
+		<input type="checkbox" name="cosa" value="1" id="cosa3" >
+		{{ Form::label('radio', 'Si ', ['style' => 'visibility:visible','id' => 'radio']) }}
+		<input type="checkbox" name="cosa2" value="2" id="cosa4" >
+		{{ Form::label('radio2', 'No ', ['style' => 'visibility:visible','id' => 'radio2']) }}
 		</div>
 	</div>
 	@endif
@@ -68,37 +86,34 @@
 	</div>
 </div>
 
-<div class="row">
-	<div class="col-md-3 ">
-		<div class="form-group">
-			<h3>Lista de Roles:</h3><br>
-			<ul class="navbar-nav ml-auto">
-				@foreach($roles as $role)
-					<li>
-						<label>
-							@if($idRole == 'Dentista')
-								@if($role->slug != 'asistente' && $role->slug != 'admin' && $role->slug != 'suspendido')
-								<p>{{ $role->name }}
-									{{ Form::checkbox('roles[]',$role->id,null) }}
-									<em>({{ $role->description ?:'N/A' }})</em>*
-								</p>
-								@endif
-							@endif
-							@if($idRole == 'Asistente')
-								@if($role->slug != 'doctor' && $role->slug != 'admin' && $role->slug != 'suspendido')
-								<p>{{ $role->name }}
-									{{ Form::checkbox('roles[]',$role->id,null) }}
-									<em>({{ $role->description ?:'N/A' }})</em>*
-								</p>
-								@endif
-							@endif
-						</label>
-					</li>
-				@endforeach
-			</ul>
-		</div>
-	</div>
-</div>
+@if($idRole == 'doctor')
+<h3>Lista de Roles:</h3>
+<br/>
+		<table>
+			<tr>
+				<th>Nombre</th>
+				<th style="color: #FFFFFF">.........</th>
+				<th>Descripcion</th>
+			</tr>
+			@foreach($roles as $role)
+				@if($role->slug != 'asistente' && $role->slug != 'admin')
+				<tr>
+					<td>
+						<li>
+							{{ $role->name }}
+						</li>
+					</td>
+					<td>
+					</td>
+					<td>
+						{{ Form::radio('roles',$role->id) }}
+						<em>({{ $role->description ?:'N/A' }})</em>*
+					</td>
+				</tr>
+				@endif
+			@endforeach
+		</table>
+@endif
 <div class="row pt-3">
 	<div class="col-md-4">
 		*Campos obligatorios

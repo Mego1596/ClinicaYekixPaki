@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use App\Procedimiento;
 use App\Events;
 use App\Paciente;
@@ -13,7 +15,13 @@ use Validator;
 class EventsController extends Controller
 {
     public function index(){
-
+        $loggedUser=Auth::id();
+        $result =  DB::table('users')->join('role_user', 'users.id', '=', 'role_user.user_id')->where('users.id', '=', $loggedUser)->value('role_id');
+        if($result == 1 or $result == 3){
+            $encendido = true;
+        }else{
+            $encendido = false;
+        }
     	$procedimiento = Procedimiento::pluck('nombre', 'id')->toArray();
 
     	$events = Events::select('id','paciente_id','start_date','end_date','procedimiento_id','descripcion')->get();
@@ -38,11 +46,10 @@ class EventsController extends Controller
     		);
     	}
     	
-    	
 
     	$calendar_details = Calendar::addEvents($event_list)->setOptions([
     		'firstDay' => 1,
-    		'editable' => true,
+    		'editable' => $encendido,
     		'themeSystem'=>'bootstrap4',
             'locale' => 'es',
             'defaultView' => 'agendaDay',
@@ -63,9 +70,9 @@ class EventsController extends Controller
 				 	$("#txtID").val(calEvent.id);
 				 	$("#txtColor").val(calEvent.color);
 				 	FechaHora= calEvent.start._i.split("T");
-				 	horaInicio=FechaHora[1].split("+");
+				 	horaInicio=FechaHora[1].split("-");
 				 	FechaHora2= calEvent.end._i.split("T");
-				 	horaFin=FechaHora2[1].split("+");
+				 	horaFin=FechaHora2[1].split("-");
 				 	$("#txtFecha").val(FechaHora[0]);
 				 	$("#start_date").val(horaInicio[0]);
 				 	$("#start_date").prop("disabled",true);
@@ -91,7 +98,7 @@ class EventsController extends Controller
 				 }',
 			]);
 
-    	return view('events',compact('procedimiento','calendar_details'));
+    	return view('events',compact('procedimiento','calendar_details','loggedUser'));
     }
 
     public function addEvent(Request $request){

@@ -1,12 +1,12 @@
 @extends('layouts.base')
 
 @section('bread')
-@if($idRole == 'Dentista')
+@if($idRole == 'doctor')
 	<li class="breadcrumb-item">
 	  <a href="/user">Dentista</a>
 	</li>
 @endif
-@if($idRole == 'Asistente')
+@if($idRole == 'asistente')
 	<li class="breadcrumb-item">
 	  <a href="/asistente">Asistente</a>
 	</li>
@@ -24,11 +24,11 @@
 				<div class="card-header text-center">
 					<div class="row">
 						<div class="col-md-1">
-						@if($idRole == 'Dentista')
+						@if($idRole == 'doctor')
 							<a href="{{ route('user.index') }}" class="btn btn-block btn-secondary">
 							Atrás</a>
 						@endif
-						@if($idRole == 'Asistente')
+						@if($idRole == 'asistente')
 							<a href="{{ route('user.asistente') }}" class="btn btn-block btn-secondary">
 							Atrás</a>
 						@endif
@@ -44,7 +44,7 @@
 							<div class="col-md-2">
 								{{ Form::hidden('idRole', $idRole , ['class' => 'form-control','disabled'])}}
 								<div class="form-group">
-									{{ Form::label('nombre1', 'Primer Nombre*') }}
+									{{ Form::label('nombre1', 'Primer Nombre') }}
 									{{ Form::text('nombre1', null, ['class' => 'form-control','disabled'])}}
 								</div>
 							</div>
@@ -65,7 +65,7 @@
 							<div class="col-md-2">
 								{{ Form::hidden('role',$idRole, ['class' => 'form-control']) }}
 								<div class="form-group">
-									{{ Form::label('apellido1', 'Primer apellido *') }}
+									{{ Form::label('apellido1', 'Primer apellido ') }}
 									{{ Form::text('apellido1', null, ['class' => 'form-control','disabled'])}}
 								</div>
 							</div>
@@ -75,19 +75,27 @@
 									{{ Form::text('apellido2', null, ['class' => 'form-control','disabled'])}}
 								</div>
 							</div>
-							@if($idRole=='Dentista')
+							@if($idRole=='doctor')
 							<div class="col-md-2">
 								<div class="form-group">
-									{{ Form::label('numeroJunta', 'Numero de Junta*') }}
+									{{ Form::label('numeroJunta', 'Numero de Junta') }}
 									{{ Form::text('numeroJunta',null, ['class' => 'form-control','disabled'])}}
 								</div>
 							</div>
+							@endif
+							@if($idRole=='asistente')
+								<div class="col-md-2">
+									<div class="form-group">
+										{{ Form::label('numeroJunta', 'Numero de Junta ', ['style' => 'display:block','id'=>'numeroJunta2']) }}
+										{{ Form::text('numeroJunta', null, ['class' => 'form-control', 'style'=>'display:block', 'id' => 'numeroJunta','disabled'])}}
+									</div>
+								</div>
 							@endif
 						</div>
 					<div class="row">
 						<div class="col-md-3">
 							<div class="form-group">
-								{{ Form::label('description', 'E-Mail*') }}
+								{{ Form::label('description', 'E-Mail') }}
 								{{ Form::text('email', null, ['class' => 'form-control','disabled'])}}
 							</div>
 						</div>

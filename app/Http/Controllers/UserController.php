@@ -18,7 +18,7 @@ class UserController extends Controller
     {
         
         $users = DB::table('users')->join('role_user', 'users.id', '=', 'role_user.user_id')->where('role_user.role_id', '=', 2)->select('users.id' , 'users.nombre1','users.nombre2','users.nombre3','users.apellido1','users.apellido2','users.numeroJunta')->paginate();
-        $result = DB::table('roles')->where('slug','doctor')->select('name')->get();
+        $result = DB::table('roles')->where('slug','doctor')->select('slug')->get();
         $datos= json_encode($result);
         $sub = substr($datos, 10,-3);
         return view('user.index', compact('users','sub'));
@@ -27,7 +27,7 @@ class UserController extends Controller
      public function asistentes()
     {
         $users = DB::table('users')->join('role_user', 'users.id', '=', 'role_user.user_id')->where('role_user.role_id', '=', 3)->select('users.id' , 'users.nombre1','users.nombre2','users.nombre3','users.apellido1','users.apellido2')->paginate();
-        $result = DB::table('roles')->where('slug','asistente')->select('name')->get();
+        $result = DB::table('roles')->where('slug','asistente')->select('slug')->get();
         $datos= json_encode($result);
         $sub = substr($datos, 10,-3);
         return view('user.asistente', compact('users','sub'));
@@ -51,7 +51,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        if($request['idRole'] == 'Dentista'){
+        if($request['idRole'] == 'doctor'){
             if(is_null($request['nombre1']) or is_null($request['apellido1']) or $request['numeroJunta'] == 'JVPO-' or is_null($request['email']) or is_null($request['password']) or is_null($request['roles'])){
                 return redirect()->route('user.create',$request->idRole)
                 ->with('error', 'Complete los Campos Obligatorios o digite correctamente el Numero de Junta')
@@ -80,12 +80,13 @@ class UserController extends Controller
             $user->apellido2 = $request->apellido2;
         if($user->save()){
             $user->roles()->sync($request->get('roles'));
-            if($request['role']=='Dentista'){
+            if($request['role']=='doctor'){
                 return redirect()->route('user.index')->with('info','Usuario guardado con exito');
-            }elseif ($request['role']=='Asistente') {
+            }elseif ($request['role']=='asistente') {
                 return redirect()->route('user.asistente')->with('info','Usuario guardado con exito');
             }
         }
+        //
     }
 
     /**
@@ -121,10 +122,30 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
+
+        if($request['idRole'] == 'doctor'){
+            if(is_null($request['nombre1']) or is_null($request['apellido1']) or $request['numeroJunta'] == 'JVPO-' or is_null($request['email']) ){
+                return redirect()->route('user.edit',[$user->id, $request->role])
+                ->with('error', 'Complete los Campos Obligatorios o digite correctamente el Numero de Junta')
+                ->withInput($request->all())
+                ->with('tipo', 'danger');
+            }
+        }else{
+            if(is_null($request['nombre1']) or is_null($request['apellido1']) or is_null($request['email']) ){
+                return redirect()->route('user.edit',[$user->id, $request->role])
+                ->with('error', 'Complete los Campos Obligatorios')
+                ->withInput($request->all())
+                ->with('tipo', 'danger');
+            }
+        }
+
         $user->update($request->all());
 
-        $user->roles()->sync($request->get('roles'));
-        return redirect()->route('user.index',$user->id)->with('info','Usuario actualizado con exito');
+        if($request['role']=='doctor'){
+                return redirect()->route('user.index')->with('info','Usuario Actualizado con exito');
+        }elseif ($request['role']=='asistente') {
+                return redirect()->route('user.asistente')->with('info','Usuario Actualizado con exito');
+            }
     }
 
     /**
@@ -137,5 +158,16 @@ class UserController extends Controller
     {
         $user->delete();
         return back()->with('info','Eliminado Correctamente');
+    }
+
+    public function revocarRol( User $user, $idRole){
+         $user->roles()->sync(4);
+
+         if($idRole=='doctor'){
+                return redirect()->route('user.index')->with('info','Usuario guardado con exito');
+        }elseif ($idRole=='asistente') {
+                return redirect()->route('user.asistente')->with('info','Usuario guardado con exito');
+            }
+
     }
 }

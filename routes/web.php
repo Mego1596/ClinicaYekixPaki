@@ -70,6 +70,7 @@ Route::middleware(['auth'])->group(function(){
 	Route::get('user/{user}/edit/{idrol}', 'UserController@edit')->name('user.edit')->middleware('permission:users.edit');
 
 	Route::get('asistente/', 'UserController@asistentes')->name('user.asistente')->middleware('permission:users.asistente');
+	Route::get('user/{user}/revoke/{idrol}', 'UserController@revocarRol')->name('user.revoke');
 
 	//Full Calendar
 
