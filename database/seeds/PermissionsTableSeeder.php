@@ -145,8 +145,18 @@ class PermissionsTableSeeder extends Seeder
             'description' => 'Lista y Navega todos los Pacientes del Sistema',
         ]);
 
+        //Permisos a Terceros
+        Permission::create([
+            'name' => 'Calendario de Trabajo',
+            'slug' => 'pacientes.trabajo',
+            'description' => 'Navega la vista del Calendario de Trabajo',
+        ]);
 
-
+        Permission::create([
+            'name' => 'Historia Odontologica',
+            'slug' => 'admin.historiaO',
+            'description' => 'Activacion de campo Historia Odontologica para Pacientes'
+            ]);
 
     }
 }

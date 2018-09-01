@@ -24,6 +24,15 @@ $(document).ready(function(){
         $("#cosa3").click(function(){
         document.getElementById('numeroJunta').style.display = 'block';
         document.getElementById('numeroJunta2').style.display = 'block';
+        document.getElementById('nom').style.visibility = 'visible';
+        document.getElementById('cosa5').style.display = 'inline';
+        document.getElementById('radio5').style.visibility = 'visible';
+        document.getElementById('cosa6').style.display = 'inline';
+        document.getElementById('radio6').style.visibility = 'visible';
+        if($("#cosa5").prop('checked') == true){
+          document.getElementById('especialidad').style.display = 'block';
+          document.getElementById('especialidad2').style.display = 'block';
+        }
        	$("#cosa4").prop('checked',false);
        	$("#cosa3").prop('disabled',true);
        	$("#cosa4").prop('disabled',false);
@@ -32,10 +41,35 @@ $(document).ready(function(){
     $("#cosa4").click(function(){
         document.getElementById('numeroJunta').style.display = 'none';
         document.getElementById('numeroJunta2').style.display = 'none';
+        document.getElementById('nom').style.visibility = 'hidden';
+        document.getElementById('cosa5').style.display = 'none';
+        document.getElementById('radio5').style.visibility = 'hidden';
+        document.getElementById('cosa6').style.display = 'none';
+        document.getElementById('radio6').style.visibility = 'hidden';
+        document.getElementById('especialidad').style.display = 'none';
+        document.getElementById('especialidad2').style.display = 'none';
        	$("#cosa3").prop('checked',false);
        	$("#cosa4").prop('disabled',true);
        	$("#cosa3").prop('disabled',false);
        	$("#numeroJunta").val("");
+       	$("#especialidad").val("");
+    });
+
+    $("#cosa5").click(function(){
+        document.getElementById('especialidad').style.display = 'block';
+        document.getElementById('especialidad2').style.display = 'block';
+        $("#cosa6").prop('checked',false);
+        $("#cosa5").prop('disabled',true);
+        $("#cosa6").prop('disabled',false);
+        $("#especialidad").focus();
+    });
+    $("#cosa6").click(function(){
+        document.getElementById('especialidad').style.display = 'none';
+        document.getElementById('especialidad2').style.display = 'none';
+        $("#cosa5").prop('checked',false);
+        $("#cosa6").prop('disabled',true);
+        $("#cosa5").prop('disabled',false);
+        $("#especialidad").val("");
     });
 
 });
@@ -48,7 +82,7 @@ $(document).ready(function(){
 @section('bread')
 @if($idRole == 'doctor')
 	<li class="breadcrumb-item">
-	  <a href="/user">Dentista</a>
+	  <a href="/user">Odontologo</a>
 	</li>
 @endif
 @if($idRole == 'asistente')

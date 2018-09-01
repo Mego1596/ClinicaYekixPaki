@@ -41,7 +41,7 @@
       	<input type="hidden" name="txtID" id="txtID"/>
       	<input type="hidden" name="txtFecha" id="txtFecha"/>
         <input type="hidden" name="pacienteID" id="pacienteID" value="{{$paciente->id}}">
-
+        <input type="hidden" name="encendido" id="encendido" value="{{$encendido}}">
 
       	<div class="form-row">	
       		<div class="form-group col-md-12">

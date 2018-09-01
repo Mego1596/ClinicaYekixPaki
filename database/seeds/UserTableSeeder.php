@@ -29,9 +29,9 @@ class UserTableSeeder extends Seeder
     		'special' 	     => 'all-access',
     	]);
         Role::create([
-            'name'           => 'Dentista',
+            'name'           => 'Odontologo',
             'slug'           => 'doctor',
-            'description'    => 'Rol de Dentista',
+            'description'    => 'Rol de Odontologo',
         ]);
         Role::create([
             'name'           => 'Asistente',
@@ -45,6 +45,12 @@ class UserTableSeeder extends Seeder
             'description'    => 'Rol de Suspendido',
         ]);
 
+        Role::create([
+            'name'           => 'Paciente',
+            'slug'           => 'paciente',
+            'description'    => 'Rol de Paciente',
+        ]);
+
         DB::table('role_user')->insert(['role_id' => '1','user_id'=>'1']);
 
         //Permisos de Dentista
@@ -54,8 +60,15 @@ class UserTableSeeder extends Seeder
         DB::table('permission_role')->insert(['permission_id' => '12' , 'role_id'=>'2']);
         DB::table('permission_role')->insert(['permission_id' => '16' , 'role_id'=>'2']);
         DB::table('permission_role')->insert(['permission_id' => '17' , 'role_id'=>'2']);
+        DB::table('permission_role')->insert(['permission_id' => '22' , 'role_id'=>'2']);
+        DB::table('permission_role')->insert(['permission_id' => '23' , 'role_id'=>'2']);
 
         //Permisos Asistente
+        DB::table('permission_role')->insert(['permission_id' => '6' , 'role_id'=>'3']);
+        DB::table('permission_role')->insert(['permission_id' => '7' , 'role_id'=>'3']);
+        DB::table('permission_role')->insert(['permission_id' => '8' , 'role_id'=>'3']);
+        DB::table('permission_role')->insert(['permission_id' => '9' , 'role_id'=>'3']);
+        DB::table('permission_role')->insert(['permission_id' => '10' , 'role_id'=>'3']);
         DB::table('permission_role')->insert(['permission_id' => '11' , 'role_id'=>'3']);
         DB::table('permission_role')->insert(['permission_id' => '12' , 'role_id'=>'3']);
         DB::table('permission_role')->insert(['permission_id' => '13' , 'role_id'=>'3']);
@@ -65,6 +78,12 @@ class UserTableSeeder extends Seeder
         DB::table('permission_role')->insert(['permission_id' => '18' , 'role_id'=>'3']);
         DB::table('permission_role')->insert(['permission_id' => '19' , 'role_id'=>'3']);
         DB::table('permission_role')->insert(['permission_id' => '21' , 'role_id'=>'3']);
+        DB::table('permission_role')->insert(['permission_id' => '22' , 'role_id'=>'3']);
+        DB::table('permission_role')->insert(['permission_id' => '23' , 'role_id'=>'3']);
 
+
+        //Permisos Paciente
+        DB::table('permission_role')->insert(['permission_id' => '16' , 'role_id'=>'5']);
+        DB::table('permission_role')->insert(['permission_id' => '17' , 'role_id'=>'5']);
     }
 }

@@ -64,20 +64,24 @@ class UserController extends Controller
                 ->with('tipo', 'danger');
             }
         }
-
+        
+        $numero = DB::table('users')->select('id')->max('id');
         $user = new User();
         $user->nombre1 = $request->nombre1;
         $user->apellido1 = $request->apellido1;
-        $user->name = $request->nombre1.".".$request->apellido1;
+        $user->name = $request->nombre1.".".$request->apellido1.$numero;
         $user->email = $request->email;
         $user->password =bcrypt($request->password);
         $user->numeroJunta = $request->numeroJunta;
+        $user->especialidad = $request->especialidad;
+
         if(!is_null($request['nombre2']))
             $user->nombre2 = $request->nombre2;
         if(!is_null($request['nombre3']))
             $user->nombre3 = $request->nombre3;
          if(!is_null($request['apellido2']))
             $user->apellido2 = $request->apellido2;
+
         if($user->save()){
             $user->roles()->sync($request->get('roles'));
             if($request['role']=='doctor'){
@@ -139,13 +143,22 @@ class UserController extends Controller
             }
         }
 
-        $user->update($request->all());
-
-        if($request['role']=='doctor'){
-                return redirect()->route('user.index')->with('info','Usuario Actualizado con exito');
-        }elseif ($request['role']=='asistente') {
-                return redirect()->route('user.asistente')->with('info','Usuario Actualizado con exito');
-            }
+        $userAux = User::find($user->id);
+        $userAux->nombre1     = $request->nombre1;
+        $userAux->nombre2     = $request->nombre2;
+        $userAux->nombre3     = $request->nombre3;
+        $userAux->apellido1   = $request->apellido1;
+        $userAux->apellido2   = $request->apellido2;
+        $userAux->email       = $request->email;
+        $userAux->numeroJunta = $request->numeroJunta;
+        $userAux->especialidad = $request->especialidad;
+        if($userAux->save()){
+            if($request['role']=='doctor'){
+                    return redirect()->route('user.index')->with('info','Usuario Actualizado con exito');
+            }elseif ($request['role']=='asistente') {
+                    return redirect()->route('user.asistente')->with('info','Usuario Actualizado con exito');
+                }
+        }
     }
 
     /**

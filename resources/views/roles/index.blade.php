@@ -52,7 +52,7 @@
 										@endcan
 									</td>
 									<td width="10px">
-									@if($role->id > 4 )
+									@if($role->id > 5 )
 										@can('roles.edit')
 											<a href="{{ route('roles.edit', $role->id) }}" class="btn btn-sm btn-default bg-success" style="color: white">Editar</a>
 										@endcan
@@ -60,7 +60,7 @@
 									</td>
 
 									<td width="10px">
-									@if($role->id > 4 )
+									@if($role->id > 5 )
 										@can('roles.destroy')
 											{!! Form::open(['route' => ['roles.destroy', $role->id],
 											'method' => 'DELETE']) !!}

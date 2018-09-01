@@ -74,7 +74,7 @@ Route::middleware(['auth'])->group(function(){
 
 	//Full Calendar
 
-	Route::get('events', 'EventsController@index')->name('events.index');
+	Route::get('events', 'EventsController@index')->name('events.index')->middleware('permission:paciente.trabajo');
 	Route::post('events', 'EventsController@addEvent')->name('events.add');
 
 	//Pacientes

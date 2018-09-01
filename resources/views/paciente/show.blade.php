@@ -82,11 +82,9 @@
 								{{ Form::label('telefono', 'Telefono') }}
 								{{ Form::text('telefono', null, ['class'=>'form-control', 'disabled']) }}
 							</div>
-							<div class="col-md-1">
+							<div class="col-md-2">
 								{{ Form::label('sexo', 'Sexo') }}
 								{{ Form::text('sexo', null, ['class'=>'form-control', 'disabled']) }}
-							</div>
-							<div class="col-md-1">
 							</div>
 							<div class="col-md-3">
 								{{ Form::label('email', 'Correo Electronico') }}
@@ -127,10 +125,12 @@
 						</div>
 							<br/>
 						<div class="row">
+						@can('admin.historiaO')
 							<div class="col-md-12">
 								{{ Form::label('historiaOdontologica','Historia Odontologica')}}
 								{{ Form::textarea('historiaOdontologica',null,['class' => 	'form-control','disabled','rows' => '3'])}}
 							</div>
+						@endcan
 						</div>
 							<br/>
 						<a href="{{ route('paciente.agenda', $paciente->id) }}" class="btn btn-sm btn-default bg-info" style="color: white">Agendar Cita

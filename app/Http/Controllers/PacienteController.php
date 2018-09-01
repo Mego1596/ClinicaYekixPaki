@@ -7,9 +7,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 use App\Procedimiento;
 use App\Events;
 use App\Paciente;
+use App\User;
 use Calendar;
 use Validator;
 
@@ -21,9 +23,20 @@ class PacienteController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        $pacientes = Paciente::paginate();  
-        return view('paciente.index', compact("pacientes"));
+    {   
+        Auth::user()->id;
+        $loggedUser=Auth::id();
+        $result =  DB::table('users')->join('role_user', 'users.id', '=', 'role_user.user_id')->where('users.id', '=', $loggedUser)->value('role_id');
+
+        if($result == 5){
+            $pacientes = Paciente::where('email',Auth::user()->email)->paginate(1);
+            $head = 'Paciente';
+            return view('paciente.index', compact('pacientes','head'));
+        }else{
+            $pacientes = Paciente::paginate(5); 
+            $head = 'Lista de Pacientes';
+            return view('paciente.index', compact("pacientes",'head')); 
+        }
     }
 
     /**
@@ -44,7 +57,6 @@ class PacienteController extends Controller
      */
     public function store(Request $request)
     {
-        //dd($request->all());
         $valores = $request->all();
         //Verificando si estan todos los campos obligatorios
         if(is_null($valores['nombre1']) or is_null($valores['apellido1']) or is_null($valores['fechaNacimiento']) or is_null($valores['telefono']) or is_null($valores['sexo'])
@@ -55,28 +67,38 @@ class PacienteController extends Controller
                 ->with('tipo', 'danger');
         }
 
+        $fecha_actual = \Carbon::now();
+        $anio = substr($fecha_actual,2,2);
         $paciente = new Paciente();
         $paciente->nombre1               = $request->nombre1;
         $apellido                        = $request->apellido1;
         $inicio                          = strtoupper($request->apellido1[0]);
         $apellido[0]                     =$inicio;
-        $inicio                          =$inicio."%";
+        $inicio                          =$inicio."%".$anio;
         $string = "SELECT expediente FROM pacientes WHERE expediente LIKE '".$inicio."' AND id IN (SELECT MAX(id) FROM pacientes WHERE expediente LIKE '".$inicio."')";
         $query                           = DB::select( DB::raw($string));
+
         if($query != NULL){
             foreach ($query as $key => $value) {
-            $paciente->expediente        =$apellido[0]. strval((int) substr($value->expediente,1)+1);
+
+                if( (int) substr($value->expediente,1,3) <= 9 ){
+                    $paciente->expediente =$apellido[0]."00".strval((int) substr($value->expediente,1,3)+1)."-".$anio;
+                }elseif ( (int) substr($value->expediente,1,3) >= 10 && (int) substr($value->expediente,1,3) <= 99 ) {
+                        $paciente->expediente =$apellido[0]."0".strval((int) substr($value->expediente,1,3)+1)."-".$anio;
+                }else{
+                    $paciente->expediente =$apellido[0].strval((int) substr($value->expediente,1,3)+1)."-".$anio;
+                }
             }
         }else{
-            $paciente->expediente        = $apellido[0]."1";
+            $paciente->expediente         = $apellido[0]."001-".$anio;
         }
 
-        $paciente->apellido1             = $apellido;
-        $paciente->fechaNacimiento       = $request->fechaNacimiento;
-        $paciente->telefono              = $request->telefono;
-        $paciente->sexo                  = $request->sexo;
-        $paciente->domicilio             = $request->domicilio;
-        $paciente->ocupacion             = $request->ocupacion;
+        $paciente->apellido1              = $apellido;
+        $paciente->fechaNacimiento        = $request->fechaNacimiento;
+        $paciente->telefono               = $request->telefono;
+        $paciente->sexo                   = $request->sexo;
+        $paciente->domicilio              = $request->domicilio;
+        $paciente->ocupacion              = $request->ocupacion;
 
         //campos opcionales
         if(!is_null($valores['direccion_de_trabajo']))
@@ -96,6 +118,22 @@ class PacienteController extends Controller
          if(!is_null($valores['historiaOdontologica']))
             $paciente->historiaOdontologica = $request->historiaOdontologica;        
         if($paciente->save()){
+
+            $numero = DB::table('users')->select('id')->max('id');
+            $user = new User();
+            $user->nombre1 = $request->nombre1;
+            $user->apellido1 = $request->apellido1;
+            $user->name = $request->nombre1.".".$request->apellido1.$numero;
+            $user->email = $request->email;
+            $user->password =bcrypt($request->password);
+            if(!is_null($request['nombre2']))
+            $user->nombre2 = $request->nombre2;
+            if(!is_null($request['nombre3']))
+            $user->nombre3 = $request->nombre3;
+            if(!is_null($request['apellido2']))
+            $user->apellido2 = $request->apellido2;
+            $user->save();
+            $user->roles()->sync(5);
             return redirect()->route('paciente.index',$paciente->id)
                 ->with('info','Paciente guardado con exito')
                 ->with('tipo', 'success');
@@ -154,7 +192,7 @@ class PacienteController extends Controller
             $request['email'] = "Sin correo electronico";
         
         $paciente->update($request->all());
-        return redirect()->route('paciente.edit',$paciente->id)
+        return redirect()->route('paciente.index')
             ->with('info','Paciente actualizado con exito')
             ->with('tipo', 'success');
     }
@@ -182,7 +220,6 @@ class PacienteController extends Controller
         }else{
             $encendido = false;
         }
-
         $procedimiento = Procedimiento::pluck('nombre', 'id')->toArray();
 
         $events = Events::select('id','paciente_id','start_date','end_date','procedimiento_id','descripcion')->where('paciente_id',$paciente->id)->get();
@@ -221,6 +258,8 @@ class PacienteController extends Controller
 
             ])->setCallbacks([
             'dayClick' => 'function(date,jsEvent,view){
+                //solo si es admin o asistente puede agregar la cita
+                if($("#encendido").val() == 1){
                     $("#btnAgregar").prop("disabled",false);
                     $("#btnEliminar").prop("disabled",true);
                     $("#btnModificar").prop("disabled",true);
@@ -234,10 +273,13 @@ class PacienteController extends Controller
                            $("#start_date").val(horaInicio);
                     }
                     $("#exampleModal").modal();
-                }',
+                }
+            }',
 
 
             'eventClick' => 'function(calEvent,jsEvent,view){
+                //solo si es admin o asistente puede editar la cita
+                if($("#encendido").val() == 1){
                     $("#btnAgregar").prop("disabled",true);
                     $("#btnEliminar").prop("disabled",false);
                     $("#btnModificar").prop("disabled",false);
@@ -254,7 +296,30 @@ class PacienteController extends Controller
                     $("#end_date").val(horaFin[0]);
                     $("#procedimiento_id").val(calEvent.procedimiento);
                     $("#exampleModal").modal();     
-                 }',
+                }else{
+                    $("#btnAgregar").hide();
+                    $("#btnEliminar").hide();
+                    $("#btnModificar").hide();
+                    $("#txtDescripcion").val(calEvent.descripcion);
+                    $("#txtDescripcion").prop("disabled",true);
+                    $("#txtTitulo").val(calEvent.title);
+                    $("#txtTitulo").prop("disabled",true);
+                    $("#txtID").val(calEvent.id);
+                    $("#txtColor").val(calEvent.color);
+                    FechaHora= calEvent.start._i.split("T");
+                    horaInicio=FechaHora[1].split("-");
+                    FechaHora2= calEvent.end._i.split("T");
+                    horaFin=FechaHora2[1].split("-");
+                    $("#txtFecha").val(FechaHora[0]);
+                    $("#start_date").val(horaInicio[0]);
+                    $("#start_date").prop("disabled",true);
+                    $("#end_date").val(horaFin[0]);
+                    $("#end_date").prop("disabled",true);
+                    $("#procedimiento_id").val(calEvent.procedimiento);
+                    $("#procedimiento_id").prop("disabled",true);
+                    $("#exampleModal").modal(); 
+                }
+            }',
 
             'eventDrop' => 'function(calEvent,jsEvent,view){
                     $("#txtID").val(calEvent.id);
@@ -272,7 +337,7 @@ class PacienteController extends Controller
 
             ]);
 
-        return view('paciente.agenda',compact('procedimiento','calendar_details','paciente'));
+        return view('paciente.agenda',compact('procedimiento','calendar_details','paciente','encendido'));
     }
 
     public function addEvent(Request $request){

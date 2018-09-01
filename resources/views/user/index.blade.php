@@ -2,7 +2,7 @@
 
 @section('bread')
 <li class="breadcrumb-item">
-  <a class="breadcrumb-item active">Dentista</a>
+  <a class="breadcrumb-item active">Odontologo</a>
 </li>
 @endsection
 
@@ -12,7 +12,7 @@
 			<div class="col-md-12 col-md-offset-2">
 				<div class="card card-default">
 					<div class="card-header text-center">
-						<h4>Lista de dentistas</h4>
+						<h4>Lista de Odontologos</h4>
 					</div>
 					<div class="card-body">
 						<table class="table table-striped table-hover">
@@ -97,7 +97,7 @@
 										@endcan
 									</td>
 									<td width="10px">
-										<a href="{{ route('user.revoke', ['user' =>$user->id, 'idrol' => $sub]) }}" class="btn btn-sm btn-default bg-danger" style="color: white">Revocar Permisos
+										<a href="{{ route('user.revoke', ['user' =>$user->id, 'idrol' => $sub]) }}" class="btn btn-sm btn-default bg-warning" style="color: white">Revocar Permisos
 										</a>
 									</td>
 								</tr>

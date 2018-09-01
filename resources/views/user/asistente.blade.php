@@ -96,7 +96,7 @@
 										@endcan
 									</td>
 									<td width="10px">
-										<a href="{{ route('user.revoke', ['user' =>$user->id, 'idrol' => $sub]) }}" class="btn btn-sm btn-default bg-danger" style="color: white">Revocar Permisos
+										<a href="{{ route('user.revoke', ['user' =>$user->id, 'idrol' => $sub]) }}" class="btn btn-sm btn-default bg-warning" style="color: white">Revocar Permisos
 										</a>
 									</td>
 								</tr>

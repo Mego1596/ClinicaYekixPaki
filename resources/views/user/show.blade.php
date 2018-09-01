@@ -3,7 +3,7 @@
 @section('bread')
 @if($idRole == 'doctor')
 	<li class="breadcrumb-item">
-	  <a href="/user">Dentista</a>
+	  <a href="/user">Odontologo</a>
 	</li>
 @endif
 @if($idRole == 'asistente')
@@ -41,20 +41,20 @@
 				<div class="card-body justify-content-center">
 						{!! Form::model($user, ['route' => ['user.update', $user->id], 'method' => 'PUT']) !!}
 						<div class="row">
-							<div class="col-md-2">
+							<div class="col-md-3">
 								{{ Form::hidden('idRole', $idRole , ['class' => 'form-control','disabled'])}}
 								<div class="form-group">
 									{{ Form::label('nombre1', 'Primer Nombre') }}
 									{{ Form::text('nombre1', null, ['class' => 'form-control','disabled'])}}
 								</div>
 							</div>
-							<div class="col-md-2">
+							<div class="col-md-3">
 								<div class="form-group">
 									{{ Form::label('nombre2', 'Segundo Nombre') }}
 									{{ Form::text('nombre2', null, ['class' => 'form-control','disabled'])}}
 								</div>
 							</div>
-							<div class="col-md-2">
+							<div class="col-md-3">
 								<div class="form-group">
 									{{ Form::label('nombre3', 'Tercer nombre ', ['style' => 'display:block','id'=>'nombre3.2']) }}
 									{{ Form::text('nombre3', null, ['class' => 'form-control', 'style'=>'display:block', 'id' => 'nombre3','disabled'])}}
@@ -62,21 +62,21 @@
 							</div>
 						</div>
 						<div class="row">
-							<div class="col-md-2">
+							<div class="col-md-3">
 								{{ Form::hidden('role',$idRole, ['class' => 'form-control']) }}
 								<div class="form-group">
 									{{ Form::label('apellido1', 'Primer apellido ') }}
 									{{ Form::text('apellido1', null, ['class' => 'form-control','disabled'])}}
 								</div>
 							</div>
-							<div class="col-md-2">
+							<div class="col-md-3">
 								<div class="form-group">
 									{{ Form::label('apellido2', 'Segundo apellido ') }}
 									{{ Form::text('apellido2', null, ['class' => 'form-control','disabled'])}}
 								</div>
 							</div>
 							@if($idRole=='doctor')
-							<div class="col-md-2">
+							<div class="col-md-3">
 								<div class="form-group">
 									{{ Form::label('numeroJunta', 'Numero de Junta') }}
 									{{ Form::text('numeroJunta',null, ['class' => 'form-control','disabled'])}}
@@ -84,7 +84,7 @@
 							</div>
 							@endif
 							@if($idRole=='asistente')
-								<div class="col-md-2">
+								<div class="col-md-3">
 									<div class="form-group">
 										{{ Form::label('numeroJunta', 'Numero de Junta ', ['style' => 'display:block','id'=>'numeroJunta2']) }}
 										{{ Form::text('numeroJunta', null, ['class' => 'form-control', 'style'=>'display:block', 'id' => 'numeroJunta','disabled'])}}
@@ -97,6 +97,12 @@
 							<div class="form-group">
 								{{ Form::label('description', 'E-Mail') }}
 								{{ Form::text('email', null, ['class' => 'form-control','disabled'])}}
+							</div>
+						</div>
+						<div class="col-md-3">
+							<div class="form-group">
+								{{ Form::label('especialidad', 'Especialidad') }}
+								{{ Form::text('especialidad', null, ['class' => 'form-control','disabled'])}}
 							</div>
 						</div>
 					</div>

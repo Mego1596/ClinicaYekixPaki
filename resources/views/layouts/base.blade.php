@@ -100,7 +100,9 @@
             <span>Navegar</span>
           </a>
           <div class="dropdown-menu" aria-labelledby="pagesDropdown">
-            <a class="dropdown-item" href="/events">Citas</a>
+            @can('pacientes.trabajo')
+            <a class="dropdown-item" href="{{route('events.index')}}">Citas</a>
+            @endcan
 
             @can('procedimientos.index')
             <a class="dropdown-item" href="{{route('procedimiento.index')}}">Procedimientos</a>
