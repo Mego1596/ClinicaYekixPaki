@@ -6,5 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class HistoriaMedica extends Model
 {
-    //
+    protected $fillable = [
+        'descripcion'
+    ];
 }

@@ -14,7 +14,7 @@ class HistoriaMedicaController extends Controller
      */
     public function index()
     {
-        //
+        
     }
 
     /**

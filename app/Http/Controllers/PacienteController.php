@@ -356,7 +356,7 @@ class PacienteController extends Controller
         $event->paciente_id         = $request['pacienteID'];
         if(strpos($request["txtFecha"], "T")){
             $event->start_date          = str_replace("T", " ", $request['txtFecha']);
-            $str = substr($request['txtFecha'],0,-8);
+            $str = substr($request['txtFecha'],0,-9);
             $event->end_date            = $str." ".$request['end_date'];
         }else{
             $event->start_date          = $request['txtFecha']." ".$request['start_date'];

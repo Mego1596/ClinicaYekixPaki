@@ -133,7 +133,7 @@
 						@endcan
 						</div>
 							<br/>
-						<a href="{{ route('paciente.agenda', $paciente->id) }}" class="btn btn-sm btn-default bg-info" style="color: white">Agendar Cita
+						<a href="{{ route('paciente.agenda', $paciente->id) }}" class="btn btn-sm btn-default bg-info" style="color: white">Calendario
 						</a>
 					</div>
 					{!! Form::close() !!}
