@@ -28,15 +28,16 @@ class PacienteController extends Controller
         Auth::user()->id;
         $loggedUser=Auth::id();
         $result =  DB::table('users')->join('role_user', 'users.id', '=', 'role_user.user_id')->where('users.id', '=', $loggedUser)->value('role_id');
-
         if($result == 5){
             $pacientes = Paciente::where('email',Auth::user()->email)->paginate(1);
+            $user = User::where('email','=',Auth::user()->email)->paginate(1);
             $head = 'Paciente';
-            return view('paciente.index', compact('pacientes','head'));
+            return view('paciente.index', compact('pacientes','head','user'));
         }else{
-            $pacientes = Paciente::paginate(5); 
+            $pacientes = Paciente::paginate(5);
+            $user = User::paginate(5); 
             $head = 'Lista de Pacientes';
-            return view('paciente.index', compact("pacientes",'head')); 
+            return view('paciente.index', compact("pacientes",'head','user')); 
         }
     }
 
@@ -430,6 +431,27 @@ class PacienteController extends Controller
         }
 
         
+    }
+
+    public function search(Request $request){
+
+        if(!is_null($request['buscar'])){
+            $pacientes = Paciente::where('expediente','ILIKE', $request->buscar)->paginate();
+            foreach ($pacientes as $key => $value) {
+                $user = User::where('email','=',$value->email)->paginate(1);
+            }
+                $head = 'Lista de Pacientes';
+                return view('paciente.index', compact("pacientes",'head','user'))
+                    ->with('info', 'Busqueda Exitosa');
+
+        }
+        else{
+            $pacientes = Paciente::paginate(5);
+            $user = User::paginate(5); 
+            $head = 'Lista de Pacientes';
+            return view('paciente.index', compact("pacientes",'head','user'));
+        } 
+
     }
 
 }
