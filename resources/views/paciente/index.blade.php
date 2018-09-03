@@ -18,7 +18,9 @@
 					</div>
 					<br/>
 					@can('pacientes.create')
-				    {!! Form::open(array('route' => 'paciente.search','id'=> 'form', 'method' => 'POST','class' => 'd-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0', 'autocomplete'=>'off') ) !!}
+					<div class="row" style="align-self: left"> 
+					<div class="col-md-3" style="margin-left: 20px">
+				    {!! Form::open(array('route' => 'paciente.search','id'=> 'form', 'method' => 'POST','class' => 'd-none d-md-inline-block form-inline ml-auto mr-9 mr-md-5 my-2 my-md-0', 'autocomplete'=>'off') ) !!}
 				        <div class="input-group">
 				          <input type="text" class="form-control" placeholder="Buscar..." aria-label="Search" aria-describedby="basic-addon2" id="buscar" name="buscar">
 				          <div class="input-group-append">
@@ -30,8 +32,10 @@
 				        <br/>
 				    	<input class="btn btn-primary" type="submit" name="Restablecer" value="Ver Lista Completa">
 
-				    {!! Form::close() !!}
+				    {!! Form::close() !!}.
+				    </div>
 				    @endcan
+					</div>
 					<div class="card-body">
 						<table class="table table-striped table-hover">
 							<thead>

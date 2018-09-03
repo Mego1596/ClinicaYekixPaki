@@ -399,6 +399,11 @@ class PacienteController extends Controller
             return redirect()->route('paciente.agenda',$request->pacienteID)->withInput()->withErrors($validator);
         }
         if(isset($_POST["btnAgregar"])){
+
+
+
+
+
         $event = new Events();
         $event->paciente_id         = $request['pacienteID'];
         if(strpos($request["txtFecha"], "T")){
@@ -412,6 +417,10 @@ class PacienteController extends Controller
         $event->procedimiento_id    = $request['procedimiento_id'];
         $event->descripcion         = $request['txtDescripcion'];
         $event->save();
+
+
+
+        
         \Session::flash('success','Cita añadida exitosamente');
         return redirect()->route('paciente.agenda',$request->pacienteID)->with('info','Cita guardada con exito');
 
