@@ -14,6 +14,19 @@
 					<div class="card-header text-center">
 						<h4>Lista de Odontologos</h4>
 					</div>
+				    {!! Form::open(array('route' => 'user.search1','id'=> 'form', 'method' => 'POST','class' => 'd-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0', 'autocomplete'=>'off') ) !!}
+				        <div class="input-group">
+				          <input type="text" class="form-control" placeholder="Buscar..." aria-label="Search" aria-describedby="basic-addon2" id="buscar" name="buscar">
+				          <div class="input-group-append">
+				            <button class="btn btn-primary" type="submit">
+				              <i class="fas fa-search"></i>
+				            </button>
+				          </div>
+				        </div>
+				        <br/>
+				    	<input class="btn btn-primary" type="submit" name="Restablecer" value="Ver Lista Completa">
+
+				    {!! Form::close() !!}
 					<div class="card-body">
 						<table class="table table-striped table-hover">
 							<thead>

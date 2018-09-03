@@ -15,12 +15,28 @@
 					<div class="card-header text-center">
 						<h4>Lista de asistentes</h4>
 					</div>
+
+				    {!! Form::open(array('route' => 'user.search2','id'=> 'form', 'method' => 'POST','class' => 'd-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0', 'autocomplete'=>'off') ) !!}
+				        <div class="input-group">
+				          <input type="text" class="form-control" placeholder="Buscar..." aria-label="Search" aria-describedby="basic-addon2" id="buscar" name="buscar">
+				          <div class="input-group-append">
+				            <button class="btn btn-primary" type="submit">
+				              <i class="fas fa-search"></i>
+				            </button>
+				          </div>
+				        </div>
+				        <br/>
+				    	<input class="btn btn-primary" type="submit" name="Restablecer" value="Ver Lista Completa">
+
+				    {!! Form::close() !!}
+
 					<div class="card-body">
 						<table class="table table-striped table-hover">
 							<thead>
 								<tr>
 									<th width="10px">ID</th>
 									<th>Nombre</th>
+									<th>Nombre de Usuario</th>
 									@if(sizeof($users) == 0)
 									<th width="237">
 										@can('users.create')
@@ -71,6 +87,9 @@
 									@if($user->nombre2 != 'N/A' && $user->nombre3 != 'N/A' && $user->apellido2 != 'N/A')
 									<td>{{$user->nombre1." ".$user->nombre2." ".$user->nombre3." ".$user->apellido1." ".$user->apellido2}}</td>
 									@endif
+									<td>
+										{{$user->name}}
+									</td>
 									<td width="10px">
 										@can('users.show')
 											<a href="{{ route('user.show', ['user' => $user->id, 'idrol' => $sub]) }}" class="btn btn-sm btn-default bg-info" style="color: white">Ver
