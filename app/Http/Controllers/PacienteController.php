@@ -250,6 +250,10 @@ class PacienteController extends Controller
     public function destroy(Paciente $paciente)
     {   
         $user = User::select('id')->where('email',$paciente->email)->value('id');
+        $historia = HistoriaMedica::where('paciente_id',$paciente->id)->get();
+        foreach ($historia as $key => $value) {
+            $value->delete();
+        }
         $aux = User::find($user);
         $aux->delete();
         $paciente->delete();
