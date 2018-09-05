@@ -18,6 +18,16 @@
 					<div class="row" style="align-self: left"> 
 						<div class="col-md-3" style="margin-left: 20px">
 					    {!! Form::open(array('route' => 'user.search1','id'=> 'form', 'method' => 'POST','class' => 'd-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0', 'autocomplete'=>'off') ) !!}
+					    <div>
+							<select class="form-control" name="buscador" id="buscador">
+								<option id="0">Buscar Por...</option>
+								<option id="1">Nombre</option>
+								<option id="2">Apellido</option>
+								<option id="3">No. de Junta</option>
+								<option id="4">Nombre de Usuario</option>
+							</select>
+						</div>
+						<br/>
 					        <div class="input-group">
 					          <input type="text" class="form-control" placeholder="Buscar..." aria-label="Search" aria-describedby="basic-addon2" id="buscar" name="buscar">
 					          <div class="input-group-append">
@@ -39,7 +49,7 @@
 									<th width="10px">ID</th>
 									<th>Nombre</th>
 									<th>Numero de Junta</th>
-
+									<th>Nombre de Usuario</th>
 									@if(sizeof($users) == 0)
 									<th width="237">
 										@can('users.create')
@@ -63,34 +73,9 @@
 								@foreach($users as $user)
 								<tr>
 									<td>{{$user->id}}</td>
-									@if($user->nombre2 == 'N/A' && $user->nombre3 == 'N/A' && $user->apellido2 == 'N/A')
-									<td>{{$user->nombre1." ".$user->apellido1}}</td>
-									@endif
-
-
-									@if($user->nombre2 == 'N/A' && $user->nombre3 == 'N/A' && $user->apellido2 != 'N/A')
-									<td>{{$user->nombre1." ".$user->apellido1." ".$user->apellido2}}</td>
-									@endif
-
-
-									@if($user->nombre2 != 'N/A' && $user->nombre3 == 'N/A' && $user->apellido2 == 'N/A')
-									<td>{{$user->nombre1." ".$user->nombre2." ".$user->apellido1}}</td>
-									@endif
-
-
-									@if($user->nombre2 != 'N/A' && $user->nombre3 == 'N/A' && $user->apellido2 != 'N/A')
-									<td>{{$user->nombre1." ".$user->nombre2." ".$user->apellido1." ".$user->apellido2}}</td>
-									@endif
-
-
-									@if($user->nombre2 != 'N/A' && $user->nombre3 != 'N/A' && $user->apellido2 == 'N/A')
-									<td>{{$user->nombre1." ".$user->nombre2." ".$user->nombre3." ".$user->apellido1}}</td>
-									@endif
-
-									@if($user->nombre2 != 'N/A' && $user->nombre3 != 'N/A' && $user->apellido2 != 'N/A')
 									<td>{{$user->nombre1." ".$user->nombre2." ".$user->nombre3." ".$user->apellido1." ".$user->apellido2}}</td>
-									@endif
 									<td>{{$user->numeroJunta}}</td>
+									<td>{{$user->name}}</td>
 									<td width="10px">
 										@can('users.show')
 											<a href="{{ route('user.show', ['user' => $user->id, 'idrol' => $sub]) }}" class="btn btn-sm btn-default bg-info" style="color: white">Ver

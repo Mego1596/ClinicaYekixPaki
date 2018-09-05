@@ -19,7 +19,7 @@ $(document).ready(function(){
        	$("#cosa").prop('checked',false);
        	$("#cosa2").prop('disabled',true);
        	$("#cosa").prop('disabled',false);
-       	$("nombre3").val('');
+       	$("nombre3").val();
     });
 
 });
@@ -27,7 +27,7 @@ $(document).ready(function(){
 <script>
 window.onload = function() {
 	var result = document.getElementById('nombre3').value;
-	if(result=='N/A'){
+	if(result==''){
 		$("#cosa2").prop('checked',true);
        	$("#cosa2").prop('disabled',true);
        	document.getElementById('nombre3').style.display = 'none';

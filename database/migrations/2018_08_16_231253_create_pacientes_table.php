@@ -16,10 +16,10 @@ class CreatePacientesTable extends Migration
         Schema::create('pacientes', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nombre1');
-            $table->string('nombre2')->nullable()->default('N/A');
-            $table->string('nombre3')->nullable()->default('N/A');
+            $table->string('nombre2')->nullable();
+            $table->string('nombre3')->nullable();
             $table->string('apellido1');
-            $table->string('apellido2')->nullable()->default('N/A');
+            $table->string('apellido2')->nullable();
             $table->string('recomendado')->nullable()->default('-');
             $table->string('historiaOdontologica')->nullable()->default('-');
             $table->date('fechaNacimiento');
@@ -31,6 +31,8 @@ class CreatePacientesTable extends Migration
             $table->string('responsable')->nullable()->default("Sin responsable");
             $table->string('direccion_de_trabajo')->nullable()->default("Sin direccion de trabajo");
             $table->string('expediente')->unique();
+            $table->integer('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });
     }

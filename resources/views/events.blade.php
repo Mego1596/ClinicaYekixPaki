@@ -58,8 +58,13 @@
       		{!! Form::label('txtDescripcion', 'Descripcion:')!!}
       		{!! Form::textarea('txtDescripcion', null, ['class' => 'form-control', 'rows' => '2'])!!}
       	</div>
-      	{!! Form::label('procedimiento_id', 'Procedimiento:')!!}
-      	{!! Form::select('procedimiento_id', $procedimiento, null, ['placeholder' => 'Elija un procedimiento'])!!}
+        @can('pacientes.trabajo')
+        <div class="row">
+          <div class="col-md-4" style="margin-left: 100px">
+              <a class="btn btn-info" href="#" name="plan" id="plan">Gestionar Plan de Tratamiento</a>
+          </div>
+        </div>
+        @endcan
 
       <div class="modal-footer">
 		{!! Form::submit('Añadir Cita', ['class' => 'btn btn-success','id' => 'btnAgregar', 'name' => 'btnAgregar']) !!}
@@ -76,40 +81,27 @@
 
 
 @section('calendar')
+
+<script type="text/javascript">
+        document.getElementById("plan").onclick = function() {
+          var x=parseInt($('#txtID').val());
+          this.setAttribute("href","planTratamiento/"+x);
+          //this.setAttribute("href","{{route('planTratamiento.index', ['cita' => ''])}}" )
+        }
+</script>
     {!! $calendar_details->script() !!}
 
-    <script type="text/javascript">
+<script type="text/javascript">
 
-	/*function EnviarInformacion(accion,objEvento,modal){
-		$.ajax({
-			type:'POST',
-			url:'eventos.php?accion='+accion,
-			data:objEvento,
-			success:function(msg){
-				if(msg){
-					$('#CalendarioWeb').fullCalendar('refetchEvents');
-					if(!modal){
-						$('#exampleModal').modal('toggle');
-					}
-				}
-			},
-			error:function(){
-				alert('Hay un error...');
-			}
-		});
-	}*/
-
-	$('.clockpicker').clockpicker();
-		
-	function limpiarFormulario(){
-		$('#txtID').val("");
-		$('#txtDescripcion').val("");
-		$('#txtTitulo').val("");
-		$('#txtColor').val("");
-		$('#start_date').val("");
-		$('#end_date').val("");
-		$('#procedimiento_id').val("");
-	}
-
+  	$('.clockpicker').clockpicker();
+  	function limpiarFormulario(){
+  		$('#txtID').val("");
+  		$('#txtDescripcion').val("");
+  		$('#txtTitulo').val("");
+  		$('#txtColor').val("");
+  		$('#start_date').val("");
+  		$('#end_date').val("");
+  		//$('#procedimiento_id').val("");
+	 }
 </script>
 @endsection

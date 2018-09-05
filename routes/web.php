@@ -109,4 +109,18 @@ Route::middleware(['auth'])->group(function(){
 	Route::delete('historiaMedica/{historia}', 'HistoriaMedicaController@destroy')->name('historia.destroy')->middleware('permission:admin.eliminarHistoria');
 
 
+	//Plan de Tratamiento
+	Route::post('planTratamiento/store', 'PlanTratamientoController@store')->name('planTratamiento.store')->middleware('permission:planTratamientos.create');
+
+	Route::get('planTratamiento/{cita}', 'PlanTratamientoController@index')->name('planTratamiento.index')->middleware('permission:planTratamientos.index');
+
+	Route::get('planTratamiento/create', 'PlanTratamientoController@create')->name('planTratamiento.create')->middleware('permission:planTratamientos.create');
+
+	Route::put('planTratamiento/update/{planTratamiento}', 'PlanTratamientoController@update')->name('planTratamiento.update')->middleware('permission:procedimientos.edit');
+
+	Route::get('planTratamiento/show/{planTratamiento}', 'PlanTratamientoController@show')->name('planTratamiento.show')->middleware('permission:planTratamientos.show');
+
+	Route::delete('planTratamiento/destroy/{planTratamiento}', 'PlanTratamientoController@destroy')->name('planTratamiento.destroy')->middleware('permission:planTratamientos.destroy');
+
+	Route::get('planTratamiento/edit/{planTratamiento}', 'PlanTratamientoController@edit')->name('planTratamiento.edit')->middleware('permission:planTratamientos.edit');
 });

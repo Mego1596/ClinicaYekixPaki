@@ -21,6 +21,16 @@
 					<div class="row" style="align-self: left"> 
 					<div class="col-md-3" style="margin-left: 20px">
 				    {!! Form::open(array('route' => 'paciente.search','id'=> 'form', 'method' => 'POST','class' => 'd-none d-md-inline-block form-inline ml-auto mr-9 mr-md-5 my-2 my-md-0', 'autocomplete'=>'off') ) !!}
+						<div>
+							<select class="form-control" name="buscador" id="buscador">
+								<option id="0">Buscar Por...</option>
+								<option id="1">Nombre</option>
+								<option id="2">Apellido</option>
+								<option id="3">Expediente</option>
+								<option id="4">Nombre de Usuario</option>
+							</select>
+						</div>
+						<br/>
 				        <div class="input-group">
 				          <input type="text" class="form-control" placeholder="Buscar..." aria-label="Search" aria-describedby="basic-addon2" id="buscar" name="buscar">
 				          <div class="input-group-append">

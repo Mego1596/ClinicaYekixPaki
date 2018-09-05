@@ -22,28 +22,44 @@ class EventsController extends Controller
         }else{
             $encendido = false;
         }
-    	$procedimiento = Procedimiento::pluck('nombre', 'id')->toArray();
+    	//$procedimiento = Procedimiento::pluck('nombre', 'id')->toArray();
 
-    	$events = Events::select('id','paciente_id','start_date','end_date','procedimiento_id','descripcion')->get();
+    	$events = Events::select('id','paciente_id','start_date','end_date'/*,'procedimiento_id'*/,'descripcion')->get();
     	$event_list= [];
     	foreach ($events as $key => $event) {
-    		$proceso = Procedimiento::find($event->procedimiento_id);
+    		//$proceso = Procedimiento::find($event->procedimiento_id);
             $paciente = Paciente::find($event->paciente_id);
     		//poner aqui el paciente asociado a la cita
-    		$event_list[] =Calendar::event(
-    			$paciente->nombre1." ".$paciente->nombre2." ".$paciente->apellido1." ".$paciente->apellido2,
-    			false,
-    			new \DateTime($event->start_date),
-    			new \DateTime($event->end_date),
-    			$event->id,
-    			[
-    			'color' => $proceso->color,
-    			'descripcion' => $event->descripcion,
-    			'textColor' => $event->textcolor,
-    			'procedimiento' => $proceso->id,
-                'durationEditable' => false,
-    			]
-    		);
+            //if(is_null($proceso)){
+                $event_list[] =Calendar::event(
+                    $paciente->nombre1." ".$paciente->nombre2." ".$paciente->apellido1." ".$paciente->apellido2,
+                    false,
+                    new \DateTime($event->start_date),
+                    new \DateTime($event->end_date),
+                    $event->id,
+                    [
+                    /*'color'             => $proceso->color,*/
+                    'descripcion'       => $event->descripcion,
+                    'textColor'         => $event->textcolor,
+                    'durationEditable'  => false,
+                    ]
+                );
+            /*}else{
+                $event_list[] =Calendar::event(
+                    $paciente->nombre1." ".$paciente->nombre2." ".$paciente->apellido1." ".$paciente->apellido2,
+                    false,
+                    new \DateTime($event->start_date),
+                    new \DateTime($event->end_date),
+                    $event->id,
+                    [
+                    'color'             => $proceso->color,
+                    'descripcion'       => $event->descripcion,
+                    'textColor'         => $event->textcolor,
+                    'procedimiento'     => $proceso->id,
+                    'durationEditable'  => false,
+                    ]
+                );
+            }*/
     	}
     	
 
@@ -78,8 +94,8 @@ class EventsController extends Controller
 				 	$("#start_date").prop("disabled",true);
 				 	$("#end_date").val(horaFin[0]);
 				 	$("#end_date").prop("disabled",true);
-				 	$("#procedimiento_id").val(calEvent.procedimiento);
-				 	$("#procedimiento_id").prop("disabled",true);
+				 	//$("#procedimiento_id").val(calEvent.procedimiento);
+				 	//$("#procedimiento_id").prop("disabled",true);
 				 	$("#exampleModal").modal(); 	
 				 }',
 
@@ -93,12 +109,12 @@ class EventsController extends Controller
 				 	$("#txtFecha").val(fechaHora[0]);
 				 	$("#start_date").val(fechaHora[1]);
 				 	$("#end_date").val(fechaHora2[1]);
-				 	$("#procedimiento_id").val(calEvent.procedimiento);
+				 	//$("#procedimiento_id").val(calEvent.procedimiento);
 				 	document.getElementById("btnModificar").click();
 				 }',
 			]);
 
-    	return view('events',compact('procedimiento','calendar_details','loggedUser'));
+    	return view('events',compact(/*'procedimiento',*/'calendar_details','loggedUser'));
     }
 
     public function addEvent(Request $request){
@@ -106,7 +122,6 @@ class EventsController extends Controller
     		'paciente_id' 		=> 'required',
     		'start_date' 		=> 'required',
     		'end_date' 			=> 'required',
-    		'procedimiento_id' 	=> 'required' 
     	]);
 
     	if($validator->fails()){
@@ -119,7 +134,6 @@ class EventsController extends Controller
     		$event = Events::find($request["txtID"]);
     		$event->start_date			= $request['txtFecha']." ".$request['start_date'];
     		$event->end_date			= $request['txtFecha']." ".$request['end_date'];
-    		$event->procedimiento_id 	= $request['procedimiento_id'];
     		$event->save();
     		return Redirect::to('events')->with('info','Cita actualizada con exito');	
     	}

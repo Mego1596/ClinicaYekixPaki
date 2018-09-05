@@ -34,8 +34,8 @@ class PacienteController extends Controller
             $head = 'Paciente';
             return view('paciente.index', compact('pacientes','head','user'));
         }else{
-            $pacientes = Paciente::paginate(5);
-            $user = User::paginate(5); 
+            $pacientes = Paciente::paginate(10);
+            $user = User::paginate(10); 
             $head = 'Lista de Pacientes';
             return view('paciente.index', compact("pacientes",'head','user')); 
         }
@@ -59,6 +59,7 @@ class PacienteController extends Controller
      */
     public function store(Request $request)
     {
+
         $valores = $request->all();
         //Verificando si estan todos los campos obligatorios
 
@@ -76,16 +77,35 @@ class PacienteController extends Controller
                         ->with('tipo', 'danger');
                 }
 
-        $fecha_actual = \Carbon::now();
-        $anio = substr($fecha_actual,2,2);
-        $paciente = new Paciente();
-        $paciente->nombre1               = $request->nombre1;
-        $apellido                        = $request->apellido1;
-        $inicio                          = strtoupper($request->apellido1[0]);
-        $apellido[0]                     =$inicio;
-        $inicio                          =$inicio."%".$anio;
-        $string = "SELECT expediente FROM pacientes WHERE expediente LIKE '".$inicio."' AND id IN (SELECT MAX(id) FROM pacientes WHERE expediente LIKE '".$inicio."')";
-        $query                           = DB::select( DB::raw($string));
+
+
+
+            $numero = DB::table('users')->select('id')->max('id');
+            $user = new User();
+            $user->nombre1 = $request->nombre1;
+            $user->apellido1 = $request->apellido1;
+            $user->name = $request->nombre1.".".$request->apellido1.$numero;
+            $user->email = $request->email;
+            $user->password =bcrypt($request->password);
+            if(!is_null($request['nombre2']))
+            $user->nombre2 = $request->nombre2;
+            if(!is_null($request['nombre3']))
+            $user->nombre3 = $request->nombre3;
+            if(!is_null($request['apellido2']))
+            $user->apellido2 = $request->apellido2;
+            $user->save();
+            $user->roles()->sync(5);
+
+            $fecha_actual = \Carbon::now();
+            $anio = substr($fecha_actual,2,2);
+            $paciente = new Paciente();
+            $paciente->nombre1               = $request->nombre1;
+            $apellido                        = $request->apellido1;
+            $inicio                          = strtoupper($request->apellido1[0]);
+            $apellido[0]                     =$inicio;
+            $inicio                          =$inicio."%".$anio;
+            $string = "SELECT expediente FROM pacientes WHERE expediente LIKE '".$inicio."' AND id IN (SELECT MAX(id) FROM pacientes WHERE expediente LIKE '".$inicio."')";
+            $query                           = DB::select( DB::raw($string));
 
         if($query != NULL){
             foreach ($query as $key => $value) {
@@ -109,6 +129,8 @@ class PacienteController extends Controller
         $paciente->domicilio              = $request->domicilio;
         $paciente->ocupacion              = $request->ocupacion;
         $paciente->email                  = $request->email;
+        $paciente->user_id                = $user->id;
+
         //campos opcionales
         if(!is_null($valores['direccion_de_trabajo']))
             $paciente->direccion_de_trabajo = $request->direccion_de_trabajo;
@@ -125,24 +147,6 @@ class PacienteController extends Controller
          if(!is_null($valores['historiaOdontologica']))
             $paciente->historiaOdontologica = $request->historiaOdontologica;        
         if($paciente->save()){
-
-            $numero = DB::table('users')->select('id')->max('id');
-            $user = new User();
-            $user->nombre1 = $request->nombre1;
-            $user->apellido1 = $request->apellido1;
-            $user->name = $request->nombre1.".".$request->apellido1.$numero;
-            $user->email = $request->email;
-            $user->password =bcrypt($request->password);
-            if(!is_null($request['nombre2']))
-            $user->nombre2 = $request->nombre2;
-            if(!is_null($request['nombre3']))
-            $user->nombre3 = $request->nombre3;
-            if(!is_null($request['apellido2']))
-            $user->apellido2 = $request->apellido2;
-            $user->save();
-            $user->roles()->sync(5);
-
-
             if(!is_null($valores['historiaMedica'])){
                 $historiaMed = new HistoriaMedica();
                 $historiaMed->descripcion = $request->historiaMedica;
@@ -204,26 +208,25 @@ class PacienteController extends Controller
                     ->with('tipo', 'danger');
         }
 
+        $user = User::find($paciente->user_id);
+
         if(is_null($request['direccion_de_trabajo']))
             $request['direccion_de_trabajo'] = "Sin direccion de trabajo";
 
         if(is_null($request['responsable']))
             $request['responsable'] = "Sin responsable";
 
-        if(is_null($valores['nombre2']))
-            $request['nombre2'] = "N/A";
-        else
+        if(!is_null($valores['nombre2']))
             $request['nombre2'] = $request->nombre2;
+            $user->nombre2 = $request->nombre2;
 
-        if(is_null($valores['nombre3']))
-            $request['nombre3'] = "N/A";
-        else
+        if(!is_null($valores['nombre3']))
             $request['nombre3'] = $request->nombre3;
+            $user->nombre3 = $request->nombre3;
 
-         if(is_null($valores['apellido2']))
-            $request['apellido2'] = "N/A";
-        else
+         if(!is_null($valores['apellido2']))
             $request['apellido2'] = $request->apellido2;
+            $user->apellido2 = $request->apellido2;
 
          if(is_null($valores['recomendado']))
             $request['recomendado'] = "-";
@@ -234,7 +237,10 @@ class PacienteController extends Controller
             $request['historiaOdontologica'] = "-";
         else
             $request['historiaOdontologica'] = $request->historiaOdontologica;
-
+        $user->nombre1 = $request->nombre1;
+        $user->apellido1 = $request->apellido1;
+        $user->email = $request->email;
+        $user->save();
         $paciente->update($request->all());
         return redirect()->route('paciente.index')
             ->with('info','Paciente actualizado con exito')
@@ -271,27 +277,43 @@ class PacienteController extends Controller
         }else{
             $encendido = false;
         }
-        $procedimiento = Procedimiento::pluck('nombre', 'id')->toArray();
+        //$procedimiento = Procedimiento::pluck('nombre', 'id')->toArray();
 
-        $events = Events::select('id','paciente_id','start_date','end_date','procedimiento_id','descripcion')->where('paciente_id',$paciente->id)->get();
+        $events = Events::select('id','paciente_id','start_date','end_date',/*'procedimiento_id'*/'descripcion')->where('paciente_id',$paciente->id)->get();
         $event_list= [];
         foreach ($events as $key => $event) {
-            $proceso = Procedimiento::find($event->procedimiento_id);
+            //$proceso = Procedimiento::find($event->procedimiento_id);
             $paciente = Paciente::find($event->paciente_id);
-            $event_list[] =Calendar::event(
-                $paciente->nombre1." ".$paciente->nombre2." ".$paciente->apellido1." ".$paciente->apellido2,
-                false,
-                new \DateTime($event->start_date),
-                new \DateTime($event->end_date),
-                $event->id,
-                [
-                'color'             => $proceso->color,
-                'descripcion'       => $event->descripcion,
-                'textColor'         => $event->textcolor,
-                'procedimiento'     => $proceso->id,
-                'durationEditable'  => false,
-                ]
-            );
+            //if(is_null($proceso)){
+                $event_list[] =Calendar::event(
+                    $paciente->nombre1." ".$paciente->nombre2." ".$paciente->apellido1." ".$paciente->apellido2,
+                    false,
+                    new \DateTime($event->start_date),
+                    new \DateTime($event->end_date),
+                    $event->id,
+                    [
+                    /*'color'             => $proceso->color,*/
+                    'descripcion'       => $event->descripcion,
+                    'textColor'         => $event->textcolor,
+                    'durationEditable'  => false,
+                    ]
+                );
+            /*}else{
+                $event_list[] =Calendar::event(
+                    $paciente->nombre1." ".$paciente->nombre2." ".$paciente->apellido1." ".$paciente->apellido2,
+                    false,
+                    new \DateTime($event->start_date),
+                    new \DateTime($event->end_date),
+                    $event->id,
+                    [
+                    'color'             => $proceso->color,
+                    'descripcion'       => $event->descripcion,
+                    'textColor'         => $event->textcolor,
+                    'procedimiento'     => $proceso->id,
+                    'durationEditable'  => false,
+                    ]
+                );
+            }*/
         }
         
         
@@ -345,7 +367,7 @@ class PacienteController extends Controller
                     $("#txtFecha").val(FechaHora[0]);
                     $("#start_date").val(horaInicio[0]);
                     $("#end_date").val(horaFin[0]);
-                    $("#procedimiento_id").val(calEvent.procedimiento);
+                    //$("#procedimiento_id").val(calEvent.procedimiento);
                     $("#exampleModal").modal();     
                 }else{
                     $("#btnAgregar").hide();
@@ -366,8 +388,8 @@ class PacienteController extends Controller
                     $("#start_date").prop("disabled",true);
                     $("#end_date").val(horaFin[0]);
                     $("#end_date").prop("disabled",true);
-                    $("#procedimiento_id").val(calEvent.procedimiento);
-                    $("#procedimiento_id").prop("disabled",true);
+                    //$("#procedimiento_id").val(calEvent.procedimiento);
+                    //$("#procedimiento_id").prop("disabled",true);
                     $("#exampleModal").modal(); 
                 }
             }',
@@ -382,13 +404,13 @@ class PacienteController extends Controller
                     $("#txtFecha").val(fechaHora[0]);
                     $("#start_date").val(fechaHora[1]);
                     $("#end_date").val(fechaHora2[1]);
-                    $("#procedimiento_id").val(calEvent.procedimiento);
+                    //$("#procedimiento_id").val(calEvent.procedimiento);
                     document.getElementById("btnModificar").click();
                  }',
 
             ]);
 
-        return view('paciente.agenda',compact('procedimiento','calendar_details','paciente','encendido'));
+        return view('paciente.agenda',compact(/*'procedimiento',*/'calendar_details','paciente','encendido'));
     }
 
     public function addEvent(Request $request){
@@ -396,18 +418,12 @@ class PacienteController extends Controller
             'pacienteID'        => 'required',
             'start_date'        => 'required',
             'end_date'          => 'required',
-            'procedimiento_id'  => 'required' 
         ]);
         if($validator->fails()){
             \Session::flash('warnning', 'Porfavor ingrese datos validos');
             return redirect()->route('paciente.agenda',$request->pacienteID)->withInput()->withErrors($validator);
         }
         if(isset($_POST["btnAgregar"])){
-
-
-
-
-
         $event = new Events();
         $event->paciente_id         = $request['pacienteID'];
         if(strpos($request["txtFecha"], "T")){
@@ -418,13 +434,12 @@ class PacienteController extends Controller
             $event->start_date          = $request['txtFecha']." ".$request['start_date'];
             $event->end_date            = $request['txtFecha']." ".$request['end_date'];
         }
-        $event->procedimiento_id    = $request['procedimiento_id'];
+       // if(!is_null($request['procedimiento_id'])){
+       //     $event->procedimiento_id    = $request['procedimiento_id'];
+       // }
         $event->descripcion         = $request['txtDescripcion'];
         $event->save();
 
-
-
-        
         \Session::flash('success','Cita añadida exitosamente');
         return redirect()->route('paciente.agenda',$request->pacienteID)->with('info','Cita guardada con exito');
 
@@ -433,7 +448,8 @@ class PacienteController extends Controller
             $event->paciente_id         = $request['pacienteID'];
             $event->start_date          = $request['txtFecha']." ".$request['start_date'];
             $event->end_date            = $request['txtFecha']." ".$request['end_date'];
-            $event->procedimiento_id    = $request['procedimiento_id'];
+            //$event->procedimiento_id    = $request['procedimiento_id'];
+            $event->descripcion         = $request['txtDescripcion'];
             $event->save();
             return redirect()->route('paciente.agenda',$request->pacienteID)->with('info','Cita actualizada con exito');
         }elseif (isset($_POST['btnEliminar'])) {
@@ -447,24 +463,76 @@ class PacienteController extends Controller
     }
 
     public function search(Request $request){
-
-        if(!is_null($request['buscar'])){
-            $pacientes = Paciente::where('expediente','ILIKE', $request->buscar)->paginate();
-            foreach ($pacientes as $key => $value) {
-                $user = User::where('email','=',$value->email)->paginate(1);
+        if($request['buscador']!='Buscar Por...'){
+            if($request['buscador'] == 'Nombre'){
+                if(!is_null($request['buscar'])){
+                    $pacientes = Paciente::where('nombre1','ILIKE', $request->buscar.'%')->orWhere('nombre2','ILIKE', $request->buscar.'%')->orWhere('nombre3','ILIKE', $request->buscar.'%')->paginate();
+                    $user = User::paginate();
+                    $head = 'Lista de Pacientes';
+                    return view('paciente.index', compact("pacientes",'head','user'))
+                            ->with('info', 'Busqueda Exitosa');
+                }
+                else{
+                    $pacientes = Paciente::paginate(10);
+                    $user = User::paginate(10); 
+                    $head = 'Lista de Pacientes';
+                    return view('paciente.index', compact("pacientes",'head','user'));
+                }
+            }elseif ($request['buscador'] == 'Apellido') {
+                if(!is_null($request['buscar'])){
+                    $pacientes = Paciente::where('apellido1','ILIKE', $request->buscar.'%')->orWhere('apellido2','ILIKE', $request->buscar.'%')->paginate();
+                    $user = User::paginate();
+                    $head = 'Lista de Pacientes';
+                    return view('paciente.index', compact("pacientes",'head','user'))
+                            ->with('info', 'Busqueda Exitosa');
+                }
+                else{
+                    $pacientes = Paciente::paginate(10);
+                    $user = User::paginate(10); 
+                    $head = 'Lista de Pacientes';
+                    return view('paciente.index', compact("pacientes",'head','user'));
+                }
+            }elseif ($request['buscador'] == 'Expediente') {
+               if(!is_null($request['buscar'])){
+                    $pacientes = Paciente::where('expediente','ILIKE', $request->buscar.'%')->paginate();
+                    $user = User::paginate();
+                    $head = 'Lista de Pacientes';
+                    return view('paciente.index', compact("pacientes",'head','user'))
+                            ->with('info', 'Busqueda Exitosa');
+                }
+                else{
+                    $pacientes = Paciente::paginate(10);
+                    $user = User::paginate(10); 
+                    $head = 'Lista de Pacientes';
+                    return view('paciente.index', compact("pacientes",'head','user'));
+                }
+            }elseif ($request['buscador'] == 'Nombre de Usuario') {
+                if(!is_null($request['buscar'])){
+                    $pacientes = Paciente::paginate();
+                    $user = User::where('name','ILIKE',$request->buscar.'%')->paginate();
+                    $head = 'Lista de Pacientes';
+                    return view('paciente.index', compact("pacientes",'head','user'))
+                            ->with('info', 'Busqueda Exitosa');
+                }
+                else{
+                    $pacientes = Paciente::paginate(10);
+                    $user = User::paginate(10); 
+                    $head = 'Lista de Pacientes';
+                    return view('paciente.index', compact("pacientes",'head','user'));
+                }
             }
+        }else{
+             $pacientes = Paciente::paginate(10);
+                $user = User::paginate(10); 
                 $head = 'Lista de Pacientes';
-                return view('paciente.index', compact("pacientes",'head','user'))
-                    ->with('info', 'Busqueda Exitosa');
-
+                return view('paciente.index', compact("pacientes",'head','user'));
         }
-        else{
-            $pacientes = Paciente::paginate(5);
-            $user = User::paginate(5); 
-            $head = 'Lista de Pacientes';
-            return view('paciente.index', compact("pacientes",'head','user'));
-        } 
-
     }
 
 }
+
+
+/*        <!--{!! Form::label('procedimiento_id', 'Procedimiento:')!!}
+        {!! Form::select('procedimiento_id', $procedimiento, null, ['placeholder' => 'Elija un procedimiento'])!!}-->
+
+        */

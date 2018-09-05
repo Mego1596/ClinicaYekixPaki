@@ -145,6 +145,39 @@ class PermissionsTableSeeder extends Seeder
             'description' => 'Lista y Navega todos los Pacientes del Sistema',
         ]);
 
+
+        //Plan de Tratamiento
+        Permission::create([
+            'name' => 'Navegar Planes de Tratamiento',
+            'slug' => 'planTratamientos.index',
+            'description' => 'Lista y Navega todos los Planes de Tratamiento del Sistema',
+        ]);
+
+        Permission::create([
+            'name' => 'Ver Detalle de Plan de Tratamiento',
+            'slug' => 'planTratamientos.show',
+            'description' => 'Ver en detalle cada Plan de Tratamiento del sistema',
+        ]);
+
+        Permission::create([
+            'name' => 'Creacion de Planes de Tratamiento',
+            'slug' => 'planTratamientos.create',
+            'description' => 'Editar cualquier dato de un Plan de Tratamiento del sistema',
+        ]);
+
+        Permission::create([
+            'name' => 'Edicion de Planes de Tratamiento',
+            'slug' => 'planTratamientos.edit',
+            'description' => 'Editar cualquier dato de un Plan de Tratamiento del sistema',
+        ]);
+
+        Permission::create([
+            'name' => 'Eliminar Procedimiento',
+            'slug' => 'planTratamientos.destroy',
+            'description' => 'Eliminar cualquier dato de un Plan de Tratamiento del sistema',
+        ]);
+
+
         //Permisos a Terceros
         Permission::create([
             'name' => 'Calendario de Trabajo',

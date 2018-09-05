@@ -68,8 +68,10 @@
       		{!! Form::label('txtDescripcion', 'Descripcion:')!!}
       		{!! Form::textarea('txtDescripcion', null, ['class' => 'form-control', 'rows' => '2', 'id' => 'txtDescripcion'])!!}
       	</div>
-      	{!! Form::label('procedimiento_id', 'Procedimiento:')!!}
-      	{!! Form::select('procedimiento_id', $procedimiento, null, ['placeholder' => 'Elija un procedimiento'])!!}
+
+        <!-- EN EL SELECT VA LA VARIABLE PROCEDIMIENTO -->
+
+
 
       <div class="modal-footer">
 		{!! Form::submit('Añadir Cita', ['class' => 'btn btn-success','id' => 'btnAgregar', 'name' => 'btnAgregar']) !!}
@@ -118,7 +120,7 @@
 		$('#txtColor').val("");
 		$('#start_date').val("");
 		$('#end_date').val("");
-		$('#procedimiento_id').val("");
+		//$('#procedimiento_id').val("");
 	}
 
 </script>

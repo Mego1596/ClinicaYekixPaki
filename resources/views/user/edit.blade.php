@@ -79,7 +79,7 @@ $(document).ready(function(){
 <script>
 window.onload = function() {
 	var result = document.getElementById('nombre3').value;
-	if(result=='N/A'){
+	if(result==''){
 		$("#cosa2").prop('checked',true);
        	$("#cosa2").prop('disabled',true);
        	document.getElementById('nombre3').style.display = 'none';
@@ -109,7 +109,7 @@ window.onload = function() {
     document.getElementById('radio6').style.visibility = 'visible';
 
   var result3 = document.getElementById('especialidad').value;
-  if(result3 =''){
+  if(result3 == ''){
     $("#cosa6").prop('checked',true);
     $("#cosa6").prop('disabled',true);
     document.getElementById('especialidad').style.display = 'none';
