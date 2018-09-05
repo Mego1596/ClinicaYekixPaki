@@ -27,7 +27,7 @@
 					          </div>
 					        </div>
 					        <br/>
-					    	<input class="btn btn-primary" type="submit" name="Restablecer" value="Ver Lista Completa">
+					    	<a class="btn btn-primary" href="{{route('user.index')}}">Ver Lista Completa</a>
 
 					    {!! Form::close() !!}
 						</div>
