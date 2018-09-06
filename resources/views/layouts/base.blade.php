@@ -33,6 +33,12 @@
       vertical-align: middle;
       background: #F2F2F2;
     }
+    .fc-today {
+    background: #FFF !important;
+    border: none !important;
+    border-top: 1px solid #ddd !important;
+    font-weight: bold;
+} 
   </style>
         @yield('javascript')
   </head>

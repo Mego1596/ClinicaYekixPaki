@@ -105,7 +105,7 @@ class PlanTratamientoController extends Controller
         }else{
             $encendido = false;
         }
-        //$procedimiento = Procedimiento::pluck('nombre', 'id')->toArray();
+        $procesos = Procedimiento::where('id',$id)->get();
         $events = Events::select('id','paciente_id','start_date','end_date',/*'procedimiento_id'*/'descripcion')->where('paciente_id',$paciente)->get();
         $event_list= [];
         foreach ($events as $key => $event) {
@@ -238,7 +238,7 @@ class PlanTratamientoController extends Controller
 
             ]);
 
-        return view('planTratamiento.agenda',compact(/*'procedimiento',*/'calendar_details','paciente','encendido','id'));
+        return view('planTratamiento.agenda',compact('procesos','calendar_details','paciente','encendido','id'));
     }
 
     public function addEvent(Request $request){

@@ -24,7 +24,7 @@ class EventsController extends Controller
             $encendido = false;
         }
     	//$procedimiento = Procedimiento::pluck('nombre', 'id')->toArray();
-
+        $procesos = Procedimiento::paginate();
     	$events = Events::select('id','paciente_id','start_date','end_date','descripcion')->get();
         $event_list= [];
         foreach ($events as $key => $event) {
@@ -47,7 +47,6 @@ class EventsController extends Controller
             }else{
                 $planT = Plan_Tratamiento::where('events_id',$event->id)->value('procedimiento_id');
                 $proceso = Procedimiento::where('id',$planT)->value('color');
-                var_dump($proceso);
                 $event_list[] =Calendar::event(
                     $paciente->nombre1." ".$paciente->nombre2." ".$paciente->apellido1." ".$paciente->apellido2,
                     false,
@@ -116,7 +115,7 @@ class EventsController extends Controller
 				 }',
 			]);
 
-    	return view('events',compact(/*'procedimiento',*/'calendar_details','loggedUser'));
+    	return view('events',compact('procesos','calendar_details','loggedUser'));
     }
 
     public function addEvent(Request $request){
