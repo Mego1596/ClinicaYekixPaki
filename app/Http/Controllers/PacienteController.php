@@ -13,6 +13,7 @@ use App\Events;
 use App\Paciente;
 use App\User;
 use App\HistoriaMedica;
+use App\Plan_Tratamiento;
 use Calendar;
 use Validator;
 
@@ -279,12 +280,12 @@ class PacienteController extends Controller
         }
         //$procedimiento = Procedimiento::pluck('nombre', 'id')->toArray();
 
-        $events = Events::select('id','paciente_id','start_date','end_date',/*'procedimiento_id'*/'descripcion')->where('paciente_id',$paciente->id)->get();
+        $events = Events::select('id','paciente_id','start_date','end_date','descripcion')->where('paciente_id',$paciente->id)->get();
         $event_list= [];
         foreach ($events as $key => $event) {
-            //$proceso = Procedimiento::find($event->procedimiento_id);
             $paciente = Paciente::find($event->paciente_id);
-            //if(is_null($proceso)){
+            $planT = Plan_Tratamiento::where('events_id',$event->id)->get();
+            if(sizeof($planT) > 1){
                 $event_list[] =Calendar::event(
                     $paciente->nombre1." ".$paciente->nombre2." ".$paciente->apellido1." ".$paciente->apellido2,
                     false,
@@ -298,7 +299,9 @@ class PacienteController extends Controller
                     'durationEditable'  => false,
                     ]
                 );
-            /*}else{
+            }else{
+                $planT = Plan_Tratamiento::where('events_id',$event->id)->value('procedimiento_id');
+                $proceso = Procedimiento::find($planT);
                 $event_list[] =Calendar::event(
                     $paciente->nombre1." ".$paciente->nombre2." ".$paciente->apellido1." ".$paciente->apellido2,
                     false,
@@ -313,7 +316,7 @@ class PacienteController extends Controller
                     'durationEditable'  => false,
                     ]
                 );
-            }*/
+            }
         }
         
         

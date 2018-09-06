@@ -114,13 +114,16 @@ Route::middleware(['auth'])->group(function(){
 
 	Route::get('planTratamiento/{cita}', 'PlanTratamientoController@index')->name('planTratamiento.index')->middleware('permission:planTratamientos.index');
 
-	Route::get('planTratamiento/create', 'PlanTratamientoController@create')->name('planTratamiento.create')->middleware('permission:planTratamientos.create');
+	Route::get('planTratamiento/create/{cita}', 'PlanTratamientoController@create')->name('planTratamiento.create')->middleware('permission:planTratamientos.create');
 
 	Route::put('planTratamiento/update/{planTratamiento}', 'PlanTratamientoController@update')->name('planTratamiento.update')->middleware('permission:procedimientos.edit');
 
-	Route::get('planTratamiento/show/{planTratamiento}', 'PlanTratamientoController@show')->name('planTratamiento.show')->middleware('permission:planTratamientos.show');
+	Route::get('planTratamiento/show/{cita}/{planTratamiento}', 'PlanTratamientoController@show')->name('planTratamiento.show')->middleware('permission:planTratamientos.show');
 
 	Route::delete('planTratamiento/destroy/{planTratamiento}', 'PlanTratamientoController@destroy')->name('planTratamiento.destroy')->middleware('permission:planTratamientos.destroy');
 
-	Route::get('planTratamiento/edit/{planTratamiento}', 'PlanTratamientoController@edit')->name('planTratamiento.edit')->middleware('permission:planTratamientos.edit');
+	Route::get('planTratamiento/edit/{cita}/{planTratamiento}', 'PlanTratamientoController@edit')->name('planTratamiento.edit')->middleware('permission:planTratamientos.edit');
+
+	Route::get('planTratamiento/{procedimiento}/{paciente}/events','PlanTratamientoController@agendar2')->name('planTratamiento.agenda');
+	Route::post('planTratamiento/events', 'PlanTratamientoController@addEvent')->name('planTratamiento.add');
 });

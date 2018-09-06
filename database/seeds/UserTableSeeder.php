@@ -88,6 +88,11 @@ class UserTableSeeder extends Seeder
         DB::table('permission_role')->insert(['permission_id' => '25' , 'role_id'=>'3']);
         DB::table('permission_role')->insert(['permission_id' => '26' , 'role_id'=>'3']);
         DB::table('permission_role')->insert(['permission_id' => '27' , 'role_id'=>'3']);
+        DB::table('permission_role')->insert(['permission_id' => '29' , 'role_id'=>'3']);
+        DB::table('permission_role')->insert(['permission_id' => '30' , 'role_id'=>'3']);
+        DB::table('permission_role')->insert(['permission_id' => '31' , 'role_id'=>'3']);
+        DB::table('permission_role')->insert(['permission_id' => '32' , 'role_id'=>'3']);
+        DB::table('permission_role')->insert(['permission_id' => '33' , 'role_id'=>'3']);
 
         //Permisos Paciente
         DB::table('permission_role')->insert(['permission_id' => '16' , 'role_id'=>'5']);

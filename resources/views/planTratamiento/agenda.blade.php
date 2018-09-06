@@ -1,11 +1,8 @@
 @extends('layouts.base')
 
 @section('bread')
-<li class="breadcrumb-item">
-  <a class="breadcrumb-item active">Citas</a>
-</li>
-@endsection
 
+@endsection
 
 @section('content')
 	<div class="container">
@@ -20,7 +17,7 @@
 		</div>
 	</div>
 <!-- Modal -->
-{!! Form::open(array('route' => 'events.add','id'=> 'form', 'method' => 'POST') ) !!}
+{!! Form::open(array('route' => 'planTratamiento.add','id'=> 'form', 'method' => 'POST') ) !!}
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -33,6 +30,10 @@
       <div class="modal-body">
       	<input type="hidden" name="txtID" id="txtID"/>
       	<input type="hidden" name="txtFecha" id="txtFecha"/>
+        <input type="hidden" name="pacienteID" id="pacienteID" value="{{$paciente->id}}">
+        <input type="hidden" name="encendido" id="encendido" value="{{$encendido}}">
+        <input type="hidden" name="txtProcedimiento_id" id="txtProcedimiento_id" value="{{$id}}">
+
       	<div class="form-row">	
       		<div class="form-group col-md-12">
       			{!! Form::label('paciente_id', 'Paciente:',['id' => 'tit']) !!}
@@ -56,20 +57,18 @@
       	</div>
       	<div class="form-group">
       		{!! Form::label('txtDescripcion', 'Descripcion:')!!}
-      		{!! Form::textarea('txtDescripcion', null, ['class' => 'form-control', 'rows' => '2'])!!}
+      		{!! Form::textarea('txtDescripcion', null, ['class' => 'form-control', 'rows' => '2', 'id' => 'txtDescripcion'])!!}
       	</div>
-        @can('planTratamientos.index')
-        <div class="row">
-          <div class="col-md-4" style="margin-left: 100px">
-              <a class="btn btn-info" href="#" name="plan" id="plan">Gestionar Plan de Tratamiento</a>
-          </div>
-        </div>
-        @endcan
+
+        <!-- EN EL SELECT VA LA VARIABLE PROCEDIMIENTO -->
+
+
 
       <div class="modal-footer">
 		{!! Form::submit('Añadir Cita', ['class' => 'btn btn-success','id' => 'btnAgregar', 'name' => 'btnAgregar']) !!}
 		{!! Form::submit('Modificar Cita', ['class' => 'btn btn-success','id' => 'btnModificar','name' => 'btnModificar']) !!}
 		{!! Form::submit('Borrar', ['class' => 'btn btn-danger ','id' => 'btnEliminar','name' => 'btnEliminar']) !!}
+
         <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
         {!! Form::close() !!}
       </div>
@@ -80,27 +79,40 @@
 
 
 @section('calendar')
-
-<script type="text/javascript">
-        document.getElementById("plan").onclick = function() {
-          var x=parseInt($('#txtID').val());
-          this.setAttribute("href","planTratamiento/"+x);
-          //this.setAttribute("href","{{route('planTratamiento.index', ['cita' => ''])}}" )
-        }
-</script>
     {!! $calendar_details->script() !!}
 
-<script type="text/javascript">
+    <script type="text/javascript">
 
-  	$('.clockpicker').clockpicker();
-  	function limpiarFormulario(){
-  		$('#txtID').val("");
-  		$('#txtDescripcion').val("");
-  		$('#txtTitulo').val("");
-  		$('#txtColor').val("");
-  		$('#start_date').val("");
-  		$('#end_date').val("");
-  		//$('#procedimiento_id').val("");
-	 }
+	/*function EnviarInformacion(accion,objEvento,modal){
+		$.ajax({
+			type:'POST',
+			url:'eventos.php?accion='+accion,
+			data:objEvento,
+			success:function(msg){
+				if(msg){
+					$('#CalendarioWeb').fullCalendar('refetchEvents');
+					if(!modal){
+						$('#exampleModal').modal('toggle');
+					}
+				}
+			},
+			error:function(){
+				alert('Hay un error...');
+			}
+		});
+	}*/
+
+	$('.clockpicker').clockpicker();
+		
+	function limpiarFormulario(){
+		$('#txtID').val("");
+		$('#txtDescripcion').val("");
+		$('#txtTitulo').val("");
+		$('#txtColor').val("");
+		$('#start_date').val("");
+		$('#end_date').val("");
+		//$('#procedimiento_id').val("");
+	}
+
 </script>
 @endsection
