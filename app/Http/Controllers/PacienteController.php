@@ -278,7 +278,7 @@ class PacienteController extends Controller
         }else{
             $encendido = false;
         }
-        //$procedimiento = Procedimiento::pluck('nombre', 'id')->toArray();
+        $procesos = Procedimiento::get();
 
         $events = Events::select('id','paciente_id','start_date','end_date','descripcion')->where('paciente_id',$paciente->id)->get();
         $event_list= [];
@@ -412,7 +412,7 @@ class PacienteController extends Controller
 
             ]);
 
-        return view('paciente.agenda',compact(/*'procedimiento',*/'calendar_details','paciente','encendido'));
+        return view('paciente.agenda',compact('procesos','calendar_details','paciente','encendido'));
     }
 
     public function addEvent(Request $request){

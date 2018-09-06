@@ -19,8 +19,11 @@
           <tr>
             <td>Revision General</td>
             <td>
-              <div style="background-color:{{$p->color}}; color:{{$p->color}}">///////</div>
+              <div style="background-color:#000000; color:#000000">///////</div>
             </td>
+          </tr>
+          <tr>
+              <td style="color: white">.</td>
           </tr>
           @foreach($procesos as $p)
             <tr>

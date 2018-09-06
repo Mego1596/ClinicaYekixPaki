@@ -19,6 +19,35 @@
 	<div class="panel panel-primary">
 		<div class="panel-heading">
 			<h3 align="center">Citas:</h3></div>
+      <div class="row">
+        <table>
+          <th>Descripcion</th>
+          <th>Color</th>
+          <tr>
+            <td>Revision General</td>
+            <td>
+              <div style="background-color:#000000; color:#000000">///////</div>
+            </td>
+          </tr>
+          <tr>
+              <td style="color: white">.</td>
+          </tr>
+          @foreach($procesos as $p)
+            <tr>
+              <td>
+                {{$p->nombre}}
+              </td>
+              <td>
+                <div style="background-color:{{$p->color}}; color:{{$p->color}}">///////</div>
+              </td>
+              <br/>
+            </tr>
+            <tr>
+              <td style="color: white">.</td>
+            </tr>
+          @endforeach
+          </table>
+      </div>
 			<div class="panel-body">
 				{!! $calendar_details->calendar() !!}
 					</div>

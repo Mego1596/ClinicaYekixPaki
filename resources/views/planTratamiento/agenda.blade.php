@@ -13,6 +13,15 @@
         <table>
           <th>Descripcion</th>
           <th>Color</th>
+          <tr>
+            <td>Revision General</td>
+            <td>
+              <div style="background-color:#000000; color:#000000">///////</div>
+            </td>
+          </tr>
+          <tr>
+              <td style="color: white">.</td>
+          </tr>
           @foreach($procesos as $p)
             <tr>
               <td>
