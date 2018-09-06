@@ -26,7 +26,7 @@
           <tr>
             <td>Revision General</td>
             <td>
-              <div style="background-color:#000000; color:#000000">///////</div>
+              <input type="color" disabled value="#000000">
             </td>
           </tr>
           <tr>
@@ -38,7 +38,7 @@
                 {{$p->nombre}}
               </td>
               <td>
-                <div style="background-color:{{$p->color}}; color:{{$p->color}}">///////</div>
+                <input type="color" disabled value="{{$p->color}}">
               </td>
               <br/>
             </tr>
