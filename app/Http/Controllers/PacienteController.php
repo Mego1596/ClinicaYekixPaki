@@ -285,7 +285,7 @@ class PacienteController extends Controller
         foreach ($events as $key => $event) {
             $paciente = Paciente::find($event->paciente_id);
             $planT = Plan_Tratamiento::where('events_id',$event->id)->get();
-            if(sizeof($planT) > 1){
+            if(sizeof($planT) > 1 || is_null($planT)){
                 $event_list[] =Calendar::event(
                     $paciente->nombre1." ".$paciente->nombre2." ".$paciente->apellido1." ".$paciente->apellido2,
                     false,
@@ -301,7 +301,7 @@ class PacienteController extends Controller
                 );
             }else{
                 $planT = Plan_Tratamiento::where('events_id',$event->id)->value('procedimiento_id');
-                $proceso = Procedimiento::find($planT);
+                $proceso = Procedimiento::where('id',$planT)->value('color');
                 $event_list[] =Calendar::event(
                     $paciente->nombre1." ".$paciente->nombre2." ".$paciente->apellido1." ".$paciente->apellido2,
                     false,
@@ -309,10 +309,9 @@ class PacienteController extends Controller
                     new \DateTime($event->end_date),
                     $event->id,
                     [
-                    'color'             => $proceso->color,
+                    'color'             => $proceso,
                     'descripcion'       => $event->descripcion,
                     'textColor'         => $event->textcolor,
-                    'procedimiento'     => $proceso->id,
                     'durationEditable'  => false,
                     ]
                 );
