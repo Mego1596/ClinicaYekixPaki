@@ -11,8 +11,6 @@
     <meta name="author" content="">
 
     <title>YekixPaki</title>
-
-
     <!-- Custom styles for this template-->
     <link href="{{ asset('css/sb-admin.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
@@ -20,7 +18,7 @@
     <link rel="stylesheet" href="text/css" href="{{ asset('css/estilos.css') }}">
 
     <!-- Full Calendar -->
-    <link href='https://use.fontawesome.com/releases/v5.0.6/css/all.css' rel='stylesheet'>
+    <!--<link href='https://use.fontawesome.com/releases/v5.0.6/css/all.css' rel='stylesheet'>-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script type="text/javascript" src="{{ asset('js/jquery.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/moment.min.js') }}"></script>
@@ -40,6 +38,7 @@
     font-weight: bold;
 } 
   </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         @yield('javascript')
   </head>
 
