@@ -11,13 +11,13 @@
 	<div class="container">
 	<div class="panel panel-primary">
 		<div class="panel-heading">
-			<h3 align="center">Citas:</h3></div>
-      <div class="row">
+			<h3 align="center">Citas:</h3>
         <table>
-          <th>Descripcion</th>
-          <th>Color</th>
           <tr>
-            <td>Revision General</td>
+            <td>Revision General o Paciente Referidos con Procedimiento</td>
+            <td>
+            
+            </td>
             <td>
               <input type="color" disabled value="#000000">
             </td>
@@ -25,22 +25,40 @@
           <tr>
               <td style="color: white">.</td>
           </tr>
+          <tr>
           @foreach($procesos as $p)
-            <tr>
-              <td>
+            @if($p->id%2==0)
+              <td style="text-align: left;">
                 {{$p->nombre}}
+              </td>
+              <td>
+                
               </td>
               <td>
                 <input type="color" disabled value="{{$p->color}}">
               </td>
-              <br/>
-            </tr>
-            <tr>
               <td style="color: white">.</td>
-            </tr>
+            @endif
           @endforeach
+        </tr>
+        <tr>
+          @foreach($procesos as $p)
+            @if($p->id%2!=0)
+              <td>
+                {{$p->nombre}}
+              </td>
+              <td>
+                
+              </td>
+              <td>
+                <input type="color" disabled value="{{$p->color}}">
+              </td>
+              <td style="color: white">.</td>
+            @endif
+          @endforeach
+        </tr>
           </table>
-      </div>
+    </div>
       <div class="panel-body">
         <br/>
 				{!! $calendar_details->calendar() !!}

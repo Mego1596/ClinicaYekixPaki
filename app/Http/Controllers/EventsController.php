@@ -38,7 +38,6 @@ class EventsController extends Controller
                     new \DateTime($event->end_date),
                     $event->id,
                     [
-                    /*'color'             => $proceso->color,*/
                     'descripcion'       => $event->descripcion,
                     'textColor'         => $event->textcolor,
                     'durationEditable'  => false,
