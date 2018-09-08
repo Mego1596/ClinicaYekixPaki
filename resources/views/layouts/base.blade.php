@@ -34,7 +34,7 @@
       background: #F2F2F2;
     }
     .fc-today {
-    background: #FFF !important;
+    background: #eee !important;
     border: none !important;
     border-top: 1px solid #ddd !important;
     font-weight: bold;

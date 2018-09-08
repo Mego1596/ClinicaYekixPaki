@@ -16,14 +16,8 @@
           <tr>
             <td>Revision General o Paciente Referidos con Procedimiento</td>
             <td>
-            
-            </td>
-            <td>
               <input type="color" disabled value="#000000">
             </td>
-          </tr>
-          <tr>
-              <td style="color: white">.</td>
           </tr>
           <tr>
           @foreach($procesos as $p)
@@ -32,32 +26,53 @@
                 {{$p->nombre}}
               </td>
               <td>
-                
-              </td>
-              <td>
                 <input type="color" disabled value="{{$p->color}}">
               </td>
-              <td style="color: white">.</td>
+              <td>
+                &nbsp;
+              </td>
+              <td>
+                &nbsp;
+              </td>
+              <td>
+                &nbsp;
+              </td>
+              <td>
+                &nbsp;
+              </td>
             @endif
           @endforeach
-        </tr>
-        <tr>
-          @foreach($procesos as $p)
-            @if($p->id%2!=0)
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            @foreach($procesos as $p)
+              @if($p->id%2!=0)
+                <td>
+                  {{$p->nombre}}
+                </td>
+                <td>
+                  <input type="color" disabled value="{{$p->color}}">
+                </td>
               <td>
-                {{$p->nombre}}
+                &nbsp;
               </td>
               <td>
-                
+                &nbsp;
               </td>
               <td>
-                <input type="color" disabled value="{{$p->color}}">
+                &nbsp;
               </td>
-              <td style="color: white">.</td>
-            @endif
-          @endforeach
-        </tr>
-          </table>
+              <td>
+                &nbsp;
+              </td>
+              @endif
+            @endforeach
+          </tr>
+        </table>
     </div>
       <div class="panel-body">
         <br/>
