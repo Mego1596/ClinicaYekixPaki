@@ -6,7 +6,7 @@ use App\User;
 use Caffeinated\Shinobi\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
+use Mail;
 class UserController extends Controller
 {
     /**
@@ -52,13 +52,13 @@ class UserController extends Controller
     public function store(Request $request)
     {
         if($request['idRole'] == 'doctor'){
-            if(is_null($request['nombre1']) or is_null($request['apellido1']) or $request['numeroJunta'] == 'JVPO-' or is_null($request['email']) or is_null($request['password']) or is_null($request['roles'])){
+            if(is_null($request['nombre1']) or is_null($request['apellido1']) or $request['numeroJunta'] == 'JVPO-' or is_null($request['email'])  or is_null($request['roles'])){
                 return redirect()->route('user.create',$request->idRole)
                 ->with('error', 'Complete los Campos Obligatorios o digite correctamente el Numero de Junta')
                 ->with('tipo', 'danger');
             }
         }else{
-            if(is_null($request['nombre1']) or is_null($request['apellido1']) or is_null($request['email']) or is_null($request['password']) or is_null($request['roles'])){
+            if(is_null($request['nombre1']) or is_null($request['apellido1']) or is_null($request['email'])  or is_null($request['roles'])){
                 return redirect()->route('user.create',$request->idRole)
                 ->with('error', 'Complete los Campos Obligatorios')
                 ->with('tipo', 'danger');
@@ -71,9 +71,17 @@ class UserController extends Controller
         $user->apellido1 = $request->apellido1;
         $user->name = $request->nombre1.".".$request->apellido1.$numero;
         $user->email = $request->email;
-        $user->password =bcrypt($request->password);
         $user->numeroJunta = $request->numeroJunta;
         $user->especialidad = $request->especialidad;
+          /**generando password */
+        $password=substr(md5(microtime()),1,6);
+             //** enviando email, contraseña */
+        Mail::send('email.paciente', ['user'=>$user], function ($m) use ($user) {
+                $m->to($user->email,$user->nombre1);
+                $m->subject('Contraseña y nombre de usuario');
+               
+        });
+        $user->password =bcrypt($request->password);
 
         if(!is_null($request['nombre2']))
             $user->nombre2 = $request->nombre2;

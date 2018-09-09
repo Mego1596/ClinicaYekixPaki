@@ -5,6 +5,8 @@ namespace App;
 use Caffeinated\Shinobi\Traits\ShinobiTrait; 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Auth\Notifications\ResetPassword;
+use App\Notifications\ResetPasswordPersonalizado;
 
 class User extends Authenticatable
 {
@@ -31,5 +33,10 @@ class User extends Authenticatable
 
     public function rol(){
 
+    }
+
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new ResetPasswordPersonalizado($token));
     }
 }
