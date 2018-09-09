@@ -69,11 +69,11 @@ class PacienteController extends Controller
             if(is_null($valores['nombre1']) or is_null($valores['apellido1']) 
             or is_null($valores['fechaNacimiento']) 
             or is_null($valores['telefono']) or is_null($valores['sexo'])
-            or is_null($valores['domicilio']) or is_null($valores['ocupacion']) 
-            or is_null($valores['email']) ){
+            or is_null($valores['domicilio']) or is_null($valores['ocupacion'])){
                 
                 return redirect()->route('paciente.create')
                         ->with('error', 'Complete los campos obligatorios')
+                        ->withInput($valores)
                         ->with('tipo', 'danger');
                 
             }
@@ -83,30 +83,18 @@ class PacienteController extends Controller
             $password=substr(md5(microtime()),1,6);
 
 
-            $numero = DB::table('users')->select('id')->max('id');
+
             $user = new User();
             $user->nombre1 = $request->nombre1;
             $user->apellido1 = $request->apellido1;
-            $user->name = $request->nombre1.".".$request->apellido1.$numero;
-            $user->email = $request->email;
             $user->password=$password;
-
             //** enviando email, contraseña */
-            Mail::send('email.paciente', ['user'=>$user], function ($m) use ($user,$valores) {
-                $m->to($user->email,$valores['nombre1']);
-                $m->subject('Contraseña y nombre de usuario');
-               
-            });
-
-            $user->password =bcrypt($password);
             if(!is_null($request['nombre2']))
             $user->nombre2 = $request->nombre2;
             if(!is_null($request['nombre3']))
             $user->nombre3 = $request->nombre3;
                 if(!is_null($request['apellido2']))
             $user->apellido2 = $request->apellido2;
-            $user->save();
-            $user->roles()->sync(5);
 
             $fecha_actual = \Carbon::now();
             $anio = substr($fecha_actual,2,2);
@@ -124,14 +112,29 @@ class PacienteController extends Controller
 
                 if( (int) substr($value->expediente,1,3) <= 9 ){
                     $paciente->expediente =$apellido[0]."00".strval((int) substr($value->expediente,1,3)+1)."-".$anio;
+                    $user->name =$request->nombre1[0].$apellido[0]."00".strval((int) substr($value->expediente,1,3)+1)."-".$anio;
                 }elseif ( (int) substr($value->expediente,1,3) >= 10 && (int) substr($value->expediente,1,3) <= 99 ) {
                         $paciente->expediente =$apellido[0]."0".strval((int) substr($value->expediente,1,3)+1)."-".$anio;
+                        $user->name=$request->nombre1[0].$apellido[0]."0".strval((int) substr($value->expediente,1,3)+1)."-".$anio;
                 }else{
                     $paciente->expediente =$apellido[0].strval((int) substr($value->expediente,1,3)+1)."-".$anio;
+                    $user->name = $request->nombre1[0].$apellido[0].strval((int) substr($value->expediente,1,3)+1)."-".$anio;
                 }
             }
         }else{
             $paciente->expediente         = $apellido[0]."001-".$anio;
+            $user->name                   = $request->nombre1[0].$apellido[0]."001-".$anio;
+        }
+
+        if(!is_null($request['email'])){
+            $user->email = $request->email;
+            Mail::send('email.paciente', ['user'=>$user], function ($m) use ($user,$valores) {
+                $m->to($user->email,$valores['nombre1']);
+                $m->subject('Contraseña y nombre de usuario');
+            });
+            $user->password =bcrypt($password);
+            $user->save();
+            $user->roles()->sync(5);
         }
 
         $paciente->apellido1              = $apellido;
@@ -140,7 +143,6 @@ class PacienteController extends Controller
         $paciente->sexo                   = $request->sexo;
         $paciente->domicilio              = $request->domicilio;
         $paciente->ocupacion              = $request->ocupacion;
-        $paciente->email                  = $request->email;
         $paciente->user_id                = $user->id;
 
         //campos opcionales
@@ -157,7 +159,9 @@ class PacienteController extends Controller
          if(!is_null($valores['recomendado']))
             $paciente->recomendado = $request->recomendado;
          if(!is_null($valores['historiaOdontologica']))
-            $paciente->historiaOdontologica = $request->historiaOdontologica;        
+            $paciente->historiaOdontologica = $request->historiaOdontologica; 
+         if(!is_null($valores['email']))
+            $paciente->email = $request->email;       
         if($paciente->save()){
             if(!is_null($valores['historiaMedica'])){
                 $historiaMed = new HistoriaMedica();
@@ -272,8 +276,11 @@ class PacienteController extends Controller
         foreach ($historia as $key => $value) {
             $value->delete();
         }
-        $aux = User::find($user);
-        $aux->delete();
+
+        if(!is_null($user)){
+            $aux = User::find($user);
+            $aux->delete();
+        }
         $paciente->delete();
         return back()
             ->with('info','Eliminado Correctamente')

@@ -123,8 +123,15 @@
       	</div>
         @can('planTratamientos.index')
         <div class="row">
-          <div class="col-md-4" style="margin-left: 100px">
+          <div class="col-md-4">
               <a class="btn btn-info" href="#" name="plan" id="plan">Gestionar Plan de Tratamiento</a>
+          </div>
+        </div>
+        @endcan
+        @can('recetas.index')
+        <div class="row">
+          <div class="col-md-4" style="margin-top: 10px">
+              <a class="btn btn-info" href="{{route('receta.index')}}">Gestionar Receta</a>
           </div>
         </div>
         @endcan

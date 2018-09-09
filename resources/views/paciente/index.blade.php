@@ -53,7 +53,6 @@
 									<th width="10px">ID</th>
 									<th>Nombre</th>
 									<th>No. Expediente</th>
-									<th>Nombre de Usuario</th>
 									@if (sizeof($pacientes) == 0)
 										<th width="237">
 											@can('pacientes.create')
@@ -74,9 +73,7 @@
 								</tr>
 							</thead>
 							<tbody>
-								@foreach($pacientes as $paciente)
-									@foreach($user as $users)
-										@if($paciente->email == $users->email)
+								@foreach($pacientes as $paciente).
 											<tr>
 												<td>{{$paciente->id}}</td>
 
@@ -110,7 +107,6 @@
 
 
 												<td>{{$paciente->expediente}}</td>
-												<td>{{$users->name}}</td>
 												<td width="10px">
 													@can('pacientes.show')
 														<a href="{{ route('paciente.show', $paciente->id) }}" class="btn btn-sm btn-default bg-info" style="color: white">Ver
@@ -155,9 +151,9 @@
 													@endcan
 												</td>
 											</tr>
-										@endif
-									@endforeach
 								@endforeach
+
+
 							</tbody>
 						</table>
 						{{$pacientes->render()}}

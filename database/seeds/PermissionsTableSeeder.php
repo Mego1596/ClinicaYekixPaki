@@ -220,5 +220,36 @@ class PermissionsTableSeeder extends Seeder
         ]);
 
 
+        //Recetas
+        Permission::create([
+            'name' => 'Navegar Recetas',
+            'slug' => 'recetas.index',
+            'description' => 'Lista y Navega todos los Recetas del Sistema',
+        ]);
+
+        Permission::create([
+            'name' => 'Ver Detalle de Receta',
+            'slug' => 'recetas.show',
+            'description' => 'Ver en detalle cada Receta del sistema',
+        ]);
+
+        Permission::create([
+            'name' => 'Creacion de Recetas',
+            'slug' => 'recetas.create',
+            'description' => 'Editar cualquier dato de un Receta del sistema',
+        ]);
+
+        Permission::create([
+            'name' => 'Edicion de Recetas',
+            'slug' => 'recetas.edit',
+            'description' => 'Editar cualquier dato de un Receta del sistema',
+        ]);
+
+        Permission::create([
+            'name' => 'Eliminar Procedimiento',
+            'slug' => 'recetas.destroy',
+            'description' => 'Eliminar cualquier dato de un Receta del sistema',
+        ]);
+
     }
 }

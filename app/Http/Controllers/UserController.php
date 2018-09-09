@@ -75,14 +75,6 @@ class UserController extends Controller
         $user->especialidad = $request->especialidad;
           /**generando password */
         $password=substr(md5(microtime()),1,6);
-             //** enviando email, contraseña */
-        Mail::send('email.paciente', ['user'=>$user], function ($m) use ($user) {
-                $m->to($user->email,$user->nombre1);
-                $m->subject('Contraseña y nombre de usuario');
-               
-        });
-        $user->password =bcrypt($request->password);
-
         if(!is_null($request['nombre2']))
             $user->nombre2 = $request->nombre2;
         if(!is_null($request['nombre3']))
@@ -90,6 +82,14 @@ class UserController extends Controller
          if(!is_null($request['apellido2']))
             $user->apellido2 = $request->apellido2;
 
+             //** enviando email, contraseña */
+        Mail::send('email.paciente', ['user'=>$user], function ($m) use ($user) {
+                $m->to($user->email,$user->nombre1);
+                $m->subject('Contraseña y nombre de usuario');
+               
+        });
+
+        $user->password =bcrypt($request->password);
         if($user->save()){
             $user->roles()->sync($request->get('roles'));
             if($request['role']=='doctor'){

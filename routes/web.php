@@ -126,4 +126,22 @@ Route::middleware(['auth'])->group(function(){
 
 	Route::get('planTratamiento/{procedimiento}/{paciente}/events','PlanTratamientoController@agendar2')->name('planTratamiento.agenda');
 	Route::post('planTratamiento/events', 'PlanTratamientoController@addEvent')->name('planTratamiento.add');
+
+	//Recetas
+	Route::post('receta/store', 'RecetasController@store')->name('receta.store')->middleware('permission:recetas.create');
+
+	Route::get('receta', 'RecetasController@index')->name('receta.index')->middleware('permission:recetas.index');
+
+	Route::get('receta/create', 'RecetasController@create')->name('receta.create')->middleware('permission:recetas.create');
+
+	Route::put('receta/{receta}', 'RecetasController@update')->name('receta.update')->middleware('permission:recetas.edit');
+
+	Route::get('receta/{receta}', 'RecetasController@show')->name('receta.show')->middleware('permission:recetas.show');
+
+	Route::delete('receta/{receta}', 'RecetasController@destroy')->name('receta.destroy')->middleware('permission:recetas.destroy');
+
+	Route::get('receta/edit/{receta}', 'RecetasController@edit')->name('receta.edit')->middleware('permission:recetas.edit');
+
+
+
 });
