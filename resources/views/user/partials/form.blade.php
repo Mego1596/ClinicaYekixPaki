@@ -78,12 +78,7 @@
 			{{ Form::text('email', null, ['class' => 'form-control'])}}
 		</div>
 	</div>
-	<div class="col-md-3">
-		<div class="form-group">
-			{{ Form::label('password', 'Contraseña*') }}
-			{{ Form::password('password', ['class' => 'form-control','id'=>'password'])}}
-		</div>
-	</div>
+
 	@if($idRole=='doctor')
 	<div class="col-md-3">
 		<div class="form-group">
