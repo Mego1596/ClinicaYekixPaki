@@ -60,6 +60,7 @@ class ResetPasswordPersonalizado extends Notification
         }
 
         return (new MailMessage)
+            ->from('clinicaYekixPaki@gmail.com','Yekixpaki')
             ->subject(Lang::getFromJson('Reestablecimiento de contraseña'))
             ->greeting('Hola '.$notifiable->name)
             ->line(Lang::getFromJson('Recibes este email porque se solicitó un reestablecimiento de contraseña para tu cuenta.'))
