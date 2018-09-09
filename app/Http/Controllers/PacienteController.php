@@ -131,6 +131,7 @@ class PacienteController extends Controller
             Mail::send('email.paciente', ['user'=>$user], function ($m) use ($user,$valores) {
                 $m->to($user->email,$valores['nombre1']);
                 $m->subject('Contraseña y nombre de usuario');
+                $m->from('clinicaYekixPaki@gmail.com','YekixPaki');
             });
             $user->password =bcrypt($password);
             $user->save();
