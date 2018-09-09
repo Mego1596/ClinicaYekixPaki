@@ -79,9 +79,9 @@ class UserController extends Controller
             $user->nombre2 = $request->nombre2;
         if(!is_null($request['nombre3']))
             $user->nombre3 = $request->nombre3;
-         if(!is_null($request['apellido2']))
+        if(!is_null($request['apellido2']))
             $user->apellido2 = $request->apellido2;
-
+        $user->password = $password;
              //** enviando email, contraseña */
         Mail::send('email.paciente', ['user'=>$user], function ($m) use ($user) {
                 $m->to($user->email,$user->nombre1);

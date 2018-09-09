@@ -22,6 +22,8 @@ class UserTableSeeder extends Seeder
             'apellido1'      => 'Granados'
     	]);
 
+        
+
     	Role::create([
     		'name' 		     => 'Administrador',
     		'slug' 		     => 'admin',
