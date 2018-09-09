@@ -17,6 +17,8 @@ use App\Plan_Tratamiento;
 use Calendar;
 use Validator;
 
+use Mail;
+
 class PacienteController extends Controller
 {
     /**
@@ -64,7 +66,11 @@ class PacienteController extends Controller
         $valores = $request->all();
         //Verificando si estan todos los campos obligatorios
 
-            if(is_null($valores['nombre1']) or is_null($valores['apellido1']) or is_null($valores['fechaNacimiento']) or is_null($valores['telefono']) or is_null($valores['sexo']) or is_null($valores['domicilio']) or is_null($valores['ocupacion']) or is_null($valores['password']) or is_null($valores['confirmPassword']) or  is_null($valores['email']) ){
+            if(is_null($valores['nombre1']) or is_null($valores['apellido1']) 
+            or is_null($valores['fechaNacimiento']) 
+            or is_null($valores['telefono']) or is_null($valores['sexo'])
+            or is_null($valores['domicilio']) or is_null($valores['ocupacion']) 
+            or is_null($valores['email']) ){
                 
                 return redirect()->route('paciente.create')
                         ->with('error', 'Complete los campos obligatorios')
@@ -72,13 +78,9 @@ class PacienteController extends Controller
                 
             }
 
-            if($valores['password'] != $valores['confirmPassword']){
-                    return redirect()->route('paciente.create')
-                        ->with('error', 'Verifique que la Contraseña este correcta')
-                        ->with('tipo', 'danger');
-                }
 
-
+            /**generando password */
+            $password=substr(md5(microtime()),1,6);
 
 
             $numero = DB::table('users')->select('id')->max('id');
@@ -87,12 +89,21 @@ class PacienteController extends Controller
             $user->apellido1 = $request->apellido1;
             $user->name = $request->nombre1.".".$request->apellido1.$numero;
             $user->email = $request->email;
-            $user->password =bcrypt($request->password);
+            $user->password=$password;
+
+            //** enviando email, contraseña */
+            Mail::send('email.paciente', ['user'=>$user], function ($m) use ($user,$valores) {
+                $m->to($user->email,$valores['nombre1']);
+                $m->subject('Contraseña y nombre de usuario');
+               
+            });
+
+            $user->password =bcrypt($password);
             if(!is_null($request['nombre2']))
             $user->nombre2 = $request->nombre2;
             if(!is_null($request['nombre3']))
             $user->nombre3 = $request->nombre3;
-            if(!is_null($request['apellido2']))
+                if(!is_null($request['apellido2']))
             $user->apellido2 = $request->apellido2;
             $user->save();
             $user->roles()->sync(5);

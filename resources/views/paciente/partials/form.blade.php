@@ -104,20 +104,7 @@
 	</div>
 </div>
 <br/>
-<div class="row">
-<div class="col-md-3">
-		<div class="form-group">
-			{{ Form::label('password', 'Contraseña*') }}
-			{{ Form::password('password', ['class' => 'form-control','id'=>'password'])}}
-		</div>
-	</div>
-<div class="col-md-3">
-		<div class="form-group">
-			{{ Form::label('confirmPassword', 'Confirmar Contraseña*') }}
-			{{ Form::password('confirmPassword', ['class' => 'form-control','id'=>'confirmPassword'])}}
-		</div>
-	</div>
-</div>
+
 <div class="row">
 	
 </div>
