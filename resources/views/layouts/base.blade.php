@@ -36,9 +36,10 @@
     border: none !important;
     border-top: 1px solid #ddd !important;
     font-weight: bold;
-} 
-  </style>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    } 
+    </style>
+  {{-- iconos --}}
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
         @yield('javascript')
   </head>
 
@@ -46,14 +47,14 @@
 
     <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
  
-      <a class="navbar-brand mr-1" href="/home">Clinica Odontologica YekixPaki</a>
+      <a class="navbar-brand mr-1" href="{{ route('home') }}">Clinica Odontologica YekixPaki</a>
 
       <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
         <i class="fa fa-bars"></i>
       </button>
 
       <!-- Navbar -->
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <div class="ntllapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
 
                     <!-- Right Side Of Navbar -->
@@ -92,6 +93,7 @@
     <div id="wrapper">
 
       <!-- Sidebar -->
+      {{-- @if(session('home')) --}}
       <ul class="sidebar navbar-nav">
         <li class="nav-item">
           <a class="nav-link" href="/home">
@@ -132,6 +134,7 @@
           </div>
         </li>
       </ul>
+      {{-- @endif --}}
 
       <div  id="content-wrapper">
 
@@ -184,7 +187,6 @@
         </footer>
       </div>
       <!-- /.content-wrapper -->
-
     </div>
     <!-- /#wrapper -->
 

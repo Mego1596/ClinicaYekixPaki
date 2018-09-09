@@ -17,7 +17,7 @@
 			<div class="col-md-12 col-md-offset-2">
 				<div class="card card-default">
 					<div class="card-header text-center">
-					<div class="row">
+						<div class="row">
 							<div class="col-md-1">
 								<a href="{{ route('paciente.index') }}" class="btn btn-block btn-secondary">
 								Atrás</a>
@@ -39,8 +39,7 @@
 								{{ Form::text('expediente', null, ['class' => 'form-control','disabled' ])}}
 							</div>
 						</div>
-						<br/>
-						<div class="row">
+						<div class="row pt-3">
 							<div class="col-md-2">
 								<div class="form-group">
 									{{ Form::label('nombre1', 'Primer nombre') }}
@@ -72,8 +71,7 @@
 								</div>
 							</div>
 						</div>
-						<br/>
-						<div class="row">
+						<div class="row pt-3">
 							<div class="col-md-2">
 								{{ Form::label('fechaNacimiento', 'Fecha de nacimiento') }}
 								{{ Form::date('fechaNacimiento', \Carbon\Carbon::now(), ['class' => 'form-control', 'type'=>'date', 'style'=>'height: 38px', 'disabled']) }}
@@ -95,36 +93,31 @@
 								{{ Form::text('ocupacion', null, ['class' => 'form-control', 'disabled']) }}
 							</div>
 						</div>
-						<br/>
-						<div class="row">
+						<div class="row pt-3">
 							<div class="col-md-12">
 								{{ Form::label('domicilio', 'Domicilio') }}
 								{{ Form::text('domicilio', null, ['class'=>'form-control', 'disabled']) }}
 							</div>
 						</div>
-						<br/>
-						<div class="row">
+						<div class="row pt-3">
 							<div class="col-md-12">
 								{{ Form::label('direccion_de_trabajo', 'Direccion de trabajo') }}
 								{{ Form::text('direccion_de_trabajo', null, ['class'=>'form-control', 'disabled']) }}
 							</div>
 						</div>
-						<br/>
-						<div class="row">
+						<div class="row pt-3">
 							<div class="col-md-12">
 								{{ Form::label('responsable', 'Responsable') }}
 								{{ Form::text('responsable', null, ['class'=>'form-control', 'disabled']) }}
 							</div>
 						</div>
-							<br/>
-						<div class="row">	
+						<div class="row pt-3">	
 							<div class="col-md-12">
 								{{ Form::label('recomendado', 'Recomendado por') }}
 								{{ Form::email('recomendado', null, ['class'=>'form-control', 'disabled']) }}
 							</div>
 						</div>
-							<br/>
-						<div class="row">
+						<div class="row pt-3">
 						@can('admin.historiaO')
 							<div class="col-md-12">
 								{{ Form::label('historiaOdontologica','Historia Odontologica')}}
@@ -132,19 +125,91 @@
 							</div>
 						@endcan
 						</div>
-						<br/>
-						<a href="{{ route('paciente.agenda', $paciente->id) }}" class="btn btn-sm btn-default bg-primary" style="color: white;width: 105px;font-size: 15pt">Calendario</a>
-
-						@can('admin.crearHistoria')
-						<!-- Button trigger modal -->
-						<button type="button" class="btn btn-success" data-toggle="modal" data-target="#Modal2" style="width: 195px;font-size: 14pt">
-						  Crear Historia Medica
-						</button>
-						@endcan
-					</div>
+						<div class="row pt-3">
+							<div class="col-md-3 col-sm-12">
+							<a href="{{ route('paciente.agenda', $paciente->id) }}" class="btn btn-block btn-primary bg-primary" role="button">Calendario</a>	
+							</div>
+							<div class="col-md-5 col-sm-12">
+							@can('admin.crearHistoria')
+							<!-- Button trigger modal -->
+							<button type="button" class="btn btn-block btn-success" data-toggle="modal" data-target="#Modal2">
+							  Crear Historia Medica
+							</button>
+							@endcan	
+							</div>
+						</div>
 					{!! Form::close() !!}
+					</div>
+					@can('admin.historiaM')
+						<div class="container">
+							<div class="row">
+								<div class="col-md-4">
+									<h5>Historia Médica:</h5>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-12">
+	        						<table class="table table-striped table-responsive-md">
+	        							<th width="85%">Descripcion</th>
+	        							<th></th>
+	        							<th></th>
+	        							@foreach ($historias as $key) 
+	        							<tr>
+	        								<td>
+		        								{{$key->descripcion}}
+			        						</td>
+			        						<td width="10px">
+												@can('admin.editarHistoria')
+												<!-- Button trigger modal -->
+												<button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal{{$key->id}}">
+												  Editar
+												</button>
+												@endcan
+												{!! Form::model($key, ['route' => ['historia.update', $key->id], 'method'=> 'PUT' ] ) !!}
+												<!-- Modal -->
+												<div class="modal fade" id="exampleModal{{$key->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+												  <div class="modal-dialog" role="document">
+												    <div class="modal-content">
+												      <div class="modal-header">
+												        <h5 class="modal-title" id="exampleModalLabel"> Historia Medica</h5>
+												        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+												          <span aria-hidden="true">&times;</span>
+												        </button>
+												      </div>
+												      <div class="modal-body">
+												      	<input type="hidden" name="id" id="id" value="{{$key->id}}">
+												      	<textarea name="descripcion" id="descripcion" cols="30" rows="10" 
+												      	class="form-control">{{ $key->descripcion }}</textarea>
+												        {{-- <input type="text" name="descripcion" id="descripcion" value="{{$key->descripcion}}"> --}}
+												      </div>
+												      <div class="modal-footer">
+												        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+												        <button type="submit" class="btn btn-success">Modificar</button>
+												      </div>
+												    </div>
+												  </div>
+												</div>
+												{!! Form::close() !!}
+											</td>
+											@can('admin.eliminarHistoria')
+											<td>
+											{!! Form::open(['route' => ['historia.destroy', $key->id],
+													'method' => 'DELETE']) !!}
+														<button class="btn btn-block btn-danger" style="color: white">
+															Eliminar
+														</button>
+													{!! Form::close() !!}
+			        						</td>
+			        						@endcan
+		        						</tr>
+							    		@endforeach
+									</table>
+								</div> 
+							</div>
+						</div>
+					@endcan
 
-						{!! Form::open(['route' => 'historia.store']) !!}
+					{!! Form::open(['route' => 'historia.store']) !!}
 						<!-- Modal -->
 						<div class="modal fade" id="Modal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 							<div class="modal-dialog" role="document">
@@ -156,7 +221,9 @@
 						        			</button>
 						      		</div>
 						      		<div class="modal-body">
-						        		<input type="text" name="descripcion" id="descripcion">
+						      			<label for="descripcion">Descripci&#243;n:</label>
+						      			<textarea name="descripcion" id="descripcion" cols="30" rows="10" class="form-control"></textarea>
+						        		{{-- <input type="text" name="descripcion" id="descripcion" class="form-control"> --}}
 						        		<input type="hidden" name="paciente_id" id="paciente_id" value="{{$paciente->id}}">
 						      		</div>
 						      		<div class="modal-footer">
@@ -167,82 +234,8 @@
 							</div>
 						</div>
 						{!! Form::close() !!}
-
-
-
-
-
-					@can('admin.historiaM')
-						<div class="row">
-							<h5>&nbsp;&nbsp;&nbsp;Historia Medica:</h5>
-							<div class="col-md-12">
-        						<table>
-        							<th>Descripcion:</th>
-        							<th style="color:#FFFFFF">.............</th>
-        							<th style="color:#FFFFFF">.............</th>
-        							<th></th>
-        							@foreach ($historias as $key) 
-        							<tr>
-        								<td>
-	        								<ul>
-			        							<li>
-			        								{{$key->descripcion}}							
-			        							</li>
-		        							</ul>
-		        						</td>
-		        						<td>
-		        							
-		        						</td>
-		        						<td width="10px">
-											@can('admin.editarHistoria')
-											<!-- Button trigger modal -->
-											<button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal{{$key->id}}" style="height: 33px">
-											  Editar
-											</button>
-											@endcan
-											{!! Form::model($key, ['route' => ['historia.update', $key->id], 'method'=> 'PUT' ] ) !!}
-											<!-- Modal -->
-											<div class="modal fade" id="exampleModal{{$key->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-											  <div class="modal-dialog" role="document">
-											    <div class="modal-content">
-											      <div class="modal-header">
-											        <h5 class="modal-title" id="exampleModalLabel"> Historia Medica</h5>
-											        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-											          <span aria-hidden="true">&times;</span>
-											        </button>
-											      </div>
-											      <div class="modal-body">
-											      	<input type="hidden" name="id" id="id" value="{{$key->id}}">
-											        <input type="text" name="descripcion" id="descripcion" value="{{$key->descripcion}}">
-											      </div>
-											      <div class="modal-footer">
-											        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-											        <button type="submit" class="btn btn-success">Modificar</button>
-											      </div>
-											    </div>
-											  </div>
-											</div>
-											{!! Form::close() !!}
-										</td>
-										@can('admin.eliminarHistoria')
-										<td>
-										{!! Form::open(['route' => ['historia.destroy', $key->id],
-												'method' => 'DELETE']) !!}
-													<button class="btn btn-sm btn-block btn-default bg-danger" style="color: white">
-														Eliminar
-													</button>
-												{!! Form::close() !!}
-		        						</td>
-		        						@endcan
-	        						</tr>
-						    		@endforeach
-								</table>
-							</div> 
-						</div>
-						@endcan
 				</div>
 			</div>
 		</div>
 	</div>
-</div>
 @endsection
