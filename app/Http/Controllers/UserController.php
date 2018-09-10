@@ -65,8 +65,9 @@ class UserController extends Controller
             }
         }
         
-        $numero = DB::table('users')->select('id')->max('id');
+        $numero = DB::table('users')->select('correlativo')->max('correlativo')+1;
         $user = new User();
+        $user->correlativo = $numero;
         $user->nombre1 = $request->nombre1;
         $user->apellido1 = $request->apellido1;
         $user->name = $request->nombre1.".".$request->apellido1.$numero;
