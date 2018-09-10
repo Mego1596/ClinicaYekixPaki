@@ -131,7 +131,7 @@
         @can('recetas.index')
         <div class="row">
           <div class="col-md-4" style="margin-top: 10px">
-              <a class="btn btn-info" href="{{route('receta.index')}}">Gestionar Receta</a>
+              <a class="btn btn-info" href="#" name="receta" id="receta">Gestionar Receta</a>
           </div>
         </div>
         @endcan
@@ -155,6 +155,11 @@
         document.getElementById("plan").onclick = function() {
           var x=parseInt($('#txtID').val());
           this.setAttribute("href","planTratamiento/"+x);
+          //this.setAttribute("href","{{route('planTratamiento.index', ['cita' => ''])}}" )
+        }
+        document.getElementById("receta").onclick = function() {
+          var x=parseInt($('#txtID').val());
+          this.setAttribute("href","receta/"+x);
           //this.setAttribute("href","{{route('planTratamiento.index', ['cita' => ''])}}" )
         }
 </script>

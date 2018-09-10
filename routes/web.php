@@ -130,17 +130,17 @@ Route::middleware(['auth'])->group(function(){
 	//Recetas
 	Route::post('receta/store', 'RecetasController@store')->name('receta.store')->middleware('permission:recetas.create');
 
-	Route::get('receta', 'RecetasController@index')->name('receta.index')->middleware('permission:recetas.index');
+	Route::get('receta/{cita}', 'RecetasController@index')->name('receta.index')->middleware('permission:recetas.index');
 
-	Route::get('receta/create', 'RecetasController@create')->name('receta.create')->middleware('permission:recetas.create');
+	Route::get('receta/create/{cita}', 'RecetasController@create')->name('receta.create')->middleware('permission:recetas.create');
 
-	Route::put('receta/{receta}', 'RecetasController@update')->name('receta.update')->middleware('permission:recetas.edit');
+	Route::put('receta/update/{receta}', 'RecetasController@update')->name('receta.update')->middleware('permission:recetas.edit');
 
-	Route::get('receta/{receta}', 'RecetasController@show')->name('receta.show')->middleware('permission:recetas.show');
+	Route::get('receta/show/{cita}/{receta}', 'RecetasController@show')->name('receta.show')->middleware('permission:recetas.show');
 
-	Route::delete('receta/{receta}', 'RecetasController@destroy')->name('receta.destroy')->middleware('permission:recetas.destroy');
+	Route::delete('receta/destroy/{receta}', 'RecetasController@destroy')->name('receta.destroy')->middleware('permission:recetas.destroy');
 
-	Route::get('receta/edit/{receta}', 'RecetasController@edit')->name('receta.edit')->middleware('permission:recetas.edit');
+	Route::get('receta/edit/{cita}/{receta}', 'RecetasController@edit')->name('receta.edit')->middleware('permission:recetas.edit');
 
 
 

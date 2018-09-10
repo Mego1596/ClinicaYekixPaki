@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Recetas;
+use App\Events;
+use App\Paciente;
 use Illuminate\Http\Request;
 
 class RecetasController extends Controller
@@ -12,9 +14,10 @@ class RecetasController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($id)
     {
-        return view('receta.index');
+        $recetas = Recetas::paginate();
+        return view('receta.index',compact('recetas','id')); 
     }
 
     /**
@@ -22,9 +25,12 @@ class RecetasController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        //
+    public function create($id)
+    {   
+        $evento   = Events::find($id);
+        $paciente = Paciente::find($evento->paciente_id);
+        json_decode($paciente);
+        return view('receta.create',compact('id','paciente'));
     }
 
     /**
@@ -35,7 +41,8 @@ class RecetasController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Recetas::create($request->all());
+        return redirect()->route('receta.index',$request->events_id)->with('info','Receta Guardada con exito');
     }
 
     /**
@@ -55,7 +62,7 @@ class RecetasController extends Controller
      * @param  \App\Recetas  $recetas
      * @return \Illuminate\Http\Response
      */
-    public function edit(Recetas $recetas)
+    public function edit($id,Recetas $recetas)
     {
         //
     }
