@@ -62,9 +62,13 @@ class RecetasController extends Controller
      * @param  \App\Recetas  $recetas
      * @return \Illuminate\Http\Response
      */
-    public function edit($id,Recetas $recetas)
+    public function edit($id,$id2)
     {
-        //
+        $evento   = Events::find($id);
+        $paciente = Paciente::find($evento->paciente_id);
+        json_decode($paciente);
+        $recetas  = Recetas::find($id2);
+        return view('receta.edit',compact('id','recetas','paciente','id2'));
     }
 
     /**
@@ -74,9 +78,13 @@ class RecetasController extends Controller
      * @param  \App\Recetas  $recetas
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Recetas $recetas)
+    public function update(Request $request)
     {
-        //
+        $receta = Recetas::find($request->id);
+        $receta->peso = $request->peso;
+        $receta->recetaPara = $request->recetaPara;
+        $receta->save();
+        return redirect()->route('receta.index',$request->events_id)->with('info','Receta actualizada con exito');
     }
 
     /**
@@ -85,8 +93,10 @@ class RecetasController extends Controller
      * @param  \App\Recetas  $recetas
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Recetas $recetas)
+    public function destroy($id)
     {
-        //
+        $receta = Recetas::find($id);
+        $receta->delete();
+        return back()->with('info','Eliminado Correctamente');
     }
 }
