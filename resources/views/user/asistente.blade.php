@@ -32,7 +32,7 @@
 						          <input type="text" class="form-control" placeholder="Buscar..." aria-label="Search" aria-describedby="basic-addon2" id="buscar" name="buscar">
 						          <div class="input-group-append">
 						            <button class="btn btn-primary" type="submit">
-						              <i class="fas fa-search"></i>
+						              <i class="fa fa-search"></i>
 						            </button>
 						          </div>
 						        </div>

@@ -10,7 +10,7 @@
 					<div class="row">
 						<div class="col-12">
 								<a href="{{route('events.index')}}" class="btn btn-block btn-light">
-									<i class="fas fa-calendar-alt fa-7x"></i>
+									<i class="fa fa-calendar" style="font-size: 150px"></i>
 								</a>
 						</div>
 					</div>
@@ -26,7 +26,7 @@
 					<div class="row">
 						<div class="col-12">
 								<a href="{{route('procedimiento.index')}}" class="btn btn-block btn-light">
-									<i class="fas fa-clipboard-list fa-7x"></i>
+									<i class="fa fa-list" style="font-size: 150px"></i>
 								</a>
 						</div>
 					</div>
@@ -42,7 +42,7 @@
 					<div class="row">
 						<div class="col-12">
 							<a href="{{route('user.index')}}" class="btn btn-block btn-light">
-								<i class="fas fa-user-md fa-7x"></i>
+								<i class="fa fa-user-md" style="font-size: 150px"></i>
 							</a>
 						</div>
 					</div>
@@ -62,7 +62,7 @@
 					<div class="row">
 						<div class="col-12">
 						<a href="{{route('user.asistente')}}" class="btn btn-block btn-light">
-							<i class="fas fa-hands-helping fa-7x"></i>
+							<i class="	fa fa-handshake-o" style="font-size: 150px"></i>
 						</a>
 						</div>
 					</div>
@@ -76,7 +76,7 @@
 					<div class="row">
 						<div class="col-12">
 							<a href="{{route('paciente.index')}}" class="btn btn-block btn-light">
-								<i class="fas fa-users fa-7x"></i>
+								<i class="fa fa-group" style="font-size: 150px"></i>
 							</a>	
 						</div>
 					</div>
@@ -90,7 +90,7 @@
 					<div class="row">
 						<div class="col-12">
 							<a href="{{route('roles.index')}}" class="btn btn-block btn-light">
-								<i class="fas fa-user-tie fa-7x"></i>
+								<i class="fa fa-user" style="font-size: 150px"></i>
 							</a>		
 						</div>
 					</div>
