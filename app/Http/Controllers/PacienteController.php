@@ -217,7 +217,7 @@ class PacienteController extends Controller
         //Verificando si estan todos los campos obligatorios
         if(is_null($valores['nombre1']) or is_null($valores['apellido1'])
             or is_null($valores['fechaNacimiento']) or is_null($valores['telefono']) or is_null($valores['sexo'])
-            or is_null($valores['domicilio']) or is_null($valores['ocupacion']) or is_null($valores['email']) ){
+            or is_null($valores['domicilio']) or is_null($valores['ocupacion'])){
 
             return redirect()
                     ->route('paciente.edit',$paciente->id)
@@ -226,7 +226,6 @@ class PacienteController extends Controller
         }
 
         $user = User::find($paciente->user_id);
-
         if(is_null($request['direccion_de_trabajo']))
             $request['direccion_de_trabajo'] = "Sin direccion de trabajo";
 
@@ -235,15 +234,18 @@ class PacienteController extends Controller
 
         if(!is_null($valores['nombre2']))
             $request['nombre2'] = $request->nombre2;
-            $user->nombre2 = $request->nombre2;
+            if(!is_null($user))
+                $user->nombre2 = $request->nombre2;
 
         if(!is_null($valores['nombre3']))
             $request['nombre3'] = $request->nombre3;
-            $user->nombre3 = $request->nombre3;
+            if(!is_null($user))
+                $user->nombre3 = $request->nombre3;
 
          if(!is_null($valores['apellido2']))
             $request['apellido2'] = $request->apellido2;
-            $user->apellido2 = $request->apellido2;
+            if(!is_null($user))
+                $user->apellido2 = $request->apellido2;
 
          if(is_null($valores['recomendado']))
             $request['recomendado'] = "-";
@@ -254,10 +256,40 @@ class PacienteController extends Controller
             $request['historiaOdontologica'] = "-";
         else
             $request['historiaOdontologica'] = $request->historiaOdontologica;
-        $user->nombre1 = $request->nombre1;
-        $user->apellido1 = $request->apellido1;
-        $user->email = $request->email;
-        $user->save();
+        
+        if(is_null($user)){
+            if($request['email'] != null){
+                $nuevo = new User();
+                $nuevo->name = $request->nombre1[0].$paciente->expediente;
+                $nuevo->nombre1 = $request->nombre1;
+                $nuevo->apellido1 = $request->apellido1;
+                $nuevo->email = $request->email;
+                $password=substr(md5(microtime()),1,6);
+                $nuevo->password = $password;
+                Mail::send('email.paciente', ['user'=>$nuevo], function ($m) use ($nuevo,$request) {
+                $m->to($nuevo->email,$request['nombre1']);
+                $m->subject('Contraseña y nombre de usuario');
+                $m->from('clinicaYekixPaki@gmail.com','YekixPaki');
+                });
+                $nuevo->password =bcrypt($password);
+                $nuevo->save();
+                $nuevo->roles()->sync(5);
+                $paciente->user_id = $nuevo->id;
+            }
+        }else{
+            if($request->email != null){
+                $user->nombre1 = $request->nombre1;
+                $user->apellido1 = $request->apellido1;
+                $user->email = $request->email;
+                $user->save();
+            }else{
+                $auxiliarid = $paciente->user_id;
+                $paciente->user_id = null;
+                $paciente->save();
+                $usuario = User::find($auxiliarid);
+                $usuario->delete();
+            }
+        }
         $paciente->update($request->all());
         return redirect()->route('paciente.index')
             ->with('info','Paciente actualizado con exito')
@@ -604,9 +636,3 @@ class PacienteController extends Controller
     }
 
 }
-
-
-/*        <!--{!! Form::label('procedimiento_id', 'Procedimiento:')!!}
-        {!! Form::select('procedimiento_id', $procedimiento, null, ['placeholder' => 'Elija un procedimiento'])!!}-->
-
-        */

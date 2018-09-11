@@ -53,6 +53,7 @@
 									<th width="10px">ID</th>
 									<th>Nombre</th>
 									<th>No. Expediente</th>
+									<th>Nombre de Usuario</th>
 									@if (sizeof($pacientes) == 0)
 										<th width="237">
 											@can('pacientes.create')
@@ -73,40 +74,67 @@
 								</tr>
 							</thead>
 							<tbody>
-								@foreach($pacientes as $paciente).
+									@foreach($pacientes as $paciente)
+										@if($paciente->user_id !=null)
+											@foreach($user as $users)
+												@if($paciente->user_id == $users->id)
+													<tr>
+														<td>{{$paciente->id}}</td>
+														<td>{{$paciente->nombre1." ".$paciente->nombre2." ".$paciente->nombre3." ".$paciente->apellido1." ".$paciente->apellido2}}</td>
+														<td>{{$paciente->expediente}}</td>
+														<td>{{$users->name}}</td>
+														<td width="10px">
+															@can('pacientes.show')
+																<a href="{{ route('paciente.show', $paciente->id) }}" class="btn btn-sm btn-default bg-info" style="color: white">Ver
+																</a>
+															@endcan
+														</td>
+														<td width="10px">
+															@can('pacientes.edit')
+																<a href="{{ route('paciente.edit', $paciente->id) }}" class="btn btn-sm  btn-default bg-success" style="color: white">Editar</a>
+															@endcan
+														</td>
+														<td width="10px">
+															@can('users.destroy')
+																<button type="button" class="btn btn-sm btn-default btn btn-danger" data-toggle="modal" data-target="#Modal2">
+												  					Eliminar
+																</button>
+																{!! Form::open(['route' => ['paciente.destroy', $paciente->id],'method' => 'DELETE']) !!}
+																	<!-- Modal -->
+																	<div class="modal fade" id="Modal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+																		<div class="modal-dialog" role="document">
+																	    	<div class="modal-content">
+																	    		<div class="modal-header">
+																	        		<h5 class="modal-title" id="exampleModalLabel"> Eliminar Paciente</h5>
+																	        			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+																	          				<span aria-hidden="true">&times;</span>
+																	        			</button>
+																	      		</div>
+																	      		<div class="modal-body">
+																	      			<label>Estas seguro?</label>
+																	      			<br/>
+																	      			<button type="button" class="btn btn-md btn-default" data-dismiss="modal">No</button>
+																	        		<button class="btn btn-md btn-default bg-danger" style="color: white">
+																						Si
+																					</button>
+																	      		</div>
+																	      		<div class="modal-footer">
+																	      		</div>
+																	    	</div>
+																		</div>
+																	</div>
+																{!! Form::close() !!}
+															@endcan
+														</td>
+													</tr>
+												@endif
+											@endforeach
+										@else
 											<tr>
 												<td>{{$paciente->id}}</td>
-
-												@if($paciente->nombre2 == 'N/A' && $paciente->nombre3 == 'N/A' && $paciente->apellido2 == 'N/A')
-												<td>{{$paciente->nombre1." ".$paciente->apellido1}}</td>
-												@endif
-
-
-												@if($paciente->nombre2 == 'N/A' && $paciente->nombre3 == 'N/A' && $paciente->apellido2 != 'N/A')
-												<td>{{$paciente->nombre1." ".$paciente->apellido1." ".$paciente->apellido2}}</td>
-												@endif
-
-
-												@if($paciente->nombre2 != 'N/A' && $paciente->nombre3 == 'N/A' && $paciente->apellido2 == 'N/A')
-												<td>{{$paciente->nombre1." ".$paciente->nombre2." ".$paciente->apellido1}}</td>
-												@endif
-
-
-												@if($paciente->nombre2 != 'N/A' && $paciente->nombre3 == 'N/A' && $paciente->apellido2 != 'N/A')
-												<td>{{$paciente->nombre1." ".$paciente->nombre2." ".$paciente->apellido1." ".$paciente->apellido2}}</td>
-												@endif
-
-
-												@if($paciente->nombre2 != 'N/A' && $paciente->nombre3 != 'N/A' && $paciente->apellido2 == 'N/A')
-												<td>{{$paciente->nombre1." ".$paciente->nombre2." ".$paciente->nombre3." ".$paciente->apellido1}}</td>
-												@endif
-
-												@if($paciente->nombre2 != 'N/A' && $paciente->nombre3 != 'N/A' && $paciente->apellido2 != 'N/A')
 												<td>{{$paciente->nombre1." ".$paciente->nombre2." ".$paciente->nombre3." ".$paciente->apellido1." ".$paciente->apellido2}}</td>
-												@endif
-
-
 												<td>{{$paciente->expediente}}</td>
+												<td>Sin Usuario</td>
 												<td width="10px">
 													@can('pacientes.show')
 														<a href="{{ route('paciente.show', $paciente->id) }}" class="btn btn-sm btn-default bg-info" style="color: white">Ver
@@ -124,9 +152,9 @@
 										  					Eliminar
 														</button>
 														{!! Form::open(['route' => ['paciente.destroy', $paciente->id],'method' => 'DELETE']) !!}
-															<!-- Modal -->
-															<div class="modal fade" id="Modal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-																<div class="modal-dialog" role="document">
+																<!-- Modal -->
+														<div class="modal fade" id="Modal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+															<div class="modal-dialog" role="document">
 															    	<div class="modal-content">
 															    		<div class="modal-header">
 															        		<h5 class="modal-title" id="exampleModalLabel"> Eliminar Paciente</h5>
@@ -139,7 +167,7 @@
 															      			<br/>
 															      			<button type="button" class="btn btn-md btn-default" data-dismiss="modal">No</button>
 															        		<button class="btn btn-md btn-default bg-danger" style="color: white">
-																				Si
+																					Si
 																			</button>
 															      		</div>
 															      		<div class="modal-footer">
@@ -151,7 +179,8 @@
 													@endcan
 												</td>
 											</tr>
-								@endforeach
+										@endif
+									@endforeach
 
 
 							</tbody>

@@ -2,7 +2,7 @@
 	{{ Form::hidden('events_id', $id,['class' => 'form-control'])  }}
 	<div class="col-md-5">
 		<div class="form-group">
-			{{ Form::label('nombre', 'Primer Nombre') }}
+			{{ Form::label('nombre', 'Nombre') }}
 			{{ Form::text('nombre', $paciente->nombre1." ".$paciente->nombre2." ".$paciente->nombre3." ".$paciente->apellido1." ".$paciente->apellido2, ['class' => 'form-control', 'disabled'])}}
 		</div>
 	</div>
