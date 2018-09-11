@@ -297,7 +297,7 @@ class PacienteController extends Controller
             $encendido = false;
         }
         $procesos = Procedimiento::get();
-
+        $procedimiento = Procedimiento::pluck('nombre','id')->toArray();
         $events = Events::select('id','paciente_id','start_date','end_date','descripcion')->where('paciente_id',$paciente->id)->get();
         $event_list= [];
         foreach ($events as $key => $event) {
@@ -320,6 +320,7 @@ class PacienteController extends Controller
             }else{
                 $planT = Plan_Tratamiento::where('events_id',$event->id)->value('procedimiento_id');
                 $proceso = Procedimiento::where('id',$planT)->value('color');
+                $proc1   = Procedimiento::where('id',$planT)->value('id');
                 $event_list[] =Calendar::event(
                     $paciente->nombre1." ".$paciente->nombre2." ".$paciente->apellido1." ".$paciente->apellido2,
                     false,
@@ -330,6 +331,7 @@ class PacienteController extends Controller
                     'color'             => $proceso,
                     'descripcion'       => $event->descripcion,
                     'textColor'         => $event->textcolor,
+                    'procedimiento'     => $proc1,
                     'durationEditable'  => false,
                     ]
                 );
@@ -387,7 +389,7 @@ class PacienteController extends Controller
                     $("#txtFecha").val(FechaHora[0]);
                     $("#start_date").val(horaInicio[0]);
                     $("#end_date").val(horaFin[0]);
-                    //$("#procedimiento_id").val(calEvent.procedimiento);
+                    $("#procedimiento_id").val(calEvent.procedimiento);
                     $("#exampleModal").modal();     
                 }else{
                     $("#btnAgregar").hide();
@@ -408,8 +410,8 @@ class PacienteController extends Controller
                     $("#start_date").prop("disabled",true);
                     $("#end_date").val(horaFin[0]);
                     $("#end_date").prop("disabled",true);
-                    //$("#procedimiento_id").val(calEvent.procedimiento);
-                    //$("#procedimiento_id").prop("disabled",true);
+                    $("#procedimiento_id").val(calEvent.procedimiento);
+                    $("#procedimiento_id").prop("disabled",true);
                     $("#exampleModal").modal(); 
                 }
             }',
@@ -424,13 +426,13 @@ class PacienteController extends Controller
                     $("#txtFecha").val(fechaHora[0]);
                     $("#start_date").val(fechaHora[1]);
                     $("#end_date").val(fechaHora2[1]);
-                    //$("#procedimiento_id").val(calEvent.procedimiento);
+                    $("#procedimiento_id").val(calEvent.procedimiento);
                     document.getElementById("btnModificar").click();
                  }',
 
             ]);
 
-        return view('paciente.agenda',compact('procesos','calendar_details','paciente','encendido'));
+        return view('paciente.agenda',compact('procedimiento','procesos','calendar_details','paciente','encendido'));
     }
 
     public function addEvent(Request $request){
@@ -444,34 +446,67 @@ class PacienteController extends Controller
             return redirect()->route('paciente.agenda',$request->pacienteID)->withInput()->withErrors($validator);
         }
         if(isset($_POST["btnAgregar"])){
-        $event = new Events();
-        $event->paciente_id         = $request['pacienteID'];
-        if(strpos($request["txtFecha"], "T")){
-            $event->start_date          = str_replace("T", " ", $request['txtFecha']);
-            $str = substr($request['txtFecha'],0,-9);
-            $event->end_date            = $str." ".$request['end_date'];
-        }else{
-            $event->start_date          = $request['txtFecha']." ".$request['start_date'];
-            $event->end_date            = $request['txtFecha']." ".$request['end_date'];
-        }
-       // if(!is_null($request['procedimiento_id'])){
-       //     $event->procedimiento_id    = $request['procedimiento_id'];
-       // }
-        $event->descripcion         = $request['txtDescripcion'];
-        $event->save();
-
-        \Session::flash('success','Cita añadida exitosamente');
-        return redirect()->route('paciente.agenda',$request->pacienteID)->with('info','Cita guardada con exito');
-
+            if($request->procedimiento_id==NULL){
+                $event = new Events();
+                $event->paciente_id         = $request['pacienteID'];
+                if(strpos($request["txtFecha"], "T")){
+                    $event->start_date          = str_replace("T", " ", $request['txtFecha']);
+                    $str = substr($request['txtFecha'],0,-9);
+                    $event->end_date            = $str." ".$request['end_date'];
+                }else{
+                    $event->start_date          = $request['txtFecha']." ".$request['start_date'];
+                    $event->end_date            = $request['txtFecha']." ".$request['end_date'];
+                }
+                $event->descripcion         = $request['txtDescripcion'];
+                $event->save();
+                \Session::flash('success','Cita añadida exitosamente');
+                return redirect()->route('paciente.agenda',$request->pacienteID)->with('info','Cita guardada con exito');
+            }else{
+                $event = new Events();
+                $event->paciente_id         = $request['pacienteID'];
+                if(strpos($request["txtFecha"], "T")){
+                    $event->start_date          = str_replace("T", " ", $request['txtFecha']);
+                    $str = substr($request['txtFecha'],0,-9);
+                    $event->end_date            = $str." ".$request['end_date'];
+                }else{
+                    $event->start_date          = $request['txtFecha']." ".$request['start_date'];
+                    $event->end_date            = $request['txtFecha']." ".$request['end_date'];
+                }
+                $event->descripcion         = $request['txtDescripcion'];
+                $event->save();
+                $tratamiento_cita = new Plan_Tratamiento();
+                $tratamiento_cita->procedimiento_id = $request->procedimiento_id;
+                $tratamiento_cita->events_id        = $event->id;
+                $tratamiento_cita->save();
+                \Session::flash('success','Cita añadida exitosamente');
+                return redirect()->route('paciente.agenda',$request->pacienteID)->with('info','Cita guardada con exito');
+            }
         }elseif (isset($_POST["btnModificar"])) {
-            $event = Events::find($request["txtID"]);
-            $event->paciente_id         = $request['pacienteID'];
-            $event->start_date          = $request['txtFecha']." ".$request['start_date'];
-            $event->end_date            = $request['txtFecha']." ".$request['end_date'];
-            //$event->procedimiento_id    = $request['procedimiento_id'];
-            $event->descripcion         = $request['txtDescripcion'];
-            $event->save();
-            return redirect()->route('paciente.agenda',$request->pacienteID)->with('info','Cita actualizada con exito');
+            if($request->procedimiento_id==NULL){
+                $event = Events::find($request["txtID"]);
+                $event->paciente_id         = $request['pacienteID'];
+                $event->start_date          = $request['txtFecha']." ".$request['start_date'];
+                $event->end_date            = $request['txtFecha']." ".$request['end_date'];
+                $event->descripcion         = $request['txtDescripcion'];
+                $event->save();
+                $plan1 = Plan_Tratamiento::where('events_id',$event->id);
+                $plan1->delete();
+                return redirect()->route('paciente.agenda',$request->pacienteID)->with('info','Cita actualizada con exito');
+            }else{
+                $event = Events::find($request["txtID"]);
+                $event->paciente_id         = $request['pacienteID'];
+                $event->start_date          = $request['txtFecha']." ".$request['start_date'];
+                $event->end_date            = $request['txtFecha']." ".$request['end_date'];
+                $event->descripcion         = $request['txtDescripcion'];
+                $event->save();
+                $planAnterior = Plan_Tratamiento::where('events_id',$event->id);
+                $planAnterior->delete();
+                $tratamiento_cita = new Plan_Tratamiento();
+                $tratamiento_cita->procedimiento_id = $request->procedimiento_id;
+                $tratamiento_cita->events_id        = $event->id;
+                $tratamiento_cita->save();
+                return redirect()->route('paciente.agenda',$request->pacienteID)->with('info','Cita actualizada con exito');
+            }
         }elseif (isset($_POST['btnEliminar'])) {
             $event = Events::find($request["txtID"]);
             $event->delete();

@@ -1,5 +1,28 @@
 @extends('layouts.base')
 
+@section('javascript')
+<script>
+$(document).ready(function(){
+    $("#cosa").click(function(){
+        document.getElementById('procedimiento').style.visibility = 'visible';
+        document.getElementById('procedimiento_id').style.visibility = 'visible';
+        $("#cosa2").prop('checked',false);
+        $("#cosa").prop('disabled',true);
+        $("#cosa2").prop('disabled',false);
+    });
+    $("#cosa2").click(function(){
+        document.getElementById('procedimiento').style.visibility = 'hidden';
+        document.getElementById('procedimiento_id').style.visibility = 'hidden';
+        $("#cosa").prop('checked',false);
+        $("#cosa2").prop('disabled',true);
+        $("#cosa").prop('disabled',false);
+        $("#comboProc").val("");
+    });
+
+});
+</script>
+@endsection
+
 @section('bread')
 <li class="breadcrumb-item">
   <a href="/paciente">Paciente</a>
@@ -130,9 +153,19 @@
       		{!! Form::textarea('txtDescripcion', null, ['class' => 'form-control', 'rows' => '2', 'id' => 'txtDescripcion'])!!}
       	</div>
 
-        <!-- EN EL SELECT VA LA VARIABLE PROCEDIMIENTO -->
-
-
+        {!! Form::label('pregunta', 'Paciente con Procedimiento?',['style' => 'visibility:visible', 'id'=>'pregunta'])!!}
+        <br/>
+        <input type="checkbox" name="cosa" value="1" id="cosa" >
+        {{ Form::label('radio', 'Si ', ['style' => 'visibility:visible','id' => 'radio']) }}
+        <input type="checkbox" name="cosa2" value="2" id="cosa2" >
+        {{ Form::label('radio2', 'No ', ['style' => 'visibility:visible','id' => 'radio2']) }}
+      <!-- EN EL SELECT VA LA VARIABLE PROCEDIMIENTO -->
+        <div class="form-group">
+          {!! Form::label('procedimiento_id', 'Procedimiento:',['style' => 'visibility:hidden', 'id' => 'procedimiento'])!!}
+          <div class="">
+          {!! Form::select('procedimiento_id', $procedimiento, null, ['placeholder' => 'Elija un procedimiento', 'style' => 'visibility:hidden','id' =>'procedimiento_id'])!!}
+          </div>
+        </div>
 
       <div class="modal-footer">
 		{!! Form::submit('Añadir Cita', ['class' => 'btn btn-success','id' => 'btnAgregar', 'name' => 'btnAgregar']) !!}
@@ -153,25 +186,6 @@
 
     <script type="text/javascript">
 
-	/*function EnviarInformacion(accion,objEvento,modal){
-		$.ajax({
-			type:'POST',
-			url:'eventos.php?accion='+accion,
-			data:objEvento,
-			success:function(msg){
-				if(msg){
-					$('#CalendarioWeb').fullCalendar('refetchEvents');
-					if(!modal){
-						$('#exampleModal').modal('toggle');
-					}
-				}
-			},
-			error:function(){
-				alert('Hay un error...');
-			}
-		});
-	}*/
-
 	$('.clockpicker').clockpicker();
 		
 	function limpiarFormulario(){
@@ -181,7 +195,7 @@
 		$('#txtColor').val("");
 		$('#start_date').val("");
 		$('#end_date').val("");
-		//$('#procedimiento_id').val("");
+		$('#procedimiento_id').val("");
 	}
 
 </script>
