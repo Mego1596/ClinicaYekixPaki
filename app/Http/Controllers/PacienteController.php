@@ -390,6 +390,25 @@ class PacienteController extends Controller
                     $("#start_date").val(horaInicio[0]);
                     $("#end_date").val(horaFin[0]);
                     $("#procedimiento_id").val(calEvent.procedimiento);
+                    if(calEvent.procedimiento == null){
+                            $("#cosa").prop("checked",false);
+                            $("#cosa2").prop("checked",true);
+                            $("#cosa2").prop("disabled",true);
+                            $("#cosa").prop("disabled",false);
+                            if($("#cosa2").prop("checked")==true){
+                              document.getElementById("procedimiento").style.visibility = "hidden";
+                              document.getElementById("procedimiento_id").style.visibility ="hidden";
+                            }
+                    }else{
+                            $("#cosa").prop("checked",true);
+                            $("#cosa2").prop("checked",false);
+                            $("#cosa2").prop("disabled",false);
+                            $("#cosa").prop("disabled",true);
+                            if($("#cosa").prop("checked")==true){
+                              document.getElementById("procedimiento").style.visibility ="visible";
+                              document.getElementById("procedimiento_id").style.visibility ="visible";
+                            }
+                        }
                     $("#exampleModal").modal();     
                 }else{
                     $("#btnAgregar").hide();

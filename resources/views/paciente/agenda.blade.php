@@ -16,9 +16,11 @@ $(document).ready(function(){
         $("#cosa").prop('checked',false);
         $("#cosa2").prop('disabled',true);
         $("#cosa").prop('disabled',false);
-        $("#comboProc").val("");
+        $("#procedimiento_id").val("");
     });
 
+    $("#cosa2").prop('checked',true);
+    $("#cosa2").prop('disabled',true);
 });
 </script>
 @endsection
