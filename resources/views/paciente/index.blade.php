@@ -42,12 +42,12 @@
 				        <br/>
 				        <a class="btn btn-primary" href="{{route('paciente.index')}}">Ver Lista Completa</a>
 
-				    {!! Form::close() !!}.
+				    {!! Form::close() !!}
 				    </div>
 				    @endcan
 					</div>
 					<div class="card-body">
-						<table class="table table-striped table-hover">
+						<table class="table table-striped table-hover table-responsive-md">
 							<thead>
 								<tr>
 									<th width="10px">ID</th>
