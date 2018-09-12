@@ -63,10 +63,6 @@
 	 <td>
 	    <table border="0" cellspacing="0" cellpadding="0" width="500px">
 	          @foreach($detalles as $proc)
-	          	@if($proc->id%2 != 0)
-	          		<tr>
-	          			<td>O:</td>
-	          		</tr>
 		        	<tr>
 		            	<td>{{$proc->medicamento}}</td>
 		          	</tr>
@@ -76,7 +72,6 @@
 		          	<tr>
 		          		<td>{{$proc->cantidad}}</td>
 		          	</tr>
-	          	@endif
 	          @endforeach
 	    </table>    
 	 </td>
@@ -91,17 +86,17 @@
 				<td align="center" style="font-weight: bold;font-size: 10px">Dra. Kimberly Johanna Amaya Jimenez</td>
 			</tr>
 			<tr>
-				<td align="center" style="font-weight: bold;font-size: 10px">J.V.P.O 5028</td>
+				<td align="center" style="font-size: 10px">J.V.P.O 5028</td>
 			</tr>
 			<tr>
-				<td align="center" style="font-weight: bold;font-size: 10px">Horarios de Lunes a Viernes de 2:00p.m a 6:00 p.m Sabado 8:00 a.m 3:00 p.m
+				<td align="center" style="font-size: 10px">Horarios de Lunes a Viernes de 2:00p.m a 6:00 p.m Sabado 8:00 a.m 3:00 p.m
 				</td>
 			</tr>
 			<tr>
-				<td align="center" style="font-weight: bold;font-size: 10px">y mañanas de lunes a viernes</td>
+				<td align="center" style="font-size: 10px">y mañanas de lunes a viernes</td>
 			</tr>
 			<tr>
-				<td align="center" style="font-weight: bold;font-size: 10px">TELEFONO 6420-8735 Domingo solo por cita</td>
+				<td align="center" style="font-size: 10px">TELEFONO 6420-8735 Domingo solo por cita</td>
 			</tr>
 		</table>
 	</div>
