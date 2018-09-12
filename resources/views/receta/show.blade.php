@@ -61,7 +61,7 @@
 	<table border="0" cellspacing="0" cellpadding="0">
 	 <tr>
 	 <td>
-	    <table border="0" cellspacing="0" cellpadding="0">
+	    <table border="0" cellspacing="0" cellpadding="0" width="500px">
 	          @foreach($detalles as $proc)
 	          	@if($proc->id%2 != 0)
 	          		<tr>
@@ -79,26 +79,6 @@
 	          	@endif
 	          @endforeach
 	    </table>    
-	 </td>
-	 <td>
-	    <table border="0" cellspacing="0" cellpadding="0">
-	          @foreach($detalles as $proc)
-	          	@if($proc->id%2 == 0)
-	          		<tr>
-	          			<td>O:</td>
-	          		</tr>
-		          	<tr>
-		            	<td>{{$proc->medicamento}}</td>
-		          	</tr>
-		          	<tr>
-		          		<td>{{$proc->dosis}}</td>
-		          	</tr>
-		          	<tr>
-		          		<td>{{$proc->cantidad}}</td>
-		          	</tr>
-	          	@endif
-	          @endforeach
-	     </table>
 	 </td>
 	 </tr>
 	</table>
