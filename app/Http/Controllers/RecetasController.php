@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Recetas;
 use App\Events;
 use App\Paciente;
+use App\DetalleReceta;
 use Illuminate\Http\Request;
+use PDF;
 
 class RecetasController extends Controller
 {
@@ -42,7 +44,7 @@ class RecetasController extends Controller
     public function store(Request $request)
     {
         Recetas::create($request->all());
-        return redirect()->route('receta.index',$request->events_id)->with('info','Receta Guardada con exito');
+        return redirect()->route('receta.create',$request->events_id)->with('info','Receta Guardada con exito');
     }
 
     /**
@@ -51,9 +53,16 @@ class RecetasController extends Controller
      * @param  \App\Recetas  $recetas
      * @return \Illuminate\Http\Response
      */
-    public function show(Recetas $recetas)
+    public function show($id,$id2)
     {
-        //
+        $paciente = Paciente::find($id);
+        $receta = Recetas::find($id2);
+        $fecha = substr($receta->created_at, 0,11);
+        $newDate = date("d/m/Y", strtotime($fecha));
+        $detalles = DetalleReceta::where('receta_id',$id2)->get();
+        $pdf = PDF::loadView('receta.show',compact('paciente','receta','newDate','detalles'));
+        $pdf->setPaper('A4','Portrait');
+        return $pdf->stream();
     }
 
     /**

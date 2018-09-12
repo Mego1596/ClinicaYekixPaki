@@ -22,7 +22,7 @@
 										@endcan
 									</th>
 									@else
-									<th colspan="3" width="237">
+									<th colspan="4" width="237">
 										@can('recetas.create')
 										<a href="{{ route('receta.create',['cita' =>$id]) }}" class="btn btn-block btn-success pull-right">
 											Crear
@@ -36,7 +36,13 @@
 								@foreach($recetas as $receta)
 								<tr>
 									<td>{{$receta->id}}</td>
-									<td>{{$receta->recetaPara}}</td>
+									<td>Receta Para</td>
+									<td width="10px">
+										@can('recetas.create')
+											<a href="{{ route('detalleReceta.index',$receta->id)}}" class="btn btn-sm btn-default bg-info" style="color: white">Detalles Receta
+											</a>
+										@endcan
+									</td>
 									<td width="10px">
 										@can('recetas.show')
 											<a href="{{ route('receta.show',['cita' => $id, 'receta' => $receta->id])}}" class="btn btn-sm btn-default bg-info" style="color: white">Ver

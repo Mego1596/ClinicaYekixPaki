@@ -99,7 +99,7 @@
 																<button type="button" class="btn btn-sm btn-default btn btn-danger" data-toggle="modal" data-target="#Modal2">
 												  					Eliminar
 																</button>
-																{!! Form::open(['route' => ['paciente.destroy', $paciente->id],'method' => 'DELETE']) !!}
+																{!! Form::open(['route' => ['detalleReceta.destroy', $detalles->id],'method' => 'DELETE']) !!}
 																	<!-- Modal -->
 																	<div class="modal fade" id="Modal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 																		<div class="modal-dialog" role="document">

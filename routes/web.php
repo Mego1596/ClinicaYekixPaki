@@ -142,6 +142,20 @@ Route::middleware(['auth'])->group(function(){
 
 	Route::get('receta/edit/{cita}/{receta}', 'RecetasController@edit')->name('receta.edit')->middleware('permission:recetas.edit');
 
+	//dealle Receta
+	Route::post('detalleReceta/store', 'DetalleRecetaController@store')->name('detalleReceta.store')->middleware('permission:admin.crearHistoria');
+
+	Route::get('detalleReceta/{receta}', 'DetalleRecetaController@index')->name('detalleReceta.index')->middleware('permission:recetas.index');
+
+	Route::get('detalleReceta/show/{receta}', 'DetalleRecetaController@show')->name('detalleReceta.show')->middleware('permission:detalleRecetas.show');
+
+	Route::get('detalleReceta/create/{receta}', 'DetalleRecetaController@create')->name('detalleReceta.create')->middleware('permission:recetas.create');
+
+	Route::put('detalleReceta/update/{detalle}', 'DetalleRecetaController@update')->name('detalleReceta.update')->middleware('permission:admin.editarHistoria');
+
+	Route::get('detalleReceta/edit/{receta}/{detalle}', 'DetalleRecetaController@edit')->name('detalleReceta.edit')->middleware('permission:detalleRecetas.edit');
+
+	Route::delete('detalleReceta/destroy/{detalle}', 'DetalleRecetaController@destroy')->name('detalleReceta.destroy')->middleware('permission:admin.eliminarHistoria');
 
 
 });

@@ -73,6 +73,11 @@ class UserTableSeeder extends Seeder
         DB::table('permission_role')->insert(['permission_id' => '36' , 'role_id'=>'2']);
         DB::table('permission_role')->insert(['permission_id' => '37' , 'role_id'=>'2']);
         DB::table('permission_role')->insert(['permission_id' => '38' , 'role_id'=>'2']);
+        DB::table('permission_role')->insert(['permission_id' => '39' , 'role_id'=>'2']);
+        DB::table('permission_role')->insert(['permission_id' => '40' , 'role_id'=>'2']);
+        DB::table('permission_role')->insert(['permission_id' => '41' , 'role_id'=>'2']);
+        DB::table('permission_role')->insert(['permission_id' => '42' , 'role_id'=>'2']);
+        DB::table('permission_role')->insert(['permission_id' => '43' , 'role_id'=>'2']);
 
 
         //Permisos Asistente

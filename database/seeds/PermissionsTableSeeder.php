@@ -246,10 +246,41 @@ class PermissionsTableSeeder extends Seeder
         ]);
 
         Permission::create([
-            'name' => 'Eliminar Procedimiento',
+            'name' => 'Eliminar Recetas',
             'slug' => 'recetas.destroy',
             'description' => 'Eliminar cualquier dato de un Receta del sistema',
         ]);
 
+
+        //Detalle Receta
+        Permission::create([
+            'name' => 'Navegar Detalle Recetas',
+            'slug' => 'detalleRecetas.index',
+            'description' => 'Lista y Navega todos los Detalles Recetas de la Receta',
+        ]);
+
+        Permission::create([
+            'name' => 'Ver Detalle de Receta',
+            'slug' => 'detalleRecetas.show',
+            'description' => 'Ver en detalle cada Detalle de Receta de la receta',
+        ]);
+
+        Permission::create([
+            'name' => 'Creacion de Detalle Recetas',
+            'slug' => 'detalleRecetas.create',
+            'description' => 'Editar cualquier dato de un Detalle de Receta de la receta',
+        ]);
+
+        Permission::create([
+            'name' => 'Edicion de Detalle Recetas',
+            'slug' => 'detalleRecetas.edit',
+            'description' => 'Editar cualquier dato de un Detalle de Receta de la receta',
+        ]);
+
+        Permission::create([
+            'name' => 'Eliminar Detalle Receta',
+            'slug' => 'detalleRecetas.destroy',
+            'description' => 'Eliminar cualquier dato de un Detalle de Receta de la receta',
+        ]);
     }
 }

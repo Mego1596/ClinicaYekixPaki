@@ -16,14 +16,6 @@
 	</div>
 </div>
 
-<div class="row">
-	<div class="col-md-12">
-		<div class="form-group">
-			{{ Form::label('recetaPara', 'Receta Para:  *') }}
-			{{ Form::textarea('recetaPara', null, ['class' => 'form-control', 'rows' => '5'])}}
-		</div>
-	</div>
-</div>
 
 <div class="row pt-3">
 	<div class="col-md-4">
