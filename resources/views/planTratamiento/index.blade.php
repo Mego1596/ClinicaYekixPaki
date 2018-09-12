@@ -12,7 +12,7 @@ solo hacer gestion de plan de tratamiento si no tiene plan activo
 						<h4>Plan de Tratamiento</h4>
 					</div>
 					<div class="card-body">
-						<table class="table table-striped table-hover" >
+						<table class="table table-striped table-hover table-responsive-md" >
 							<thead>
 								<tr>
 									<th width="10px">ID</th>

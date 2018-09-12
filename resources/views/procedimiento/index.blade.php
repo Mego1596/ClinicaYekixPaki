@@ -13,7 +13,7 @@
 						<h4>Lista de procedimientos</h4>
 					</div>
 					<div class="card-body">
-						<table class="table table-striped table-hover" >
+						<table class="table table-striped table-hover table-responsive-md" >
 							<thead>
 								<tr>
 									<th width="10px">ID</th>

@@ -16,11 +16,11 @@
 						<h4>Lista de roles</h4>
 					</div>
 					<div class="card-body">
-						<table class="table table-striped table-hover">
+						<table class="table table-striped table-hover table-responsive-md">
 							<thead>
 								<tr>
 									<th width="10px">ID</th>
-									<th>Rol</th>
+									<th width="100%">Rol</th>
 									@if(sizeof($roles) == 0)
 									<th width="237">
 										@can('roles.create')
@@ -45,22 +45,40 @@
 								<tr>
 									<td>{{$role->id}}</td>
 									<td>{{$role->name}}</td>
-									<td width="10px">
+									@if( $role->id < 5)
+									<td width="232" colspan="3">
 										@can('roles.show')
-											<a href="{{ route('roles.show', $role->id) }}" class="btn btn-sm btn-default bg-info" style="color: white">Ver
+											<a href="{{ route('roles.show', $role->id) }}" class="btn btn-sm btn-block btn-default bg-info" style="color: white">Ver
 											</a>
 										@endcan
 									</td>
-									<td width="10px">
+									@elseif($role->id > 5)
+									<td width="100%">
+										@can('roles.show')
+											<a href="{{ route('roles.show', $role->id) }}" class="btn btn-sm btn-block btn-default bg-info" style="color: white">Ver
+											</a>
+										@endcan
+									</td>
+									@elseif($role->id == 5)
+									<td colspan="3">
+										@can('roles.show')
+											<a href="{{ route('roles.show', $role->id) }}" class="btn btn-sm btn-block btn-default bg-info" style="color: white">Ver
+											</a>
+										@endcan
+									</td>
+									@endif
+
 									@if($role->id > 5 )
+									<td width="10px">
 										@can('roles.edit')
 											<a href="{{ route('roles.edit', $role->id) }}" class="btn btn-sm btn-default bg-success" style="color: white">Editar</a>
 										@endcan
-									@endif
 									</td>
+									
+									@endif
 
-									<td width="10px">
 									@if($role->id > 5 )
+									<td width="10px">
 										@can('roles.destroy')
 											{!! Form::open(['route' => ['roles.destroy', $role->id],
 											'method' => 'DELETE']) !!}
@@ -69,8 +87,9 @@
 												</button>
 											{!! Form::close() !!}
 										@endcan
-									@endif
 									</td>
+									
+									@endif
 								</tr>
 								@endforeach
 							</tbody>
