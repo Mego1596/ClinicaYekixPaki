@@ -38,14 +38,14 @@
 									<td>{{$receta->id}}</td>
 									<td>Receta Para</td>
 									<td width="10px">
-										@can('recetas.create')
-											<a href="{{ route('detalleReceta.index',$receta->id)}}" class="btn btn-sm btn-default bg-info" style="color: white">Detalles Receta
+										@can('recetas.show')
+											<a href="{{ route('receta.show',['cita' => $id, 'receta' => $receta->id])}}" class="btn btn-sm btn-default bg-info" style="color: white">Ver
 											</a>
 										@endcan
 									</td>
 									<td width="10px">
-										@can('recetas.show')
-											<a href="{{ route('receta.show',['cita' => $id, 'receta' => $receta->id])}}" class="btn btn-sm btn-default bg-info" style="color: white">Ver
+										@can('recetas.create')
+											<a href="{{ route('detalleReceta.index',$receta->id)}}" class="btn btn-sm btn-default bg-primary" style="color: white">Detalles Receta
 											</a>
 										@endcan
 									</td>
