@@ -14,7 +14,7 @@ class DetalleRecetaController extends Controller
      */
     public function index($id)
     {
-        $detalles = DetalleReceta::paginate();
+        $detalles = DetalleReceta::where('receta_id', $id)->paginate();
         return view('detalleReceta.index',compact('detalles','id'));
     }
 
@@ -36,13 +36,11 @@ class DetalleRecetaController extends Controller
      */
     public function store(Request $request)
     {
-        $numero = DetalleReceta::select('id')->max('id');
         $detalle = new DetalleReceta();
         $detalle->medicamento = $request->medicamento;
         $detalle->dosis = $request->dosis;
         $detalle->cantidad = $request->cantidad;
         $detalle->receta_id = $request->receta_id;
-        $detalle->id        = $numero+2;
         $detalle->save();
         return redirect()->route('detalleReceta.index',$request->receta_id)->with('info','Detalle de Receta Guardada con exito');
     }

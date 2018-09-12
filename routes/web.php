@@ -145,7 +145,7 @@ Route::middleware(['auth'])->group(function(){
 	//dealle Receta
 	Route::post('detalleReceta/store', 'DetalleRecetaController@store')->name('detalleReceta.store')->middleware('permission:admin.crearHistoria');
 
-	Route::get('detalleReceta/{receta}', 'DetalleRecetaController@index')->name('detalleReceta.index')->middleware('permission:recetas.index');
+	Route::get('detalleReceta/{receta}', 'DetalleRecetaController@index')->name('detalleReceta.index')->middleware('permission:detalleRecetas.index');
 
 	Route::get('detalleReceta/show/{receta}', 'DetalleRecetaController@show')->name('detalleReceta.show')->middleware('permission:detalleRecetas.show');
 

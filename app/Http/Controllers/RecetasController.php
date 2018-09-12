@@ -43,8 +43,11 @@ class RecetasController extends Controller
      */
     public function store(Request $request)
     {
-        Recetas::create($request->all());
-        return redirect()->route('receta.create',$request->events_id)->with('info','Receta Guardada con exito');
+        $receta = new Recetas();
+        $receta->events_id = $request->events_id;
+        $receta->peso      = $request->peso;
+        $receta->save();
+        return redirect()->route('detalleReceta.create',$receta->id)->with('info','Receta Guardada con exito');
     }
 
     /**

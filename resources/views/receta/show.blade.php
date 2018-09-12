@@ -62,7 +62,8 @@
 	 <tr>
 	 <td>
 	    <table border="0" cellspacing="0" cellpadding="0" width="500px">
-	          @foreach($detalles as $proc)
+	        @if(sizeof($detalles) == 2)
+	        	@foreach($detalles as $proc)
 		        	<tr>
 		            	<td>{{$proc->medicamento}}</td>
 		          	</tr>
@@ -73,6 +74,28 @@
 		          		<td>{{$proc->cantidad}}</td>
 		          	</tr>
 	          @endforeach
+	        @else
+	        	@foreach($detalles as $proc)
+		        	<tr>
+		            	<td>{{$proc->medicamento}}</td>
+		          	</tr>
+		          	<tr>
+		          		<td>{{$proc->dosis}}</td>
+		          	</tr>
+		          	<tr>
+		          		<td>{{$proc->cantidad}}</td>
+		          	</tr>
+		          	<tr>
+		          		<td style="color:white">.</td>
+		          	</tr>
+		          	<tr>
+		          		<td style="color:white">.</td>
+		          	</tr>
+		          	<tr>
+		          		<td style="color:white">.</td>
+		          	</tr>
+	          	@endforeach
+	          @endif
 	    </table>    
 	 </td>
 	 </tr>
