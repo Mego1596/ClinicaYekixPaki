@@ -30,13 +30,17 @@
 					<div class="card-body">
 						{!! Form::model($paciente, ['route' => ['paciente.update', $paciente->id]]) !!}
 						<div class="row">
-							<div class="col-md-2">
+							<div class="col-md-3">
 								{{ Form::label('created_at', 'Fecha:') }}
 								{{ Form::datetime('created_at', null, ['class' => 'form-control','disabled'])}}
 							</div>
 							<div class="col-md-2">
 								{{ Form::label('expediente', 'No. Expediente') }}
 								{{ Form::text('expediente', null, ['class' => 'form-control','disabled' ])}}
+							</div>
+							<div class=col-md-2>
+								<label for="edad">Edad</label>
+								<input value="{{$edad}}" disabled class="form-control">
 							</div>
 						</div>
 						<div class="row pt-3">

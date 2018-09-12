@@ -187,10 +187,13 @@ class PacienteController extends Controller
         $string ="SELECT id,descripcion FROM historia_medicas WHERE paciente_id=".$paciente->id;
         $historias = DB::select(DB::raw($string));
 
+        $edad= Carbon::parse($paciente->fechaNacimiento)->age;
+        
+
         foreach ($historias as $key => $value) {
             $value->descripcion;
         }
-        return view('paciente.show', compact('paciente','historias'));
+        return view('paciente.show', compact('paciente','historias','edad'));
     }
 
     /**
