@@ -36,7 +36,7 @@
 								@foreach($recetas as $receta)
 								<tr>
 									<td>{{$receta->id}}</td>
-									<td>Receta Para</td>
+									<td>{{$paciente->nombre1." ".$paciente->nombre2." ".$paciente->nombre3." ".$paciente->apellido1." ".$paciente->apellido2}}</td>
 									<td width="10px">
 										@can('recetas.show')
 											<a href="{{ route('receta.show',['cita' => $id, 'receta' => $receta->id])}}" class="btn btn-sm btn-default bg-info" style="color: white">Ver

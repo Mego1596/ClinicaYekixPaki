@@ -313,7 +313,7 @@ class PacienteController extends Controller
             $value->delete();
         }
         if(!is_null($user)){
-            $aux = User::find($user);
+            $aux = User::find($paciente->user_id);
             $aux->delete();
         }
         $paciente->delete();

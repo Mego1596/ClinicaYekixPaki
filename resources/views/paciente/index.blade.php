@@ -96,12 +96,12 @@
 														</td>
 														<td width="10px">
 															@can('users.destroy')
-																<button type="button" class="btn btn-sm btn-default btn btn-danger" data-toggle="modal" data-target="#Modal2">
+																<button type="button" class="btn btn-sm btn-default btn btn-danger" data-toggle="modal" data-target="#Modal{{$paciente->id}}">
 												  					Eliminar
 																</button>
 																{!! Form::open(['route' => ['paciente.destroy', $paciente->id],'method' => 'DELETE']) !!}
 																	<!-- Modal -->
-																	<div class="modal fade" id="Modal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+																	<div class="modal fade" id="Modal{{$paciente->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 																		<div class="modal-dialog" role="document">
 																	    	<div class="modal-content">
 																	    		<div class="modal-header">
@@ -148,12 +148,12 @@
 												</td>
 												<td width="10px">
 													@can('users.destroy')
-														<button type="button" class="btn btn-sm btn-default btn btn-danger" data-toggle="modal" data-target="#Modal2">
+														<button type="button" class="btn btn-sm btn-default btn btn-danger" data-toggle="modal" data-target="#Modal{{$paciente->id}}">
 										  					Eliminar
 														</button>
 														{!! Form::open(['route' => ['paciente.destroy', $paciente->id],'method' => 'DELETE']) !!}
 																<!-- Modal -->
-														<div class="modal fade" id="Modal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+														<div class="modal fade" id="Modal{{$paciente->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 															<div class="modal-dialog" role="document">
 															    	<div class="modal-content">
 															    		<div class="modal-header">

@@ -8,7 +8,7 @@
 	</div>
 </div>
 <div class="row">
-	<div class="col-md-1">
+	<div class="col-md-2">
 		<div class="form-group">
 			{{ Form::label('peso', 'Peso (lbs) *') }}
 			{{ Form::number('peso', null, ['class' => 'form-control', 'step' => '0.10'])}}

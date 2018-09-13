@@ -19,7 +19,9 @@ class RecetasController extends Controller
     public function index($id)
     {
         $recetas = Recetas::paginate();
-        return view('receta.index',compact('recetas','id')); 
+        $event = Events::find($id);
+        $paciente = Paciente::find($event->id);
+        return view('receta.index',compact('recetas','id','paciente')); 
     }
 
     /**
@@ -94,7 +96,6 @@ class RecetasController extends Controller
     {
         $receta = Recetas::find($request->id);
         $receta->peso = $request->peso;
-        $receta->recetaPara = $request->recetaPara;
         $receta->save();
         return redirect()->route('receta.index',$request->events_id)->with('info','Receta actualizada con exito');
     }
