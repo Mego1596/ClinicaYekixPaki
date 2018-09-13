@@ -50,6 +50,7 @@
 						<table class="table table-striped table-hover table-responsive-md">
 							<thead>
 								<tr>
+									<th width="10px">ID</th>
 									<th>Nombre</th>
 									<th>No. Expediente</th>
 									<th>Nombre de Usuario</th>
@@ -74,11 +75,12 @@
 							</thead>
 							<tbody>
 									@foreach($pacientes as $paciente)
-										@if($paciente->habilitado == true)
+										@if($paciente->habilitado != true)
 											@if($paciente->user_id !=null)
 												@foreach($user as $users)
 													@if($paciente->user_id == $users->id)
 														<tr>
+															<td>{{$paciente->id}}</td>
 															<td>{{$paciente->nombre1." ".$paciente->nombre2." ".$paciente->nombre3." ".$paciente->apellido1." ".$paciente->apellido2}}</td>
 															<td>{{$paciente->expediente}}</td>
 															<td>{{$users->name}}</td>
@@ -95,8 +97,8 @@
 															</td>
 															<td width="10px">
 																@can('users.destroy')
-																	<button type="button" class="btn btn-sm btn-default btn btn-warning" data-toggle="modal" data-target="#Modal{{$paciente->id}}">
-													  					Inhabilitar
+																	<button type="button" class="btn btn-sm btn-default btn btn-danger" data-toggle="modal" data-target="#Modal{{$paciente->id}}">
+													  					Eliminar
 																	</button>
 																	{!! Form::open(['route' => ['paciente.destroy', $paciente->id],'method' => 'DELETE']) !!}
 																		<!-- Modal -->
@@ -104,7 +106,7 @@
 																			<div class="modal-dialog" role="document">
 																		    	<div class="modal-content">
 																		    		<div class="modal-header">
-																		        		<h5 class="modal-title" id="exampleModalLabel"> Inhabilitar Paciente</h5>
+																		        		<h5 class="modal-title" id="exampleModalLabel"> Eliminar Paciente</h5>
 																		        			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 																		          				<span aria-hidden="true">&times;</span>
 																		        			</button>
@@ -130,6 +132,7 @@
 												@endforeach
 											@else
 												<tr>
+													<td>{{$paciente->id}}</td>
 													<td>{{$paciente->nombre1." ".$paciente->nombre2." ".$paciente->nombre3." ".$paciente->apellido1." ".$paciente->apellido2}}</td>
 													<td>{{$paciente->expediente}}</td>
 													<td>Sin Usuario</td>
@@ -146,8 +149,8 @@
 													</td>
 													<td width="10px">
 														@can('users.destroy')
-															<button type="button" class="btn btn-sm btn-default btn btn-warning" data-toggle="modal" data-target="#Modal{{$paciente->id}}">
-											  					Inhabilitar
+															<button type="button" class="btn btn-sm btn-default btn btn-danger" data-toggle="modal" data-target="#Modal{{$paciente->id}}">
+											  					Eliminar
 															</button>
 															{!! Form::open(['route' => ['paciente.destroy', $paciente->id],'method' => 'DELETE']) !!}
 																	<!-- Modal -->
@@ -155,7 +158,7 @@
 																<div class="modal-dialog" role="document">
 																    	<div class="modal-content">
 																    		<div class="modal-header">
-																        		<h5 class="modal-title" id="exampleModalLabel"> Inhabilitar Paciente</h5>
+																        		<h5 class="modal-title" id="exampleModalLabel"> Eliminar Paciente</h5>
 																        			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 																          				<span aria-hidden="true">&times;</span>
 																        			</button>
@@ -165,50 +168,6 @@
 																      			<br/>
 																      			<button type="button" class="btn btn-md btn-default" data-dismiss="modal">No</button>
 																        		<button class="btn btn-md btn-default bg-danger" style="color: white">
-																						Si
-																				</button>
-																      		</div>
-																      		<div class="modal-footer">
-																      		</div>
-																    	</div>
-																	</div>
-																</div>
-															{!! Form::close() !!}
-														@endcan
-													</td>
-												</tr>
-											@endif
-										@else
-											@if($paciente->user_id !=null)
-												
-											@else
-												<tr style="background: #ffb3b3">
-													<td>{{$paciente->nombre1." ".$paciente->nombre2." ".$paciente->nombre3." ".$paciente->apellido1." ".$paciente->apellido2}}</td>
-													<td>{{$paciente->expediente}}</td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td width="10px">
-														@can('pacientes.habilitarPaciente')
-															<button type="button" class="btn btn-sm btn-default btn btn-success" data-toggle="modal" data-target="#Modal{{$paciente->id}}">
-											  					Habilitar
-															</button>
-															{!! Form::open(['route' => ['paciente.habilitarPaciente', $paciente->id],'method' => 'POST']) !!}
-																	<!-- Modal -->
-															<div class="modal fade" id="Modal{{$paciente->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-																<div class="modal-dialog" role="document">
-																    	<div class="modal-content">
-																    		<div class="modal-header">
-																        		<h5 class="modal-title" id="exampleModalLabel"> Habilitar Paciente</h5>
-																        			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-																          				<span aria-hidden="true">&times;</span>
-																        			</button>
-																      		</div>
-																      		<div class="modal-body">
-																      			<label>Estas seguro?</label>
-																      			<br/>
-																      			<button type="button" class="btn btn-md btn-default" data-dismiss="modal">No</button>
-																        		<button class="btn btn-md btn-default bg-success" style="color: white">
 																						Si
 																				</button>
 																      		</div>

@@ -100,6 +100,9 @@ Route::middleware(['auth'])->group(function(){
 	Route::post('paciente/events', 'PacienteController@addEvent')->name('paciente.add');
 	Route::post('busqueda/','PacienteController@search')->name('paciente.search')->middleware('permission:pacientes.create');
 
+	Route::post('paciente/{paciente}','PacienteController@habilitar')->name('paciente.habilitarPaciente')->middleware('permission:pacientes.habilitarPaciente');
+
+
 
 	//Historia Medica
 	Route::post('historiaMedica/store', 'HistoriaMedicaController@store')->name('historia.store')->middleware('permission:admin.crearHistoria');
