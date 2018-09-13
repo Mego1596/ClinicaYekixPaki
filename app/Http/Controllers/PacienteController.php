@@ -321,7 +321,12 @@ class PacienteController extends Controller
         $pacientes = Paciente::paginate(10);
         $user = User::paginate(10); 
         $head = 'Lista de Pacientes';
-        return view('paciente.index', compact('pacientes','head','user'));
+        return redirect()->route('paciente.index')
+            ->with('pacientes',$pacientes)
+            ->with('head',$head)
+            ->with('user', $user)
+            ->with('info','Paciente actualizado con exito')
+            ->with('tipo', 'success');
     }
 
     public function agendar(Paciente $paciente)
@@ -683,7 +688,10 @@ class PacienteController extends Controller
         $pacientes = Paciente::paginate(10);
         $user = User::paginate(10); 
         $head = 'Lista de Pacientes';
-        return view('paciente.index',compact('pacientes','head','user'))
+        return redirect()->route('paciente.index')
+            ->with('pacientes',$pacientes)
+            ->with('head',$head)
+            ->with('user', $user)
             ->with('info','Paciente Habilitado Correctamente')
             ->with('tipo', 'success');
 

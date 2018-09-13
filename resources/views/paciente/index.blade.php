@@ -50,7 +50,6 @@
 						<table class="table table-striped table-hover table-responsive-md">
 							<thead>
 								<tr>
-									<th width="10px">ID</th>
 									<th>Nombre</th>
 									<th>No. Expediente</th>
 									<th>Nombre de Usuario</th>
@@ -80,7 +79,6 @@
 												@foreach($user as $users)
 													@if($paciente->user_id == $users->id)
 														<tr>
-															<td>{{$paciente->id}}</td>
 															<td>{{$paciente->nombre1." ".$paciente->nombre2." ".$paciente->nombre3." ".$paciente->apellido1." ".$paciente->apellido2}}</td>
 															<td>{{$paciente->expediente}}</td>
 															<td>{{$users->name}}</td>
@@ -132,7 +130,6 @@
 												@endforeach
 											@else
 												<tr>
-													<td>{{$paciente->id}}</td>
 													<td>{{$paciente->nombre1." ".$paciente->nombre2." ".$paciente->nombre3." ".$paciente->apellido1." ".$paciente->apellido2}}</td>
 													<td>{{$paciente->expediente}}</td>
 													<td>Sin Usuario</td>
@@ -186,7 +183,6 @@
 												
 											@else
 												<tr style="background: #ffb3b3">
-													<td>{{$paciente->id}}</td>
 													<td>{{$paciente->nombre1." ".$paciente->nombre2." ".$paciente->nombre3." ".$paciente->apellido1." ".$paciente->apellido2}}</td>
 													<td>{{$paciente->expediente}}</td>
 													<td></td>
