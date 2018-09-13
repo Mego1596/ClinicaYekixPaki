@@ -326,7 +326,7 @@ class PacienteController extends Controller
             ->with('pacientes',$pacientes)
             ->with('head',$head)
             ->with('user', $user)
-            ->with('info','Paciente actualizado con exito')
+            ->with('info','Paciente Inhabilitado con exito')
             ->with('tipo', 'success');
     }
 
