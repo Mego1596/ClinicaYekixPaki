@@ -8,7 +8,7 @@ use App\Paciente;
 use App\DetalleReceta;
 use Illuminate\Http\Request;
 use PDF;
-
+use Carbon\Carbon;
 class RecetasController extends Controller
 {
     /**
@@ -62,7 +62,7 @@ class RecetasController extends Controller
     {
         $paciente = Paciente::find($id);
         $receta = Recetas::find($id2);
-        $edad= Carbon::parse($paciente->fechaNacimiento())->age;
+        $edad= Carbon::parse($paciente->fechaNacimiento)->age;
         $fecha = substr($receta->created_at, 0,11);
         $newDate = date("d/m/Y", strtotime($fecha));
         $detalles = DetalleReceta::where('receta_id',$id2)->get();
