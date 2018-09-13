@@ -186,9 +186,7 @@
 													<td>{{$paciente->nombre1." ".$paciente->nombre2." ".$paciente->nombre3." ".$paciente->apellido1." ".$paciente->apellido2}}</td>
 													<td>{{$paciente->expediente}}</td>
 													<td></td>
-													<td></td>
-													<td></td>
-													<td width="10px">
+													<td colspan="3">
 														@can('pacientes.habilitarPaciente')
 															<button type="button" class="btn btn-sm btn-default btn btn-success" data-toggle="modal" data-target="#Modal{{$paciente->id}}">
 											  					Habilitar
