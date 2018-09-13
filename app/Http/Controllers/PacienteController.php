@@ -145,6 +145,7 @@ class PacienteController extends Controller
         $paciente->domicilio              = $request->domicilio;
         $paciente->ocupacion              = $request->ocupacion;
         $paciente->user_id                = $user->id;
+        $paciente->habilitado             = true;
 
         //campos opcionales
         if(!is_null($valores['direccion_de_trabajo']))
@@ -307,19 +308,20 @@ class PacienteController extends Controller
      */
     public function destroy(Paciente $paciente)
     {   
-        $user = User::select('id')->where('id',$paciente->user_id)->value('id');
-        $historia = HistoriaMedica::where('paciente_id',$paciente->id)->get();
-        foreach ($historia as $key => $value) {
-            $value->delete();
-        }
-        if(!is_null($user)){
+        $users = User::select('id')->where('id',$paciente->user_id)->value('id');
+        if(!is_null($users)){
             $aux = User::find($paciente->user_id);
+            $paciente->user_id  =   null;
+            $paciente->save();
             $aux->delete();
         }
-        $paciente->delete();
-        return back()
-            ->with('info','Eliminado Correctamente')
-            ->with('tipo', 'success');
+        $paciente->habilitado = false;
+        $paciente->save();
+
+        $pacientes = Paciente::paginate(10);
+        $user = User::paginate(10); 
+        $head = 'Lista de Pacientes';
+        return view('paciente.index', compact('pacientes','head','user'));
     }
 
     public function agendar(Paciente $paciente)
@@ -635,6 +637,56 @@ class PacienteController extends Controller
                 $user = User::paginate(10); 
                 $head = 'Lista de Pacientes';
                 return view('paciente.index', compact("pacientes",'head','user'));
+        }
+    }
+
+
+    public function habilitar(Paciente $paciente){
+        $paciente->habilitado=true;
+        $paciente->save();
+        $user = User::find($paciente->user_id);
+
+        if(is_null($user)){
+            if($paciente->email != null){
+                $nuevo = new User();
+                $nuevo->name = $paciente->nombre1[0].$paciente->expediente;
+                $nuevo->nombre1 = $paciente->nombre1;
+                $nuevo->apellido1 = $paciente->apellido1;
+                $nuevo->email = $paciente->email;
+                $password=substr(md5(microtime()),1,6);
+                $nuevo->password = $password;
+                Mail::send('email.paciente',['user'=>$nuevo], function ($m) use ($nuevo,$paciente){
+                $m->to($nuevo->email,$paciente->nombre1);
+                $m->subject('Contraseña y nombre de usuario');
+                $m->from('clinicaYekixPaki@gmail.com','YekixPaki');
+                });
+                $nuevo->password =bcrypt($password);
+                $nuevo->save();
+                $nuevo->roles()->sync(5);
+                $paciente->user_id = $nuevo->id;
+                $paciente->save();
+        }else{
+            if($paciente->email != null){
+                $user->nombre1 = $paciente->nombre1;
+                $user->apellido1 = $paciente->apellido1;
+                $user->email = $paciente->email;
+                $user->save();
+            }else{
+                $auxiliarid = $paciente->user_id;
+                $paciente->user_id = null;
+                $paciente->save();
+                $usuario = User::find($auxiliarid);
+                if(!is_null($usuario))
+                $usuario->delete();
+            }
+        }
+        $pacientes = Paciente::paginate(10);
+        $user = User::paginate(10); 
+        $head = 'Lista de Pacientes';
+        return view('paciente.index',compact('pacientes','head','user'))
+            ->with('info','Paciente Habilitado Correctamente')
+            ->with('tipo', 'success');
+
         }
     }
 

@@ -26,13 +26,14 @@ class CreatePacientesTable extends Migration
             $table->string('email')->unique()->nullable();
             $table->string('ocupacion');
             $table->string('telefono');
+            $table->boolean('habilitado');
             $table->string('sexo',1);
             $table->string('domicilio');
             $table->string('responsable')->nullable()->default("Sin responsable");
             $table->string('direccion_de_trabajo')->nullable()->default("Sin direccion de trabajo");
             $table->string('expediente')->unique();
             $table->integer('user_id')->nullable()->unsigned();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });
     }

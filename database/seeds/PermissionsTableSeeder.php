@@ -282,5 +282,11 @@ class PermissionsTableSeeder extends Seeder
             'slug' => 'detalleRecetas.destroy',
             'description' => 'Eliminar cualquier dato de un Detalle de Receta de la receta',
         ]);
+
+        Permission::create([
+            'name' => 'Habilitar Paciente',
+            'slug' => 'pacientes.habilitarPaciente',
+            'description' => 'Campo habilitar pacientes que estan deshabilitados',
+        ]);
     }
 }
