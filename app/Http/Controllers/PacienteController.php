@@ -107,7 +107,8 @@ class PacienteController extends Controller
             $string = "SELECT expediente FROM pacientes WHERE expediente LIKE '".$inicio."' AND id IN (SELECT MAX(id) FROM pacientes WHERE expediente LIKE '".$inicio."')";
             $query                           = DB::select( DB::raw($string));
 
-        if($query != NULL){
+        if($query != NULL)
+        {
             foreach ($query as $key => $value) {
 
                 if( (int) substr($value->expediente,1,3) <= 9 ){
@@ -120,11 +121,11 @@ class PacienteController extends Controller
                     $paciente->expediente =$apellido[0].strval((int) substr($value->expediente,1,3)+1)."-".$anio;
                     $user->name = $request->nombre1[0].$apellido[0].strval((int) substr($value->expediente,1,3)+1)."-".$anio;
                 }
-            }
-        }else{
-            $paciente->expediente         = $apellido[0]."001-".$anio;
-            $user->name                   = $request->nombre1[0].$apellido[0]."001-".$anio;
-        }
+                 }
+        }else   {
+                     $paciente->expediente         = $apellido[0]."001-".$anio;
+                    $user->name                   = $request->nombre1[0].$apellido[0]."001-".$anio;
+                }
 
         if(!is_null($request['email'])){
             $user->email = $request->email;

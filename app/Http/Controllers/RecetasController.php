@@ -62,10 +62,11 @@ class RecetasController extends Controller
     {
         $paciente = Paciente::find($id);
         $receta = Recetas::find($id2);
+        $edad= Carbon::parse($paciente->fechaNacimiento())->age;
         $fecha = substr($receta->created_at, 0,11);
         $newDate = date("d/m/Y", strtotime($fecha));
         $detalles = DetalleReceta::where('receta_id',$id2)->get();
-        $pdf = PDF::loadView('receta.show',compact('paciente','receta','newDate','detalles'));
+        $pdf = PDF::loadView('receta.show',compact('paciente','receta','newDate','detalles','edad'));
         $pdf->setPaper('A4','Portrait');
         return $pdf->stream();
     }

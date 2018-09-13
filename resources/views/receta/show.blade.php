@@ -45,7 +45,7 @@
 	<label style="text-decoration: underline;font-size: 15px"> {{$paciente->nombre1." ".$paciente->nombre2." ".$paciente->nombre3." ".$paciente->apellido1." ".$paciente->apellido2}}</label>
 	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	<label style="font-size: 15px; font-style: italic;">Edad:</label>
-	<label style="text-decoration: underline;font-size: 15px">Variable</label>
+<label style="text-decoration: underline;font-size: 15px">{{$edad}}</label>
 	<br />
 	<label style="font-size: 15px; font-style: italic;">Peso:</label>
 	<label style="text-decoration: underline;font-size: 15px"> {{$receta->peso}} lbs.</label>
