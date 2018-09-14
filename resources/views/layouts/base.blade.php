@@ -58,24 +58,36 @@
               <a class="btn btn-primary" href="{{ route('login') }}">{{ __('Iniciar Sesion') }}</a>
             </li>
           @else
+          @can('pacientes.trabajo')
             <li class="nav-item">
               <a class="nav-link" id="nav-citas" href="{{route('events.index')}}">Citas</a>
             </li>
+          @endcan
+          @can('procedimientos.index')
             <li class="nav-item">
               <a class="nav-link" id="nav-procedimientos" href="{{route('procedimiento.index')}}">Procedimientos</a>
             </li>
+          @endcan
+          @can('users.index')
             <li class="nav-item">
               <a class="nav-link" id="nav-doctores" href="{{route('user.index')}}">Doctores</a>
             </li>
+          @endcan
+          @can('users.index')
             <li class="nav-item">
               <a class="nav-link" id="nav-asistentes" href="{{route('user.asistente')}}">Asistentes</a>
             </li>
+          @endcan
+          @can('pacientes.index')
             <li class="nav-item">
               <a class="nav-link" id="nav-pacientes" href="{{route('paciente.index')}}">Pacientes</a>
             </li>
+          @endcan
+          @can('roles.index')
             <li class="nav-item">
               <a class="nav-link" id="nav-roles" href="{{route('roles.index')}}">Roles</a>
             </li>
+          @endcan
           </ul>
 
 

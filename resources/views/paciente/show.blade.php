@@ -131,9 +131,11 @@
 						@endcan
 						</div>
 						<div class="row pt-3">
+						@can('pacientes.citas')
 							<div class="col-md-3 col-sm-12">
 							<a href="{{ route('paciente.agenda', $paciente->id) }}" class="btn btn-block btn-primary bg-primary" role="button">Calendario</a>	
 							</div>
+						@endcan
 							<div class="col-md-5 col-sm-12">
 							@can('admin.crearHistoria')
 							<!-- Button trigger modal -->
