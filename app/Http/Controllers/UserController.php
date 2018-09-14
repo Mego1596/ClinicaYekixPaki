@@ -53,13 +53,13 @@ class UserController extends Controller
     public function store(UserRequest $request)
     {
         if($request['idRole'] == 'doctor'){
-            if(is_null($request['nombre1']) or is_null($request['apellido1']) or $request['numeroJunta'] == 'JVPO-' or is_null($request['email'])  or is_null($request['roles'])){
+            if(is_null($request['nombre1']) or is_null($request['apellido1']) or $request['numeroJunta'] == 'JVPO-' or is_null($request['email'])){
                 return redirect()->route('user.create',$request->idRole)
                 ->with('error', 'Complete los Campos Obligatorios o digite correctamente el Numero de Junta')
                 ->with('tipo', 'danger');
             }
         }else{
-            if(is_null($request['nombre1']) or is_null($request['apellido1']) or is_null($request['email'])  or is_null($request['roles'])){
+            if(is_null($request['nombre1']) or is_null($request['apellido1']) or is_null($request['email'])){
                 return redirect()->route('user.create',$request->idRole)
                 ->with('error', 'Complete los Campos Obligatorios')
                 ->with('tipo', 'danger');
@@ -93,10 +93,11 @@ class UserController extends Controller
 
         $user->password =bcrypt($password);
         if($user->save()){
-            $user->roles()->sync($request->get('roles'));
             if($request['role']=='doctor'){
+                $user->roles()->sync(2);
                 return redirect()->route('user.index')->with('info','Usuario guardado con exito');
             }elseif ($request['role']=='asistente') {
+                $user->roles()->sync(3);
                 return redirect()->route('user.asistente')->with('info','Usuario guardado con exito');
             }
         }
@@ -274,22 +275,27 @@ class UserController extends Controller
                     return view('user.index', compact('users','roles','sub'))
                            ->with('info', 'Busqueda Exitosa');
                 }
-        }else{
-            $users = DB::table('users')->join('role_user', 'users.id', '=', 'role_user.user_id')->where('role_user.role_id', '=', 2)->select('users.id' , 'users.nombre1','users.nombre2','users.nombre3','users.apellido1','users.apellido2','users.numeroJunta','users.name')->paginate();
-            $result = DB::table('roles')->where('slug','doctor')->select('slug')->get();
-            $datos= json_encode($result);
-            $sub = substr($datos, 10,-3);
-            return view('user.index', compact('users','roles','sub'))
-                   ->with('info', 'Busqueda Exitosa');
-        }
-
-    }
+            }else{
+              $users = DB::table('users')->join('role_user', 'users.id', '=', 'role_user.user_id')->where('role_user.role_id', '=', 2)->select('users.id' , 'users.nombre1','users.nombre2','users.nombre3','users.apellido1','users.apellido2','users.numeroJunta','users.name')->paginate();
+              $result = DB::table('roles')->where('slug','doctor')->select('slug')->get();
+              $datos= json_encode($result);
+              $sub = substr($datos, 10,-3);
+              return view('user.index', compact('users','roles','sub'))
+                     ->with('info', 'Busqueda Exitosa');
+            }
+          }else{
+              $users = DB::table('users')->join('role_user', 'users.id', '=', 'role_user.user_id')->where('role_user.role_id', '=', 2)->select('users.id' , 'users.nombre1','users.nombre2','users.nombre3','users.apellido1','users.apellido2','users.numeroJunta','users.name')->paginate();
+              $result = DB::table('roles')->where('slug','doctor')->select('slug')->get();
+              $datos= json_encode($result);
+              $sub = substr($datos, 10,-3);
+              return view('user.index', compact('users','roles','sub'))
+                     ->with('info', 'Busqueda Exitosa');
+          }
 }
 
     public function search2(Request $request) {
             if($request['buscador']!='Buscar Por...'){
-                
-            if($request['buscador'] == 'Nombre'){
+              if($request['buscador'] == 'Nombre'){
                 if(!is_null($request['buscar'])){
                     $users = DB::table('users')->join('role_user', 'users.id', '=', 'role_user.user_id')->where('role_user.role_id', '=', 3)->
                     where(  function ($query) use ($request) {
@@ -302,8 +308,7 @@ class UserController extends Controller
                     $sub = substr($datos, 10,-3);
                     return view('user.asistente', compact('users','sub'))
                            ->with('info', 'Busqueda Exitosa');
-                }
-                else{
+                }else{
                     $users = DB::table('users')->join('role_user', 'users.id', '=', 'role_user.user_id')->where('role_user.role_id', '=', 3)->select('users.id' , 'users.nombre1','users.nombre2','users.nombre3','users.apellido1','users.apellido2','users.numeroJunta','users.name')->paginate();
                     $result = DB::table('roles')->where('slug','doctor')->select('slug')->get();
                     $datos= json_encode($result);
@@ -311,7 +316,7 @@ class UserController extends Controller
                     return view('user.asistente', compact('users','roles','sub'))
                            ->with('info', 'Busqueda Exitosa');
                 }
-            }elseif ($request['buscador'] == 'Apellido') {
+              }elseif ($request['buscador'] == 'Apellido') {
                 if(!is_null($request['buscar'])){
                     $users = DB::table('users')->join('role_user', 'users.id', '=', 'role_user.user_id')->where('role_user.role_id', '=', 3)->
                     where(  function ($query) use ($request) {
@@ -323,8 +328,7 @@ class UserController extends Controller
                     $sub = substr($datos, 10,-3);
                     return view('user.asistente', compact('users','sub'))
                            ->with('info', 'Busqueda Exitosa');
-                }
-                else{
+                }else{
                     $users = DB::table('users')->join('role_user', 'users.id', '=', 'role_user.user_id')->where('role_user.role_id', '=', 3)->select('users.id' , 'users.nombre1','users.nombre2','users.nombre3','users.apellido1','users.apellido2','users.numeroJunta','users.name')->paginate();
                     $result = DB::table('roles')->where('slug','doctor')->select('slug')->get();
                     $datos= json_encode($result);
@@ -332,17 +336,15 @@ class UserController extends Controller
                     return view('user.asistente', compact('users','roles','sub'))
                            ->with('info', 'Busqueda Exitosa');
                 }
-
-            }elseif ($request['buscador'] == 'Nombre de Usuario') {
-                if(!is_null($request['buscar'])){
+              }elseif ($request['buscador'] == 'Nombre de Usuario') {
+                  if(!is_null($request['buscar'])){
                     $users = DB::table('users')->join('role_user', 'users.id', '=', 'role_user.user_id')->where('role_user.role_id', '=', 3)->where('name','ILIKE',$request->buscar."%")->select('users.id', 'users.nombre1','users.nombre2','users.nombre3','users.apellido1','users.apellido2','users.numeroJunta','users.name')->paginate();
                     $result = DB::table('roles')->where('slug','doctor')->select('slug')->get();
                     $datos= json_encode($result);
                     $sub = substr($datos, 10,-3);
                     return view('user.asistente', compact('users','sub'))
                            ->with('info', 'Busqueda Exitosa');
-                }
-                else{
+                  }else{
                     $users = DB::table('users')->join('role_user', 'users.id', '=', 'role_user.user_id')->where('role_user.role_id', '=', 3)->select('users.id' , 'users.nombre1','users.nombre2','users.nombre3','users.apellido1','users.apellido2','users.numeroJunta','users.name')->paginate();
                     $result = DB::table('roles')->where('slug','doctor')->select('slug')->get();
                     $datos= json_encode($result);
@@ -350,15 +352,19 @@ class UserController extends Controller
                     return view('user.asistente', compact('users','roles','sub'))
                            ->with('info', 'Busqueda Exitosa');
                 }
-            
-        }else{
+              }else{
+              $users = DB::table('users')->join('role_user', 'users.id', '=', 'role_user.user_id')->where('role_user.role_id', '=', 3)->select('users.id' , 'users.nombre1','users.nombre2','users.nombre3','users.apellido1','users.apellido2','users.name')->paginate();
+              $result = DB::table('roles')->where('slug','asistente')->select('slug')->get();
+              $datos= json_encode($result);
+              $sub = substr($datos, 10,-3);
+              return view('user.asistente', compact('users','sub'));
+            }
+          }else{
             $users = DB::table('users')->join('role_user', 'users.id', '=', 'role_user.user_id')->where('role_user.role_id', '=', 3)->select('users.id' , 'users.nombre1','users.nombre2','users.nombre3','users.apellido1','users.apellido2','users.name')->paginate();
-            $result = DB::table('roles')->where('slug','asistente')->select('slug')->get();
-            $datos= json_encode($result);
-            $sub = substr($datos, 10,-3);
-            return view('user.asistente', compact('users','sub'));
-        }
-
-    }
+              $result = DB::table('roles')->where('slug','asistente')->select('slug')->get();
+              $datos= json_encode($result);
+              $sub = substr($datos, 10,-3);
+              return view('user.asistente', compact('users','sub'));
+          }
     }
 }
