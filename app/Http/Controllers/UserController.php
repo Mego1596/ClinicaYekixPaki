@@ -90,7 +90,7 @@ class UserController extends Controller
                 $m->from('clinicaYekixPaki@gmail.com','YekixPaki');
         });
 
-        $user->password =bcrypt($request->password);
+        $user->password =bcrypt($password);
         if($user->save()){
             $user->roles()->sync($request->get('roles'));
             if($request['role']=='doctor'){
