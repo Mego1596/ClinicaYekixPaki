@@ -190,12 +190,12 @@ class PacienteController extends Controller
         $historias = DB::select(DB::raw($string));
 
         $edad= Carbon::parse($paciente->fechaNacimiento)->age;
-        
+        $nuevaFecha = date("d/m/Y H:m:s", strtotime($paciente->created_at));        
 
         foreach ($historias as $key => $value) {
             $value->descripcion;
         }
-        return view('paciente.show', compact('paciente','historias','edad'));
+        return view('paciente.show', compact('paciente','historias','edad','nuevaFecha'));
     }
 
     /**
