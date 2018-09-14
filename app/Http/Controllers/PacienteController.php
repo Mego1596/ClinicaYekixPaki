@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Auth;
@@ -18,6 +17,7 @@ use Calendar;
 use Validator;
 
 use Mail;
+use App\Http\Requests\PacienteRequest;
 
 class PacienteController extends Controller
 {
@@ -60,7 +60,7 @@ class PacienteController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PacienteRequest  $request)
     {
 
         $valores = $request->all();
