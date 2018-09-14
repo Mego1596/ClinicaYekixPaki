@@ -7,6 +7,7 @@ use Caffeinated\Shinobi\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Mail;
+use App\Http\Requests\UserRequest;
 class UserController extends Controller
 {
     /**
@@ -49,7 +50,7 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UserRequest $request)
     {
         if($request['idRole'] == 'doctor'){
             if(is_null($request['nombre1']) or is_null($request['apellido1']) or $request['numeroJunta'] == 'JVPO-' or is_null($request['email'])  or is_null($request['roles'])){

@@ -3,19 +3,35 @@
 		{{ Form::hidden('idRole', $idRole , ['class' => 'form-control'])}}
 		<div class="form-group">
 			{{ Form::label('nombre1', 'Primer Nombre*') }}
-			{{ Form::text('nombre1', null, ['class' => 'form-control'])}}
+			{{ Form::text('nombre1', null, ['class' => 'form-control','required'])}}
+
+			@if($errors->has('nombre1'))
+			<div class="alert alert-warning">
+				<strong> {{$errors->first('nombre1')}}</strong>
+			</div>		
+			@endif
 		</div>
 	</div>
 	<div class="col-md-3">
 		<div class="form-group">
 			{{ Form::label('nombre2', 'Segundo Nombre') }}
 			{{ Form::text('nombre2', null, ['class' => 'form-control'])}}
+			@if($errors->has('nombre2'))
+			<div class="alert alert-warning">
+				<strong> {{$errors->first('nombre2')}}</strong>
+			</div>		
+			@endif
 		</div>
 	</div>
 	<div class="col-md-3">
 		<div class="form-group">
 			{{ Form::label('nombre3', 'Tercer nombre ', ['style' => 'display:none','id'=>'nombre3.2']) }}
 			{{ Form::text('nombre3', null, ['class' => 'form-control', 'style'=>'display:none', 'id' => 'nombre3'])}}
+			@if($errors->has('nombre3'))
+			<div class="alert alert-warning">
+				<strong> {{$errors->first('nombre3')}}</strong>
+			</div>		
+			@endif
 		</div>
 	</div>
 	<div class="col-md-3">
@@ -34,20 +50,35 @@
 		{{ Form::hidden('role',$idRole, ['class' => 'form-control']) }}
 		<div class="form-group">
 			{{ Form::label('apellido1', 'Primer apellido *') }}
-			{{ Form::text('apellido1', null, ['class' => 'form-control'])}}
+			{{ Form::text('apellido1', null, ['class' => 'form-control','required'])}}
+			@if($errors->has('apellido1'))
+			<div class="alert alert-warning">
+				<strong> {{$errors->first('apellido1')}}</strong>
+			</div>		
+			@endif
 		</div>
 	</div>
 	<div class="col-md-3">
 		<div class="form-group">
 			{{ Form::label('apellido2', 'Segundo apellido ') }}
 			{{ Form::text('apellido2', null, ['class' => 'form-control'])}}
+			@if($errors->has('apellido2'))
+			<div class="alert alert-warning">
+				<strong> {{$errors->first('apellido2')}}</strong>
+			</div>		
+			@endif
 		</div>
 	</div>
 	@if($idRole=='doctor')
 	<div class="col-md-3">
 		<div class="form-group">
 			{{ Form::label('numeroJunta', 'Numero de Junta*') }}
-			{{ Form::text('numeroJunta', 'JVPO-', ['class' => 'form-control'])}}
+			{{ Form::text('numeroJunta', 'JVPO-', ['class' => 'form-control','required'])}}
+			@if($errors->has('numeroJunta'))
+			<div class="alert alert-warning">
+				<strong> {{$errors->first('numeroJunta')}}</strong>
+			</div>		
+			@endif
 		</div>
 	</div>
 	@endif
@@ -56,6 +87,11 @@
 		<div class="form-group">
 			{{ Form::label('numeroJunta', 'Numero de Junta ', ['style' => 'display:none','id'=>'numeroJunta2']) }}
 			{{ Form::text('numeroJunta', null, ['class' => 'form-control', 'style'=>'display:none', 'id' => 'numeroJunta'])}}
+			@if($errors->has('numeroJunta'))
+			<div class="alert alert-warning">
+				<strong> {{$errors->first('numeroJunta')}}</strong>
+			</div>		
+			@endif
 		</div>
 	</div>
 	<div class="col-md-3">
@@ -74,8 +110,13 @@
 <div class="row">
 	<div class="col-md-3">
 		<div class="form-group">
-			{{ Form::label('description', 'E-Mail*') }}
+			{{ Form::label('description', 'E-Mail') }}
 			{{ Form::text('email', null, ['class' => 'form-control'])}}
+			@if($errors->has('email'))
+			<div class="alert alert-warning">
+				<strong> {{$errors->first('email')}}</strong>
+			</div>		
+			@endif
 		</div>
 	</div>
 
@@ -84,6 +125,11 @@
 		<div class="form-group">
 			{{ Form::label('especialidad', 'Especialidad') }}
 			{{ Form::text('especialidad', null , ['class' => 'form-control'])}}
+			@if($errors->has('especialidad'))
+			<div class="alert alert-warning">
+				<strong> {{$errors->first('especialidad')}}</strong>
+			</div>		
+			@endif
 		</div>
 	</div>
 	@endif
@@ -92,6 +138,11 @@
 		<div class="form-group">
 			{{ Form::label('especialidad', 'Especialidad', ['style' => 'display:none','id'=>'especialidad2']) }}
 			{{ Form::text('especialidad', null, ['class' => 'form-control', 'style'=>'display:none', 'id' => 'especialidad'])}}
+			@if($errors->has('especialidad'))
+			<div class="alert alert-warning">
+				<strong> {{$errors->first('especialidad')}}</strong>
+			</div>		
+			@endif
 		</div>
 	</div>
 	<div class="col-md-3">
@@ -102,67 +153,12 @@
 		{{ Form::label('radio5', 'Si ', ['style' => 'visibility:hidden','id' => 'radio5']) }}
 		<input type="checkbox" name="cosa2" value="2" id="cosa6" style="display: none" >
 		{{ Form::label('radio6', 'No ', ['style' => 'visibility:hidden','id' => 'radio6']) }}
+		
 		</div>
 	</div>
 	@endif
 </div>
 
-@if($idRole == 'doctor')
-<h3>Lista de Roles:</h3>
-<br/>
-		<table>
-			<tr>
-				<th>Nombre</th>
-				<th style="color: #FFFFFF">.........</th>
-				<th>Descripcion</th>
-			</tr>
-			@foreach($roles as $role)
-				@if($role->slug != 'asistente' && $role->slug != 'admin')
-				<tr>
-					<td>
-						<li>
-							{{ $role->name }}
-						</li>
-					</td>
-					<td>
-					</td>
-					<td>
-						{{ Form::radio('roles',$role->id) }}
-						<em>({{ $role->description ?:'N/A' }})</em>*
-					</td>
-				</tr>
-				@endif
-			@endforeach
-		</table>
-@endif
-@if($idRole == 'asistente')
-<h3>Lista de Roles:</h3>
-<br/>
-		<table>
-			<tr>
-				<th>Nombre</th>
-				<th style="color: #FFFFFF">.........</th>
-				<th>Descripcion</th>
-			</tr>
-			@foreach($roles as $role)
-				@if($role->slug != 'doctor' && $role->slug != 'admin')
-				<tr>
-					<td>
-						<li>
-							{{ $role->name }}
-						</li>
-					</td>
-					<td>
-					</td>
-					<td>
-						{{ Form::radio('roles',$role->id) }}
-						<em>({{ $role->description ?:'N/A' }})</em>*
-					</td>
-				</tr>
-				@endif
-			@endforeach
-		</table>
-@endif
 <div class="row pt-3">
 	<div class="col-md-4">
 		*Campos obligatorios
