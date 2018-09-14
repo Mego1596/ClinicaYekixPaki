@@ -20,7 +20,7 @@ class RecetasController extends Controller
     {
         $recetas = Recetas::paginate();
         $event = Events::find($id);
-        $paciente = Paciente::find($event->id);
+        $paciente = Paciente::find($event->paciente_id);
         return view('receta.index',compact('recetas','id','paciente')); 
     }
 
@@ -60,7 +60,8 @@ class RecetasController extends Controller
      */
     public function show($id,$id2)
     {
-        $paciente = Paciente::find($id);
+        $evento = Events::find($id);
+        $paciente = Paciente::find($evento->paciente_id);
         $receta = Recetas::find($id2);
         $edad= Carbon::parse($paciente->fechaNacimiento)->age;
         $fecha = substr($receta->created_at, 0,11);
