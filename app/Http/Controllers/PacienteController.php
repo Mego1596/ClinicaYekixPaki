@@ -216,7 +216,7 @@ class PacienteController extends Controller
      * @param  \App\Paciente  $paciente
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Paciente $paciente)
+    public function update(PacienteRequest $request, Paciente $paciente)
     {
         $valores = $request->all();
         //Verificando si estan todos los campos obligatorios

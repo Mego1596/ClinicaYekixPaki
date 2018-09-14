@@ -6,9 +6,9 @@
 			 ,'title'=>'primer nombre'])}}
 			
 			@if($errors->has('nombre1'))
-			<span class="help-block">
+			<div class="alert alert-warning">
 				<strong> {{$errors->first('nombre1')}}</strong>
-			</span>		
+			</div>		
 			@endif
 
 	</div>
@@ -20,9 +20,9 @@
 			'title'=>'segundo nombre'])}}
 			
 			@if($errors->has('nombre2'))
-			<span class="help-block">
+			<div class="alert alert-warning">
 				<strong> {{$errors->first('nombre2')}}</strong>
-			</span>		
+			</div>		
 			@endif
 
 		</div>
@@ -34,9 +34,9 @@
 			'title'=>'tercer nombre', 'id' => 'nombre3'])}}
 
 			@if($errors->has('nombre3'))
-			<span class="help-block">
-			<strong> {{$errors->first('nombre3')}}</strong>
-			</span>		
+			<div class="alert alert-warning">
+				<strong> {{$errors->first('nombre3')}}</strong>
+			</div>		
 			@endif
 
 		</div>
@@ -64,9 +64,9 @@
 			'title'=>'primer apellido'])}}
 			
 			@if($errors->has('apellido1'))
-			<span class="help-block">
+			<div class="alert alert-warning">
 				<strong> {{$errors->first('apellido1')}}</strong>
-			</span>		
+			</div>		
 			@endif
 
 		</div>
@@ -78,9 +78,9 @@
 			,'title'=>'segundo apellido'])}}
 
 			@if($errors->has('apellido2'))
-			<span class="help-block">
+			<div class="alert alert-warning">
 				<strong> {{$errors->first('apellido2')}}</strong>
-			</span>		
+			</div>		
 			@endif
 		</div>
 	</div>
@@ -89,11 +89,11 @@
 		{{ Form::date('fechaNacimiento', null, ['class' => 'form-control', 'type'=>'date', 
 		'style'=>'height: 38px','required','min'=>'1900-01-01','max'=>date("Y-m-d")]) }}
 		
-			@if($errors->has('fechaNacimiento'))
-			<span class="help-block">
-				<strong> {{$errors->first('fechaNacimiento')}}</strong>
-			</span>		
-			@endif
+		@if($errors->has('fechaNacimiento'))
+		<div class="alert alert-warning">
+			<strong> {{$errors->first('fechaNacimiento')}}</strong>
+		</div>		
+		@endif
 	</div>
 
 	<div class="col-md-3{{$errors->has('telefono') ? ' has-error':'' }}">
@@ -102,10 +102,10 @@
 		'required']) }}
 	
 	@if($errors->has('telefono'))
-		<span class="help-block">
-			<strong> {{$errors->first('telefono')}}</strong>
-		</span>		
-		@endif
+	<div class="alert alert-warning">
+		<strong> {{$errors->first('telefono')}}</strong>
+	</div>		
+	@endif
 	</div>
 </div>
 
@@ -115,9 +115,9 @@
 		{{ Form::text('ocupacion', null, ['class' => 'form-control' ,'title'=>'Ocupación','required']) }}
 		
 		@if($errors->has('ocupacion'))
-		<span class="help-block">
+		<div class="alert alert-warning">
 			<strong> {{$errors->first('ocupacion')}}</strong>
-		</span>		
+		</div>		
 		@endif
 
 	</div>
@@ -127,9 +127,9 @@
 		['placeholder'=>'Seleccione...', 'class'=>'form-control','required']) }}
 
 		@if($errors->has('sexo'))
-		<span class="help-block">
+		<div class="alert alert-warning">
 			<strong> {{$errors->first('sexo')}}</strong>
-		</span>		
+		</div>		
 		@endif
 	</div>
 
@@ -137,9 +137,9 @@
 		{{ Form::label('email', 'Correo Electronico') }}
 		{{ Form::email('email', null, ['class'=>'form-control','maxlength'=>'90']) }}
 		@if($errors->has('email'))
-		<span class="help-block">
+		<div class="alert alert-warning">
 			<strong> {{$errors->first('email')}}</strong>
-		</span>		
+		</div>		
 		@endif
 	</div>
 	<div class="col-md-4">
@@ -147,9 +147,9 @@
 			{{ Form::label('recomendado','Recomendado Por')}}
 			{{ Form::text('recomendado',null,['class' => 'form-control'])}}
 			@if($errors->has('recomendado'))
-			<span class="help-block">
+			<div class="alert alert-warning">
 				<strong> {{$errors->first('recomendado')}}</strong>
-			</span>		
+			</div>		
 			@endif
 		</div>
 	</div>
@@ -158,22 +158,22 @@
 			{{ Form::label('historiaOdontologica','Historia Odontologica')}}
 			{{ Form::text('historiaOdontologica',null,['class' => 'form-control'])}}
 			@if($errors->has('historiaOdontologica'))
-			<span class="help-block">
+			<div class="alert alert-warning">
 				<strong> {{$errors->first('historiaOdontologica')}}</strong>
-			</span>		
+			</div>		
 			@endif
 		</div>
 	</div>
 	<div class="col-md-4">
 		<div class="form-group{{$errors->has('historiaMedica') ? ' has-error':'' }}">
 			{{ Form::label('historiaMedica','Historia Medica')}}
-			{{ Form::text('historiaMedica',null,['class' => 'form-control',
-			])}}
-			@if($errors->has('historicaMedica'))
-			<span class="help-block">
+			{{ Form::text('historiaMedica',null,['class' => 'form-control'])}}
+			
+			@if($errors->has('historiaMedica'))
+			<div class="alert alert-warning">
 				<strong> {{$errors->first('historiaMedica')}}</strong>
-			</span>		
-			@endif			
+			</div>		
+			@endif
 		</div>
 	</div>
 </div>
@@ -184,10 +184,10 @@
 		{{ Form::textarea('domicilio', null, ['class'=>'form-control','rows'=>'3','required']) }}
 
 		@if($errors->has('domicilio'))
-		<span class="help-block">
+		<div class="alert alert-warning">
 			<strong> {{$errors->first('domicilio')}}</strong>
-		</span>		
-		@endif
+		</div>		
+		@endif	
 
 	</div>
 	<div class="col-md-4{{$errors->has('direccion_de_trabajo') ? ' has-error':'' }}">
@@ -195,9 +195,9 @@
 		{{ Form::textarea('direccion_de_trabajo', null, ['class'=>'form-control','rows'=> '3']) }}
 	
 		@if($errors->has('direccion_de_trabajo'))
-		<span class="help-block">
+		<div class="alert alert-warning">
 			<strong> {{$errors->first('direccion_de_trabajo')}}</strong>
-		</span>		
+		</div>		
 		@endif
 	</div>
 	<div class="col-md-4{{$errors->has('responsable') ? ' has-error':'' }}">
@@ -205,9 +205,9 @@
 		{{ Form::textarea('responsable', null, ['class'=>'form-control','rows'=>'3']) }}
 		
 		@if($errors->has('responsable'))
-		<span class="help-block">
+		<div class="alert alert-warning">
 			<strong> {{$errors->first('responsable')}}</strong>
-		</span>		
+		</div>		
 		@endif
 	</div>
 </div>
