@@ -14,7 +14,15 @@
 			<div class="col-md-12">
 				<div class="card">
 					<div class="card-header text-center">
-						<h4>{{$head}}</h4>
+						<div class="row">
+			            	<div class="col-md-1">
+			                	<a href="/home" class="btn btn-block btn-secondary">
+			                	Atrás</a>
+			              	</div>
+			              	<div class="col-md-10">
+			                	<h4>{{$head}}</h4>
+			              	</div>
+          				</div>
 					</div>
 					<br/>
 					@can('pacientes.create')

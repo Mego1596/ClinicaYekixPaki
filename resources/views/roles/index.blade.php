@@ -13,7 +13,15 @@
 			<div class="col-md-12 col-md-offset-2">
 				<div class="card card-default">
 					<div class="card-header text-center">
-						<h4>Lista de roles</h4>
+						<div class="row">
+			            	<div class="col-md-1">
+			                	<a href="/home" class="btn btn-block btn-secondary">
+			                	Atrás</a>
+			              	</div>
+			              	<div class="col-md-10">
+			                	<h4>Lista de roles</h4>
+			              	</div>
+          				</div>
 					</div>
 					<div class="card-body">
 						<table class="table table-striped table-hover table-responsive-md">

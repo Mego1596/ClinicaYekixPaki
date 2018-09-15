@@ -28,9 +28,18 @@
 						</div>
 					</div>
 					<div class="card-body">
-					<p><strong>Nombre: </strong><br>{{ $role->name }}</p>
-					<p><strong>Slug: </strong><br>{{ $role->slug }}</p>
-					<p align="justify"><strong>Descripcion: </strong><br>{{ $role->description }}</p>
+						<p><strong>Nombre: </strong><br>{{ $role->name }}</p>
+						<p><strong>Slug: </strong><br>{{ $role->slug }}</p>
+						<p align="justify"><strong>Descripcion: </strong><br>{{ $role->description }}</p>
+						<table style="margin-left:10px ">
+						@foreach($permisos as $permiso)
+							<tr>
+								<td>
+									<li>{{$permiso->name}}</li>
+								</td>
+							</tr>	
+						@endforeach
+						</table>
 					</div>
 				</div>
 			</div>

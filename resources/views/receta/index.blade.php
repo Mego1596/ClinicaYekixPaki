@@ -1,11 +1,31 @@
 @extends('layouts.base')
+
+@section('bread')
+<li class="breadcrumb-item">
+  <a href="/events">Citas</a>
+</li>
+
+<li class="breadcrumb-item">
+  <a class="breadcrumb-item active">Receta</a>
+</li>
+
+@endsection
+
 @section('content')
 	<div>
 		<div class="row">
 			<div class="col-md-12 col-md-offset-2">
 				<div class="card panel-default">
 					<div class="card-header text-center">
-						<h4>Lista de recetas</h4>
+					<div class="row">
+							<div class="col-md-1">
+								<a href="/events" class="btn btn-block btn-secondary">
+								Atrás</a>
+							</div>
+							<div class="col-md-10">
+								<h4>Lista de recetas</h4>
+							</div>
+					</div>
 					</div>
 					<div class="card-body">
 						<table class="table table-striped table-hover" >
@@ -39,13 +59,13 @@
 									<td>{{$paciente->nombre1." ".$paciente->nombre2." ".$paciente->nombre3." ".$paciente->apellido1." ".$paciente->apellido2}}</td>
 									<td width="10px">
 										@can('recetas.show')
-											<a href="{{ route('receta.show',['cita' => $id, 'receta' => $receta->id])}}" class="btn btn-sm btn-default bg-info" style="color: white">Ver
+											<a href="{{ route('receta.show',['cita' => $id, 'receta' => $receta->id])}}" class="btn btn-sm btn-default bg-info" style="color: white" target="_blank">Ver
 											</a>
 										@endcan
 									</td>
 									<td width="10px">
 										@can('recetas.create')
-											<a href="{{ route('detalleReceta.index',$receta->id)}}" class="btn btn-sm btn-default bg-primary" style="color: white">Detalles Receta
+											<a href="{{ route('detalleReceta.index',['cita' => $id, 'receta' => $receta->id])}}" class="btn btn-sm btn-default bg-primary" style="color: white">Detalles Receta
 											</a>
 										@endcan
 									</td>

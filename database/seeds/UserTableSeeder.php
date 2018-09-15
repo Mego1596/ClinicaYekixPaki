@@ -111,5 +111,6 @@ class UserTableSeeder extends Seeder
         //Permisos Paciente
         DB::table('permission_role')->insert(['permission_id' => '16' , 'role_id'=>'5']);
         DB::table('permission_role')->insert(['permission_id' => '17' , 'role_id'=>'5']);
+        DB::table('permission_role')->insert(['permission_id' => '21' , 'role_id'=>'5']);
     }
 }

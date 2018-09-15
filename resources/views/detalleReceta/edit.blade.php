@@ -1,4 +1,18 @@
 @extends('layouts.base')
+@section('bread')
+<li class="breadcrumb-item">
+  <a href="/events">Citas</a>
+</li>
+<li class="breadcrumb-item">
+  <a href="{{route('receta.index', $id3)}}">Recetas</a>
+</li>
+<li class="breadcrumb-item">
+  <a href="{{route('detalleReceta.index', ['cita' => $id3, 'receta' => $id])}}">Detalle Receta</a>
+</li>
+<li class="breadcrumb-item">
+  <a class="breadcrumb-item active">Editar Detalle Receta</a>
+</li>
+@endsection
 @section('content')
 	<div>
 		<div class="row">
@@ -7,11 +21,11 @@
 					<div class="card-header text-center">
 						<div class="row">
 							<div class="col-md-1">
-								<a href="{{ route('detalleReceta.index',['receta' => $id ]) }}" class="btn btn-block btn-secondary">
+								<a href="{{route('detalleReceta.index', ['cita' => $id3, 'receta' => $id])}}" class="btn btn-block btn-secondary">
 								Atrás</a>
 							</div>
 							<div class="col-md-10">
-								<h4>Crear Receta</h4>
+								<h4>Editar Detalle de Receta</h4>
 							</div>
 						</div>
 					</div>
