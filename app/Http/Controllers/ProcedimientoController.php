@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Procedimiento;
 use Illuminate\Http\Request;
 use App\Http\Requests\ProcedimientosRequest;
+use App\Http\Requests\ProcedimientosUpdateRequest;
 
 class ProcedimientoController extends Controller
 {
@@ -99,7 +100,7 @@ class ProcedimientoController extends Controller
      * @param  \App\Procedimiento  $procedimiento
      * @return \Illuminate\Http\Response
      */
-    public function update(ProcedimientosRequest $request, Procedimiento $procedimiento)
+    public function update(ProcedimientosUpdateRequest $request, Procedimiento $procedimiento)
     {
         $valores = $request->all();
         $colores_guardados = Procedimiento::get()->all();
@@ -121,11 +122,7 @@ class ProcedimientoController extends Controller
                 return redirect()->route('procedimiento.create')
                 ->with('error', 'Complete los campos obligatorios');
         } 
-        else if ($existe) //validacion de solo color aun cuando los demas campos tengan valor
-        {
-            return redirect()->route('procedimiento.create')
-            ->with('error', 'Cambie de color de identificador');
-        }
+        
         else //validacion aprobada
         {
             $procedimiento->update($request->all());
