@@ -45,7 +45,7 @@ class PacienteRequest extends FormRequest
     }
     
     public function messages(){
-        $regex="Caracteres permitidos [a-záéíóúñ] mayusculas y minusculas";
+        $regex="No debe contener numeros o simbolos";
         $required="El campo es obligatorio";
         $cadena="Debe ser formato string";
         $max="Debe contener menos de 50 caracteres.";
@@ -104,8 +104,8 @@ class PacienteRequest extends FormRequest
             'email.min'=>"Debe de tener mas de 6 caracteres",
             
             /*unicos*/
-            'email.unique'=>"Email debe ser unico en los registros",
-            'email.email'=>"Debe ser un email correcto",
+            'email.unique'=>"El email ya existe en los registros",
+            'email.email'=>"Digite un email correcto",
             "fechaNacimiento.date"=>"Debe ser una fecha",
             "fechaNacimiento.before"=>"La fecha debe ser antes de 2016-01-01",
             "fechaNacimiento.after"=>"La fecha debe ser despues de 1900-01-01",

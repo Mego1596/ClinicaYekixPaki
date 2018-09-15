@@ -38,7 +38,7 @@ class UserRequest extends FormRequest
 
     public function messages()
     {
-        $regex="Caracteres permitidos [a-záéíóúñ] mayusculas y minusculas";
+        $regex="No debe contener numeros o simbolos";
         $required="El campo es obligatorio";
         $cadena="Debe ser formato string";
         $max="Debe contener menos de 50 caracteres.";
@@ -64,7 +64,7 @@ class UserRequest extends FormRequest
             'nombre3.regex'=>$regex,
             'apellido1.regex'=>$regex,
             'apellido2.regex'=>$regex,
-            'numeroJunta.regex'=>"Formato debe ser VPO-999999 ",
+            'numeroJunta.regex'=>"Formato debe ser JVPO-xxxx ",
             'especialidad.regex'=>$regex,    
             /*max and min*/
             'nombre1.max'=>$max,
@@ -77,7 +77,7 @@ class UserRequest extends FormRequest
             'email.min'=>"Debe de tener mas de 6 caracteres",
             
             /*unicos*/
-            'email.unique'=>"Email debe ser unico en los registros",
+            'email.unique'=>"El email ya existe en los registros",
             'email.email'=>"Debe ser un email correcto",
 
 

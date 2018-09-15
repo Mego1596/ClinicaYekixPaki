@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Procedimiento;
 use Illuminate\Http\Request;
+use App\Http\Requests\ProcedimientosRequest;
 
 class ProcedimientoController extends Controller
 {
@@ -34,7 +35,7 @@ class ProcedimientoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ProcedimientosRequest $request)
     {
         $valores = $request->all();
         $colores_guardados = Procedimiento::get()->all();
@@ -98,7 +99,7 @@ class ProcedimientoController extends Controller
      * @param  \App\Procedimiento  $procedimiento
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Procedimiento $procedimiento)
+    public function update(ProcedimientosRequest $request, Procedimiento $procedimiento)
     {
         $valores = $request->all();
         $colores_guardados = Procedimiento::get()->all();

@@ -1,16 +1,31 @@
 <div class="form-group">
 	{{ Form::label('name', 'Nombre del Rol *') }}
-	{{ Form::text('name', null, ['class' => 'form-control','align' => 'justify'])}}
+	{{ Form::text('name', null, ['class' => 'form-control','align' => 'justify','required'])}}
+	@if($errors->has('name'))
+	<div class="alert alert-warning">
+		<strong> {{$errors->first('name')}}</strong>
+	</div>		
+	@endif
 </div>
 
 <div class="form-group">
-	{{ Form::label('slug', 'URL Amigable *') }}
-	{{ Form::text('slug', null, ['class' => 'form-control'])}}
+	{{ Form::label('slug', 'Identificador *') }}
+	{{ Form::text('slug', null, ['class' => 'form-control','required'])}}
+	@if($errors->has('slug'))
+	<div class="alert alert-warning">
+		<strong> {{$errors->first('slug')}}</strong>
+	</div>		
+	@endif
 </div>
 
 <div class="form-group">
 	{{ Form::label('description', 'Descripcion') }}
 	{{ Form::text('description', null, ['class' => 'form-control'])}}
+	@if($errors->has('description'))
+	<div class="alert alert-warning">
+		<strong> {{$errors->first('description')}}</strong>
+	</div>		
+	@endif
 </div>
 
 	<div class="form-group">
