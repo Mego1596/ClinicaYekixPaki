@@ -7,6 +7,7 @@ use Caffeinated\Shinobi\Models\Role;
 use Caffeinated\Shinobi\Models\Permission;
 use Illuminate\Http\Request;
 use App\Http\Requests\RolesRequest;
+use App\Http\Requests\RolesUpdateRequest;
 
 class RoleController extends Controller
 {
@@ -86,7 +87,7 @@ class RoleController extends Controller
      * @param  \App\Role  $role
      * @return \Illuminate\Http\Response
      */
-    public function update(RolesRequest $request, Role $role)
+    public function update(RolesUpdateRequest $request, Role $role)
     {
         $valores = $request->all();
         if(is_null($valores['name']) or is_null($valores['slug']))

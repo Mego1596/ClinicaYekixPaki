@@ -16,7 +16,7 @@ class ProcedimientoController extends Controller
      */
     public function index()
     {
-        $procedimientos = Procedimiento::paginate();
+        $procedimientos = Procedimiento::paginate(10);
         return view('procedimiento.index', compact('procedimientos'));
     }
 

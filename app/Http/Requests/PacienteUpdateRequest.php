@@ -3,15 +3,21 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
+use Illuminate\Routing\Route;
 
-class PacienteRequest extends FormRequest
+class PacienteUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
      */
-   
+    protected $ruta;
+    public function __construct(Route $ruta)
+    {
+        $this->ruta=$ruta;
+    }
     public function authorize()
     {
         return true;
@@ -24,25 +30,32 @@ class PacienteRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'nombre1'=>'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ]*)*)+$/|max:50|string',
-            'nombre2'=>'nullable|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ]*)*)+$/|max:50|string',
-            'nombre3'=>'nullable|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ]*)*)+$/|max:50|string',
-            'apellido1'=>'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ]*)*)+$/|max:50|string',
-            'apellido2'=>'nullable|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ]*)*)+$/|max:50|string',
-            'fechaNacimiento'=>'required|date|before:2016-01-01|after:1900-01-01',
-            'telefono'=>'required|min:9|max:9|regex:/^[0-9]{4}-[0-9]{4}$/',
-            'ocupacion' => 'required|string|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
-            'sexo'=>'required|string|regex:/^[MF]$/',
-            'email'=>'nullable|string|email|unique:users|max:90|min:5',
-            'recomendado'=>'nullable|string|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
-            'historiaOdontologica'=>'nullable|string|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
-            'historiaMedica'=>'nullable|string|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
-            'domicilio'=>'required|string|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
-            'direccion_de_trabajo'=>'nullable|string|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
-            'responsable'=>'nullable|string|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ]*)*)+$/'
 
-        ];  
+            return [
+                'nombre1'=>'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ]*)*)+$/|max:50|string',
+                'nombre2'=>'nullable|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ]*)*)+$/|max:50|string',
+                'nombre3'=>'nullable|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ]*)*)+$/|max:50|string',
+                'apellido1'=>'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ]*)*)+$/|max:50|string',
+                'apellido2'=>'nullable|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ]*)*)+$/|max:50|string',
+                'fechaNacimiento'=>'required|date|before:2016-01-01|after:1900-01-01',
+                'telefono'=>'required|min:9|max:9|regex:/^[0-9]{4}-[0-9]{4}$/',
+                'ocupacion' => 'required|string|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
+                'sexo'=>'required|string|regex:/^[MF]$/',
+                //'nullable|string|email|unique:users|max:90|min:5'
+                'email'=>[
+                    'nullable','string','email','max:90','min:5',
+                    Rule::unique('pacientes')->ignore($this->ruta->parameter('paciente'))
+
+                ],
+                'recomendado'=>'nullable|string|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
+                'historiaOdontologica'=>'nullable|string|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
+                'historiaMedica'=>'nullable|string|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
+                'domicilio'=>'required|string|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
+                'direccion_de_trabajo'=>'nullable|string|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
+                'responsable'=>'nullable|string|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ]*)*)+$/'
+    
+                    ];  
+
     }
     
     public function messages(){

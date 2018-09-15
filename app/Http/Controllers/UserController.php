@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Mail;
 use App\Http\Requests\UserRequest;
+use App\Http\Requests\UserUpdateRequest;
 class UserController extends Controller
 {
     /**
@@ -135,7 +136,7 @@ class UserController extends Controller
      * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(UserRequest $request, User $user)
+    public function update(UserUpdateRequest $request, User $user)
     {
 
         if($request['idRole'] == 'doctor'){

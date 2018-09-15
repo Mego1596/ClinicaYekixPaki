@@ -4,6 +4,9 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+use Illuminate\Routing\Route;
+use Illuminate\Validation\Rule;
+
 class ProcedimientosUpdateRequest extends FormRequest
 {
     /**
@@ -11,6 +14,13 @@ class ProcedimientosUpdateRequest extends FormRequest
      *
      * @return bool
      */
+    protected $ruta;
+    public function __construct(Route $ruta)
+    {
+        $this->ruta=$ruta;
+    }
+
+
     public function authorize()
     {
         return true;
@@ -23,11 +33,15 @@ class ProcedimientosUpdateRequest extends FormRequest
      */
     public function rules()
     {
-        
+
             return [
                 'nombre'=>'required|regex:/^[^0-9]+$/|max:120|string',
                 'descripcion'=>'required|regex:/^[^0-9]+$/|max:500|string',
-                'color'=>'required|regex:/^#[0-9ABDCDEFabcdef]+$/'
+                
+                'color'=>['required',
+                'regex:/^#[0-9ABDCDEFabcdef]+$/',
+                Rule::unique('procedimientos')->ignore($this->ruta->parameter('procedimiento')),
+                        ]
             ];
         
     }
@@ -44,6 +58,7 @@ class ProcedimientosUpdateRequest extends FormRequest
 
         'color.required'=>'Debe escoger un color',
         'color.regex'=>'No es un color valido',
+        'color.unique'=>'El color ya existe en los registros'
     ];
     }
 }
