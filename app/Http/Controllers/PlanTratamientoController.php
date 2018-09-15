@@ -111,7 +111,7 @@ class PlanTratamientoController extends Controller
         foreach ($events as $key => $event) {
             $paciente = Paciente::find($event->paciente_id);
             $planT = Plan_Tratamiento::where('events_id',$event->id)->get();
-            if(sizeof($planT) > 1){
+            if(sizeof($planT) > 1 || is_null($planT)){
                 $event_list[] =Calendar::event(
                     $paciente->nombre1." ".$paciente->nombre2." ".$paciente->apellido1." ".$paciente->apellido2,
                     false,
@@ -126,8 +126,8 @@ class PlanTratamientoController extends Controller
                     ]
                 );
             }else{
-                $planT = Plan_Tratamiento::where('events_id',$event->id)->value('procedimiento_id');
-                $proceso = Procedimiento::find($planT);
+                $planT2 = Plan_Tratamiento::where('events_id',$event->id)->value('procedimiento_id');
+                $proceso = Procedimiento::find($planT2);
                 $event_list[] =Calendar::event(
                     $paciente->nombre1." ".$paciente->nombre2." ".$paciente->apellido1." ".$paciente->apellido2,
                     false,

@@ -102,20 +102,29 @@
       			{!! $errors->first('paciente_id','<p class="alert alert-danger">El titulo de la cita es requerido</p>') !!}
       		</div>
       	</div>
-      	<div class="form-group">
-      		{!! Form::label('start_date','Hora Inicio de la Cita:')!!}
-      		<div class="input-group clockpicker" data-autoclose="true">
-      			{!! Form::time('start_date', null, ['value'=> '00:00', 'class' => 'form-control'] ) !!}
-      			{!! $errors->first('start_date','<p class="alert alert-danger">La Fecha de Inicio es requerida</p>') !!}
-      			
-      		</div>
-      	</div>
-      	<div class="form-group">
-      		{!! Form::label('end_date','Hora Fin de la Cita:')!!}
-      		<div class="input-group clockpicker" data-autoclose="true">
-      			{!! Form::time('end_date', null, ['value'=> '00:00', 'class' => 'form-control'] ) !!}
-      			{!! $errors->first('end_date','<p class="alert alert-danger">La Fecha de Fin es requerida</p>') !!}
-      	</div>
+        <div class="form-group">
+          {!! Form::label('start_date','Hora Inicio de la Cita:')!!}
+          <div class="input-group clockpicker " data-autoclose="true">
+            {!! Form::text('start_date', null, ['class' => 'form-control']) !!}
+            <span class="input-group-addon">
+              <i class="btn btn-primary">
+              <span class="fa fa-clock-o"></span>
+              </i>
+            </span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          {!! Form::label('end_date','Hora Fin de la Cita:')!!}
+          <div class="input-group clockpicker " data-autoclose="true">
+            {!! Form::text('end_date', null, ['class' => 'form-control']) !!}
+            <span class="input-group-addon">
+              <i class="btn btn-primary">
+              <span class="fa fa-clock-o"></span>
+              </i>
+            </span>
+          </div>
+        </div>
       	<div class="form-group">
       		{!! Form::label('txtDescripcion', 'Descripcion:')!!}
       		{!! Form::textarea('txtDescripcion', null, ['class' => 'form-control', 'rows' => '2', 'id' => 'txtDescripcion'])!!}
