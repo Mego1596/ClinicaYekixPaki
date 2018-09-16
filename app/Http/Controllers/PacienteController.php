@@ -700,4 +700,13 @@ class PacienteController extends Controller
         }
     }
 
+    public function anexos(Request $request){
+        $files = $request->file('anexo');
+        foreach ($files as $file) {
+            $filename = $file->getClientOriginalName();
+            $generado = str_random(25) . '.' . $file->getClientOriginalExtension();
+            \Storage::disk('dropbox')->put($generado,  \File::get($file));
+        }
+    }
+
 }

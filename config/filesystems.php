@@ -43,6 +43,12 @@ return [
 
     'disks' => [
 
+        'dropbox' => [
+            'driver' => 'dropbox',
+            'app_secret' => env('DROPBOX_APP_SECRET'),
+            'token' => env('DROPBOX_TOKEN'),
+        ],
+
         'local' => [
             'driver' => 'local',
             'root' => storage_path('app'),

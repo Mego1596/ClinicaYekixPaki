@@ -82,6 +82,8 @@ Route::middleware(['auth'])->group(function(){
 	Route::post('events', 'EventsController@addEvent')->name('events.add');
 
 	//Pacientes
+	Route::post('paciente/anexos', 'PacienteController@anexos')->name('paciente.anexos');
+
 	Route::post('paciente/store', 'PacienteController@store')->name('paciente.store')->middleware('permission:pacientes.create');
 
 	Route::get('paciente', 'PacienteController@index')->name('paciente.index')->middleware('permission:pacientes.index');

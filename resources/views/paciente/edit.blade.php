@@ -75,6 +75,12 @@ window.onload = function() {
 						{!! Form::model($paciente, ['route' => ['paciente.update', $paciente->id], 'method' => 'PUT','autocomplete'=> 'off']) !!}
 							@include('paciente.partials.formEdit')
 						{!! Form::close() !!}
+
+						<form action="{{route('paciente.anexos')}}" method="POST" id="anexos" enctype="multipart/form-data">
+							{{ csrf_field() }}							
+								<input type="file" name="anexo[]" id="anexo" multiple>
+								<input type="submit">
+						</form>
 					</div>
 				</div>
 			</div>
