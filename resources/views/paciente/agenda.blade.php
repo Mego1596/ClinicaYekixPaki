@@ -40,7 +40,52 @@ $(document).ready(function(){
 @endsection
 
 @section('content')
-	<div class="container">
+<!-- en caso de error -->
+<div>
+  <div class="row">
+    <div class="col-md-12 pt-3">
+      @if($errors->has('txtFecha'))
+      <div class="alert alert-warning">
+         {{$errors->first('txtFecha')}}
+      </div>
+      @elseif($errors->has('start_date'))
+      <div class="alert alert-warning">
+        {{$errors->first('start_date')}}
+      </div>		
+      @elseif($errors->has('end_date'))
+      <div class="alert alert-warning">
+        {{$errors->first('end_date')}}
+      </div>
+      @elseif($errors->has('RangoStartHora'))
+      <div class="alert alert-warning">
+         {{$errors->first('RangoStartHora')}}
+      </div>
+      @elseif($errors->has('RangoEndHora'))
+      <div class="alert alert-warning">
+        {{$errors->first('RangoEndHora')}}
+      </div>
+      @elseif($errors->has('RangoLibre'))
+      <div class="alert alert-warning">
+       {{$errors->first('RangoLibre')}}
+      </div>
+      @elseif($errors->has('choques'))
+      <div class="alert alert-warning">
+       {{$errors->first('choques')}}
+      </div>
+      @elseif($errors->has('minCita'))
+      <div class="alert alert-warning">
+       {{$errors->first('minCita')}}
+      </div>
+      @elseif($errors->has('maxCita'))
+      <div class="alert alert-warning">
+       {{$errors->first('maxCita')}}
+      </div>
+      @endif
+    </div>
+  </div>
+</div>
+<!--fin en caso de error-->
+<div class="container">
 	<div class="panel panel-primary">
 		<div class="panel-heading">
 			<h3 align="center">Citas:</h3></div>
@@ -133,13 +178,13 @@ $(document).ready(function(){
       		<div class="form-group col-md-12">
       			{!! Form::label('paciente_id', 'Paciente:',['id' => 'tit']) !!}
       			{!! Form::text('paciente_id', null, ['class' => 'form-control', 'placeholder' => 'Titulo del Evento', 'id' => 'txtTitulo']) !!}
-      			{!! $errors->first('paciente_id','<p class="alert alert-danger">El titulo de la cita es requerido</p>') !!}
+      			
       		</div>
       	</div>
         <div class="form-group">
           {!! Form::label('start_date','Hora Inicio de la Cita:')!!}
           <div class="input-group clockpicker " data-autoclose="true">
-            {!! Form::text('start_date', null, ['class' => 'form-control']) !!}
+            {!! Form::text('start_date', null, ['class' => 'form-control','required']) !!}
             <span class="input-group-addon">
               <i class="btn btn-primary">
               <span class="fa fa-clock-o"></span>
@@ -151,7 +196,7 @@ $(document).ready(function(){
         <div class="form-group">
           {!! Form::label('end_date','Hora Fin de la Cita:')!!}
           <div class="input-group clockpicker " data-autoclose="true">
-            {!! Form::text('end_date', null, ['class' => 'form-control']) !!}
+            {!! Form::text('end_date', null, ['class' => 'form-control','required']) !!}
             <span class="input-group-addon">
               <i class="btn btn-primary">
               <span class="fa fa-clock-o"></span>

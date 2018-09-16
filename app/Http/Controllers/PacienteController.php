@@ -19,6 +19,7 @@ use Validator;
 use Mail;
 use App\Http\Requests\PacienteRequest;
 use App\Http\Requests\PacienteUpdateRequest;
+use App\Http\Requests\PacienteEventRequest;
 
 class PacienteController extends Controller
 {
@@ -498,16 +499,8 @@ class PacienteController extends Controller
         return view('paciente.agenda',compact('procedimiento','procesos','calendar_details','paciente','encendido'));
     }
 
-    public function addEvent(Request $request){
-        $validator = Validator::make($request->all(), [
-            'pacienteID'        => 'required',
-            'start_date'        => 'required',
-            'end_date'          => 'required',
-        ]);
-        if($validator->fails()){
-            \Session::flash('warnning', 'Porfavor ingrese datos validos');
-            return redirect()->route('paciente.agenda',$request->pacienteID)->withInput()->withErrors($validator);
-        }
+    public function addEvent(PacienteEventRequest $request){
+       
         if(isset($_POST["btnAgregar"])){
             if($request->procedimiento_id==NULL){
                 $event = new Events();
