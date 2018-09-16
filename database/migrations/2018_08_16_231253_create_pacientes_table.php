@@ -20,8 +20,8 @@ class CreatePacientesTable extends Migration
             $table->string('nombre3')->nullable();
             $table->string('apellido1');
             $table->string('apellido2')->nullable();
-            $table->string('recomendado')->nullable()->default('-');
-            $table->string('historiaOdontologica')->nullable()->default('-');
+            $table->string('recomendado')->nullable();
+            $table->string('historiaOdontologica')->nullable();
             $table->date('fechaNacimiento');
             $table->string('email')->unique()->nullable();
             $table->string('ocupacion');

@@ -171,7 +171,7 @@ window.onload = function() {
 					</div>
 				</div>
 				<div class="card-body justify-content-center">
-						{!! Form::model($user, ['route' => ['user.update', $user->id], 'method' => 'PUT']) !!}
+						{!! Form::model($user, ['route' => ['user.update', $user->id], 'method' => 'PUT', 'autocomplete'=> 'off']) !!}
 							@include('user.partials.formEdit')
 						{!! Form::close() !!}
 					</div>

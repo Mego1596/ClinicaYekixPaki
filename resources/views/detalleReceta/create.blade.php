@@ -30,7 +30,7 @@
 						</div>
 					</div>
 					<div class="card-body">
-						{!! Form::open(['route' => 'detalleReceta.store']) !!}
+						{!! Form::open(['route' => 'detalleReceta.store', 'autocomplete'=> 'off']) !!}
 						{!! Form::hidden('cita', $id2 ,['class' => 'form-control']) !!}
 							@include('detalleReceta.partials.form')
 						{!! Form::close() !!}

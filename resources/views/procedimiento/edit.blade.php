@@ -26,7 +26,7 @@
 						</div>
 					</div>
 					<div class="card-body">
-						{!! Form::model($procedimiento, ['route' => ['procedimiento.update', $procedimiento->id], 'method' => 'PUT']) !!}
+						{!! Form::model($procedimiento, ['route' => ['procedimiento.update', $procedimiento->id], 'method' => 'PUT' , 'autocomplete'=> 'off']) !!}
 
 							@include('procedimiento.partials.form')
 

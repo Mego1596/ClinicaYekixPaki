@@ -28,7 +28,7 @@
 						</div>
 					</div>
 					<div class="card-body">
-						{!! Form::model($role, ['route' => ['roles.update', $role->id], 'method' => 'PUT']) !!}
+						{!! Form::model($role, ['route' => ['roles.update', $role->id], 'method' => 'PUT', 'autocomplete'=> 'off']) !!}
 
 							@include('roles.partials.form')
 
