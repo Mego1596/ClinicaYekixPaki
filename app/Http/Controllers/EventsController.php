@@ -65,7 +65,7 @@ class EventsController extends Controller
 
     	$calendar_details = Calendar::addEvents($event_list)->setOptions([
     		'firstDay' => 1,
-    		'editable' => $encendido,
+    		'editable' => false,
     		'themeSystem'=>'bootstrap4',
             'locale' => 'es',
             'defaultView' => 'agendaDay',
@@ -98,20 +98,6 @@ class EventsController extends Controller
 				 	//$("#procedimiento_id").prop("disabled",true);
 				 	$("#exampleModal").modal(); 	
 				 }',
-
-			'eventDrop' => 'function(calEvent,jsEvent,view){
-				 	$("#txtID").val(calEvent.id);
-				 	$("#txtTitulo").val(calEvent.title);
-				 	$("#txtColor").val(calEvent.color);
-				 	$("#txtDescripcion").val(calEvent.descripcion);
-				 	var fechaHora 	= calEvent.start.format().split("T");
-				 	var fechaHora2 	= calEvent.end.format().split("T");
-				 	$("#txtFecha").val(fechaHora[0]);
-				 	$("#start_date").val(fechaHora[1]);
-				 	$("#end_date").val(fechaHora2[1]);
-				 	//$("#procedimiento_id").val(calEvent.procedimiento);
-				 	document.getElementById("btnModificar").click();
-				 }',
 			]);
 
     	return view('events',compact('procesos','calendar_details','loggedUser'));
@@ -127,15 +113,6 @@ class EventsController extends Controller
     	if($validator->fails()){
     		\Session::flash('warnning', 'Porfavor ingrese datos validos');
     		return Redirect::to('/events')->withInput()->withErrors($validator);
-    	}
-
-    	if (isset($_POST["btnModificar"])) {
-
-    		$event = Events::find($request["txtID"]);
-    		$event->start_date			= $request['txtFecha']." ".$request['start_date'];
-    		$event->end_date			= $request['txtFecha']." ".$request['end_date'];
-    		$event->save();
-    		return Redirect::to('events')->with('info','Cita actualizada con exito');	
     	}
     }
 }

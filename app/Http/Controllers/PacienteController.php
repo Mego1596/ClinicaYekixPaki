@@ -386,7 +386,7 @@ class PacienteController extends Controller
 
         $calendar_details = Calendar::addEvents($event_list)->setOptions([
             'firstDay'      => 1,
-            'editable'      => $encendido,
+            'editable'      => false,
             'themeSystem'   => 'bootstrap4',
             'locale'        => 'es',
             'header'        => array(
