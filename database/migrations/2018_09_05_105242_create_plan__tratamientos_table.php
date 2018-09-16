@@ -18,7 +18,7 @@ class CreatePlanTratamientosTable extends Migration
             $table->integer('procedimiento_id')->nullable()->unsigned();
             $table->foreign('procedimiento_id')->references('id')->on('procedimientos')->nullable();
             $table->integer('events_id')->nullable()->unsigned();
-            $table->foreign('events_id')->references('id')->on('events')->nullable();
+            $table->foreign('events_id')->references('id')->on('events')->onDelete('cascade');
             $table->timestamps();
         });
     }

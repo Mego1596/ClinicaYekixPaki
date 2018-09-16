@@ -17,7 +17,7 @@ class PacienteEventRequest extends FormRequest
      */
     protected $fechaRequest;
     protected $duracionMaximaCita=180;
-    protected $duracionMinimaCita=30;
+    protected $duracionMinimaCita=29;
     protected $requestGeneral;
     public function __construct(Request $request)
     {
@@ -48,8 +48,8 @@ class PacienteEventRequest extends FormRequest
         $RangoLibreStartA=Carbon::parse($request['start_date'])->hour."".Carbon::parse($request['start_date'])->format('i');
         $RangoLibreEndA=Carbon::parse($request['end_date'])->hour."".Carbon::parse($request['end_date'])->format('i');
        
-        if(($RangoLibreEndA>=1200 && $RangoLibreEndA<=1400) ||
-         ($RangoLibreStartA>=1200 && $RangoLibreStartA<=1400)){
+        if(($RangoLibreEndA > 1200 && $RangoLibreEndA < 1400) ||
+         ($RangoLibreStartA > 1200 && $RangoLibreStartA < 1400)){
             $request['RangoLibre']='a';//importante determina a-> para dar escapa a integer
         }   
         /*revisa si existe un registro intermedio establecido*/

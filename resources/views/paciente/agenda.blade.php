@@ -158,7 +158,7 @@ $(document).ready(function(){
 		</div>
 	</div>
 <!-- Modal -->
-{!! Form::open(array('route' => 'paciente.add','id'=> 'form', 'method' => 'POST') ) !!}
+{!! Form::open(array('route' => 'paciente.add','id'=> 'form', 'method' => 'POST', 'autocomplete' => 'off') ) !!}
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
