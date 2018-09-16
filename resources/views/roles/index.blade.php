@@ -88,12 +88,34 @@
 									@if($role->id > 5 )
 									<td width="10px">
 										@can('roles.destroy')
-											{!! Form::open(['route' => ['roles.destroy', $role->id],
-											'method' => 'DELETE']) !!}
-												<button class="btn btn-sm btn-default bg-danger" style="color: white">
-													Eliminar
-												</button>
-											{!! Form::close() !!}
+											<button type="button" class="btn btn-sm btn-default btn btn-danger" data-toggle="modal" data-target="#Modal{{$role->id}}">
+													  					Eliminar
+																	</button>
+																	{!! Form::open(['route' => ['roles.destroy', $role->id],'method' => 'DELETE']) !!}
+																		<!-- Modal -->
+																		<div class="modal fade" id="Modal{{$role->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+																			<div class="modal-dialog" role="document">
+																		    	<div class="modal-content">
+																		    		<div class="modal-header">
+																		        		<h5 class="modal-title" id="exampleModalLabel">Eliminar Rol</h5>
+																		        			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+																		          				<span aria-hidden="true">&times;</span>
+																		        			</button>
+																		      		</div>
+																		      		<div class="modal-body">
+																		      			<label>Estas seguro?</label>
+																		      			<br/>
+																		      			<button type="button" class="btn btn-md btn-default" data-dismiss="modal">No</button>
+																		        		<button class="btn btn-md btn-default bg-danger" style="color: white">
+																							Si
+																						</button>
+																		      		</div>
+																		      		<div class="modal-footer">
+																		      		</div>
+																		    	</div>
+																			</div>
+																		</div>
+																	{!! Form::close() !!}
 										@endcan
 									</td>
 									

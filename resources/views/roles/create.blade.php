@@ -28,7 +28,7 @@
 						</div>
 					</div>
 					<div class="card-body">
-						{!! Form::open(['route' => 'roles.store']) !!}
+						{!! Form::open(['route' => 'roles.store', 'autocomplete'=> 'off']) !!}
 
 							@include('roles.partials.form')
 

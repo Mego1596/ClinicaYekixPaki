@@ -25,7 +25,7 @@
 					
 					</div>
 					<div class="card-body">
-						{!! Form::open(['route' => 'procedimiento.store']) !!}
+						{!! Form::open(['route' => 'procedimiento.store', 'autocomplete'=> 'off']) !!}
 
 							@include('procedimiento.partials.form')
 

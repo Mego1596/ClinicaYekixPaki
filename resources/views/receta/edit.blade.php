@@ -27,7 +27,7 @@
 						</div>
 					</div>
 					<div class="card-body">
-						{!! Form::model($recetas, ['route' => ['receta.update', $recetas->id], 'method' => 'PUT']) !!}
+						{!! Form::model($recetas, ['route' => ['receta.update', $recetas->id], 'method' => 'PUT', 'autocomplete'=> 'off']) !!}
 							{!! Form::hidden('id',$id2,['class' => 'form-control']) !!}
 							@include('receta.partials.form')
 						{!! Form::close() !!}
