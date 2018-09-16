@@ -196,7 +196,7 @@
 													<td></td>
 													<td colspan="3">
 														@can('pacientes.habilitarPaciente')
-															<button type="button" class="btn btn-sm btn-default btn btn-success" data-toggle="modal" data-target="#Modal{{$paciente->id}}">
+															<button type="button" class="btn btn-sm btn-default btn btn-success" data-toggle="modal" data-target="#Modal{{$paciente->id}}" style="width: 100%">
 											  					Habilitar
 															</button>
 															{!! Form::open(['route' => ['paciente.habilitarPaciente', $paciente->id],'method' => 'POST']) !!}
