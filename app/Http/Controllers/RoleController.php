@@ -8,6 +8,7 @@ use Caffeinated\Shinobi\Models\Permission;
 use Illuminate\Http\Request;
 use App\Http\Requests\RolesRequest;
 use App\Http\Requests\RolesUpdateRequest;
+use Illuminate\Support\Facades\DB;
 
 class RoleController extends Controller
 {
@@ -64,7 +65,8 @@ class RoleController extends Controller
      */
     public function show(Role $role)
     {      
-        return view('roles.show', compact('role'));
+        $permisos = DB::table('permissions')->join('permission_role', 'permissions.id','=','permission_role.permission_id')->where('permission_role.role_id',$role->id)->get();
+        return view('roles.show', compact('role','permisos'));
     }
 
     /**

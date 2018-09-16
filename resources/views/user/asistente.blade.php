@@ -13,7 +13,15 @@
 			<div class="col-md-12 col-md-offset-2">
 				<div class="card card-default">
 					<div class="card-header text-center">
-						<h4>Lista de asistentes</h4>
+						<div class="row">
+			            	<div class="col-md-1">
+			                	<a href="/home" class="btn btn-block btn-secondary">
+			                	Atrás</a>
+			              	</div>
+			              	<div class="col-md-10">
+								<h4>Lista de asistentes</h4>
+			              	</div>
+          				</div>
 					</div>
 					<br/>
 					<div class="row" style="align-self: left"> 
@@ -87,19 +95,18 @@
 											<a href="{{ route('user.edit', ['user' => $user->id, 'idrol' => $sub]) }}" class="btn btn-sm btn-default bg-success" style="color: white">Editar</a>
 										@endcan
 									</td>
-
 									<td width="10px">
 										@can('users.destroy')
-										<button type="button" class="btn btn-sm btn-default btn btn-danger" data-toggle="modal" data-target="#Modal2">
+										<button type="button" class="btn btn-sm btn-default btn btn-danger" data-toggle="modal" data-target="#Modal{{$user->id}}">
 						  					Eliminar
 										</button>
 										{!! Form::open(['route' => ['user.destroy', $user->id],'method' => 'DELETE']) !!}
 											<!-- Modal -->
-											<div class="modal fade" id="Modal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+											<div class="modal fade" id="Modal{{$user->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 												<div class="modal-dialog" role="document">
 											    	<div class="modal-content">
 											    		<div class="modal-header">
-											        		<h5 class="modal-title" id="exampleModalLabel"> Eliminar Asistente</h5>
+											        		<h5 class="modal-title" id="exampleModalLabel"> Eliminar Odontologo</h5>
 											        			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 											          				<span aria-hidden="true">&times;</span>
 											        			</button>
@@ -118,12 +125,41 @@
 												</div>
 											</div>
 											{!! Form::close() !!}
+
 										@endcan
 									</td>
-									<td width="10px">
-										<a href="{{ route('user.revoke', ['user' =>$user->id, 'idrol' => $sub]) }}" class="btn btn-sm btn-default bg-warning" style="color: white">Revocar Permisos
-										</a>
+									@can('admin.revoke')
+									<td width="100px">
+										<button type="button" class="btn btn-sm btn-default btn btn-warning" data-toggle="modal" data-target="#Modal2{{$user->id}}">
+						  					Remover Permisos
+										</button>
+										{!! Form::open(['route' => ['user.revoke', $user->id, $sub],'method' => 'GET']) !!}
+											<!-- Modal -->
+											<div class="modal fade" id="Modal2{{$user->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+												<div class="modal-dialog" role="document">
+											    	<div class="modal-content">
+											    		<div class="modal-header">
+											        		<h5 class="modal-title" id="exampleModalLabel"> Remover Permisos</h5>
+											        			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+											          				<span aria-hidden="true">&times;</span>
+											        			</button>
+											      		</div>
+											      		<div class="modal-body">
+											      			<label>Estas seguro?</label>
+											      			<br/>
+											      			<button type="button" class="btn btn-md btn-default" data-dismiss="modal">No</button>
+											        		<button class="btn btn-md btn-default bg-danger" style="color: white">
+																Si
+															</button>
+											      		</div>
+											      		<div class="modal-footer">
+											      		</div>
+											    	</div>
+												</div>
+											</div>
+											{!! Form::close() !!}
 									</td>
+									@endcan
 								</tr>
 								@endforeach
 							</tbody>

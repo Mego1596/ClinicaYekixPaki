@@ -118,7 +118,7 @@ $(document).ready(function(){
 					</div>
 				</div>
 				<div class="card-body justify-content-center">
-						{!! Form::open(['route' => 'user.store']) !!}
+						{!! Form::open(['route' => 'user.store', 'autocomplete'=> 'off']) !!}
 							@include('user.partials.form')
 						{!! Form::close() !!}
 

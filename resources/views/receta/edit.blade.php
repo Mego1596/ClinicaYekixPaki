@@ -1,5 +1,15 @@
 @extends('layouts.base')
-
+@section('bread')
+<li class="breadcrumb-item">
+  <a href="/events">Citas</a>
+</li>
+<li class="breadcrumb-item">
+  <a href="{{ route('receta.index',['cita' => $id ]) }}">Receta</a>
+</li>
+<li class="breadcrumb-item">
+  <a class="breadcrumb-item active">Editar Receta</a>
+</li>
+@endsection
 @section('content')
 	<div>
 		<div class="row">
@@ -17,7 +27,7 @@
 						</div>
 					</div>
 					<div class="card-body">
-						{!! Form::model($recetas, ['route' => ['receta.update', $recetas->id], 'method' => 'PUT']) !!}
+						{!! Form::model($recetas, ['route' => ['receta.update', $recetas->id], 'method' => 'PUT', 'autocomplete'=> 'off']) !!}
 							{!! Form::hidden('id',$id2,['class' => 'form-control']) !!}
 							@include('receta.partials.form')
 						{!! Form::close() !!}

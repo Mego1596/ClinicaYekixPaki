@@ -140,7 +140,7 @@ class PermissionsTableSeeder extends Seeder
         ]);
 
         Permission::create([
-            'name' => 'CRUD de Citas',
+            'name' => 'Calendario de Citas del Paciente',
             'slug' => 'pacientes.citas',
             'description' => 'Lista y Navega todos los Pacientes del Sistema',
         ]);

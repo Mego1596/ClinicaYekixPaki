@@ -11,7 +11,15 @@
 	<div class="container">
 	<div class="panel panel-primary">
 		<div class="panel-heading">
-			<h3 align="center">Citas:</h3>
+          <div class="row">
+              <div class="col-md-1">
+                <a href="/home" class="btn btn-block btn-secondary">
+                Atrás</a>
+              </div>
+              <div class="col-md-10">
+                <h3 align="center">Citas:</h3>
+              </div>
+          </div>
         <table>
           <tr>
             <td>Revision General o Paciente Referidos con Procedimiento</td>

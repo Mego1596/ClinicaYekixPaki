@@ -12,10 +12,10 @@ class DetalleRecetaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($id)
+    public function index($id,$id2)
     {
         $detalles = DetalleReceta::where('receta_id', $id)->paginate();
-        return view('detalleReceta.index',compact('detalles','id'));
+        return view('detalleReceta.index',compact('detalles','id','id2'));
     }
 
     /**
@@ -23,9 +23,9 @@ class DetalleRecetaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($id)
+    public function create($id, $id2)
     {
-        return view('detalleReceta.create', compact('id'));
+        return view('detalleReceta.create', compact('id','id2'));
     }
 
     /**
@@ -42,7 +42,7 @@ class DetalleRecetaController extends Controller
         $detalle->cantidad = $request->cantidad;
         $detalle->receta_id = $request->receta_id;
         $detalle->save();
-        return redirect()->route('detalleReceta.index',$request->receta_id)->with('info','Detalle de Receta Guardada con exito');
+        return redirect()->route('detalleReceta.index',['receta' => $request->receta_id,'cita'=>$request->cita] )->with('info','Detalle de Receta Guardada con exito');
     }
 
     /**
@@ -51,10 +51,10 @@ class DetalleRecetaController extends Controller
      * @param  \App\DetalleReceta  $detalleReceta
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id,$id2,$id3)
     {
         $detalles = DetalleReceta::find($id);
-        return view('detalleReceta.show',compact('detalles'));
+        return view('detalleReceta.show',compact('detalles','id','id2','id3'));
     }
 
     /**
@@ -63,10 +63,10 @@ class DetalleRecetaController extends Controller
      * @param  \App\DetalleReceta  $detalleReceta
      * @return \Illuminate\Http\Response
      */
-    public function edit($id,$id2)
+    public function edit($id,$id2,$id3)
     {   
         $detalles = DetalleReceta::find($id2);
-        return view('detalleReceta.edit',compact('id','detalles','id2'));
+        return view('detalleReceta.edit',compact('id','detalles','id2','id3'));
     }
 
     /**
@@ -76,15 +76,14 @@ class DetalleRecetaController extends Controller
      * @param  \App\DetalleReceta  $detalleReceta
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, DetalleReceta $detalleReceta)
+    public function update(Request $request, DetalleReceta $detalle)
     {
-        $detalle = DetalleReceta::find($request->id);
         $detalle->medicamento = $request->medicamento;
         $detalle->dosis = $request->dosis;
         $detalle->cantidad = $request->cantidad;
         $detalle->receta_id = $request->receta_id;
         $detalle->save();
-        return redirect()->route('detalleReceta.index',$request->receta_id)->with('info','Detalle de Receta Actualizada con exito');
+        return redirect()->route('detalleReceta.index',['receta' => $request->receta_id,'cita'=>$request->cita])->with('info','Detalle de Receta Actualizada con exito');
     }
 
     /**

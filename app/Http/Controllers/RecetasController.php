@@ -49,7 +49,7 @@ class RecetasController extends Controller
         $receta->events_id = $request->events_id;
         $receta->peso      = $request->peso;
         $receta->save();
-        return redirect()->route('detalleReceta.create',$receta->id)->with('info','Receta Guardada con exito');
+        return redirect()->route('detalleReceta.create',['cita' => $request->events_id,'receta'=>$receta->id])->with('info','Receta Guardada con exito');
     }
 
     /**
