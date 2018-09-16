@@ -76,15 +76,14 @@ class DetalleRecetaController extends Controller
      * @param  \App\DetalleReceta  $detalleReceta
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, DetalleReceta $detalleReceta)
+    public function update(Request $request, DetalleReceta $detalle)
     {
-        $detalle = DetalleReceta::find($request->id);
         $detalle->medicamento = $request->medicamento;
         $detalle->dosis = $request->dosis;
         $detalle->cantidad = $request->cantidad;
         $detalle->receta_id = $request->receta_id;
         $detalle->save();
-        return redirect()->route('detalleReceta.index',$request->receta_id)->with('info','Detalle de Receta Actualizada con exito');
+        return redirect()->route('detalleReceta.index',['receta' => $request->receta_id,'cita'=>$request->cita])->with('info','Detalle de Receta Actualizada con exito');
     }
 
     /**
