@@ -68,6 +68,10 @@ $(document).ready(function(){
       <div class="alert alert-warning">
        {{$errors->first('RangoLibre')}}
       </div>
+      @elseif($errors->has('notEqualFree'))
+      <div class="alert alert-warning">
+       {{$errors->first('notEqualFree')}}
+      </div>
       @elseif($errors->has('choques'))
       <div class="alert alert-warning">
        {{$errors->first('choques')}}

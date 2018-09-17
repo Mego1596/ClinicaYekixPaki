@@ -31,8 +31,11 @@ class PacienteEventRequest extends FormRequest
         $request['choques']='1';
         $request['minCita']='1';
         $request['maxCita']='1';
+        $request['notEqualFree']='1';
 
-
+        /***
+         * REGLA FUERA DE HORAS DE NEGOCIO
+         * 
         /*fuerza que sea fuera de rango si la unica opcion es cero*/
         if($request['RangoStartHora'][0]=='0'){
             $request['RangoStartHora']='2300';
@@ -44,15 +47,50 @@ class PacienteEventRequest extends FormRequest
             $request['RangoEndHora']='2300';
         }
 
-        /*Horarios de almuerzo del negocio*/
-        $RangoLibreStartA=Carbon::parse($request['start_date'])->hour."".Carbon::parse($request['start_date'])->format('i');
-        $RangoLibreEndA=Carbon::parse($request['end_date'])->hour."".Carbon::parse($request['end_date'])->format('i');
-       
+
+        /**
+         * REGLA HORAS DE ALMUERZO
+         */
+        
+         /*Horarios de almuerzo del negocio*/
+        $RangoLibreStartA=Carbon::parse($request['start_date'])->hour."".Carbon::parse
+        ($request['start_date'])->format('i');
+        $RangoLibreEndA=Carbon::parse($request['end_date'])->hour."".Carbon::parse
+        ($request['end_date'])->format('i');
+
+        /*cuando no es sabado*/
+        if(Carbon::parse($this->fechaRequest)->format('l')!='Saturday') //if si es sabado
+            {  
         if(($RangoLibreEndA > 1200 && $RangoLibreEndA < 1400) ||
-         ($RangoLibreStartA > 1200 && $RangoLibreStartA < 1400)){
+         ($RangoLibreStartA > 1200 && $RangoLibreStartA < 1400))
+                {
             $request['RangoLibre']='a';//importante determina a-> para dar escapa a integer
-        }   
-        /*revisa si existe un registro intermedio establecido*/
+                }
+            }
+            else  
+            {
+            if(($RangoLibreEndA > 1200 && $RangoLibreEndA < 1300) ||
+            ($RangoLibreStartA > 1200 && $RangoLibreStartA < 1300))
+                {
+               $request['RangoLibre']='a';//importante determina a-> para dar escapa a integer
+                }
+            }   
+        /**
+         * REGLA NO CITAS A LA HORA 12:00 - 14:00  && 12:00 - 13:00
+         */
+        if(Carbon::parse($this->fechaRequest)->format('l')!='Saturday'){
+            if($RangoLibreEndA==1400&&$RangoLibreStartA==1200){
+                    $request['notEqualFree']='a';
+                }
+        }else{
+            if($RangoLibreEndA==1300&&$RangoLibreStartA==1200){
+                $request['notEqualFree']='a';
+            }
+        }
+
+        /***
+         * REGLA DE NO CHOQUES DE CITAS
+         */
        
         /*concatena formato concordante a  bd*/
         $fechaHoraInicio=$request['txtFecha']." ".$request['start_date'];
@@ -78,6 +116,9 @@ class PacienteEventRequest extends FormRequest
         $request['choques']='a'; //fuerza a que sea 'a' para no ser integer 1
         }
 
+        /**
+         * REGLA DURACION DE CITAS
+         */
         $horaInicio=Carbon::parse($request['start_date']);
         $horaFin=Carbon::parse($request['end_date']);
         
@@ -128,6 +169,7 @@ class PacienteEventRequest extends FormRequest
                             'RangoStartHora'=> 'integer|between:800,1800',
                             'RangoEndHora'=> 'integer|between:800,1800',
                             'RangoLibre'=>'integer',
+                            'notEqualFree'=>'integer',
                             'choques'=>'integer',
                             'minCita'=>'integer',
                             'maxCita'=>'integer'
@@ -155,6 +197,7 @@ class PacienteEventRequest extends FormRequest
                             'RangoStartHora'=> 'integer|between:800,1500',
                             'RangoEndHora'=> 'integer|between:800,1500',
                             'RangoLibre'=>'integer',
+                            'notEqualFree'=>'integer',
                             'choques'=>'integer',
                             'minCita'=>'integer',
                             'maxCita'=>'integer'
@@ -187,6 +230,7 @@ class PacienteEventRequest extends FormRequest
                         'RangoStartHora'=> 'integer|between:800,1800',
                         'RangoEndHora'=> 'integer|between:800,1800',
                         'RangoLibre'=>'integer',
+                        'notEqualFree'=>'integer',
                         'minCita'=>'integer',
                         'maxCita'=>'integer'
                     ];
@@ -213,6 +257,7 @@ class PacienteEventRequest extends FormRequest
                         'RangoStartHora'=> 'integer|between:800,1500',
                         'RangoEndHora'=> 'integer|between:800,1500',
                         'RangoLibre'=>'integer',
+                        'notEqualFree'=>'integer',
                         'minCita'=>'integer',
                         'maxCita'=>'integer'
  
@@ -241,8 +286,8 @@ class PacienteEventRequest extends FormRequest
         'RangoLibre.integer'=>'No se atiende de 12:00 a 14:00 ',
         'choques.integer'=>'No deben chocar citas con otros pacientes',
         'minCita.integer'=>'Las citas no deben durar menos de 30 minutos',
-        'maxCita.integer'=>'Las citas no deben durar mas de 3 horas'
-
+        'maxCita.integer'=>'Las citas no deben durar mas de 3 horas',
+        'notEqualFree.integer'=>'La cita no puede ser de 12:00 a 14:00',
         ];
         }
         else{
@@ -261,8 +306,8 @@ class PacienteEventRequest extends FormRequest
                 'RangoLibre.integer'=>'No se atiende de 12:00 a 14:00 ',
                 'choques.integer'=>'No deben chocar citas con otros pacientes',
                 'minCita.integer'=>'Las citas no deben durar menos de 30 minutos',
-                'maxCita.integer'=>'Las citas no deben durar mas de 3 horas'
-
+                'maxCita.integer'=>'Las citas no deben durar mas de 3 horas',
+                'notEqualFree.integer'=>'La cita no puede ser de 12:00 a 13:00',
                 ];
         }
 
