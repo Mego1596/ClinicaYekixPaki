@@ -22,7 +22,15 @@ class PacienteEventRequest extends FormRequest
     public function __construct(Request $request)
     {
         $this->requestGeneral=$request;
-        $this->fechaRequest=$request['txtFecha'];   
+        if(strpos($request["txtFecha"], "T")){
+                    $start_date = str_replace("T", " ", $request['txtFecha']);
+                    $str = substr($request['txtFecha'],0,-9);
+                    $this->fechaRequest=$str;
+                    $x = 0;
+                }else{
+                    $this->fechaRequest=$request['txtFecha'];
+                    $x = 1;
+                }
 
         /*request emergentes de ayuda a validaciones especiales*/
         $request['RangoLibre']='1';
@@ -95,6 +103,13 @@ class PacienteEventRequest extends FormRequest
         /*concatena formato concordante a  bd*/
         $fechaHoraInicio=$request['txtFecha']." ".$request['start_date'];
         $fechaHoraFin=$request['txtFecha']." ".$request['end_date'];
+        if($x == 0){
+            $fechaHoraInicio=$str." ".$request['start_date'];
+            $fechaHoraFin=$str." ".$request['end_date'];
+        }elseif ($x == 1) {
+            $fechaHoraInicio= $request['txtFecha']." ".$request['start_date'];
+            $fechaHoraFin= $request['txtFecha']." ".$request['end_date'];
+        }
        /*comparacion por ambos lados de rangos existentes */
         $comparacionInferior= Events::where('start_date','>',$fechaHoraInicio)
         ->where('start_date','<',$fechaHoraFin)->get();
