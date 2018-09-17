@@ -1,5 +1,5 @@
 <div class="row">
-	{{ Form::hidden'receta_id', $id,['class' => 'form-control'])  }}
+	{{ Form::hidden('receta_id', $id,['class' => 'form-control'])  }}
 	<div class="col-md-5">
 		<div class="form-group">
 			{{ Form::label('medicamento', 'Medicamento*') }}
