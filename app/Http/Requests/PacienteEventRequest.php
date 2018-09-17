@@ -16,7 +16,7 @@ class PacienteEventRequest extends FormRequest
      * @return bool
      */
     protected $fechaRequest;
-    protected $duracionMaximaCita=180;
+    protected $duracionMaximaCita=181;
     protected $duracionMinimaCita=29;
     protected $requestGeneral;
     public function __construct(Request $request)
@@ -58,12 +58,24 @@ class PacienteEventRequest extends FormRequest
         $fechaHoraInicio=$request['txtFecha']." ".$request['start_date'];
         $fechaHoraFin=$request['txtFecha']." ".$request['end_date'];
        /*comparacion por ambos lados de rangos existentes */
-        $comparacionInferior= Events::where('start_date','>=',$fechaHoraInicio)->where('start_date','<=',$fechaHoraFin)->get();
-        $comparacionSuperior= Events::where('end_date','>=',$fechaHoraInicio)->where('end_date','<=',$fechaHoraFin)->get();
-       
+        $comparacionInferior= Events::where('start_date','>',$fechaHoraInicio)
+        ->where('start_date','<',$fechaHoraFin)->get();
+        $comparacionSuperior= Events::where('end_date','>',$fechaHoraInicio)
+        ->where('end_date','<',$fechaHoraFin)->get();
+       /*compara limites inferiores dentro de un mismo dia*/ 
+        $comparacionExterior=events::where('start_date','<',$fechaHoraInicio)
+        ->where('end_date','>',$fechaHoraFin)
+        ->where('start_date','>=',$this->fechaRequest.' 00:00:00')
+        ->where('end_date','<=',$this->fechaRequest.' 23:59:59')->get();
+
         /*si existe un elemento en el array lo fuerza*/
         if(count($comparacionInferior)>0||count($comparacionSuperior)>0){
-            $request['choques']='a'; //fuerza a que sea 'a' para no ser integer 1
+           
+            $request['choques']='a';
+        }
+        else if(count($comparacionExterior)>0)
+        {
+        $request['choques']='a'; //fuerza a que sea 'a' para no ser integer 1
         }
 
         $horaInicio=Carbon::parse($request['start_date']);
