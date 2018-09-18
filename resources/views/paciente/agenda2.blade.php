@@ -35,7 +35,11 @@ $(document).ready(function(){
 </li>
 
 <li class="breadcrumb-item">
-  <a class="breadcrumb-item active" ">Citas</a>
+  <a href="/paciente/{{$paciente->id}}/events">Citas</a>
+</li>
+
+<li class="breadcrumb-item">
+  <a class="breadcrumb-item active" ">Cupos</a>
 </li>
 @endsection
 
@@ -92,68 +96,16 @@ $(document).ready(function(){
 <div class="container">
 	<div class="panel panel-primary">
 		<div class="panel-heading">
-			<h3 align="center">Citas:</h3></div>
-              <table>
-          <tr>
-            <td>Revision General o Paciente Referidos con Procedimiento</td>
-            <td>
-              <input type="color" disabled value="#000000">
-            </td>
-          </tr>
-          <tr>
-          @foreach($procesos as $p)
-            @if($p->id%2==0)
-              <td style="text-align: left;">
-                {{$p->nombre}}
-              </td>
-              <td>
-                <input type="color" disabled value="{{$p->color}}">
-              </td>
-              <td>
-                &nbsp;
-              </td>
-              <td>
-                &nbsp;
-              </td>
-              <td>
-                &nbsp;
-              </td>
-              <td>
-                &nbsp;
-              </td>
-            @endif
-          @endforeach
-          </tr>
-          <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            @foreach($procesos as $p)
-              @if($p->id%2!=0)
-                <td>
-                  {{$p->nombre}}
-                </td>
-                <td>
-                  <input type="color" disabled value="{{$p->color}}">
-                </td>
-              <td>
-                &nbsp;
-              </td>
-              <td>
-                &nbsp;
-              </td>
-              <td>
-                &nbsp;
-              </td>
-              <td>
-                &nbsp;
-              </td>
-              @endif
-            @endforeach
-          </tr>
-        </table>
+          <div class="row">
+              <div class="col-md-1">
+                <a href="/paciente/{{$paciente->id}}/events" class="btn btn-block btn-secondary">
+                Atrás</a>
+              </div>
+              <div class="col-md-10">
+                <h3 align="center">Cupos del Dia:</h3>
+              </div>
+          </div>
+      </div>
 			<div class="panel-body">
 				{!! $calendar_details->calendar() !!}
 					</div>
@@ -177,7 +129,7 @@ $(document).ready(function(){
       	<input type="hidden" name="txtFecha" id="txtFecha"/>
         <input type="hidden" name="pacienteID" id="pacienteID" value="{{$paciente->id}}">
         <input type="hidden" name="encendido" id="encendido" value="{{$encendido}}">
-        <a class="btn btn-primary" href="{{route('paciente.agenda2', $paciente->id)}}"> Ver Cupos</a>
+
       	<div class="form-row">	
       		<div class="form-group col-md-12">
       			{!! Form::label('paciente_id', 'Paciente:',['id' => 'tit']) !!}
@@ -231,6 +183,7 @@ $(document).ready(function(){
 		{!! Form::submit('Añadir Cita', ['class' => 'btn btn-success','id' => 'btnAgregar', 'name' => 'btnAgregar']) !!}
 		{!! Form::submit('Modificar Cita', ['class' => 'btn btn-success','id' => 'btnModificar','name' => 'btnModificar']) !!}
 		{!! Form::submit('Borrar', ['class' => 'btn btn-danger ','id' => 'btnEliminar','name' => 'btnEliminar']) !!}
+
         <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
         {!! Form::close() !!}
       </div>

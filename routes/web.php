@@ -97,6 +97,7 @@ Route::middleware(['auth'])->group(function(){
 	Route::get('paciente/edit/{paciente}', 'PacienteController@edit')->name('paciente.edit')->middleware('permission:pacientes.edit');
 
 	Route::get('paciente/{paciente}/events', 'PacienteController@agendar')->name('paciente.agenda');
+	Route::get('paciente/{paciente}/events/cupos', 'PacienteController@agendar2')->name('paciente.agenda2');
 	Route::post('paciente/events', 'PacienteController@addEvent')->name('paciente.add');
 	Route::post('busqueda/','PacienteController@search')->name('paciente.search')->middleware('permission:pacientes.create');
 

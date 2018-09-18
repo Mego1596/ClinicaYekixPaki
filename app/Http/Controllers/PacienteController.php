@@ -498,6 +498,53 @@ class PacienteController extends Controller
 
         return view('paciente.agenda',compact('procedimiento','procesos','calendar_details','paciente','encendido'));
     }
+    
+    public function agendar2(Paciente $paciente)
+    {
+        $loggedUser=Auth::id();
+        $result =  DB::table('users')->join('role_user', 'users.id', '=', 'role_user.user_id')->where('users.id', '=', $loggedUser)->value('role_id');
+        if($result == 1 or $result == 3){
+            $encendido = true;
+        }else{
+            $encendido = false;
+        }
+        $procesos = Procedimiento::get();
+        $procedimiento = Procedimiento::pluck('nombre','id')->toArray();
+        $events = Events::select('id','paciente_id','start_date','end_date','descripcion')->get();
+        $event_list= [];
+        foreach ($events as $key => $event) {
+                $event_list[] =Calendar::event(
+                    "Ocupado",
+                    false,
+                    new \DateTime($event->start_date),
+                    new \DateTime($event->end_date),
+                    $event->id,
+                    [
+                    'descripcion'       => $event->descripcion,
+                    'textColor'         => $event->textcolor,
+                    'durationEditable'  => false,
+                    ]
+                );
+        }
+        
+        
+
+        $calendar_details = Calendar::addEvents($event_list)->setOptions([
+            'firstDay'      => 1,
+            'editable'      => false,
+            'themeSystem'   => 'bootstrap4',
+            'locale'        => 'es',
+            'defaultView' => 'agendaWeek',
+            'header'        => array(
+                        'left' => 'prev,next today', 
+                      'center' => 'title', 
+                       'right' => 'agendaWeek'
+            ),
+
+            ]);
+
+        return view('paciente.agenda2',compact('procedimiento','procesos','calendar_details','paciente','encendido'));
+    }
 
     public function addEvent(PacienteEventRequest $request){
        
