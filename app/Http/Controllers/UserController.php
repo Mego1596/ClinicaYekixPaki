@@ -179,10 +179,36 @@ class UserController extends Controller
      * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function destroy(User $user,$idRole)
     {
         $user->delete();
-        return back()->with('info','Eliminado Correctamente');
+        if($idRole == 'asistente'){
+          $users = DB::table('users')->join('role_user', 'users.id', '=', 'role_user.user_id')->where('role_user.role_id', '=', 3)->select('users.id' , 'users.nombre1','users.nombre2','users.nombre3','users.apellido1','users.apellido2','users.name')->paginate();
+          $result = DB::table('roles')->where('slug','asistente')->select('slug')->get();
+          $datos= json_encode($result);
+          $sub = substr($datos, 10,-3);
+          return redirect()->route('user.asistente')
+            ->with('users', $users)
+            ->with('sub', $sub)
+            ->with('info','Asistente Eliminado con Exito')
+            ->with('tipo', 'success');
+        }else{
+          $users = DB::table('users')->join('role_user', 'users.id', '=', 'role_user.user_id')->where('role_user.role_id', '=', 2)->select('users.id' , 'users.nombre1','users.nombre2','users.nombre3','users.apellido1','users.apellido2','users.numeroJunta','users.name')->paginate();
+          $result = DB::table('roles')->where('slug','asistente')->select('slug')->get();
+          $datos= json_encode($result);
+          $sub = substr($datos, 10,-3);
+          return redirect()->route('user.index')
+            ->with('users', $users)
+            ->with('sub', $sub)
+            ->with('info','Odontologo Eliminado con Exito')
+            ->with('tipo', 'success');
+        }
+       /* return redirect()->route('paciente.index')
+            ->with('pacientes',$pacientes)
+            ->with('head',$head)
+            ->with('user', $user)
+            ->with('info','Paciente Inhabilitado con exito')
+            ->with('tipo', 'success');*/
     }
 
     public function revocarRol( User $user, $idRole){

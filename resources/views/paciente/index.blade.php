@@ -34,7 +34,7 @@
 								<option id="0">Buscar Por...</option>
 								<option id="1">Nombre</option>
 								<option id="2">Apellido</option>
-								<option id="3">Expediente</option>
+								<option id="3" selected>Expediente</option>
 								<option id="4">Nombre de Usuario</option>
 							</select>
 						</div>

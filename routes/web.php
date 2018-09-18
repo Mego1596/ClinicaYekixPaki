@@ -63,9 +63,9 @@ Route::middleware(['auth'])->group(function(){
 
 	Route::put('user/{user}', 'UserController@update')->name('user.update')->middleware('permission:users.edit');
 	
-	Route::get('user/{user}/{idrol}', 'UserController@show')->name('user.show')->middleware('permission:users.show');
+	Route::get('user/show/{user}/{idrol}', 'UserController@show')->name('user.show')->middleware('permission:users.show');
 
-	Route::delete('user/{user}', 'UserController@destroy')->name('user.destroy')->middleware('permission:users.destroy');
+	Route::delete('user/{user}/{idRole}', 'UserController@destroy')->name('user.destroy')->middleware('permission:users.destroy');
 
 	Route::get('user/{user}/edit/{idrol}', 'UserController@edit')->name('user.edit')->middleware('permission:users.edit');
 

@@ -666,8 +666,15 @@ class PacienteController extends Controller
                 }
             }elseif ($request['buscador'] == 'Nombre de Usuario') {
                 if(!is_null($request['buscar'])){
-                    $pacientes = Paciente::paginate();
-                    $user = User::where('name','ILIKE',$request->buscar.'%')->paginate();
+                    $user = User::where('name','ILIKE',$request->buscar.'%')->select('name','id')->paginate();
+                    if(sizeof($user)!=0){
+                        foreach ($user as $key => $value) {
+                            $pacientes = Paciente::where('user_id',$value->id)->paginate();
+                        }
+                    }else{
+                        $pacientes = Paciente::paginate(10);
+                        $user = User::paginate(10); 
+                    }
                     $head = 'Lista de Pacientes';
                     return view('paciente.index', compact("pacientes",'head','user'))
                             ->with('info', 'Busqueda Exitosa');
@@ -678,6 +685,11 @@ class PacienteController extends Controller
                     $head = 'Lista de Pacientes';
                     return view('paciente.index', compact("pacientes",'head','user'));
                 }
+            }else{
+                $pacientes = Paciente::paginate(10);
+                $user = User::paginate(10); 
+                $head = 'Lista de Pacientes';
+                return view('paciente.index', compact("pacientes",'head','user'));
             }
         }else{
              $pacientes = Paciente::paginate(10);

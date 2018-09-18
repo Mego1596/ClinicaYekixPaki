@@ -32,7 +32,7 @@
 										<option id="0">Buscar Por...</option>
 										<option id="1">Nombre</option>
 										<option id="2">Apellido</option>
-										<option id="4">Nombre de Usuario</option>
+										<option id="4" selected>Nombre de Usuario</option>
 									</select>
 								</div>
 								<br/>
@@ -100,7 +100,7 @@
 										<button type="button" class="btn btn-sm btn-default btn btn-danger" data-toggle="modal" data-target="#Modal{{$user->id}}">
 						  					Eliminar
 										</button>
-										{!! Form::open(['route' => ['user.destroy', $user->id],'method' => 'DELETE']) !!}
+										{!! Form::open(['route' => ['user.destroy', $user->id,"asistente"],'method' => 'DELETE']) !!}
 											<!-- Modal -->
 											<div class="modal fade" id="Modal{{$user->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 												<div class="modal-dialog" role="document">
