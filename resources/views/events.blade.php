@@ -104,6 +104,7 @@
       <div class="modal-body">
       	<input type="hidden" name="txtID" id="txtID"/>
       	<input type="hidden" name="txtFecha" id="txtFecha"/>
+        <input type="hidden" name="txtPaciente_id" id="txtPaciente_id">
         <div class="form-group">
           {!! Form::label('txtExpediente', 'Expediente:')!!}
           {!! Form::text('txtExpediente', null, ['class' => 'form-control','disabled'])!!}
@@ -156,7 +157,13 @@
           </div>
         </div>
         @endcan
-
+        @can('pacientes.create')
+        <div class="row">
+          <div class="col-md-4" style="margin-top: 10px">
+        <a class="btn btn-default bg-dark" href="#" style="color: white" name="modificar" id="modificar">Gestionar Cita</a>
+          </div>
+        </div>
+        @endcan
       <div class="modal-footer">
 		{!! Form::submit('Añadir Cita', ['class' => 'btn btn-success','id' => 'btnAgregar', 'name' => 'btnAgregar']) !!}
 		{!! Form::submit('Modificar Cita', ['class' => 'btn btn-success','id' => 'btnModificar','name' => 'btnModificar']) !!}
@@ -183,7 +190,13 @@
           this.setAttribute("href","receta/"+x);
           //this.setAttribute("href","{{route('planTratamiento.index', ['cita' => ''])}}" )
         }
+        document.getElementById("modificar").onclick = function() {
+          var x=parseInt($('#txtPaciente_id').val());
+          this.setAttribute("href","paciente/"+x+"/events");
+          //this.setAttribute("href","{{route('planTratamiento.index', ['cita' => ''])}}" )
+        }
 </script>
+
     {!! $calendar_details->script() !!}
 
 <script type="text/javascript">

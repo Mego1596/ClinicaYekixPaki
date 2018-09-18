@@ -23,15 +23,14 @@ class PacienteEventRequest extends FormRequest
     {
         $this->requestGeneral=$request;
         if(strpos($request["txtFecha"], "T")){
-                    $start_date = str_replace("T", " ", $request['txtFecha']);
-                    $str = substr($request['txtFecha'],0,-9);
-                    $this->fechaRequest=$str;
-                    $x = 0;
-                }else{
-                    $this->fechaRequest=$request['txtFecha'];
-                    $x = 1;
-                }
-
+            $start_date = str_replace("T", " ", $request['txtFecha']);
+            $str = substr($request['txtFecha'],0,-9);
+            $this->fechaRequest=$str;
+            $x = 0;
+        }else{
+            $this->fechaRequest=$request['txtFecha'];
+            $x = 1;
+        }
         /*request emergentes de ayuda a validaciones especiales*/
         $request['RangoLibre']='1';
         $request['RangoStartHora']=Carbon::parse($request['start_date'])->hour."".Carbon::parse($request['start_date'])->format('i');
@@ -61,10 +60,8 @@ class PacienteEventRequest extends FormRequest
          */
         
          /*Horarios de almuerzo del negocio*/
-        $RangoLibreStartA=Carbon::parse($request['start_date'])->hour."".Carbon::parse
-        ($request['start_date'])->format('i');
-        $RangoLibreEndA=Carbon::parse($request['end_date'])->hour."".Carbon::parse
-        ($request['end_date'])->format('i');
+        $RangoLibreStartA=Carbon::parse($request['start_date'])->hour."".Carbon::parse($request['start_date'])->format('i');
+        $RangoLibreEndA=Carbon::parse($request['end_date'])->hour."".Carbon::parse($request['end_date'])->format('i');
 
         /*cuando no es sabado*/
         if(Carbon::parse($this->fechaRequest)->format('l')!='Saturday') //if si es sabado
@@ -116,8 +113,8 @@ class PacienteEventRequest extends FormRequest
         $comparacionSuperior= Events::where('end_date','>',$fechaHoraInicio)
         ->where('end_date','<',$fechaHoraFin)->get();
        /*compara limites inferiores dentro de un mismo dia*/ 
-        $comparacionExterior=events::where('start_date','<',$fechaHoraInicio)
-        ->where('end_date','>',$fechaHoraFin)
+        $comparacionExterior=Events::where('start_date','<=',$fechaHoraInicio)
+        ->where('end_date','>=',$fechaHoraFin)
         ->where('start_date','>=',$this->fechaRequest.' 00:00:00')
         ->where('end_date','<=',$this->fechaRequest.' 23:59:59')->get();
 

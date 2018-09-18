@@ -42,6 +42,7 @@ class EventsController extends Controller
                     'textColor'         => $event->textcolor,
                     'durationEditable'  => false,
                     'expediente'        => $paciente->expediente,
+                    'paciente'          => $paciente->id,
                     ]
                 );
             }else{
@@ -59,6 +60,7 @@ class EventsController extends Controller
                     'textColor'         => $event->textcolor,
                     'durationEditable'  => false,
                     'expediente'        => $paciente->expediente,
+                    'paciente'          => $paciente->id,
                     ]
                 );
             }
@@ -86,6 +88,7 @@ class EventsController extends Controller
 				 	$("#txtTitulo").val(calEvent.title);
 				 	$("#txtTitulo").prop("disabled",true);
 				 	$("#txtID").val(calEvent.id);
+                    $("#txtPaciente_id").val(calEvent.paciente);
 				 	$("#txtColor").val(calEvent.color);
                     $("#txtExpediente").val(calEvent.expediente);
 				 	FechaHora= calEvent.start._i.split("T");
