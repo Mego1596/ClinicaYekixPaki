@@ -177,7 +177,7 @@ $(document).ready(function(){
       	<input type="hidden" name="txtFecha" id="txtFecha"/>
         <input type="hidden" name="pacienteID" id="pacienteID" value="{{$paciente->id}}">
         <input type="hidden" name="encendido" id="encendido" value="{{$encendido}}">
-        <a class="btn btn-primary" href="{{route('paciente.agenda2', $paciente->id)}}"> Ver Cupos</a>
+        <a class="btn btn-primary" href="{{route('paciente.agenda2', $paciente->id)}}" target="_blank"> Ver Cupos</a>
       	<div class="form-row">	
       		<div class="form-group col-md-12">
       			{!! Form::label('paciente_id', 'Paciente:',['id' => 'tit']) !!}
