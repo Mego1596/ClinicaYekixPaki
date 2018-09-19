@@ -72,6 +72,10 @@ $(document).ready(function(){
       <div class="alert alert-warning">
        {{$errors->first('notEqualFree')}}
       </div>
+      @elseif($errors->has('horasFijas'))
+      <div class="alert alert-warning">
+       {{$errors->first('horasFijas')}}
+      </div>
       @elseif($errors->has('choques'))
       <div class="alert alert-warning">
        {{$errors->first('choques')}}
@@ -83,6 +87,10 @@ $(document).ready(function(){
       @elseif($errors->has('maxCita'))
       <div class="alert alert-warning">
        {{$errors->first('maxCita')}}
+      </div>
+      @elseif($errors->has('notRangoFree'))
+      <div class="alert alert-warning">
+       {{$errors->first('notRangoFree')}}
       </div>
       @endif
     </div>

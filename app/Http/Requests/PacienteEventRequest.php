@@ -39,7 +39,10 @@ class PacienteEventRequest extends FormRequest
         $request['minCita']='1';
         $request['maxCita']='1';
         $request['notEqualFree']='1';
+        $request['horasFijas']='1';
+        $request['notRangoFree']='1';
 
+        
         /***
          * REGLA FUERA DE HORAS DE NEGOCIO
          * 
@@ -53,7 +56,7 @@ class PacienteEventRequest extends FormRequest
         if($request['RangoEndHora'][0]=='0'){
             $request['RangoEndHora']='2300';
         }
-
+        
 
         /**
          * REGLA HORAS DE ALMUERZO
@@ -69,17 +72,23 @@ class PacienteEventRequest extends FormRequest
         if(($RangoLibreEndA > 1200 && $RangoLibreEndA < 1400) ||
          ($RangoLibreStartA > 1200 && $RangoLibreStartA < 1400))
                 {
-            $request['RangoLibre']='a';//importante determina a-> para dar escapa a integer
+                $request['RangoLibre']='a';//importante determina a-> para dar escapa a integer
+                }
+                else if($RangoLibreStartA<=1200&&$RangoLibreEndA>=1400){
+                $request['notRangoFree']='a';    
                 }
             }
-            else  
-            {
-            if(($RangoLibreEndA > 1200 && $RangoLibreEndA < 1300) ||
-            ($RangoLibreStartA > 1200 && $RangoLibreStartA < 1300))
+            else
+            { 
+             if(($RangoLibreEndA > 1200 && $RangoLibreEndA < 1300) ||
+                ($RangoLibreStartA > 1200 && $RangoLibreStartA < 1300))
                 {
                $request['RangoLibre']='a';//importante determina a-> para dar escapa a integer
                 }
-            }   
+                else if($RangoLibreStartA<=1200&&$RangoLibreEndA>=1300){
+                $request['notRangoFree']='a';
+                }
+            } 
         /**
          * REGLA NO CITAS A LA HORA 12:00 - 14:00  && 12:00 - 13:00
          */
@@ -141,6 +150,13 @@ class PacienteEventRequest extends FormRequest
         else if($horaInicio->diffInMinutes($horaFin)>= $this->duracionMaximaCita){
             $request['maxCita']='a';            
         }
+        $horaInicio=$horaInicio->format('i');
+        $horaFin=$horaFin->format('i');
+
+        if(($horaInicio!='00'&&$horaInicio!='30')||($horaFin!='00'&&$horaFin!='30')){
+            $request['horasFijas']='a';
+
+        }
         //dd($request);
     }
     public function authorize()
@@ -184,7 +200,9 @@ class PacienteEventRequest extends FormRequest
                             'notEqualFree'=>'integer',
                             'choques'=>'integer',
                             'minCita'=>'integer',
-                            'maxCita'=>'integer'
+                            'maxCita'=>'integer',
+                            'horasFijas'=>'integer',
+                            'notRangoFree'=>'integer'
                         ];
                 }//si es lunes-viernes, domingo
                 else{
@@ -212,7 +230,9 @@ class PacienteEventRequest extends FormRequest
                             'notEqualFree'=>'integer',
                             'choques'=>'integer',
                             'minCita'=>'integer',
-                            'maxCita'=>'integer'
+                            'maxCita'=>'integer',
+                            'horasFijas'=>'integer',
+                            'notRangoFree'=>'integer'
                         ];
                 }//fin por si es sabado
         }
@@ -244,7 +264,9 @@ class PacienteEventRequest extends FormRequest
                         'RangoLibre'=>'integer',
                         'notEqualFree'=>'integer',
                         'minCita'=>'integer',
-                        'maxCita'=>'integer'
+                        'maxCita'=>'integer',
+                        'horasFijas'=>'integer',
+                        'notRangoFree'=>'integer'
                     ];
             }//si es lunes-viernes, domingo
             else{
@@ -271,7 +293,9 @@ class PacienteEventRequest extends FormRequest
                         'RangoLibre'=>'integer',
                         'notEqualFree'=>'integer',
                         'minCita'=>'integer',
-                        'maxCita'=>'integer'
+                        'maxCita'=>'integer',
+                        'horasFijas'=>'integer',
+                        'notRangoFree'=>'integer'
  
                     ];
             }//fin por si es sabado
@@ -300,6 +324,8 @@ class PacienteEventRequest extends FormRequest
         'minCita.integer'=>'Las citas no deben durar menos de 30 minutos',
         'maxCita.integer'=>'Las citas no deben durar mas de 3 horas',
         'notEqualFree.integer'=>'La cita no puede ser de 12:00 a 14:00',
+        'horasFijas.integer'=>'Citas deben ser puntuales horas y fracciones de media hora',
+        'notRangoFree.integer'=>'No se puede agendar horas que esten dentro del rango de 12:00 a 14:00'
         ];
         }
         else{
@@ -320,6 +346,8 @@ class PacienteEventRequest extends FormRequest
                 'minCita.integer'=>'Las citas no deben durar menos de 30 minutos',
                 'maxCita.integer'=>'Las citas no deben durar mas de 3 horas',
                 'notEqualFree.integer'=>'La cita no puede ser de 12:00 a 13:00',
+                'horasFijas.integer'=>'Citas deben ser puntuales horas y fracciones de media hora',
+                'notRangoFree.integer'=>'No se puede agendar horas que esten dentro del rango de 12:00 a 13:00'
                 ];
         }
 
