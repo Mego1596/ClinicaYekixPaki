@@ -37,7 +37,6 @@
 								<option id="4">Nombre de Usuario</option>
 							</select>
 				        <br/>
-				    {!! Form::close() !!}
 				    </div>
 				    <div style="margin-left:-35px"> 
 				    	<div class="input-group">
@@ -49,6 +48,7 @@
 				          		</div>
 						</div>
 				    </div>
+				    {!! Form::close() !!}
 				    <div style="margin-left: 20px"> 
 				        <a class="btn btn-primary" href="{{route('paciente.index')}}">Ver Lista Completa</a>
 				    </div>
