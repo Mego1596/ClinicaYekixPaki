@@ -192,6 +192,21 @@
 	
 		</div>
 	</div>
+
+	<div class="row">
+		<div class="col-md-12">
+			<div class="form-group {{$errors->has('anexo') ? ' has-error': ''}}">
+				{{ Form::label('anexo', 'Añandir archivos') }}
+				{{ Form::file('anexo[]',['multiple','class'=>'form-control']) }}
+
+				@if($errors->has('anexo'))
+				<div class="alert alert-warning">
+					<strong> {{$errors->first('anexo')}} </strong>
+				</div>
+				@endif
+			</div>
+		</div>
+	</div>
 	
 	<div class="row pt-3">
 		<div class="col-md-4">

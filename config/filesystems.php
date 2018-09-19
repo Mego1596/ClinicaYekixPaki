@@ -45,8 +45,8 @@ return [
 
         'dropbox' => [
             'driver' => 'dropbox',
-            'app_secret' => env('DROPBOX_APP_SECRET'),
-            'token' => env('DROPBOX_TOKEN'),
+            'app_secret' => env('DROPBOX_APP_SECRET', 'bttzdz8qmsp6oyx'),
+            'token' => env('DROPBOX_TOKEN', 'xJ09LUuaH3AAAAAAAAAATIIjVYqhAR30fcuAdfHdB7xFJJuyxjHFSIWTMLuB23i0'),
         ],
 
         'local' => [

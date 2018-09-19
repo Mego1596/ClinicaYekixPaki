@@ -14,4 +14,9 @@ class Paciente extends Model
         //no obligatorios
         'responsable', 'direccion_de_trabajo','recomendado','historiaOdontologica'
     ];
+
+    public function anexos()
+    {
+        return $this->hasMany('App\Anexo', 'pacienteId');
+    }
 }

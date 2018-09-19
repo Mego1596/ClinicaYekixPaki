@@ -131,6 +131,13 @@
 						@endcan
 						</div>
 						<div class="row pt-3">
+								@foreach ($paciente->anexos as $anexo)
+							<div class="col-md-12">									
+									<a class="btn btn-outline-secondary" href="{{ route('file.download', $anexo->ruta) }}"> <i class="fa fa-file-text"></i> {{$anexo->nombreOriginal}}</a>									
+							</div>
+							@endforeach
+						</div>
+						<div class="row pt-3">
 						@can('pacientes.citas')
 							<div class="col-md-3 col-sm-12">
 							<a href="{{ route('paciente.agenda', $paciente->id) }}" class="btn btn-block btn-primary bg-primary" role="button">Calendario</a>	

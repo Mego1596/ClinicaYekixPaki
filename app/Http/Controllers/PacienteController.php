@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use App\Anexo;
 use App\Procedimiento;
 use App\Events;
 use App\Paciente;
@@ -253,14 +254,14 @@ class PacienteController extends Controller
             if(!is_null($user))
                 $user->apellido2 = $request->apellido2;
 
-         if(is_null($valores['recomendado']))
+         /*if(is_null($valores['recomendado']))
             $request['recomendado'] = "-";
-        else
+        else*/
             $request['recomendado'] = $request->recomendado;
 
-         if(is_null($valores['historiaOdontologica']))
+         /*if(is_null($valores['historiaOdontologica']))
             $request['historiaOdontologica'] = "-";
-        else
+        else*/
             $request['historiaOdontologica'] = $request->historiaOdontologica;
         
         if(is_null($user)){
@@ -297,6 +298,38 @@ class PacienteController extends Controller
             }
         }
         $paciente->update($request->all());
+
+        // ¿Existen archivos a anexar al paciente?
+        if($request->anexo) {
+            $files = $request->file('anexo');
+            $contador = 0;
+            $noGuardados = array();
+            foreach ($files as $file) {
+                $filename = $file->getClientOriginalName();
+                $generado = str_random(25) . '.' . $file->getClientOriginalExtension();
+                $guardado = \Storage::disk('dropbox')->put($generado,  \File::get($file));
+
+                if ($guardado) {
+                    $anexo = new Anexo();
+                    $anexo->nombreOriginal = $filename;
+                    $anexo->ruta = $generado;
+                    $anexo->pacienteId = $paciente->id;
+                    $anexo->save();
+                    $contador++;
+                } else {
+                    array_push($noGuardados, $file->getClientOriginalName());
+                }
+
+            }
+
+            if (sizeof($files) != $contador) {
+                return redirect()
+                    ->route('paciente.edit',$paciente->id)
+                    ->with('error', 'No se pudieron guardar los siguientes archivos: '. implode(",", $noGuardados))
+                    ->with('tipo', 'danger');
+            }
+        }
+
         return redirect()->route('paciente.index')
             ->with('info','Paciente actualizado con exito')
             ->with('tipo', 'success');
@@ -699,14 +732,4 @@ class PacienteController extends Controller
 
         }
     }
-
-    public function anexos(Request $request){
-        $files = $request->file('anexo');
-        foreach ($files as $file) {
-            $filename = $file->getClientOriginalName();
-            $generado = str_random(25) . '.' . $file->getClientOriginalExtension();
-            \Storage::disk('dropbox')->put($generado,  \File::get($file));
-        }
-    }
-
 }
