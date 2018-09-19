@@ -412,6 +412,11 @@ class PacienteController extends Controller
                     }else{
                            $("#start_date").val(horaInicio);
                     }
+                    /*
+                    $(document).ready(function(){
+                        document.getElementById("cupos").click();
+                    });
+                    */
                     $("#exampleModal").modal();
                 }
             }',
