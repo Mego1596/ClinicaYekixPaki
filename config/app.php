@@ -162,6 +162,8 @@ return [
         MaddHatter\LaravelFullcalendar\ServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
+
+        BC\Laravel\DropboxDriver\ServiceProvider::class,
         
     ],
 

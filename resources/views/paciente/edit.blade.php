@@ -72,9 +72,10 @@ window.onload = function() {
 						</div>
 					</div>
 					<div class="card-body">
-						{!! Form::model($paciente, ['route' => ['paciente.update', $paciente->id], 'method' => 'PUT','autocomplete'=> 'off']) !!}
+						{!! Form::model($paciente, ['route' => ['paciente.update', $paciente->id], 'method' => 'PUT','autocomplete'=> 'off', 'enctype' => 'multipart/form-data']) !!}
 							@include('paciente.partials.formEdit')
 						{!! Form::close() !!}
+
 					</div>
 				</div>
 			</div>

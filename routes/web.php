@@ -82,6 +82,10 @@ Route::middleware(['auth'])->group(function(){
 	Route::post('events', 'EventsController@addEvent')->name('events.add');
 
 	//Pacientes
+	Route::get('file/{file}/download', function ($file) {
+        return \Storage::disk('dropbox')->download($file);
+    })->name('file.download');
+
 	Route::post('paciente/store', 'PacienteController@store')->name('paciente.store')->middleware('permission:pacientes.create');
 
 	Route::get('paciente', 'PacienteController@index')->name('paciente.index')->middleware('permission:pacientes.index');
