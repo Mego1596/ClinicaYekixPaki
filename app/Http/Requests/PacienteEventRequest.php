@@ -178,7 +178,7 @@ class PacienteEventRequest extends FormRequest
         
                         return [
                             'pacienteID'        => 'required',
-                            'txtFecha'=>'after:today',
+                            'txtFecha'=>'after_or_equal:today',
                             'start_date'        => [
                                 'required',
                                 //'date_format:H:i',
@@ -208,7 +208,7 @@ class PacienteEventRequest extends FormRequest
                 else{
                         return [
                             'pacienteID'        => 'required',
-                            'txtFecha'=>'after:today',
+                            'txtFecha'=>'after_or_equal:today',
                             'start_date'        => [
                                 'required',
                                 //'date_format:H:i',
@@ -243,7 +243,7 @@ class PacienteEventRequest extends FormRequest
 
                     return [
                         'pacienteID'        => 'required',
-                        'txtFecha'=>'after:today',
+                        'txtFecha'=>'after_or_equal:today',
                         'start_date'        => [
                             'required',
                             //'date_format:H:i',
@@ -272,7 +272,7 @@ class PacienteEventRequest extends FormRequest
             else{
                     return [
                         'pacienteID'        => 'required',
-                        'txtFecha'=>'after:today',
+                        'txtFecha'=>'after_or_equal:today',
                         'start_date'        => [
                             'required',
                             //'date_format:H:i',

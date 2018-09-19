@@ -22,7 +22,7 @@
           </div>
         <table>
           <tr>
-            <td>Revision General o Paciente Referidos con Procedimiento</td>
+            <td>Revision General</td>
             <td>
               <input type="color" disabled value="#000000">
             </td>
@@ -113,7 +113,6 @@
       		<div class="form-group col-md-12">
       			{!! Form::label('paciente_id', 'Paciente:',['id' => 'tit']) !!}
       			{!! Form::text('paciente_id', null, ['class' => 'form-control', 'placeholder' => 'Titulo del Evento', 'id' => 'txtTitulo']) !!}
-      			{!! $errors->first('paciente_id','<p class="alert alert-danger">El titulo de la cita es requerido</p>') !!}
       		</div>
       	</div>
         <div class="form-group">
@@ -158,16 +157,17 @@
         </div>
         @endcan
         @can('pacientes.create')
-        <div class="row">
-          <div class="col-md-4" style="margin-top: 10px">
-        <a class="btn btn-default bg-dark" href="#" style="color: white" name="modificar" id="modificar">Gestionar Cita</a>
+          <div class="row">
+            <div class="col-md-4" style="margin-top: 10px">
+              <a class="btn btn-default bg-dark" href="#" style="color: white" name="modificar" id="modificar">Gestionar Cita</a>
+            </div>
           </div>
-        </div>
         @endcan
       <div class="modal-footer">
 		{!! Form::submit('Añadir Cita', ['class' => 'btn btn-success','id' => 'btnAgregar', 'name' => 'btnAgregar']) !!}
 		{!! Form::submit('Modificar Cita', ['class' => 'btn btn-success','id' => 'btnModificar','name' => 'btnModificar']) !!}
 		{!! Form::submit('Borrar', ['class' => 'btn btn-danger ','id' => 'btnEliminar','name' => 'btnEliminar']) !!}
+    {!! Form::submit('Asignar', ['class' => 'btn btn-info','id'=> 'btnAsignar', 'name'=>'btnAsignar']) !!}
         <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
         {!! Form::close() !!}
       </div>

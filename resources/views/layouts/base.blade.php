@@ -60,7 +60,7 @@
           @else
           @can('pacientes.trabajo')
             <li class="nav-item">
-              <a class="nav-link" id="nav-citas" href="{{route('events.index')}}">Citas</a>
+              <a class="nav-link" id="nav-citas" href="{{route('events.index')}}">Agenda</a>
             </li>
           @endcan
           @can('procedimientos.index')

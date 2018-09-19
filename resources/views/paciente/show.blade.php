@@ -30,6 +30,21 @@
 					<div class="card-body">
 						{!! Form::model($paciente, ['route' => ['paciente.update', $paciente->id]]) !!}
 						<div class="row pt-3">
+						@can('pacientes.citas')
+							<div class="col-md-3 col-sm-12">
+							<a href="{{ route('paciente.agenda', $paciente->id) }}" class="btn btn-block btn-primary bg-primary" role="button">Citas</a>	
+							</div>
+						@endcan
+							<div class="col-md-5 col-sm-12">
+							@can('admin.crearHistoria')
+							<!-- Button trigger modal -->
+							<button type="button" class="btn btn-block btn-success" data-toggle="modal" data-target="#Modal2">
+							  Anexar Historia Medica
+							</button>
+							@endcan	
+							</div>
+						</div>
+						<div class="row pt-3">
 							<div class="col-md-4">
 								{{ Form::label('created_at', 'Fecha:') }}
 								{{ Form::datetime('created_at', $nuevaFecha, ['class' => 'form-control','disabled'])}}
@@ -136,21 +151,6 @@
 									<a class="btn btn-outline-secondary" href="{{ route('file.download', $anexo->ruta) }}"> <i class="fa fa-file-text"></i> {{$anexo->nombreOriginal}}</a>									
 							</div>
 							@endforeach
-						</div>
-						<div class="row pt-3">
-						@can('pacientes.citas')
-							<div class="col-md-3 col-sm-12">
-							<a href="{{ route('paciente.agenda', $paciente->id) }}" class="btn btn-block btn-primary bg-primary" role="button">Calendario</a>	
-							</div>
-						@endcan
-							<div class="col-md-5 col-sm-12">
-							@can('admin.crearHistoria')
-							<!-- Button trigger modal -->
-							<button type="button" class="btn btn-block btn-success" data-toggle="modal" data-target="#Modal2">
-							  Crear Historia Medica
-							</button>
-							@endcan	
-							</div>
 						</div>
 					{!! Form::close() !!}
 					</div>

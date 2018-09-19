@@ -89,6 +89,15 @@ class EventsController extends Controller
 				 	$("#txtTitulo").prop("disabled",true);
 				 	$("#txtID").val(calEvent.id);
                     $("#txtPaciente_id").val(calEvent.paciente);
+                    if(calEvent.paciente == 1){
+                        $("#plan").hide();
+                        $("#receta").hide();
+                        $("#modificar").hide();
+                    }else{
+                        $("#plan").show();
+                        $("#receta").show();
+                        $("#modificar").show();
+                    }
 				 	$("#txtColor").val(calEvent.color);
                     $("#txtExpediente").val(calEvent.expediente);
 				 	FechaHora= calEvent.start._i.split("T");
@@ -116,9 +125,19 @@ class EventsController extends Controller
     		'end_date' 			=> 'required',
     	]);
 
+
     	if($validator->fails()){
+            /*
     		\Session::flash('warnning', 'Porfavor ingrese datos validos');
-    		return Redirect::to('/events')->withInput()->withErrors($validator);
+    		return Redirect::to('/events')->withInput()->withErrors($validator);*/
     	}
+
+        if(isset($_POST['btnAsignar'])){
+            $event = Events::find($request["txtID"]);
+            $pacienteNuevo = Paciente::select('id')->max('id');
+            $event->paciente_id = $pacienteNuevo;
+            $event->save();
+        }
+            return Redirect::to('/events');
     }
 }
