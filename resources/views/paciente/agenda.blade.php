@@ -100,68 +100,62 @@ $(document).ready(function(){
 <div class="container">
 	<div class="panel panel-primary">
 		<div class="panel-heading">
-			<h3 align="center">Citas:</h3></div>
-              <table>
-          <tr>
-            <td>Revision General o Paciente Referidos con Procedimiento</td>
-            <td>
-              <input type="color" disabled value="#000000">
-            </td>
-          </tr>
-          <tr>
-          @foreach($procesos as $p)
-            @if($p->id%2==0)
-              <td style="text-align: left;">
-                {{$p->nombre}}
-              </td>
-              <td>
-                <input type="color" disabled value="{{$p->color}}">
-              </td>
-              <td>
-                &nbsp;
-              </td>
-              <td>
-                &nbsp;
-              </td>
-              <td>
-                &nbsp;
-              </td>
-              <td>
-                &nbsp;
-              </td>
-            @endif
-          @endforeach
-          </tr>
-          <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            @foreach($procesos as $p)
-              @if($p->id%2!=0)
-                <td>
-                  {{$p->nombre}}
-                </td>
-                <td>
-                  <input type="color" disabled value="{{$p->color}}">
-                </td>
-              <td>
-                &nbsp;
-              </td>
-              <td>
-                &nbsp;
-              </td>
-              <td>
-                &nbsp;
-              </td>
-              <td>
-                &nbsp;
-              </td>
-              @endif
-            @endforeach
-          </tr>
-        </table>
+          <div class="row">
+              <div class="col-md-1">
+                <a href="/paciente/{{$paciente->id}}" class="btn btn-block btn-secondary">
+                Atrás</a>
+              </div>
+              <div class="col-md-10">
+                <h3 align="center">Citas:</h3>
+              </div>
+          </div>
+        <div class="row">
+          <div class="col-md-3">
+            <button type="button" class="btn btn-block btn-primary" data-toggle="modal" data-target="#ModalX">
+                  Leyenda de Procedimientos
+              </button>
+              <br />
+            {!! Form::open() !!}
+            <!-- Modal -->
+            <div class="modal fade" id="ModalX" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Identificador de Procedimientos</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                          </button>
+                      </div>
+                      <div class="modal-body" style="overflow-y: auto; max-height: calc(70vh - 150px);">
+                        <div class="row">
+                          <table align="center">
+                            <tr>
+                              <td style="text-align: left; background: black;color: white" width="200px">
+                              Revision General
+                              </td>
+                            </tr>
+                            <tr>
+                              <td style="color: white">.</td>
+                            </tr>
+                            @foreach($procesos as $p)
+                            <tr>
+                                <td style="text-align: left; background: {{$p->color}};color: white" width="200px">
+                                  {{$p->nombre}}
+                                </td>
+                            </tr>
+                            <tr>
+                              <td style="color: white">.</td>
+                            </tr>
+                            @endforeach
+                          </table>
+                        </div>
+                      </div>
+                  </div>
+              </div>
+            </div>
+            {!! Form::close() !!}
+          </div>
+      </div>
 			<div class="panel-body">
 				{!! $calendar_details->calendar() !!}
 					</div>
