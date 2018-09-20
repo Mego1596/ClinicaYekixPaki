@@ -9,6 +9,7 @@ use App\DetalleReceta;
 use Illuminate\Http\Request;
 use PDF;
 use Carbon\Carbon;
+use App\Http\Requests\RecetaRequest;
 class RecetasController extends Controller
 {
     /**
@@ -43,7 +44,7 @@ class RecetasController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(RecetaRequest $request)
     {
         $receta = new Recetas();
         $receta->events_id = $request->events_id;
@@ -94,7 +95,7 @@ class RecetasController extends Controller
      * @param  \App\Recetas  $recetas
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(RecetaRequest $request)
     {
         $receta = Recetas::find($request->id);
         $receta->peso = $request->peso;

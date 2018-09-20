@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\DetalleReceta;
 use Illuminate\Http\Request;
+use App\Http\Requests\DetalleRecetaRequest;
 
 class DetalleRecetaController extends Controller
 {
@@ -34,7 +35,7 @@ class DetalleRecetaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(DetalleRecetaRequest $request)
     {
         $detalle = new DetalleReceta();
         $detalle->medicamento = $request->medicamento;
@@ -76,7 +77,7 @@ class DetalleRecetaController extends Controller
      * @param  \App\DetalleReceta  $detalleReceta
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, DetalleReceta $detalle)
+    public function update(DetalleRecetaRequest $request, DetalleReceta $detalle)
     {
         $detalle->medicamento = $request->medicamento;
         $detalle->dosis = $request->dosis;

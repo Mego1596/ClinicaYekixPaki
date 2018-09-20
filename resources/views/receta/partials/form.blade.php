@@ -11,7 +11,13 @@
 	<div class="col-md-2">
 		<div class="form-group">
 			{{ Form::label('peso', 'Peso (lbs) *') }}
-			{{ Form::number('peso', null, ['class' => 'form-control', 'step' => '0.10'])}}
+			{{ Form::number('peso', null, ['class' => 'form-control', 'step' => '0.10', 'min'=>'0','max'=>'600','required'])}}
+	
+			@if($errors->has('peso'))
+			<div class="alert alert-warning">
+				<strong> {{$errors->first('peso')}}</strong>
+			</div>		
+			@endif
 		</div>
 	</div>
 </div>
