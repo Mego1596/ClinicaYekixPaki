@@ -94,13 +94,13 @@ Route::middleware(['auth'])->group(function(){
 
 	Route::put('paciente/{paciente}', 'PacienteController@update')->name('paciente.update')->middleware('permission:pacientes.edit');
 
-	Route::get('paciente/{paciente}', 'PacienteController@show')->name('paciente.show')->middleware('permission:pacientes.show');
+	Route::get('paciente/{paciente}', 'PacienteController@show')->name('paciente.show')->middleware('permission:pacientes.show')->middleware('pacientes');
 
 	Route::delete('paciente/{paciente}', 'PacienteController@destroy')->name('paciente.destroy')->middleware('permission:pacientes.destroy');
 
 	Route::get('paciente/edit/{paciente}', 'PacienteController@edit')->name('paciente.edit')->middleware('permission:pacientes.edit');
 
-	Route::get('paciente/{paciente}/events', 'PacienteController@agendar')->name('paciente.agenda');
+	Route::get('paciente/{paciente}/events', 'PacienteController@agendar')->name('paciente.agenda')->middleware('pacientes');
 	Route::get('paciente/{paciente}/events/cupos', 'PacienteController@agendar2')->name('paciente.agenda2');
 	Route::post('paciente/events', 'PacienteController@addEvent')->name('paciente.add');
 	Route::post('busqueda/','PacienteController@search')->name('paciente.search')->middleware('permission:pacientes.create');
