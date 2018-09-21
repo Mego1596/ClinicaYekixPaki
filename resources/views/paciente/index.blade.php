@@ -141,17 +141,29 @@
 													<td>{{$paciente->nombre1." ".$paciente->nombre2." ".$paciente->nombre3." ".$paciente->apellido1." ".$paciente->apellido2}}</td>
 													<td>{{$paciente->expediente}}</td>
 													<td>Sin Usuario</td>
+													@if($paciente->id == 1)
+													<td width="10px" colspan="3">
+														@can('pacientes.show')
+															<a href="{{ route('paciente.show', $paciente->id) }}" class="btn btn-sm btn-default bg-info" style="color: white;width: 100%"><i class="fa fa-folder-open-o"></i> Expediente
+															</a>
+														@endcan
+													</td>
+													@else
 													<td width="10px">
 														@can('pacientes.show')
 															<a href="{{ route('paciente.show', $paciente->id) }}" class="btn btn-sm btn-default bg-info" style="color: white"><i class="fa fa-folder-open-o"></i> Expediente
 															</a>
 														@endcan
 													</td>
+													@endif
+													@if($paciente->id != 1)
 													<td width="10px">
 														@can('pacientes.edit')
 															<a href="{{ route('paciente.edit', $paciente->id) }}" class="btn btn-sm  btn-default bg-success" style="color: white"><i class="fa fa-edit"></i> Editar</a>
 														@endcan
 													</td>
+													@endif
+													@if($paciente->id != 1)
 													<td width="10px">
 														@can('users.destroy')
 															<button type="button" class="btn btn-sm btn-default btn btn-warning" data-toggle="modal" data-target="#Modal{{$paciente->id}}">
@@ -184,6 +196,7 @@
 															{!! Form::close() !!}
 														@endcan
 													</td>
+													@endif
 												</tr>
 											@endif
 										@else
