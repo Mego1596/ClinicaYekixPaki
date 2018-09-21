@@ -174,7 +174,7 @@ $(document).ready(function(){
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
+      <div class="modal-body"  style="overflow-y: auto; max-height: calc(100vh - 150px);">
       	<input type="hidden" name="txtID" id="txtID"/>
       	<input type="hidden" name="txtFecha" id="txtFecha"/>
         <input type="hidden" name="pacienteID" id="pacienteID" value="{{$paciente->id}}">

@@ -25,12 +25,12 @@
 					<div class="row">
 						<div class="col-md-1">
 						@if($idRole == 'doctor')
-							<a href="{{ route('user.index') }}" class="btn btn-block btn-secondary">
-							Atrás</a>
+							<a href="{{ route('user.index') }}" class="btn btn-block btn-secondary" style="width: 130%">
+							<i class="fa fa-arrow-circle-left"></i> Atrás</a>
 						@endif
 						@if($idRole == 'asistente')
-							<a href="{{ route('user.asistente') }}" class="btn btn-block btn-secondary">
-							Atrás</a>
+							<a href="{{ route('user.asistente') }}" class="btn btn-block btn-secondary" style="width: 130%">
+							<i class="fa fa-arrow-circle-left"></i> Atrás</a>
 						@endif
 						</div>
 						<div class="col-md-10">

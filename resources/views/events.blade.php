@@ -13,8 +13,8 @@
 		<div class="panel-heading">
           <div class="row">
               <div class="col-md-1">
-                <a href="/home" class="btn btn-block btn-secondary">
-                Atrás</a>
+                <a href="/home" class="btn btn-block btn-secondary" style="width: 130%">
+                <i class="fa fa-arrow-circle-left"></i>Atrás</a>
               </div>
               <div class="col-md-10">
                 <h3 align="center">Citas:</h3>
@@ -23,7 +23,7 @@
           <div class="row">
           <div class="col-md-3">
             <button type="button" class="btn btn-block btn-primary" data-toggle="modal" data-target="#ModalX">
-                  Leyenda de Procedimientos
+                <i class="fa fa-list"></i>  Leyenda de Procedimientos
               </button>
             {!! Form::open() !!}
             <!-- Modal -->
@@ -85,7 +85,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
+      <div class="modal-body"  style="overflow-y: auto; max-height: calc(100vh - 150px);">
       	<input type="hidden" name="txtID" id="txtID"/>
       	<input type="hidden" name="txtFecha" id="txtFecha"/>
         <input type="hidden" name="txtPaciente_id" id="txtPaciente_id">
@@ -129,21 +129,23 @@
         @can('planTratamientos.index')
         <div class="row">
           <div class="col-md-4">
-              <a class="btn btn-info" href="#" name="plan" id="plan">Gestionar Plan de Tratamiento</a>
+              <a class="btn btn-info" href="#" name="plan" id="plan">
+              <i class="fa fa-list-alt"></i> Gestionar Plan de Tratamiento</a>
           </div>
         </div>
         @endcan
         @can('recetas.index')
         <div class="row">
           <div class="col-md-4" style="margin-top: 10px">
-              <a class="btn btn-info" href="#" name="receta" id="receta">Gestionar Receta</a>
+              <a class="btn btn-info" href="#" name="receta" id="receta">
+              <i class="fa fa-file-text-o"></i> Gestionar Receta</a>
           </div>
         </div>
         @endcan
         @can('pacientes.create')
           <div class="row">
             <div class="col-md-4" style="margin-top: 10px">
-              <a class="btn btn-default bg-dark" href="#" style="color: white" name="modificar" id="modificar">Gestionar Cita</a>
+              <a class="btn btn-info" href="#" style="color: white" name="modificar" id="modificar"><i class="fa fa-address-card-o"></i> Gestionar Cita</a>
             </div>
           </div>
         @endcan

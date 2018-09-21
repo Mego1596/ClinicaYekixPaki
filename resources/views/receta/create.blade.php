@@ -19,8 +19,8 @@
 					<div class="card-header text-center">
 						<div class="row">
 							<div class="col-md-1">
-								<a href="{{ route('receta.index',['cita' => $id ]) }}" class="btn btn-block btn-secondary">
-								Atrás</a>
+								<a href="{{ route('receta.index',['cita' => $id ]) }}" class="btn btn-block btn-secondary" style="width: 130%">
+								<li class="fa fa-arrow-circle-left"></li>Atrás</a>
 							</div>
 							<div class="col-md-10">
 								<h4>Crear Receta</h4>

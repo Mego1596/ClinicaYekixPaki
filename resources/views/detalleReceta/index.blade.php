@@ -19,8 +19,8 @@
 					<div class="card-header text-center">
 						<div class="row">
 							<div class="col-md-1">
-								<a href="{{route('receta.index', $id2)}}" class="btn btn-block btn-secondary">
-								Atrás</a>
+								<a href="{{route('receta.index', $id2)}}" class="btn btn-block btn-secondary" style="width: 130%">
+								<li class="fa fa-arrow-circle-left"></li> Atrás</a>
 							</div>
 							<div class="col-md-10">
 								<h4>Detalles de la Receta</h4>
@@ -36,7 +36,7 @@
 									<th width="237">
 										@can('detalleRecetas.create')
 										<a href="{{ route('detalleReceta.create', ['receta' => $id, 'cita' => $id2 ]) }}" class="btn btn-block btn-success pull-right">
-											Crear
+											<li class="fa fa-plus-square"></li>	Crear Detalle de Receta
 										</a>
 										@endcan
 									</th>
@@ -44,7 +44,7 @@
 									<th colspan="3" width="237">
 										@can('detalleRecetas.create')
 										<a href="{{ route('detalleReceta.create', ['receta' => $id, 'cita' => $id2 ]) }}" class="btn btn-block btn-success pull-right">
-											Crear
+											<li class="fa fa-plus-square"></li>	Crear Detalle de Receta
 										</a>
 										@endcan
 									</th>
@@ -57,18 +57,18 @@
 									<td>{{$proceso->medicamento}}</td>
 									<td width="10px">
 										@can('detalleRecetas.show')
-											<a href="{{ route('detalleReceta.show', ['receta' => $id, 'cita' => $id2,'detalle'=> $proceso->id ]) }}" class="btn btn-sm btn-default bg-info" style="color: white">Ver
+											<a href="{{ route('detalleReceta.show', ['receta' => $id, 'cita' => $id2,'detalle'=> $proceso->id ]) }}" class="btn btn-sm btn-default bg-info" style="color: white"><li class="fa fa-file-text-o"></li> Ver
 											</a>
 										@endcan
 									</td>
 									<td width="10px">
 										@can('detalleRecetas.edit')
-											<a href="{{ route('detalleReceta.edit',['receta' => $id ,'detalle' => $proceso->id,'cita'=> $id2 ]) }}" class="btn btn-sm btn-default bg-success" style="color: white">Editar</a>
+											<a href="{{ route('detalleReceta.edit',['receta' => $id ,'detalle' => $proceso->id,'cita'=> $id2 ]) }}" class="btn btn-sm btn-default bg-success" style="color: white"><li class="fa fa-edit"></li> Editar</a>
 										@endcan
 									</td>
 									<td width="10px">
 										@can('detalleRecetas.destroy')
-											<button type="button" class="btn btn-sm btn-default btn btn-danger" data-toggle="modal" data-target="#Modal{{$proceso->id}}">
+											<button type="button" class="btn btn-sm btn-default btn btn-danger" data-toggle="modal" data-target="#Modal{{$proceso->id}}"> <li class="fa fa-trash"></li>
 													  					Eliminar
 																	</button>
 																	{!! Form::open(['route' => ['detalleReceta.destroy', $proceso->id],'method' => 'DELETE']) !!}

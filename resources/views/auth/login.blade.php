@@ -8,7 +8,7 @@
                 <div class="card-header">{{ __('Iniciar Sesion') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('login') }}" aria-label="{{ __('Login') }}">
+                    <form method="POST" action="{{ route('login') }}" aria-label="{{ __('Login') }}" autocomplete="off">
                         @csrf
 
                         <div class="form-group row">

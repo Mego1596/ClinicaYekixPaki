@@ -14,8 +14,8 @@
 					<div class="card-header text-center">
 						<div class="row">
 			            	<div class="col-md-1">
-			                	<a href="/home" class="btn btn-block btn-secondary">
-			                	Atrás</a>
+			                	<a href="/home" class="btn btn-block btn-secondary" style="width: 130%">
+			                	<i class="fa fa-arrow-circle-left"></i> Atrás</a>
 			              	</div>
 			              	<div class="col-md-10">
 								<h4>Lista de Odontologos</h4>
@@ -24,7 +24,7 @@
 					</div>
 					<br/>
 					<div class="row" style="align-self: left"> 
-						<div style="margin-left: 20px">
+						<div style="margin-left: 33px">
 					    {!! Form::open(array('route' => 'user.search1','id'=> 'form', 'method' => 'POST','class' => 'd-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0', 'autocomplete'=>'off') ) !!}
 							<select class="form-control" name="buscador" id="buscador">
 								<option id="0">Buscar Por...</option>
@@ -45,7 +45,7 @@
 					        </div>
 					    </div>
 					    <div style="margin-left: 15px">
-					    	<a class="btn btn-primary" href="{{route('user.index')}}">Ver Lista Completa</a>
+					    	<a class="btn btn-primary" href="{{route('user.index')}}"><i class="fa fa-list"></i> Ver Lista Completa</a>
 					    {!! Form::close() !!}
 						</div>
 					</div>
@@ -61,7 +61,7 @@
 									<th width="237">
 										@can('users.create')
 										<a href="{{ route('user.create',$sub) }}" class="btn btn-block btn-success pull-right">
-											Crear Odontologo
+										<i class="fa fa-user-plus"></i> Crear Odontologo
 										</a>
 										@endcan
 									</th>
@@ -69,7 +69,7 @@
 									<th colspan="4" width="237">
 										@can('users.create')
 										<a href="{{ route('user.create',$sub) }}" class="btn btn-block btn-success pull-right">
-											Crear Odontologo
+										<i class="fa fa-user-plus"></i>	Crear Odontologo
 										</a>
 										@endcan
 									</th>
@@ -85,18 +85,18 @@
 									<td>{{$user->name}}</td>
 									<td width="10px">
 										@can('users.show')
-											<a href="{{ route('user.show', ['user' => $user->id, 'idrol' => $sub]) }}" class="btn btn-sm btn-default bg-info" style="color: white">Ver
+											<a href="{{ route('user.show', ['user' => $user->id, 'idrol' => $sub]) }}" class="btn btn-sm btn-default bg-info" style="color: white"><i class="fa fa-folder-open-o"></i>  Ver
 											</a>
 										@endcan
 									</td>
 									<td width="10px">
 										@can('users.edit')
-											<a href="{{ route('user.edit', ['user' => $user->id, 'idrol' => $sub]) }}" class="btn btn-sm btn-default bg-success" style="color: white">Editar</a>
+											<a href="{{ route('user.edit', ['user' => $user->id, 'idrol' => $sub]) }}" class="btn btn-sm btn-default bg-success" style="color: white"><i class="fa fa-edit"></i> Editar</a>
 										@endcan
 									</td>
 									<td width="10px">
 										@can('users.destroy')
-										<button type="button" class="btn btn-sm btn-default btn btn-danger" data-toggle="modal" data-target="#Modal{{$user->id}}">
+										<button type="button" class="btn btn-sm btn-default btn btn-danger" data-toggle="modal" data-target="#Modal{{$user->id}}"><i class="fa fa-trash"></i> 
 						  					Eliminar
 										</button>
 										{!! Form::open(['route' => ['user.destroy', $user->id,"doctor"],'method' => 'DELETE']) !!}
@@ -124,12 +124,11 @@
 												</div>
 											</div>
 											{!! Form::close() !!}
-
 										@endcan
 									</td>
 									@can('admin.revoke')
 									<td>
-										<button type="button" class="btn btn-sm btn-default btn btn-warning" data-toggle="modal" data-target="#Modal2{{$user->id}}">
+										<button type="button" class="btn btn-sm btn-default btn btn-warning" data-toggle="modal" data-target="#Modal2{{$user->id}}"><i class="fa fa-minus-square" style="color: white"></i> 
 						  					Remover Permisos
 										</button>
 										{!! Form::open(['route' => ['user.revoke', $user->id, $sub],'method' => 'GET']) !!}

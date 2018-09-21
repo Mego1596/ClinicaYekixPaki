@@ -93,10 +93,12 @@ class EventsController extends Controller
                         $("#plan").hide();
                         $("#receta").hide();
                         $("#modificar").hide();
+                        $("#btnAsignar").show();
                     }else{
                         $("#plan").show();
                         $("#receta").show();
                         $("#modificar").show();
+                        $("#btnAsignar").hide();
                     }
 				 	$("#txtColor").val(calEvent.color);
                     $("#txtExpediente").val(calEvent.expediente);

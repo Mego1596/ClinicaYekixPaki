@@ -21,8 +21,8 @@
 					<div class="card-header text-center">
 						<div class="row">
 							<div class="col-md-1">
-								<a href="{{route('detalleReceta.index', ['cita' => $id3, 'receta' => $id])}}" class="btn btn-block btn-secondary">
-								Atrás</a>
+								<a href="{{route('detalleReceta.index', ['cita' => $id3, 'receta' => $id])}}" class="btn btn-block btn-secondary" style="width: 130%">
+								<li class="fa fa-arrow-circle-left"></li> Atrás</a>
 							</div>
 							<div class="col-md-10">
 								<h4>Editar Detalle de Receta</h4>
@@ -31,7 +31,7 @@
 					</div>
 					<div class="card-body">
 						{!! Form::model($detalles, ['route' => ['detalleReceta.update', $detalles->id], 'method' => 'PUT']) !!}
-							{!! Form::text('cita',$id3,['class' => 'form-control', 'autocomplete'=> 'off']) !!}
+							{!! Form::hidden('cita',$id3,['class' => 'form-control', 'autocomplete'=> 'off']) !!}
 							@include('detalleReceta.partials.form')
 						{!! Form::close() !!}
 					</div>

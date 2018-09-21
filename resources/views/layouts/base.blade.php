@@ -53,7 +53,8 @@
   <body id="page-top">
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <a class="navbar-brand" href="{{ route('home') }}">Clinica Odontologica YekixPaki</a>
+      <a class="navbar-brand" href="{{ route('home') }}">
+                <li class="fa fa-home"></li> Clinica Odontologica YekixPaki</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -67,27 +68,29 @@
           @else
           @can('pacientes.trabajo')
             <li class="nav-item">
-              <a class="nav-link" id="nav-citas" href="{{route('events.index')}}">Agenda</a>
+              <a class="nav-link" id="nav-citas" href="{{route('events.index')}}"><i class="fa fa-calendar"></i> Agenda</a>
             </li>
           @endcan
           @can('procedimientos.index')
             <li class="nav-item">
-              <a class="nav-link" id="nav-procedimientos" href="{{route('procedimiento.index')}}">Procedimientos</a>
+              <a class="nav-link" id="nav-procedimientos" href="{{route('procedimiento.index')}}"><i class="fa fa-list"></i> Procedimientos</a>
             </li>
           @endcan
           @can('users.index')
             <li class="nav-item">
-              <a class="nav-link" id="nav-doctores" href="{{route('user.index')}}">Doctores</a>
+              <a class="nav-link" id="nav-doctores" href="{{route('user.index')}}">
+               <i class="fa fa-user-md"></i> Doctores</a>
             </li>
           @endcan
           @can('users.index')
             <li class="nav-item">
-              <a class="nav-link" id="nav-asistentes" href="{{route('user.asistente')}}">Asistentes</a>
+              <a class="nav-link" id="nav-asistentes" href="{{route('user.asistente')}}">
+              <i class="fa fa-handshake-o"></i> Asistentes</a>
             </li>
           @endcan
           @can('pacientes.index')
             <li class="nav-item">
-              <a class="nav-link" id="nav-pacientes" href="{{route('paciente.index')}}">Pacientes</a>
+              <a class="nav-link" id="nav-pacientes" href="{{route('paciente.index')}}"><i class="fa fa-group"></i> Pacientes</a>
             </li>
           @endcan
           @can('roles.index')
@@ -221,7 +224,7 @@
     <!-- /#wrapper -->
 
     <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
+    <a class="scroll-to-top rounded" href="#">
       <i class="fa fa-angle-double-up"></i>
     </a>
 
