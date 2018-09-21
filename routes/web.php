@@ -82,9 +82,9 @@ Route::middleware(['auth'])->group(function(){
 	Route::post('events', 'EventsController@addEvent')->name('events.add');
 
 	//Pacientes
-	Route::get('file/{file}/download', function ($file) {
-        return \Storage::disk('dropbox')->download($file);
-    })->name('file.download');
+	Route::get('file/{file}/download', 'AnexoController@download')->name('file.download');
+	
+	Route::delete('file/{file}/delete', 'AnexoController@destroy')->name('file.destroy');
 
 	Route::post('paciente/store', 'PacienteController@store')->name('paciente.store')->middleware('permission:pacientes.create');
 
