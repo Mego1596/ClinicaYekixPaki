@@ -145,12 +145,55 @@
 							</div>
 						@endcan
 						</div>
+						{!! Form::close() !!}
+						<!--Anexo de pacientes-->
 						<div class="row pt-3">
-								@foreach ($paciente->anexos as $anexo)
-							<div class="col-md-12">									
-									<a class="btn btn-outline-secondary" href="{{ route('file.download', $anexo->ruta) }}"> <i class="fa fa-file-text"></i> {{$anexo->nombreOriginal}}</a>									
+							<div class="col-md-12">
+								<div class="table-responsive">
+									<table class="table table-sm">
+										<thead>
+											<tr>
+												<th>Archivos Anexados al Expediente</th>
+												<th></th>
+												<th></th>
+											</tr>
+										</thead>
+										<tbody>
+											@foreach ($paciente->anexos as $anexo)
+											<tr>
+												<td><a title="Clic para Descargar" class="btn btn-outline-secondary" href="{{ route('file.download', $anexo->ruta) }}"> <i class="fa fa-file-text"></i> {{$anexo->nombreOriginal}}</a></td>
+												<td><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#borrar-{{$anexo->id}}"><i class="fa fa-trash"></i> Borrar</button></td>
+												{!! Form::open(['route' => ['file.destroy', $anexo->id],'method' => 'DELETE']) !!}
+													<!-- Modal -->
+													<div class="modal fade" id="borrar-{{$anexo->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+														<div class="modal-dialog" role="document">
+															<div class="modal-content">
+																<div class="modal-header">
+																	<h5 class="modal-title" id="exampleModalLabel">Eliminar Archivo</h5>
+																		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+																			<span aria-hidden="true">&times;</span>
+																		</button>
+																</div>
+																<div class="modal-body">
+																<label>¿Esta seguro de eliminar el archivo: <strong>{{ $anexo->nombreOriginal }} ?</strong></label>
+																	<br/>
+																	<button type="button" class="btn btn-md btn-default" data-dismiss="modal">No</button>
+																	<button class="btn btn-md btn-default bg-danger" style="color: white">
+																		Si
+																	</button>
+																</div>
+																<div class="modal-footer">
+																</div>
+															</div>
+														</div>
+													</div>
+												{!! Form::close() !!}
+											</tr>
+											@endforeach
+										</tbody>
+									</table>
+								</div>
 							</div>
-							@endforeach
 						</div>
 					{!! Form::close() !!}
 					</div>
@@ -247,7 +290,7 @@
 						    	</div>
 							</div>
 						</div>
-						{!! Form::close() !!}
+					{!! Form::close() !!}						
 				</div>
 			</div>
 		</div>
