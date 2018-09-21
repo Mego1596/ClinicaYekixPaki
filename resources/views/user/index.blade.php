@@ -61,7 +61,7 @@
 									<th width="237">
 										@can('users.create')
 										<a href="{{ route('user.create',$sub) }}" class="btn btn-block btn-success pull-right">
-											Crear
+											Crear Odontologo
 										</a>
 										@endcan
 									</th>
@@ -69,7 +69,7 @@
 									<th colspan="4" width="237">
 										@can('users.create')
 										<a href="{{ route('user.create',$sub) }}" class="btn btn-block btn-success pull-right">
-											Crear
+											Crear Odontologo
 										</a>
 										@endcan
 									</th>

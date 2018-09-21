@@ -19,7 +19,7 @@
 					<div class="card-header text-center">
 						<div class="row">
 							<div class="col-md-1">
-								<a href="{{ route('paciente.index') }}" class="btn btn-block btn-secondary">
+								<a href="{{ route('paciente.index') }}" class="btn btn-block btn-secondary" style="width: 130%"><i class="fa fa-arrow-circle-left"></i>
 								Atrás</a>
 							</div>
 							<div class="col-md-10">
@@ -32,14 +32,14 @@
 						<div class="row pt-3">
 						@can('pacientes.citas')
 							<div class="col-md-3 col-sm-12">
-							<a href="{{ route('paciente.agenda', $paciente->id) }}" class="btn btn-block btn-primary bg-primary" role="button">Citas</a>	
+							<a href="{{ route('paciente.agenda', $paciente->id) }}" class="btn btn-block btn-primary bg-primary" role="button"><i class="fa fa-calendar"></i>   Citas</a>	
 							</div>
 						@endcan
 							<div class="col-md-5 col-sm-12">
 							@can('admin.crearHistoria')
 							<!-- Button trigger modal -->
-							<button type="button" class="btn btn-block btn-success" data-toggle="modal" data-target="#Modal2">
-							  Anexar Historia Medica
+							<button type="button" class="btn btn-block btn-success" data-toggle="modal" data-target="#Modal2"><i class="fa fa-plus-square"></i>
+							     Anexar Historia Medica
 							</button>
 							@endcan	
 							</div>
@@ -138,12 +138,10 @@
 							</div>
 						</div>
 						<div class="row pt-3">
-						@can('admin.historiaO')
 							<div class="col-md-12">
 								{{ Form::label('historiaOdontologica','Historia Odontologica')}}
 								{{ Form::textarea('historiaOdontologica',null,['class' => 	'form-control','disabled','rows' => '3'])}}
 							</div>
-						@endcan
 						</div>
 						{!! Form::close() !!}
 						<!--Anexo de pacientes-->
@@ -156,12 +154,45 @@
 												<th>Archivos Anexados al Expediente</th>
 												<th></th>
 												<th></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th></th>											<th></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th></th>											
+												<th></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th></th>
 											</tr>
 										</thead>
 										<tbody>
 											@foreach ($paciente->anexos as $anexo)
 											<tr>
-												<td><a title="Clic para Descargar" class="btn btn-outline-secondary" href="{{ route('file.download', $anexo->ruta) }}"> <i class="fa fa-file-text"></i> {{$anexo->nombreOriginal}}</a></td>
+												<td><a title="Clic para Descargar" class="btn btn-outline-secondary" href="{{ route('file.download', $anexo->ruta) }}"> <i class="fa fa-file-text"></i> {{$anexo->nombreOriginal}}</a></td>	
 												<td><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#borrar-{{$anexo->id}}"><i class="fa fa-trash"></i> Borrar</button></td>
 												{!! Form::open(['route' => ['file.destroy', $anexo->id],'method' => 'DELETE']) !!}
 													<!-- Modal -->
@@ -197,7 +228,6 @@
 						</div>
 					{!! Form::close() !!}
 					</div>
-					@can('admin.historiaM')
 						<div class="container">
 							<div class="row">
 								<div class="col-md-4">
@@ -218,7 +248,7 @@
 			        						<td width="10px">
 												@can('admin.editarHistoria')
 												<!-- Button trigger modal -->
-												<button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal{{$key->id}}">
+												<button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal{{$key->id}}"><i class="fa fa-edit"></i>
 												  Editar
 												</button>
 												@endcan
@@ -249,14 +279,35 @@
 												{!! Form::close() !!}
 											</td>
 											@can('admin.eliminarHistoria')
-											<td>
-											{!! Form::open(['route' => ['historia.destroy', $key->id],
-													'method' => 'DELETE']) !!}
-														<button class="btn btn-block btn-danger" style="color: white">
-															Eliminar
-														</button>
-													{!! Form::close() !!}
-			        						</td>
+
+											<td><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#borrar-{{$key->id}}"><i class="fa fa-trash"></i> Eliminar</button></td>
+											{!! Form::open(['route' => ['historia.destroy', $key->id],'method' => 'DELETE']) !!}
+												<!-- Modal -->
+											<div class="modal fade" id="borrar-{{$key->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+												<div class="modal-dialog" role="document">
+													<div class="modal-content">
+														<div class="modal-header">
+															<h5 class="modal-title" id="exampleModalLabel">Eliminar Historia</h5>
+															<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+																<span aria-hidden="true">&times;</span>
+															</button>
+														</div>
+														<div class="modal-body">
+															<label>¿Esta seguro de eliminar la historia?
+															</label>
+															<br/>
+															<button type="button" class="btn btn-md btn-default" data-dismiss="modal">No
+															</button>
+															<button class="btn btn-md btn-default bg-danger" style="color: white">
+																Si
+															</button>
+														</div>
+															<div class="modal-footer">
+															</div>
+														</div>
+												</div>
+											</div>
+											{!! Form::close() !!}
 			        						@endcan
 		        						</tr>
 							    		@endforeach
@@ -264,7 +315,6 @@
 								</div> 
 							</div>
 						</div>
-					@endcan
 
 					{!! Form::open(['route' => 'historia.store']) !!}
 						<!-- Modal -->

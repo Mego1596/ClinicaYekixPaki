@@ -101,9 +101,9 @@ $(document).ready(function(){
 	<div class="panel panel-primary">
 		<div class="panel-heading">
           <div class="row">
-              <div class="col-md-1">
-                <a href="/paciente/{{$paciente->id}}" class="btn btn-block btn-secondary">
-                Atrás</a>
+              <div class="col-md-2">
+                <a href="/paciente/{{$paciente->id}}" class="btn btn-block btn-secondary" style="width: 50%">
+                <i class="fa fa-arrow-circle-left"></i>Atrás</a>
               </div>
               <div class="col-md-10">
                 <h3 align="center">Citas:</h3>
@@ -111,7 +111,7 @@ $(document).ready(function(){
           </div>
         <div class="row">
           <div class="col-md-3">
-            <button type="button" class="btn btn-block btn-primary" data-toggle="modal" data-target="#ModalX">
+            <button type="button" class="btn btn-block btn-primary" data-toggle="modal" data-target="#ModalX"><i class="fa fa-list"></i>
                   Leyenda de Procedimientos
               </button>
               <br />
@@ -179,7 +179,7 @@ $(document).ready(function(){
       	<input type="hidden" name="txtFecha" id="txtFecha"/>
         <input type="hidden" name="pacienteID" id="pacienteID" value="{{$paciente->id}}">
         <input type="hidden" name="encendido" id="encendido" value="{{$encendido}}">
-        <a class="btn btn-primary" href="{{route('paciente.agenda2', $paciente->id)}}" target="_blank" id="cupos" name="cupos"> Ver Cupos</a>
+        <a class="btn btn-primary" href="{{route('paciente.agenda2', $paciente->id)}}" target="_blank" id="cupos" name="cupos"><i class="fa fa-outdent"></i> Ver Cupos</a>
       	<div class="form-row">	
       		<div class="form-group col-md-12">
       			{!! Form::label('paciente_id', 'Paciente:',['id' => 'tit']) !!}
@@ -230,7 +230,7 @@ $(document).ready(function(){
         </div>
 
       <div class="modal-footer">
-		{!! Form::submit('Añadir Cita', ['class' => 'btn btn-success','id' => 'btnAgregar', 'name' => 'btnAgregar']) !!}
+		    {!! Form::submit('Añadir Cita', ['class' => 'btn btn-success','id' => 'btnAgregar', 'name' => 'btnAgregar']) !!}
 		{!! Form::submit('Modificar Cita', ['class' => 'btn btn-success','id' => 'btnModificar','name' => 'btnModificar']) !!}
 		{!! Form::submit('Borrar', ['class' => 'btn btn-danger ','id' => 'btnEliminar','name' => 'btnEliminar']) !!}
         <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>

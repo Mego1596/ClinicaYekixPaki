@@ -16,8 +16,8 @@
 					<div class="card-header text-center">
 						<div class="row">
 			            	<div class="col-md-1">
-			                	<a href="/home" class="btn btn-block btn-secondary">
-			                	Atrás</a>
+			                	<a href="/home" class="btn btn-block btn-secondary" style="width: 130%">
+			                	<i class="fa fa-arrow-circle-left"></i>Atrás</a>
 			              	</div>
 			              	<div class="col-md-10">
 			                	<h4>{{$head}}</h4>
@@ -27,7 +27,7 @@
 					<br/>
 					@can('pacientes.create')
 					<div class="row" style="align-self: left"> 
-					<div style="margin-left: 20px">
+					<div style="margin-left: 33px">
 				    {!! Form::open(array('route' => 'paciente.search','id'=> 'form', 'method' => 'POST','class' => 'd-none d-md-inline-block form-inline ml-auto mr-9 mr-md-5 my-2 my-md-0', 'autocomplete'=>'off') ) !!}
 							<select class="form-control" name="buscador" id="buscador">
 								<option id="0">Buscar Por...</option>
@@ -50,7 +50,7 @@
 				    </div>
 				    {!! Form::close() !!}
 				    <div style="margin-left: 20px"> 
-				        <a class="btn btn-primary" href="{{route('paciente.index')}}">Ver Lista Completa</a>
+				        <a class="btn btn-primary" href="{{route('paciente.index')}}"><i class="fa fa-list"></i> Ver Lista Completa</a>
 				    </div>
 				    @endcan
 					</div>
@@ -65,7 +65,7 @@
 										<th width="237">
 											@can('pacientes.create')
 											<a href="{{ route('paciente.create') }}" class="btn btn-success btn-block">
-												Crear
+											<i class="fa fa-user-plus"></i>	Crear
 											</a>
 											@endcan
 										</th>
@@ -73,7 +73,7 @@
 										<th colspan="3" width="237">
 											@can('pacientes.create')
 											<a href="{{ route('paciente.create') }}" class="btn btn-success btn-block">
-												Crear paciente
+											<i class="fa fa-user-plus"></i>	Crear paciente
 											</a>
 											@endcan
 										</th>
@@ -92,19 +92,19 @@
 															<td>{{$users->name}}</td>
 															<td width="10px">
 																@can('pacientes.show')
-																	<a href="{{ route('paciente.show', $paciente->id) }}" class="btn btn-sm btn-default bg-info" style="color: white">Ver
+																	<a href="{{ route('paciente.show', $paciente->id) }}" class="btn btn-sm btn-default bg-info" style="color: white"><i class="fa fa-folder-open-o"></i> Expediente
 																	</a>
 																@endcan
 															</td>
 															<td width="10px">
 																@can('pacientes.edit')
-																	<a href="{{ route('paciente.edit', $paciente->id) }}" class="btn btn-sm  btn-default bg-success" style="color: white">Editar</a>
+																	<a href="{{ route('paciente.edit', $paciente->id) }}" class="btn btn-sm  btn-default bg-success" style="color: white"><i class="fa fa-edit"></i> Editar</a>
 																@endcan
 															</td>
 															<td width="10px">
 																@can('users.destroy')
 																	<button type="button" class="btn btn-sm btn-default btn btn-warning" data-toggle="modal" data-target="#Modal{{$paciente->id}}">
-													  					Inhabilitar
+													  				<i class="fa fa-minus-square" style="color: white"></i> Inhabilitar
 																	</button>
 																	{!! Form::open(['route' => ['paciente.destroy', $paciente->id],'method' => 'DELETE']) !!}
 																		<!-- Modal -->
@@ -143,19 +143,19 @@
 													<td>Sin Usuario</td>
 													<td width="10px">
 														@can('pacientes.show')
-															<a href="{{ route('paciente.show', $paciente->id) }}" class="btn btn-sm btn-default bg-info" style="color: white">Ver
+															<a href="{{ route('paciente.show', $paciente->id) }}" class="btn btn-sm btn-default bg-info" style="color: white"><i class="fa fa-folder-open-o"></i> Expediente
 															</a>
 														@endcan
 													</td>
 													<td width="10px">
 														@can('pacientes.edit')
-															<a href="{{ route('paciente.edit', $paciente->id) }}" class="btn btn-sm  btn-default bg-success" style="color: white">Editar</a>
+															<a href="{{ route('paciente.edit', $paciente->id) }}" class="btn btn-sm  btn-default bg-success" style="color: white"><i class="fa fa-edit"></i> Editar</a>
 														@endcan
 													</td>
 													<td width="10px">
 														@can('users.destroy')
 															<button type="button" class="btn btn-sm btn-default btn btn-warning" data-toggle="modal" data-target="#Modal{{$paciente->id}}">
-											  					Inhabilitar
+											  				<i class="fa fa-minus-square" style="color: white"></i>	Inhabilitar
 															</button>
 															{!! Form::open(['route' => ['paciente.destroy', $paciente->id],'method' => 'DELETE']) !!}
 																	<!-- Modal -->
@@ -197,7 +197,7 @@
 													<td colspan="3">
 														@can('pacientes.habilitarPaciente')
 															<button type="button" class="btn btn-sm btn-default btn btn-success" data-toggle="modal" data-target="#Modal{{$paciente->id}}" style="width: 100%">
-											  					Habilitar
+											  				<i class="fa fa-check"></i>	  Habilitar
 															</button>
 															{!! Form::open(['route' => ['paciente.habilitarPaciente', $paciente->id],'method' => 'POST']) !!}
 																	<!-- Modal -->

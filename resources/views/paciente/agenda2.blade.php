@@ -98,8 +98,8 @@ $(document).ready(function(){
 		<div class="panel-heading">
           <div class="row">
               <div class="col-md-1">
-                <a href="/paciente/{{$paciente->id}}/events" class="btn btn-block btn-secondary">
-                Atrás</a>
+                <a href="/paciente/{{$paciente->id}}/events" class="btn btn-block btn-secondary" style="width: 120%">
+                <i class="fa fa-arrow-circle-left"></i>Atrás</a>
               </div>
               <div class="col-md-10">
                 <h3 align="center">Cupos del Dia:</h3>

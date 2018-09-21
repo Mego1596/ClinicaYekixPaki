@@ -43,8 +43,8 @@ $(document).ready(function(){
 				<div class="card-header text-center">
 					<div class="row">
 						<div class="col-md-1">
-							<a href="{{ route('paciente.index') }}" class="btn btn-block btn-secondary">
-							Atrás</a>
+							<a href="{{ route('paciente.index') }}" class="btn btn-block btn-secondary" style="width: 130%">
+							<i class="fa fa-arrow-circle-left"></i> Atrás</a>
 						</div>
 						<div class="col-md-10">
 							<h4>Crear paciente</h4>
