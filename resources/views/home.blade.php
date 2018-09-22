@@ -90,7 +90,7 @@
 					<div class="row">
 						<div class="col-12">
 							<a href="{{route('roles.index')}}" class="btn btn-block btn-light">
-								<i class="fa fa-user" style="font-size: 150px"></i>
+								<i class="fa fa-database" style="font-size: 150px"></i>
 							</a>		
 						</div>
 					</div>
@@ -102,7 +102,46 @@
 			</div>
 		</div>
 	</div>
+	<div class="row justify-content-center">
+		<div class="col-lg-10 col-12">
+			<div class="row justify-content-between text-center">
+				<div class="col-md-3" name="usuarios">
+					<div class="row">
+						<div class="col-12">		
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-12"><h5></h5></div>
+					</div>
+				</div>
+				@can('users.usuarios')
+				<div class="col-md-3" name="usuarios">
+					<div class="row">
+						<div class="col-12">
+							<a href="{{route('user.usuario')}}" class="btn btn-block btn-light">
+								<i class="fa fa-cog" style="font-size: 150px"></i>
+							</a>		
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-12"><h5>Usuarios General</h5></div>
+					</div>
+				</div>
+				@endcan
+				<div class="col-md-3" name="usuarios">
+					<div class="row">
+						<div class="col-12">		
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-12"><h5></h5></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 
 @endsection
 
+				

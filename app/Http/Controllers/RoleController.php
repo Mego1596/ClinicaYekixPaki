@@ -30,8 +30,6 @@ class RoleController extends Controller
      */
     public function create()
     {
-        $permissions = Permission::get();
-        return view('roles.create',compact('permissions'));
     }
 
     /**
@@ -42,19 +40,6 @@ class RoleController extends Controller
      */
     public function store(RolesRequest $request)
     {
-        $valores = $request->all();
-        if(is_null($valores['name']) or is_null($valores['slug']))
-        {
-            return redirect()
-                ->route('roles.create')
-                ->with('error', 'Complete los campos obligatorios');
-        }
-        else 
-        {
-            $role = Role::create($request->all());
-            $role->permissions()->sync($request->get('permissions'));
-            return redirect()->route('roles.index')->with('info','Rol guardado con exito'); 
-        }
     }
 
     /**
@@ -77,9 +62,6 @@ class RoleController extends Controller
      */
     public function edit($id)
     {   
-        $role = Role::find($id);
-        $permissions = Permission::get();
-        return view('roles.edit', compact('role','permissions'));
     }
 
     /**
@@ -91,20 +73,6 @@ class RoleController extends Controller
      */
     public function update(RolesUpdateRequest $request, Role $role)
     {
-        $valores = $request->all();
-        if(is_null($valores['name']) or is_null($valores['slug']))
-        {
-            return redirect()
-                ->route('roles.create')
-                ->with('error', 'Complete los campos obligatorios');
-        }
-        else 
-        {
-            $role->update($request->all());
-            $role->permissions()->sync($request->get('permissions'));
-            return redirect()->route('roles.index',$role->id)
-                ->with('info','Rol actualizado con exito');
-        }
     }
 
     /**
@@ -115,7 +83,5 @@ class RoleController extends Controller
      */
     public function destroy(Role $role)
     {
-        $role->delete();
-        return back()->with('info','Eliminado Correctamente');
     }
 }

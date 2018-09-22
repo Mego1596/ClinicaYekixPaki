@@ -95,7 +95,7 @@
           @endcan
           @can('roles.index')
             <li class="nav-item">
-              <a class="nav-link" id="nav-roles" href="{{route('roles.index')}}">Roles</a>
+              <a class="nav-link" id="nav-roles" href="{{route('roles.index')}}"><i class="fa fa-database"></i> Roles</a>
             </li>
           @endcan
           @can('users.usuarios')
