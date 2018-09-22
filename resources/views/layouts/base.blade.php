@@ -82,7 +82,7 @@
                <i class="fa fa-user-md"></i> Doctores</a>
             </li>
           @endcan
-          @can('users.index')
+          @can('users.asistente')
             <li class="nav-item">
               <a class="nav-link" id="nav-asistentes" href="{{route('user.asistente')}}">
               <i class="fa fa-handshake-o"></i> Asistentes</a>
@@ -95,7 +95,12 @@
           @endcan
           @can('roles.index')
             <li class="nav-item">
-              <a class="nav-link" id="nav-roles" href="{{route('roles.index')}}">Roles</a>
+              <a class="nav-link" id="nav-roles" href="{{route('roles.index')}}"><i class="fa fa-database"></i> Roles</a>
+            </li>
+          @endcan
+          @can('users.usuarios')
+            <li class="nav-item">
+              <a class="nav-link" id="nav-general" href="{{route('user.usuario')}}"><i class="fa fa-cog"></i>Usuarios General</a>
             </li>
           @endcan
           </ul>

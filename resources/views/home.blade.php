@@ -5,6 +5,7 @@
 	<div class="row justify-content-center">
 		<div class="col-lg-10 col-12">
 			<div class="row justify-content-between text-center">
+				{{-- contenedor de citas --}}
             	@can('pacientes.trabajo')
 				<div class="col-md-3" name="citas">
 					<div class="row">
@@ -21,6 +22,8 @@
 					</div>
 				</div>
 				@endcan
+				{{-- ##################################### --}}
+				{{-- contenedor de procedimientos --}}
 				@can('procedimientos.index')
 				<div class="col-md-3" name="procedimientos">
 					<div class="row">
@@ -37,6 +40,8 @@
 					</div>
 				</div>
 				@endcan
+				{{-- ############################ --}}
+				{{-- contenedor de doctores --}}
 				@can('users.index')
 				<div class="col-md-3" name="doctores">
 					<div class="row">
@@ -51,12 +56,8 @@
 					</div>
 				</div>
 				@endcan
-			</div>
-		</div>
-	</div>
-	<div class="row justify-content-center">
-		<div class="col-lg-10 col-12">
-			<div class="row justify-content-between text-center">
+				{{-- ################################# --}}
+				{{-- contenedor de asistentes --}}
 				@can('users.asistente')
 				<div class="col-md-3" name="asistentes">
 					<div class="row">
@@ -71,6 +72,14 @@
 					</div>
 				</div>
 				@endcan
+				{{-- ################################### --}}
+			</div>
+		</div>
+	</div>
+	<div class="row justify-content-center">
+		<div class="col-lg-10 col-12">
+			<div class="row justify-content-around text-center">
+				{{-- contenedor de pacientes --}}
 				@can('pacientes.index')
 				<div class="col-md-3" name="pacientes">
 					<div class="row">
@@ -85,12 +94,14 @@
 					</div>
 				</div>
 				@endcan
+				{{-- ########################### --}}
+				{{-- contenedor de roles --}}
 				@can('roles.index')
 				<div class="col-md-3" name="roles">
 					<div class="row">
 						<div class="col-12">
 							<a href="{{route('roles.index')}}" class="btn btn-block btn-light">
-								<i class="fa fa-user" style="font-size: 150px"></i>
+								<i class="fa fa-database" style="font-size: 150px"></i>
 							</a>		
 						</div>
 					</div>
@@ -99,6 +110,23 @@
 					</div>
 				</div>
 				@endcan
+				{{-- ########################### --}}
+				{{-- contenedor de usuarios --}}
+				@can('users.usuarios')
+				<div class="col-md-3" name="usuarios">
+					<div class="row">
+						<div class="col-12">
+							<a href="{{route('user.usuario')}}" class="btn btn-block btn-light">
+								<i class="fa fa-cog" style="font-size: 150px"></i>
+							</a>		
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-12"><h5>Usuarios General</h5></div>
+					</div>
+				</div>
+				@endcan
+				{{-- ############################## --}}
 			</div>
 		</div>
 	</div>
@@ -106,3 +134,4 @@
 
 @endsection
 
+				

@@ -24,19 +24,10 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::middleware(['auth'])->group(function(){
 
 	//Roles
-	Route::post('roles/store', 'RoleController@store')->name('roles.store')->middleware('permission:roles.create');
-
 	Route::get('roles', 'RoleController@index')->name('roles.index')->middleware('permission:roles.index');
-
-	Route::get('roles/create', 'RoleController@create')->name('roles.create')->middleware('permission:roles.create');
-
-	Route::put('roles/{role}', 'RoleController@update')->name('roles.update')->middleware('permission:roles.edit');
 
 	Route::get('roles/{role}', 'RoleController@show')->name('roles.show')->middleware('permission:roles.show');
 
-	Route::delete('roles/{role}', 'RoleController@destroy')->name('roles.destroy')->middleware('permission:roles.destroy');
-
-	Route::get('roles/{role}/edit', 'RoleController@edit')->name('roles.edit')->middleware('permission:roles.edit');
 
 	//Procedimientos
 	Route::post('procedimiento/store', 'ProcedimientoController@store')->name('procedimiento.store')->middleware('permission:procedimientos.create');
@@ -70,12 +61,18 @@ Route::middleware(['auth'])->group(function(){
 	Route::get('user/{user}/edit/{idrol}', 'UserController@edit')->name('user.edit')->middleware('permission:users.edit');
 
 	Route::get('asistente/', 'UserController@asistentes')->name('user.asistente')->middleware('permission:users.asistente');
+
+	Route::get('general', 'UserController@usuarios')->name('user.usuario')->middleware('permission:users.usuarios');
+
+	Route::post('general/grant/{user}', 'UserController@grant')->name('user.grant')->middleware('permission:users.usuarios');
 	
 	Route::get('user/{user}/revoke/{idrol}', 'UserController@revocarRol')->name('user.revoke');
 	
 	Route::post('busqueda1/', 'UserController@search1')->name('user.search1');
 	
 	Route::post('busqueda2/', 'UserController@search2')->name('user.search2');
+
+	Route::post('busqueda3/', 'UserController@search3')->name('user.search3');
 	//Full Calendar
 
 	Route::get('events', 'EventsController@index')->name('events.index')->middleware('permission:pacientes.trabajo');

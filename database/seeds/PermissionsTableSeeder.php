@@ -288,5 +288,17 @@ class PermissionsTableSeeder extends Seeder
             'slug' => 'pacientes.habilitarPaciente',
             'description' => 'Campo habilitar pacientes que estan deshabilitados',
         ]);
+
+        Permission::create([
+            'name' => 'Navegar Asistentes',
+            'slug' => 'users.asistente',
+            'description' => 'Lista y Navega todos los usuarios asistente del Sistema',
+        ]);
+
+        Permission::create([
+            'name' => 'Navegar Asistentes',
+            'slug' => 'users.usuarios',
+            'description' => 'Lista y Navega todos los usuarios asistente del Sistema',
+        ]);
     }
 }

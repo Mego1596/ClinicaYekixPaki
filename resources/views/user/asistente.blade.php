@@ -19,11 +19,12 @@
 			                	<i class="fa fa-arrow-circle-left"></i> Atrás</a>
 			              	</div>
 			              	<div class="col-md-10">
-								<h4>Lista de asistentes</h4>
+								<h4>{{$head}}</h4>
 			              	</div>
           				</div>
 					</div>
 					<br/>
+					@role('admin')
 					<div class="row" style="align-self: left"> 
 						<div style="margin-left: 33px">
 						    {!! Form::open(array('route' => 'user.search2','id'=> 'form', 'method' => 'POST','class' => 'd-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0', 'autocomplete'=>'off') ) !!}
@@ -51,6 +52,7 @@
 						</div>
 						    {!! Form::close() !!}
 					</div>
+					@endrole
 					<div class="card-body">
 						<table class="table table-striped table-hover table-responsive-md">
 							<thead>
