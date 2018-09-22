@@ -5,6 +5,7 @@
 	<div class="row justify-content-center">
 		<div class="col-lg-10 col-12">
 			<div class="row justify-content-between text-center">
+				{{-- contenedor de citas --}}
             	@can('pacientes.trabajo')
 				<div class="col-md-3" name="citas">
 					<div class="row">
@@ -21,6 +22,8 @@
 					</div>
 				</div>
 				@endcan
+				{{-- ##################################### --}}
+				{{-- contenedor de procedimientos --}}
 				@can('procedimientos.index')
 				<div class="col-md-3" name="procedimientos">
 					<div class="row">
@@ -37,6 +40,8 @@
 					</div>
 				</div>
 				@endcan
+				{{-- ############################ --}}
+				{{-- contenedor de doctores --}}
 				@can('users.index')
 				<div class="col-md-3" name="doctores">
 					<div class="row">
@@ -51,12 +56,8 @@
 					</div>
 				</div>
 				@endcan
-			</div>
-		</div>
-	</div>
-	<div class="row justify-content-center">
-		<div class="col-lg-10 col-12">
-			<div class="row justify-content-between text-center">
+				{{-- ################################# --}}
+				{{-- contenedor de asistentes --}}
 				@can('users.asistente')
 				<div class="col-md-3" name="asistentes">
 					<div class="row">
@@ -71,6 +72,14 @@
 					</div>
 				</div>
 				@endcan
+				{{-- ################################### --}}
+			</div>
+		</div>
+	</div>
+	<div class="row justify-content-center">
+		<div class="col-lg-10 col-12">
+			<div class="row justify-content-around text-center">
+				{{-- contenedor de pacientes --}}
 				@can('pacientes.index')
 				<div class="col-md-3" name="pacientes">
 					<div class="row">
@@ -85,6 +94,8 @@
 					</div>
 				</div>
 				@endcan
+				{{-- ########################### --}}
+				{{-- contenedor de roles --}}
 				@can('roles.index')
 				<div class="col-md-3" name="roles">
 					<div class="row">
@@ -99,21 +110,8 @@
 					</div>
 				</div>
 				@endcan
-			</div>
-		</div>
-	</div>
-	<div class="row justify-content-center">
-		<div class="col-lg-10 col-12">
-			<div class="row justify-content-between text-center">
-				<div class="col-md-3" name="usuarios">
-					<div class="row">
-						<div class="col-12">		
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-12"><h5></h5></div>
-					</div>
-				</div>
+				{{-- ########################### --}}
+				{{-- contenedor de usuarios --}}
 				@can('users.usuarios')
 				<div class="col-md-3" name="usuarios">
 					<div class="row">
@@ -128,15 +126,7 @@
 					</div>
 				</div>
 				@endcan
-				<div class="col-md-3" name="usuarios">
-					<div class="row">
-						<div class="col-12">		
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-12"><h5></h5></div>
-					</div>
-				</div>
+				{{-- ############################## --}}
 			</div>
 		</div>
 	</div>

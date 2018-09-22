@@ -100,7 +100,7 @@
           @endcan
           @can('users.usuarios')
             <li class="nav-item">
-              <a class="nav-link" id="nav-roles" href="{{route('user.usuario')}}"><i class="fa fa-cog"></i>Usuarios General</a>
+              <a class="nav-link" id="nav-general" href="{{route('user.usuario')}}"><i class="fa fa-cog"></i>Usuarios General</a>
             </li>
           @endcan
           </ul>
