@@ -70,12 +70,18 @@ Route::middleware(['auth'])->group(function(){
 	Route::get('user/{user}/edit/{idrol}', 'UserController@edit')->name('user.edit')->middleware('permission:users.edit');
 
 	Route::get('asistente/', 'UserController@asistentes')->name('user.asistente')->middleware('permission:users.asistente');
+
+	Route::get('general', 'UserController@usuarios')->name('user.usuario')->middleware('permission:users.usuarios');
+
+	Route::post('general/grant/{user}', 'UserController@grant')->name('user.grant')->middleware('permission:users.usuarios');
 	
 	Route::get('user/{user}/revoke/{idrol}', 'UserController@revocarRol')->name('user.revoke');
 	
 	Route::post('busqueda1/', 'UserController@search1')->name('user.search1');
 	
 	Route::post('busqueda2/', 'UserController@search2')->name('user.search2');
+
+	Route::post('busqueda3/', 'UserController@search3')->name('user.search3');
 	//Full Calendar
 
 	Route::get('events', 'EventsController@index')->name('events.index')->middleware('permission:pacientes.trabajo');
