@@ -20,6 +20,15 @@ $(function(){
 					break;
 				}
 			}
+			else if(incluido[i] == "events"){
+				if(url.includes("paciente")){
+					$("#nav-"+navElem[4]).addClass('active');
+					break;
+				}else{
+					$("#nav-"+navElem[i]).addClass('active');
+					break;
+				}
+			}
 			else{
 				$("#nav-"+navElem[i]).addClass('active');
 				break;
