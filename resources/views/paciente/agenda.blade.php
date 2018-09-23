@@ -126,11 +126,11 @@ $(document).ready(function(){
                               <span aria-hidden="true">&times;</span>
                           </button>
                       </div>
-                      <div class="modal-body" style="overflow-y: auto; max-height: calc(70vh - 150px);">
+                      <div class="modal-body" style="overflow-y: auto; max-height: calc(100vh - 150px);">
                         <div class="row">
                           <table align="center">
                             <tr>
-                              <td style="text-align: left; background: black;color: white" width="200px">
+                              <td style="text-align: center; background: black;color: white; border-radius: 10px" width="200px">
                               Revision General
                               </td>
                             </tr>
@@ -139,7 +139,7 @@ $(document).ready(function(){
                             </tr>
                             @foreach($procesos as $p)
                             <tr>
-                                <td style="text-align: left; background: {{$p->color}};color: white" width="200px">
+                                <td style="text-align: center; background: {{$p->color}};color: white; border-radius: 10px;" width="200px">
                                   {{$p->nombre}}
                                 </td>
                             </tr>
