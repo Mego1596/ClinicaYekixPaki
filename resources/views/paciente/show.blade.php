@@ -193,7 +193,10 @@
 											@foreach ($paciente->anexos as $anexo)
 											<tr>
 												<td><a title="Clic para Descargar" class="btn btn-outline-secondary" href="{{ route('file.download', $anexo->ruta) }}"> <i class="fa fa-file-text"></i> {{$anexo->nombreOriginal}}</a></td>	
-												<td><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#borrar-{{$anexo->id}}"><i class="fa fa-trash"></i> Borrar</button></td>
+												@can('pacientes.create')
+												<td><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#borrar-{{$anexo->id}}"><i class="fa fa-trash"></i> Borrar</button>
+												</td>
+												@endcan
 												{!! Form::open(['route' => ['file.destroy', $anexo->id],'method' => 'DELETE']) !!}
 													<!-- Modal -->
 													<div class="modal fade" id="borrar-{{$anexo->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

@@ -179,7 +179,9 @@ $(document).ready(function(){
       	<input type="hidden" name="txtFecha" id="txtFecha"/>
         <input type="hidden" name="pacienteID" id="pacienteID" value="{{$paciente->id}}">
         <input type="hidden" name="encendido" id="encendido" value="{{$encendido}}">
+        @can('pacientes.create')
         <a class="btn btn-primary" href="{{route('paciente.agenda2', $paciente->id)}}" target="_blank" id="cupos" name="cupos"><i class="fa fa-outdent"></i> Ver Cupos</a>
+        @endcan
       	<div class="form-row">	
       		<div class="form-group col-md-12">
       			{!! Form::label('paciente_id', 'Paciente:',['id' => 'tit']) !!}
