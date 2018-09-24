@@ -438,6 +438,12 @@ class PacienteController extends Controller
                     $("#btnModificar").prop("disabled",true);
                     $("#tit").hide();
                     $("#txtTitulo").hide();
+                    $("#cosa2").prop("checked",true);
+                    $("#cosa2").prop("disabled",true);
+                    $("#cosa").prop("checked",false);
+                    $("#cosa").prop("disabled",false);
+                    document.getElementById("procedimiento").style.visibility = "hidden";
+                    document.getElementById("procedimiento_id").style.visibility = "hidden";            
                     limpiarFormulario();
                     $("#txtFecha").val(date.format());
                     var horaInicio=String(date).substring(16,24);
