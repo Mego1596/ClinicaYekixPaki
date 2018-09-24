@@ -19,7 +19,7 @@ class RecetasController extends Controller
      */
     public function index($id)
     {
-        $recetas = Recetas::paginate();
+        $recetas = Recetas::where('events_id', $id)->paginate();
         $event = Events::find($id);
         $paciente = Paciente::find($event->paciente_id);
         return view('receta.index',compact('recetas','id','paciente')); 
