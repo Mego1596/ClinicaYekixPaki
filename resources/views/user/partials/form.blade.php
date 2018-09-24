@@ -110,7 +110,7 @@
 <div class="row">
 	<div class="col-md-3">
 		<div class="form-group">
-			{{ Form::label('description', 'E-Mail') }}
+			{{ Form::label('description', 'E-Mail *') }}
 			{{ Form::text('email', null, ['class' => 'form-control'])}}
 			@if($errors->has('email'))
 			<div class="alert alert-warning">
