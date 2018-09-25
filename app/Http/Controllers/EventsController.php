@@ -79,6 +79,9 @@ class EventsController extends Controller
                 'right' => 'month,agendaWeek,agendaDay'
                 )
     		])->setCallbacks([
+            'dayClick'   => 'function(calEvent,jsEvent,view){
+                document.getElementById("cupos").click();
+            }',
 			'eventClick' => 'function(calEvent,jsEvent,view){
 					$("#btnAgregar").hide();
 					$("#btnEliminar").hide();
