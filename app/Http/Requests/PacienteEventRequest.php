@@ -314,6 +314,7 @@ class PacienteEventRequest extends FormRequest
         'end_date:required'=>'Hora de inicio requerida',
         'end_date.before_or_equal'=>'La hora de atencion es antes de las 18:00',
         'end_date.after'=>'La hora de fin debe ser despues de la hora inicio',
+        'txtFecha.after_or_equal'=>'La fecha no debe ser dias anteriores a hoy',
    
         'txtFecha.after'=>'La cita no debe ser programada para hoy mismo o dias anteriores',
         'pacienteID.required'=>'campo requerido',
@@ -336,7 +337,7 @@ class PacienteEventRequest extends FormRequest
                 'end_date:required'=>'Hora de inicio requerida',
                 'end_date.before_or_equal'=>'La hora de atencion es antes de las 15:00 dia sábado',
                 'end_date.after'=>'La hora de fin debe ser despues de la hora inicio',
-           
+                'txtFecha.after_or_equal'=>'La fecha no debe ser dias anteriores a hoy',
                 'txtFecha.after'=>'La cita no debe ser programada para hoy mismo o dias anteriores',
                 'pacienteID.required'=>'campo requerido',
                 'RangoStartHora.between'=>'Horarios de atencion dia sábado 8:00-15:00',
