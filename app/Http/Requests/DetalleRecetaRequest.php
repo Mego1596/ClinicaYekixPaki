@@ -24,7 +24,7 @@ class DetalleRecetaRequest extends FormRequest
     public function rules()
     {
         return [
-            'medicamento'=>'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ]*)*)+$/|max:200',
+            'medicamento'=>'required|max:200',
             'dosis'=>'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ0-9\.])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ0-9\.]*)*)+$/|max:200',
             'cantidad'=>'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ0-9\.])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ0-9\.]*)*)+$/|max:200'
         ];

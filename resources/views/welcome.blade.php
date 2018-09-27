@@ -3,11 +3,23 @@
 
   <head>
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
 
-    <title>YekixPaki|Inicio</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="img/favicon-16x16.png">
+    <link rel="manifest" href="img/site.webmanifest">
+    <link rel="mask-icon" href="img/safari-pinned-tab.svg" color="#5bbad5">
+    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">          
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>YekixPaki | Inicio</title>
 
 
     <link href="index/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -77,8 +89,12 @@
           <div class="col-lg-8 mx-auto text-center">
             <h2 class="section-heading text-white">Quienes somos</h2>
             <hr class="light my-4">
-            <p class="text-faded mb-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae vel, deserunt assumenda odit, velit, modi perspiciatis tenetur cumque ea 
-              est blanditiis praesentium soluta dignissimos doloribus impedit. Recusandae dignissimos officia animi.</p>
+            <p class="text-faded mb-4">
+              Somos un equipo profesional y capacitado para el cuido de tu salud bucal, enfocados en la prevenciòn, tratamiento y rehabilitaciòn oral.
+            </p>
+            <p class="text-faded mb-4">
+              Prestándote servicios oontológicos desde el año 2009, capacitándonos continuamente en el área estética y cosmética dental y en 2018 en cirugía oral.
+            </p>
             <a class="btn btn-light btn-xl js-scroll-trigger" href="#servicios">Servicios</a>
           </div>
         </div>
@@ -117,9 +133,9 @@
           <div class="col-lg-3 col-md-6 text-center">
             <div class="service-box mt-5 mx-auto">
               <i class="fas fa-4x fa-clock text-primary mb-3 sr-icon-3"></i>
-              <h3 class="mb-3">Atención horas personalizadas</h3>
-              <p class="text-muted mb-0">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ut repellendus dolor unde modi, nemo sint neque commodi saepe 
-                dolores fugiat exercitationem alias minima iure error nostrum quisquam? Amet, laborum delectus.</p>
+              <h3 class="mb-3">Horarios de Atención</h3>
+              <p class="text-muted mb-0">Lunes - Viernes y Domingo  de 8:00 am a 6:00 pm</p>
+              <p class="text-muted mb-0">Sábado  de 8:00 am a 3:00 pm</p>
             </div>
           </div>
           <div class="col-lg-3 col-md-6 text-center">
