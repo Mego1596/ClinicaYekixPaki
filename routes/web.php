@@ -146,7 +146,7 @@ Route::middleware(['auth'])->group(function(){
 	Route::delete('receta/destroy/{receta}', 'RecetasController@destroy')->name('receta.destroy')->middleware('permission:recetas.destroy');
 
 	Route::get('receta/edit/{cita}/{receta}', 'RecetasController@edit')->name('receta.edit')->middleware('permission:recetas.edit');
-
+	Route::get('receta/enviar/{cita}/{receta}','RecetasController@sendMail')->name('receta.email')->middleware('permission:recetas.email');
 	//dealle Receta
 	Route::post('detalleReceta/store', 'DetalleRecetaController@store')->name('detalleReceta.store')->middleware('permission:admin.crearHistoria');
 

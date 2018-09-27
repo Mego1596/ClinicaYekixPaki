@@ -8,6 +8,7 @@ use App\Paciente;
 use App\DetalleReceta;
 use Illuminate\Http\Request;
 use PDF;
+use Mail;
 use Carbon\Carbon;
 use App\Http\Requests\RecetaRequest;
 class RecetasController extends Controller
@@ -114,5 +115,34 @@ class RecetasController extends Controller
         $receta = Recetas::find($id);
         $receta->delete();
         return back()->with('info','Eliminado Correctamente');
+    }
+
+    function sendMail($id,$id2)
+    {
+        $evento = Events::find($id);
+        $paciente = Paciente::find($evento->paciente_id);
+        $receta = Recetas::find($id2);
+        $edad= Carbon::parse($paciente->fechaNacimiento)->age;
+        $fecha = substr($receta->created_at, 0,11);
+        $newDate = date("d/m/Y", strtotime($fecha));
+        $detalles = DetalleReceta::where('receta_id',$id2)->get();
+        $pdf = PDF::loadView('receta.show',compact('paciente','receta','newDate','detalles','edad'));
+        $pdf->setPaper('A4','Portrait');
+
+        if(isset($paciente->email)){
+
+
+            Mail::send('email.receta', ['paciente'=>$paciente], function ($m) use ($paciente,$pdf) {
+            $m->to($paciente->email,$paciente->nombre1);
+            $m->subject('Receta Medica');
+            $m->from('clinicaYekixPaki@gmail.com','YekixPaki');
+            $m->attachData($pdf->output(),'receta-'.$paciente->nombre1.'.pdf');
+                                                                                                });
+            return back()->with('info','Email enviado correctamente');
+                                                                                            }
+                    else{
+            return back()->with('error','Usuario no posee email registrado');
+                    }
+
     }
 }

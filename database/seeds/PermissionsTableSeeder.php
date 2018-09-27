@@ -300,5 +300,11 @@ class PermissionsTableSeeder extends Seeder
             'slug' => 'users.usuarios',
             'description' => 'Lista y Navega todos los usuarios asistente del Sistema',
         ]);
+//envio de receta por mail
+        Permission::create([
+            'name' => 'Envio de receta',
+            'slug' => 'recetas.email',
+            'description' => 'Lista y Navega todos los usuarios asistente del Sistema',
+        ]);
     }
 }
