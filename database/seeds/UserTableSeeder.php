@@ -79,7 +79,8 @@ class UserTableSeeder extends Seeder
         DB::table('permission_role')->insert(['permission_id' => '41' , 'role_id'=>'2']);
         DB::table('permission_role')->insert(['permission_id' => '42' , 'role_id'=>'2']);
         DB::table('permission_role')->insert(['permission_id' => '43' , 'role_id'=>'2']);
-
+        //email receta
+        DB::table('permission_role')->insert(['permission_id' => '47' , 'role_id'=>'2']);
 
         //Permisos Asistente
         DB::table('permission_role')->insert(['permission_id' => '2' ,  'role_id'=>'3']);
@@ -111,9 +112,11 @@ class UserTableSeeder extends Seeder
         DB::table('permission_role')->insert(['permission_id' => '33' , 'role_id'=>'3']);
         DB::table('permission_role')->insert(['permission_id' => '44' , 'role_id'=>'3']);
         DB::table('permission_role')->insert(['permission_id' => '45' , 'role_id'=>'3']);
+
         //Permisos Paciente
         DB::table('permission_role')->insert(['permission_id' => '16' , 'role_id'=>'5']);
         DB::table('permission_role')->insert(['permission_id' => '17' , 'role_id'=>'5']);
         DB::table('permission_role')->insert(['permission_id' => '21' , 'role_id'=>'5']);
+        
     }
 }

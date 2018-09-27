@@ -75,6 +75,11 @@
 										@endcan
 									</td>
 									<td width="10px">
+											@can('recetas.email')
+												<a href="{{ route('receta.email',['cita' => $id, 'receta' => $receta->id]) }}" class="btn btn-sm btn-dark" style="color: white"><li class="fa fa-envelope"></li> Enviar receta</a>
+											@endcan
+									</td>
+									<td width="10px">
 										@can('recetas.destroy')
 											<button type="button" class="btn btn-sm btn-default btn btn-danger" data-toggle="modal" data-target="#Modal{{$receta->id}}"><li class="fa fa-trash"></li>
 													  					Eliminar
@@ -106,7 +111,9 @@
 																	{!! Form::close() !!}
 										@endcan
 									</td>
+
 								</tr>
+	
 								@endforeach
 							</tbody>
 						</table>
