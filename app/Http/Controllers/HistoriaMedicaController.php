@@ -21,7 +21,7 @@ class HistoriaMedicaController extends Controller
         $historia->paciente_id = $request->paciente_id;
         $historia->save();
         return back()
-                ->with('info','Creado Correctamente')
+                ->with('info','Historia Medica creada Correctamente')
                 ->with('tipo', 'success');
 
     }
@@ -39,7 +39,7 @@ class HistoriaMedicaController extends Controller
         $historiaMedica = HistoriaMedica::find($id);
         $historiaMedica->update($request->all());
         return back()
-                ->with('info','Modificado Correctamente')
+                ->with('info','Historia Medica modificada Correctamente')
                 ->with('tipo', 'success');
     }
 
@@ -54,7 +54,7 @@ class HistoriaMedicaController extends Controller
         $historiaMedica = HistoriaMedica::find($id);
         if($historiaMedica->delete()){
         return back()
-            ->with('info','Eliminado Correctamente')
+            ->with('info','Historia Medica eliminada Correctamente')
             ->with('tipo', 'success');
         }
     }

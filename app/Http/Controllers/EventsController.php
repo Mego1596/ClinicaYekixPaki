@@ -143,6 +143,6 @@ class EventsController extends Controller
             $event->paciente_id = $pacienteNuevo;
             $event->save();
         }
-            return Redirect::to('/events');
+        return redirect()->route('events.index')->with('info','Cita asignada con exito');
     }
 }

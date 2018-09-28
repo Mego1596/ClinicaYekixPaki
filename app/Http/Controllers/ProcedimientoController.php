@@ -66,7 +66,7 @@ class ProcedimientoController extends Controller
         else //validacion aprobada
         {
             $procedimiento = Procedimiento::create($request->all());
-            return redirect()->route('procedimiento.index')->with('info','Proceso guardado con exito');
+            return redirect()->route('procedimiento.index')->with('info','Procedimiento guardado con exito');
         }
     }
 
@@ -126,13 +126,13 @@ class ProcedimientoController extends Controller
         else //validacion aprobada
         {
             $procedimiento->update($request->all());
-            return redirect()->route('procedimiento.index')->with('info','Edicion guardada con exito');
+            return redirect()->route('procedimiento.index')->with('info','Procedimiento actualizado con exito');
         }
 
 
 
         $procedimiento->update($request->all());
-        return redirect()->route('procedimiento.edit',$procedimiento->id)->with('info','Proceso actualizado con exito');
+        return redirect()->route('procedimiento.edit',$procedimiento->id)->with('info','Procedimiento actualizado con exito');
     }
 
     /**
@@ -144,6 +144,6 @@ class ProcedimientoController extends Controller
     public function destroy(Procedimiento $procedimiento)
     {
         $procedimiento->delete();
-        return back()->with('info','Eliminado Correctamente');
+        return back()->with('info','Procedimiento eliminado correctamente');
     }
 }

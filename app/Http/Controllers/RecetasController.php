@@ -114,7 +114,7 @@ class RecetasController extends Controller
     {
         $receta = Recetas::find($id);
         $receta->delete();
-        return back()->with('info','Eliminado Correctamente');
+        return back()->with('info','Receta eliminada correctamente');
     }
 
     function sendMail($id,$id2)

@@ -122,12 +122,12 @@ class UserController extends Controller
         if($user->save()){
             if($request['role']=='doctor'){
                 $user->roles()->sync(2);
-                return redirect()->route('user.index')->with('info','Usuario guardado con exito');
+                return redirect()->route('user.index')->with('info','Odontologo guardado con exito');
             }elseif ($request['role']=='asistente') {
                 $user->roles()->sync(3);
                 return redirect()->route('user.asistente')
                 ->with('head',"Lista de Asistentes")
-                ->with('info','Usuario guardado con exito');
+                ->with('info','Asistente guardado con exito');
             }
         }
         //
@@ -194,12 +194,12 @@ class UserController extends Controller
         $userAux->especialidad = $request->especialidad;
         if($userAux->save()){
             if($request['role']=='doctor'){
-                    return redirect()->route('user.index')->with('info','Usuario Actualizado con exito');
+                    return redirect()->route('user.index')->with('info','Odonotologo Actualizado con exito');
             }elseif ($request['role']=='asistente') {
                     $head = "Lista de Asistentes";
                     return redirect()->route('user.asistente')
                     ->with('head',$head)
-                    ->with('info','Usuario Actualizado con exito');
+                    ->with('info','Asistente Actualizado con exito');
                 }
         }
     }
@@ -264,11 +264,11 @@ class UserController extends Controller
          $user->roles()->sync(4);
 
          if($idRole=='doctor'){
-                return redirect()->route('user.index')->with('info','Usuario guardado con exito');
+                return redirect()->route('user.index')->with('info','Suspencion permisos con exito');
         }elseif ($idRole=='asistente') {
                 return redirect()->route('user.asistente')
                 ->with('head',"Lista de Asistentes")
-                ->with('info','Usuario guardado con exito');
+                ->with('info','Suspencion de permisos con exito');
             }
 
     }
