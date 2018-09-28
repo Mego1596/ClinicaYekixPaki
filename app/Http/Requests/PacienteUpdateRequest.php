@@ -39,7 +39,7 @@ class PacienteUpdateRequest extends FormRequest
                 'apellido2'=>'nullable|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ]*)*)+$/|max:50|string',
                 'fechaNacimiento'=>'required|date|before:2016-01-01|after:1900-01-01',
                 'telefono'=>'required|min:9|max:9|regex:/^[0-9]{4}-[0-9]{4}$/',
-                'ocupacion' => 'required|string|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
+                'ocupacion' => 'required|string|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ])+((\s*)+([\.a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
                 'sexo'=>'required|string|regex:/^[MF]$/',
                 //'nullable|string|email|unique:users|max:90|min:5'
                 'email'=>[
@@ -50,7 +50,7 @@ class PacienteUpdateRequest extends FormRequest
                 'recomendado'=>'nullable|string|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
                 'historiaOdontologica'=>'nullable|string|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
                 'historiaMedica'=>'nullable|string|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
-                'domicilio'=>'required|string|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
+                'domicilio'=>'required|string|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ])+((\s*)+([\.a-zA-ZñÑáéíóúÁÉÍÓÚ0-9_-]*)*)+$/',
                 'direccion_de_trabajo'=>'nullable|string|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
                 'responsable'=>'nullable|string|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ]*)*)+$/'
     
