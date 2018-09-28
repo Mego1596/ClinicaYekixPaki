@@ -606,7 +606,7 @@ class PacienteController extends Controller
                 }
                 $event->descripcion         = $request['txtDescripcion'];
                 $event->save();
-                \Session::flash('success','Cita añadida exitosamente 1');
+                \Session::flash('success','Cita añadida exitosamente ');
                 return redirect()->route('paciente.agenda',$request->pacienteID)->with('info','Cita guardada con exito');
             }else{
                 $event = new Events();

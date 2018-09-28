@@ -97,6 +97,6 @@ class DetalleRecetaController extends Controller
     {
         $detalleReceta= DetalleReceta::find($id);
         $detalleReceta->delete();
-        return back()->with('info','Eliminado Correctamente');
+        return back()->with('info','Detalle de Receta Eliminado Correctamente');
     }
 }

@@ -42,7 +42,7 @@
 										@endcan
 									</th>
 									@else
-									<th colspan="4" width="237">
+									<th colspan="5" width="237">
 										@can('recetas.create')
 										<a href="{{ route('receta.create',['cita' =>$id]) }}" class="btn btn-block btn-success pull-right">
 										<li class="fa fa-plus-square"></li>	Crear Receta
