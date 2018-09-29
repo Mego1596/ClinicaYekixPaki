@@ -383,7 +383,7 @@ class PacienteController extends Controller
             $planT = Plan_Tratamiento::where('events_id',$event->id)->get();
             if(sizeof($planT) > 1 || is_null($planT) ){
                 $event_list[] =Calendar::event(
-                    $paciente->nombre1." ".$paciente->nombre2." ".$paciente->apellido1." ".$paciente->apellido2,
+                    $paciente->nombre1." ".$paciente->nombre2." ".$paciente->nombre3." ".$paciente->apellido1." ".$paciente->apellido2,
                     false,
                     new \DateTime($event->start_date),
                     new \DateTime($event->end_date),
@@ -400,7 +400,7 @@ class PacienteController extends Controller
                 $proceso = Procedimiento::where('id',$planT)->value('color');
                 $proc1   = Procedimiento::where('id',$planT)->value('id');
                 $event_list[] =Calendar::event(
-                    $paciente->nombre1." ".$paciente->nombre2." ".$paciente->apellido1." ".$paciente->apellido2,
+                    $paciente->nombre1." ".$paciente->nombre2." ".$paciente->nombre3." ".$paciente->apellido1." ".$paciente->apellido2,
                     false,
                     new \DateTime($event->start_date),
                     new \DateTime($event->end_date),

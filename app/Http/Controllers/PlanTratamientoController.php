@@ -113,7 +113,7 @@ class PlanTratamientoController extends Controller
             $planT = Plan_Tratamiento::where('events_id',$event->id)->get();
             if(sizeof($planT) > 1 || sizeof($planT) == 0){
                 $event_list[] =Calendar::event(
-                    $paciente->nombre1." ".$paciente->nombre2." ".$paciente->apellido1." ".$paciente->apellido2,
+                    $paciente->nombre1." ".$paciente->nombre2." ".$paciente->nombre3." ".$paciente->apellido1." ".$paciente->apellido2,
                     false,
                     new \DateTime($event->start_date),
                     new \DateTime($event->end_date),
@@ -129,7 +129,7 @@ class PlanTratamientoController extends Controller
                 $planT2 = Plan_Tratamiento::where('events_id',$event->id)->value('procedimiento_id');
                 $proceso = Procedimiento::find($planT2);
                 $event_list[] =Calendar::event(
-                    $paciente->nombre1." ".$paciente->nombre2." ".$paciente->apellido1." ".$paciente->apellido2,
+                    $paciente->nombre1." ".$paciente->nombre2." ".$paciente->nombre3." ".$paciente->apellido1." ".$paciente->apellido2,
                     false,
                     new \DateTime($event->start_date),
                     new \DateTime($event->end_date),
