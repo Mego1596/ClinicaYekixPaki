@@ -41,6 +41,7 @@
 										@endcan
 									</th>
 									@else
+										@if(sizeof($detalles) < 2)
 									<th colspan="3" width="237">
 										@can('detalleRecetas.create')
 										<a href="{{ route('detalleReceta.create', ['receta' => $id, 'cita' => $id2 ]) }}" class="btn btn-block btn-success pull-right">
@@ -48,6 +49,7 @@
 										</a>
 										@endcan
 									</th>
+										@endif
 									@endif
 								</tr>
 							</thead>
