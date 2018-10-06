@@ -1,6 +1,6 @@
 <div class="row">
 	<div class="col-md-3">
-		{{ Form::hidden('idRole', $idRole , ['class' => 'form-control'])}}
+		{{ Form::hidden('idRole', $idRole , ['class' => 'form-control', 'id' => 'idRole'])}}
 		<div class="form-group">
 			{{ Form::label('nombre1', 'Primer Nombre*') }}
 			{{ Form::text('nombre1', null, ['class' => 'form-control','required'])}}
@@ -68,7 +68,7 @@
 			@endif
 		</div>
 	</div>
-	@if($idRole=='doctor')
+	@if($idRole == 'doctor')
 	<div class="col-md-3">
 		<div class="form-group">
 			{{ Form::label('numeroJunta', 'Numero de Junta*') }}
@@ -81,7 +81,7 @@
 		</div>
 	</div>
 	@endif
-		@if($idRole=='asistente')
+		@if($idRole == 'asistente')
 	<div class="col-md-3">
 		<div class="form-group">
 			{{ Form::label('numeroJunta', 'Numero de Junta ', ['style' => 'display:none','id'=>'numeroJunta2']) }}

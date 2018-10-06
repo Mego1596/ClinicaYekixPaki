@@ -93,10 +93,16 @@ window.onload = function() {
 
 	var result2 = document.getElementById('numeroJunta').value;
 	if(result2 == ''){
-		$("#cosa4").prop('checked',true);
-    $("#cosa4").prop('disabled',true);
-    document.getElementById('numeroJunta').style.display = 'none';
-    document.getElementById('numeroJunta2').style.display = 'none';
+    var role = document.getElementById('idRole').value;
+    if(role == 'asistente'){
+      $("#cosa4").prop('checked',true);
+      $("#cosa4").prop('disabled',true);
+      document.getElementById('numeroJunta').style.display = 'none';
+      document.getElementById('numeroJunta2').style.display = 'none';
+    }else{
+      document.getElementById('numeroJunta').style.display = 'block';
+      document.getElementById('numeroJunta2').style.display = 'block';
+    }
 	}else{
 		$("#cosa3").prop('checked',true);
     $("#cosa3").prop('disabled',true);
