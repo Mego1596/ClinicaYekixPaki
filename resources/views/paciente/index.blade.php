@@ -70,6 +70,7 @@
 											@endcan
 										</th>
 									@else
+										@if($bloqueoOrdenado != 0)
 										<th colspan="3" width="237">
 											@can('pacientes.create')
 											<a href="{{ route('paciente.create') }}" class="btn btn-success btn-block">
@@ -77,6 +78,7 @@
 											</a>
 											@endcan
 										</th>
+										@endif
 									@endif
 								</tr>
 							</thead>

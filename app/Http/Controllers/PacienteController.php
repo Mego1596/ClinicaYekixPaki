@@ -43,6 +43,7 @@ class PacienteController extends Controller
             $pacientes = Paciente::paginate(10);
             $head = 'Lista de Pacientes';
             $cantidad = Paciente::max("id");
+            $bloqueoOrdenado = Events::where('paciente_id', $cantidad)->count();
             $anios = array(0);
             foreach ($pacientes as $value){
                 $string = "SELECT id,start_date,paciente_id FROM Events WHERE id = (SELECT MAX(id) FROM Events WHERE paciente_id =".$value->id.");";
@@ -146,7 +147,7 @@ class PacienteController extends Controller
             }
             $pacientes = Paciente::paginate(10);
             $user = User::paginate(10); 
-            return view('paciente.index', compact("pacientes",'head','user')); 
+            return view('paciente.index', compact("pacientes",'head','user','bloqueoOrdenado')); 
         }
     }
 
@@ -774,13 +775,17 @@ class PacienteController extends Controller
                     $pacientes = Paciente::where('nombre1','ILIKE', $request->buscar.'%')->orWhere('nombre2','ILIKE', $request->buscar.'%')->orWhere('nombre3','ILIKE', $request->buscar.'%')->paginate();
                     $user = User::paginate();
                     $head = 'Lista de Pacientes';
-                    return view('paciente.index', compact("pacientes",'head','user'))
+                    $cantidad = Paciente::max("id");
+                    $bloqueoOrdenado = Events::where('paciente_id', $cantidad)->count();
+                    return view('paciente.index', compact("pacientes",'head','user','bloqueoOrdenado'))
                             ->with('info', 'Busqueda Exitosa');
                 }
                 else{
                     $pacientes = Paciente::paginate(10);
                     $user = User::paginate(10); 
                     $head = 'Lista de Pacientes';
+                    $cantidad = Paciente::max("id");
+                    $bloqueoOrdenado = Events::where('paciente_id', $cantidad)->count();
                     return view('paciente.index', compact("pacientes",'head','user'));
                 }
             }elseif ($request['buscador'] == 'Apellido') {
@@ -788,28 +793,36 @@ class PacienteController extends Controller
                     $pacientes = Paciente::where('apellido1','ILIKE', $request->buscar.'%')->orWhere('apellido2','ILIKE', $request->buscar.'%')->paginate();
                     $user = User::paginate();
                     $head = 'Lista de Pacientes';
-                    return view('paciente.index', compact("pacientes",'head','user'))
+                    $cantidad = Paciente::max("id");
+                    $bloqueoOrdenado = Events::where('paciente_id', $cantidad)->count();
+                    return view('paciente.index', compact("pacientes",'head','user','bloqueoOrdenado'))
                             ->with('info', 'Busqueda Exitosa');
                 }
                 else{
                     $pacientes = Paciente::paginate(10);
                     $user = User::paginate(10); 
                     $head = 'Lista de Pacientes';
-                    return view('paciente.index', compact("pacientes",'head','user'));
+                    $cantidad = Paciente::max("id");
+                    $bloqueoOrdenado = Events::where('paciente_id', $cantidad)->count();
+                    return view('paciente.index', compact("pacientes",'head','user','bloqueoOrdenado'));
                 }
             }elseif ($request['buscador'] == 'Expediente') {
                if(!is_null($request['buscar'])){
                     $pacientes = Paciente::where('expediente','ILIKE', $request->buscar.'%')->paginate();
                     $user = User::paginate();
                     $head = 'Lista de Pacientes';
-                    return view('paciente.index', compact("pacientes",'head','user'))
+                    $cantidad = Paciente::max("id");
+                    $bloqueoOrdenado = Events::where('paciente_id', $cantidad)->count();
+                    return view('paciente.index', compact("pacientes",'head','user','bloqueoOrdenado'))
                             ->with('info', 'Busqueda Exitosa');
                 }
                 else{
                     $pacientes = Paciente::paginate(10);
                     $user = User::paginate(10); 
                     $head = 'Lista de Pacientes';
-                    return view('paciente.index', compact("pacientes",'head','user'));
+                    $cantidad = Paciente::max("id");
+                    $bloqueoOrdenado = Events::where('paciente_id', $cantidad)->count();
+                    return view('paciente.index', compact("pacientes",'head','user','bloqueoOrdenado'));
                 }
             }elseif ($request['buscador'] == 'Nombre de Usuario') {
                 if(!is_null($request['buscar'])){
@@ -823,26 +836,34 @@ class PacienteController extends Controller
                         $user = User::paginate(10); 
                     }
                     $head = 'Lista de Pacientes';
-                    return view('paciente.index', compact("pacientes",'head','user'))
+                    $cantidad = Paciente::max("id");
+                    $bloqueoOrdenado = Events::where('paciente_id', $cantidad)->count();
+                    return view('paciente.index', compact("pacientes",'head','user','bloqueoOrdenado'))
                             ->with('info', 'Busqueda Exitosa');
                 }
                 else{
                     $pacientes = Paciente::paginate(10);
                     $user = User::paginate(10); 
                     $head = 'Lista de Pacientes';
-                    return view('paciente.index', compact("pacientes",'head','user'));
+                    $cantidad = Paciente::max("id");
+                    $bloqueoOrdenado = Events::where('paciente_id', $cantidad)->count();
+                    return view('paciente.index', compact("pacientes",'head','user','bloqueoOrdenado'));
                 }
             }else{
                 $pacientes = Paciente::paginate(10);
                 $user = User::paginate(10); 
                 $head = 'Lista de Pacientes';
-                return view('paciente.index', compact("pacientes",'head','user'));
+                $cantidad = Paciente::max("id");
+                $bloqueoOrdenado = Events::where('paciente_id', $cantidad)->count();
+                return view('paciente.index', compact("pacientes",'head','user','bloqueoOrdenado'));
             }
         }else{
              $pacientes = Paciente::paginate(10);
                 $user = User::paginate(10); 
                 $head = 'Lista de Pacientes';
-                return view('paciente.index', compact("pacientes",'head','user'));
+                $cantidad = Paciente::max("id");
+                $bloqueoOrdenado = Events::where('paciente_id', $cantidad)->count();
+                return view('paciente.index', compact("pacientes",'head','user','bloqueoOrdenado'));
         }
     }
 
