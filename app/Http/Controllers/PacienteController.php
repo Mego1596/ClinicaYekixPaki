@@ -41,8 +41,111 @@ class PacienteController extends Controller
             return view('paciente.index', compact('pacientes','head','user'));
         }else{
             $pacientes = Paciente::paginate(10);
-            $user = User::paginate(10); 
             $head = 'Lista de Pacientes';
+            $cantidad = Paciente::max("id");
+            $anios = array(0);
+            foreach ($pacientes as $value){
+                $string = "SELECT id,start_date,paciente_id FROM Events WHERE id = (SELECT MAX(id) FROM Events WHERE paciente_id =".$value->id.");";
+                $query = DB::select(DB::raw($string));
+                if($value->habilitado != true){
+                    if($value->id != 1){
+                        if(!is_null($query)){
+                            foreach ($query as $conversion) {
+                                $ahora = Carbon::now();
+                                $year =(int) substr($conversion->start_date, 0,4);
+                              
+                                $month =(int) substr($conversion->start_date, -14,2);
+
+                                $day =(int) substr($conversion->start_date, -11,3);
+                             
+                                $hour = (int) substr($conversion->start_date, -9,3);
+                              
+                                $minute =(int) substr($conversion->start_date, -5,2);
+                                
+                                $second =(int) substr($conversion->start_date, -2);
+
+                                $ultimaCita = Carbon::create($year,$month,$day,$hour,$minute,$second,"America/El_Salvador");
+
+                                if($ultimaCita->diffInMinutes($ahora) < 42000){
+                                    $value->habilitado = true;
+                                    $value->save();
+                                    $user = User::find($value->user_id);
+                                    if(is_null($user)){
+                                        if($value->email != null){
+                                            $nuevo = new User();
+                                            $nuevo->name = $value->nombre1[0].$value->expediente;
+                                            $nuevo->nombre1 = $value->nombre1;
+                                            $nuevo->apellido1 = $value->apellido1;
+                                            $nuevo->email = $value->email;
+                                            $password=substr(md5(microtime()),1,6);
+                                            $nuevo->password = $password;
+                                            Mail::send('email.paciente',['user'=>$nuevo], function ($m) use ($nuevo,$value){
+                                                $m->to($nuevo->email,$value->nombre1);
+                                                $m->subject('Contraseña y nombre de usuario');
+                                                $m->from('clinicaYekixPaki@gmail.com','YekixPaki');
+                                                });
+                                                $nuevo->password =bcrypt($password);
+                                                $nuevo->save();
+                                                $nuevo->roles()->sync(5);
+                                                $value->user_id = $nuevo->id;
+                                                $value->save();
+                                        }
+                                    }else{
+                                        if($value->email != null){
+                                            $user->nombre1 = $value->nombre1;
+                                            $user->apellido1 = $value->apellido1;
+                                            $user->email = $value->email;
+                                            $user->save();
+                                        }else{
+                                            $auxiliarid = $value->user_id;
+                                            $value->user_id = null;
+                                            $value->save();
+                                            $usuario = User::find($auxiliarid);
+                                            if(!is_null($usuario))
+                                            $usuario->delete();
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }else{
+                    if($value->id != 1){
+                        if(!is_null($query)){
+                            foreach ($query as $conversion) {
+                                $ahora = Carbon::now();
+                                $year =(int) substr($conversion->start_date, 0,4);
+                              
+                                $month =(int) substr($conversion->start_date, -14,2);
+
+                                $day =(int) substr($conversion->start_date, -11,3);
+                             
+                                $hour = (int) substr($conversion->start_date, -9,3);
+                              
+                                $minute =(int) substr($conversion->start_date, -5,2);
+                                
+                                $second =(int) substr($conversion->start_date, -2);
+
+                                $ultimaCita = Carbon::create($year,$month,$day,$hour,$minute,$second,"America/El_Salvador");
+
+                                if($ultimaCita->diffInMinutes($ahora) >= 42000){
+                                    $users = User::select('id')->where('id',$value->user_id)->value('id');
+                                    if(!is_null($users)){
+                                        $aux = User::find($value->user_id);
+                                        $value->user_id  =   null;
+                                        $value->save();
+                                        $aux->delete();
+                                    }
+                                    $value->habilitado = false;
+                                    $value->save();
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            $pacientes = Paciente::paginate(10);
+            $user = User::paginate(10); 
             return view('paciente.index', compact("pacientes",'head','user')); 
         }
     }
@@ -745,54 +848,6 @@ class PacienteController extends Controller
 
 
     public function habilitar(Paciente $paciente){
-        $paciente->habilitado=true;
-        $paciente->save();
-        $user = User::find($paciente->user_id);
-
-        if(is_null($user)){
-            if($paciente->email != null){
-                $nuevo = new User();
-                $nuevo->name = $paciente->nombre1[0].$paciente->expediente;
-                $nuevo->nombre1 = $paciente->nombre1;
-                $nuevo->apellido1 = $paciente->apellido1;
-                $nuevo->email = $paciente->email;
-                $password=substr(md5(microtime()),1,6);
-                $nuevo->password = $password;
-                Mail::send('email.paciente',['user'=>$nuevo], function ($m) use ($nuevo,$paciente){
-                $m->to($nuevo->email,$paciente->nombre1);
-                $m->subject('Contraseña y nombre de usuario');
-                $m->from('clinicaYekixPaki@gmail.com','YekixPaki');
-                });
-                $nuevo->password =bcrypt($password);
-                $nuevo->save();
-                $nuevo->roles()->sync(5);
-                $paciente->user_id = $nuevo->id;
-                $paciente->save();
-        }else{
-            if($paciente->email != null){
-                $user->nombre1 = $paciente->nombre1;
-                $user->apellido1 = $paciente->apellido1;
-                $user->email = $paciente->email;
-                $user->save();
-            }else{
-                $auxiliarid = $paciente->user_id;
-                $paciente->user_id = null;
-                $paciente->save();
-                $usuario = User::find($auxiliarid);
-                if(!is_null($usuario))
-                $usuario->delete();
-            }
-        }
-        $pacientes = Paciente::paginate(10);
-        $user = User::paginate(10); 
-        $head = 'Lista de Pacientes';
-        return redirect()->route('paciente.index')
-            ->with('pacientes',$pacientes)
-            ->with('head',$head)
-            ->with('user', $user)
-            ->with('info','Paciente Habilitado Correctamente')
-            ->with('tipo', 'success');
-
-        }
+        return redirect()->route('paciente.agenda',$paciente->id);        
     }
 }

@@ -101,38 +101,6 @@
 																	<a href="{{ route('paciente.edit', $paciente->id) }}" class="btn btn-sm  btn-default bg-success" style="color: white"><i class="fa fa-edit"></i> Editar</a>
 																@endcan
 															</td>
-															<td width="10px">
-																@can('users.destroy')
-																	<button type="button" class="btn btn-sm btn-default btn btn-warning" data-toggle="modal" data-target="#Modal{{$paciente->id}}">
-													  				<i class="fa fa-minus-square" style="color: white"></i> Inhabilitar
-																	</button>
-																	{!! Form::open(['route' => ['paciente.destroy', $paciente->id],'method' => 'DELETE']) !!}
-																		<!-- Modal -->
-																		<div class="modal fade" id="Modal{{$paciente->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-																			<div class="modal-dialog" role="document">
-																		    	<div class="modal-content">
-																		    		<div class="modal-header">
-																		        		<h5 class="modal-title" id="exampleModalLabel"> Inhabilitar Paciente</h5>
-																		        			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-																		          				<span aria-hidden="true">&times;</span>
-																		        			</button>
-																		      		</div>
-																		      		<div class="modal-body">
-																		      			<label>Estas seguro?</label>
-																		      			<br/>
-																		      			<button type="button" class="btn btn-md btn-default" data-dismiss="modal">No</button>
-																		        		<button class="btn btn-md btn-default bg-danger" style="color: white">
-																							Si
-																						</button>
-																		      		</div>
-																		      		<div class="modal-footer">
-																		      		</div>
-																		    	</div>
-																			</div>
-																		</div>
-																	{!! Form::close() !!}
-																@endcan
-															</td>
 														</tr>
 													@endif
 												@endforeach
@@ -164,38 +132,6 @@
 													</td>
 													@endif
 													@if($paciente->id != 1)
-													<td width="10px">
-														@can('users.destroy')
-															<button type="button" class="btn btn-sm btn-default btn btn-warning" data-toggle="modal" data-target="#Modal{{$paciente->id}}">
-											  				<i class="fa fa-minus-square" style="color: white"></i>	Inhabilitar
-															</button>
-															{!! Form::open(['route' => ['paciente.destroy', $paciente->id],'method' => 'DELETE']) !!}
-																	<!-- Modal -->
-															<div class="modal fade" id="Modal{{$paciente->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-																<div class="modal-dialog" role="document">
-																    	<div class="modal-content">
-																    		<div class="modal-header">
-																        		<h5 class="modal-title" id="exampleModalLabel"> Inhabilitar Paciente</h5>
-																        			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-																          				<span aria-hidden="true">&times;</span>
-																        			</button>
-																      		</div>
-																      		<div class="modal-body">
-																      			<label>Estas seguro?</label>
-																      			<br/>
-																      			<button type="button" class="btn btn-md btn-default" data-dismiss="modal">No</button>
-																        		<button class="btn btn-md btn-default bg-danger" style="color: white">
-																						Si
-																				</button>
-																      		</div>
-																      		<div class="modal-footer">
-																      		</div>
-																    	</div>
-																	</div>
-																</div>
-															{!! Form::close() !!}
-														@endcan
-													</td>
 													@endif
 												</tr>
 											@endif
