@@ -67,7 +67,7 @@ class PacienteController extends Controller
 
                                 $ultimaCita = Carbon::create($year,$month,$day,$hour,$minute,$second,"America/El_Salvador");
 
-                                if($ultimaCita->diffInMinutes($ahora) < 42000){
+                                if($ultimaCita->diffInMinutes($ahora) < 2628000){
                                     $value->habilitado = true;
                                     $value->save();
                                     $user = User::find($value->user_id);
@@ -129,7 +129,7 @@ class PacienteController extends Controller
 
                                 $ultimaCita = Carbon::create($year,$month,$day,$hour,$minute,$second,"America/El_Salvador");
 
-                                if($ultimaCita->diffInMinutes($ahora) >= 42000){
+                                if($ultimaCita->diffInMinutes($ahora) >= 2628000){
                                     $users = User::select('id')->where('id',$value->user_id)->value('id');
                                     if(!is_null($users)){
                                         $aux = User::find($value->user_id);
@@ -485,7 +485,7 @@ class PacienteController extends Controller
         foreach ($events as $key => $event) {
             $paciente = Paciente::find($event->paciente_id);
             $planT = Plan_Tratamiento::where('events_id',$event->id)->get();
-            if(sizeof($planT) > 1 || is_null($planT) ){
+            if(sizeof($planT) > 1 || sizeof($planT) == 0 ){
                 $event_list[] =Calendar::event(
                     $paciente->nombre1." ".$paciente->nombre2." ".$paciente->nombre3." ".$paciente->apellido1." ".$paciente->apellido2,
                     false,

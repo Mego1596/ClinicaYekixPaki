@@ -89,6 +89,7 @@
       	<input type="hidden" name="txtID" id="txtID"/>
       	<input type="hidden" name="txtFecha" id="txtFecha"/>
         <input type="hidden" name="txtPaciente_id" id="txtPaciente_id">
+        <input type="text" name="txtValidador" id="txtValidador">
         @can('pacientes.create')
         <a class="btn btn-primary" href="{{route('paciente.agenda2', 1)}}" target="_blank" id="cupos" name="cupos" style="display: none"><i class="fa fa-outdent"></i> Ver Cupos</a>
         @endcan

@@ -30,7 +30,7 @@ class EventsController extends Controller
         foreach ($events as $key => $event) {
             $paciente = Paciente::find($event->paciente_id);
             $planT = Plan_Tratamiento::where('events_id',$event->id)->get();
-            if(sizeof($planT) > 1 || is_null($planT)){
+            if(sizeof($planT) > 1 || sizeof($planT) == 0){
                 $event_list[] =Calendar::event(
                     $paciente->nombre1." ".$paciente->nombre2." ".$paciente->nombre3." ".$paciente->apellido1." ".$paciente->apellido2,
                     false,
@@ -43,6 +43,7 @@ class EventsController extends Controller
                     'durationEditable'  => false,
                     'expediente'        => $paciente->expediente,
                     'paciente'          => $paciente->id,
+                    'validador'         => 1,
                     ]
                 );
             }else{
@@ -61,6 +62,7 @@ class EventsController extends Controller
                     'durationEditable'  => false,
                     'expediente'        => $paciente->expediente,
                     'paciente'          => $paciente->id,
+                    'validador'         => 0,
                     ]
                 );
             }
@@ -92,16 +94,20 @@ class EventsController extends Controller
 				 	$("#txtTitulo").prop("disabled",true);
 				 	$("#txtID").val(calEvent.id);
                     $("#txtPaciente_id").val(calEvent.paciente);
+                    $("#txtValidador").val(calEvent.validador);
                     if(calEvent.paciente == 1){
                         $("#plan").hide();
                         $("#receta").hide();
                         $("#modificar").hide();
                         $("#btnAsignar").show();
                     }else{
-                        $("#plan").show();
+                        $("#plan").hide();
+                        if(calEvent.validador == 1){
+                            $("#plan").show();
+                        }
                         $("#receta").show();
                         $("#modificar").show();
-                        $("#btnAsignar").hide();
+                        $("#btnAsignar").hide();   
                     }
 				 	$("#txtColor").val(calEvent.color);
                     $("#txtExpediente").val(calEvent.expediente);
