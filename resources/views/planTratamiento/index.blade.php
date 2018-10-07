@@ -1,9 +1,7 @@
 @extends('layouts.base')
 
 @section('content')
-no buscar color para la revision general (el id)
 <br/>
-solo hacer gestion de plan de tratamiento si no tiene plan activo
 	<div>
 		<div class="row">
 			<div class="col-md-12 col-md-offset-2">
@@ -23,7 +21,8 @@ solo hacer gestion de plan de tratamiento si no tiene plan activo
 									<th width="237">
 										@can('planTratamientos.create')
 										<a href="{{ route('planTratamiento.create', ['cita' =>$id]) }}" class="btn btn-block btn-success pull-right">
-											Crear
+										<i class="fa fa-tasks"></i> 
+										<i class="fa fa-plus-square" style="font-size: 10px"></i> Crear Plan de Tratamiento
 										</a>
 										@endcan
 									</th>
@@ -31,7 +30,8 @@ solo hacer gestion de plan de tratamiento si no tiene plan activo
 									<th colspan="3" width="237">
 										@can('planTratamientos.create')
 										<a href="{{ route('planTratamiento.create', ['cita' =>$id])}}" class="btn btn-block btn-success pull-right">
-											Crear
+										<i class="fa fa-tasks"></i>
+										<i class="fa fa-plus-square" style="font-size: 10px"></i> Crear Plan de Tratamiento
 										</a>
 										@endcan
 									</th>

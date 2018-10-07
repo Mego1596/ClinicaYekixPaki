@@ -23,7 +23,6 @@ class PlanTratamientoController extends Controller
     {
         $citaGeneral = Events::find($id);
         $paciente = Paciente::where('id',$citaGeneral->paciente_id)->value('id');
-        var_dump($paciente);
         $planTratamiento = Plan_Tratamiento::where('events_id',$id)->paginate();
         $proc = Procedimiento::paginate();
         return view('planTratamiento.index',compact('planTratamiento','proc','id','paciente'));
