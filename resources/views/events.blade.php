@@ -172,22 +172,20 @@
 <script type="text/javascript">
         document.getElementById("plan").onclick = function() {
           var x=parseInt($('#txtID').val());
-          this.setAttribute("href","planTratamiento/"+x);
-          //this.setAttribute("href","{{route('planTratamiento.index', ['cita' => ''])}}" )
+          var y=parseInt($('#txtValidador').val());
+          this.setAttribute("href","planTratamiento/"+x+"/"+y);
         }
 </script>
 <script type="text/javascript">
           document.getElementById("receta").onclick = function() {
           var x=parseInt($('#txtID').val());
           this.setAttribute("href","receta/"+x);
-          //this.setAttribute("href","{{route('planTratamiento.index', ['cita' => ''])}}" )
         }
 </script>
 <script type="text/javascript">
           document.getElementById("modificar").onclick = function() {
           var x=parseInt($('#txtPaciente_id').val());
           this.setAttribute("href","paciente/"+x+"/events");
-          //this.setAttribute("href","{{route('planTratamiento.index', ['cita' => ''])}}" )
         }
 </script>
     {!! $calendar_details->script() !!}

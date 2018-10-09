@@ -32,24 +32,32 @@
 									<th>Nombre</th>
 									<th>Estado</th>
 									<th></th>
-									@if (sizeof($planTratamiento) == 0)
-									<th width="237">
-										@can('planTratamientos.create')
-										<a href="{{ route('planTratamiento.create', ['cita' =>$id]) }}" class="btn btn-block btn-success pull-right">
-										<i class="fa fa-tasks"></i> 
-										<i class="fa fa-plus-square" style="font-size: 10px"></i> Crear Plan de Tratamiento
-										</a>
-										@endcan
-									</th>
+									@if($validador != 2)
+										@if (sizeof($planTratamiento) == 0)
+										<th width="237">
+											@can('planTratamientos.create')
+											<a href="{{ route('planTratamiento.create', ['cita' =>$id,'validador'=>$validador]) }}" class="btn btn-block btn-success pull-right">
+											<i class="fa fa-tasks"></i> 
+											<i class="fa fa-plus-square" style="font-size: 10px"></i> Crear Plan de Tratamiento
+											</a>
+											@endcan
+										</th>
+										@else
+										<th colspan="5" width="237">
+											@can('planTratamientos.create')
+											<a href="{{ route('planTratamiento.create', ['cita' =>$id,'validador' => $validador])}}" class="btn btn-block btn-success pull-right">
+											<i class="fa fa-tasks"></i>
+											<i class="fa fa-plus-square" style="font-size: 10px"></i> Crear Plan de Tratamiento
+											</a>
+											@endcan
+										</th>
+										@endif
 									@else
-									<th colspan="5" width="237">
-										@can('planTratamientos.create')
-										<a href="{{ route('planTratamiento.create', ['cita' =>$id])}}" class="btn btn-block btn-success pull-right">
-										<i class="fa fa-tasks"></i>
-										<i class="fa fa-plus-square" style="font-size: 10px"></i> Crear Plan de Tratamiento
-										</a>
-										@endcan
-									</th>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
 									@endif
 								</tr>
 							</thead>
@@ -57,12 +65,10 @@
 								@foreach($planTratamiento as $proceso)
 									<tr>
 										<td width="10px">{{$proceso->id}}</td>
-									@foreach($proc as $procedimiento)
-										@if($proceso->procedimiento_id == $procedimiento->id)
-										<td>{{$procedimiento->nombre}}</td>
-										@endif
-									@endforeach
-									@if($proceso->en_proceso == true)
+										@foreach($proc as $procedimiento)
+											@if($proceso->procedimiento_id == $procedimiento->id)
+												<td>{{$procedimiento->nombre}}</td>
+												@if($proceso->en_proceso == true)
 											<td width="150px">
 												<label><strong>En Proceso</strong></label>
 											</td>
@@ -78,10 +84,10 @@
 											</td>
 											<td></td>
 									@endif
-									@if($proceso->en_proceso == true)
+												@if($proceso->en_proceso == true)
 											<td width="10px">
 												@can('planTratamientos.create')
-												<a href="{{ route('planTratamiento.agenda',[ 'procedimiento'=> $procedimiento->id, 'paciente'=> $paciente] )}}" class="btn btn-sm btn-default bg-dark" style="color: white">Agendar Cita
+												<a href="{{ route('planTratamiento.agenda',[ 'procedimiento'=> $procedimiento->id, 'paciente'=> $paciente,'planTratamiento'=>$proceso->id] )}}" class="btn btn-sm btn-default bg-dark" style="color: white">Agendar Cita
 											</a>
 												@endcan
 											</td>
@@ -90,6 +96,9 @@
 									@else
 											<td></td>
 									@endif
+											@endif
+
+										@endforeach
 										<td width="10px">
 											@can('planTratamientos.show')
 												<a href="{{ route('planTratamiento.show', ['cita' =>$id, 'planTratamiento'=> $proceso->id ]) }}" class="btn btn-sm btn-default bg-info" style="color: white">Ver

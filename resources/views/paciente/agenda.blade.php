@@ -6,6 +6,10 @@ $(document).ready(function(){
     $("#cosa").click(function(){
         document.getElementById('procedimiento').style.visibility = 'visible';
         document.getElementById('procedimiento_id').style.visibility = 'visible';
+        document.getElementById('no_de_piezas1').style.display = 'inline';
+        document.getElementById('no_de_piezas2').style.display = 'inline';
+        document.getElementById('honorarios1').style.display = 'inline';
+        document.getElementById('honorarios2').style.display = 'inline';
         $("#cosa2").prop('checked',false);
         $("#cosa").prop('disabled',true);
         $("#cosa2").prop('disabled',false);
@@ -13,10 +17,16 @@ $(document).ready(function(){
     $("#cosa2").click(function(){
         document.getElementById('procedimiento').style.visibility = 'hidden';
         document.getElementById('procedimiento_id').style.visibility = 'hidden';
+        document.getElementById('no_de_piezas1').style.display = 'none';
+        document.getElementById('no_de_piezas2').style.display = 'none';
+        document.getElementById('honorarios1').style.display = 'none';
+        document.getElementById('honorarios2').style.display = 'none';
         $("#cosa").prop('checked',false);
         $("#cosa2").prop('disabled',true);
         $("#cosa").prop('disabled',false);
         $("#procedimiento_id").val("");
+        $("#no_de_piezas2").val("");
+        $("#honorarios2").val("");
     });
 
     $("#cosa2").prop('checked',true);
@@ -226,11 +236,18 @@ $(document).ready(function(){
       <!-- EN EL SELECT VA LA VARIABLE PROCEDIMIENTO -->
         <div class="form-group">
           {!! Form::label('procedimiento_id', 'Procedimiento:',['style' => 'visibility:hidden', 'id' => 'procedimiento'])!!}
-          <div class="">
           {!! Form::select('procedimiento_id', $procedimiento, null, ['placeholder' => 'Elija un procedimiento', 'style' => 'visibility:hidden','id' =>'procedimiento_id'])!!}
-          </div>
         </div>
-
+        <div class="form-group">
+            {{ Form::label('no_de_piezas', 'No. de Piezas',['id'=>'no_de_piezas1','style' => 'display:none']) }}
+            {{ Form::number('no_de_piezas', null, ['class' => 'form-control', 'step' => '0.10', 'min'=>'0','max'=>'600','id'=>'no_de_piezas2', 'style' => 'display:none'])}}
+        </div>
+        @can('pacientes.create')
+        <div class="form-group">
+            {{ Form::label('honorarios', 'Honorarios:',['id'=>'honorarios1','style' => 'display:none']) }}
+            {{ Form::number('honorarios', null, ['class' => 'form-control', 'step' => '0.10', 'min'=>'0','max'=>'600','id'=>'honorarios2','style' => 'display:none'])}}
+        </div>
+        @endcan
       <div class="modal-footer">
 		    {!! Form::submit('Añadir Cita', ['class' => 'btn btn-success','id' => 'btnAgregar', 'name' => 'btnAgregar']) !!}
 		{!! Form::submit('Modificar Cita', ['class' => 'btn btn-success','id' => 'btnModificar','name' => 'btnModificar']) !!}

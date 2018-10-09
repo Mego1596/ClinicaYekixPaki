@@ -94,6 +94,7 @@
         <input type="hidden" name="pacienteID" id="pacienteID" value="{{$paciente->id}}">
         <input type="hidden" name="encendido" id="encendido" value="{{$encendido}}">
         <input type="hidden" name="txtProcedimiento_id" id="txtProcedimiento_id" value="{{$id}}">
+        <input type="hidden" name="referencia" id="referencia" value="{{$planActual}}">
 
       	<div class="form-row">	
       		<div class="form-group col-md-12">

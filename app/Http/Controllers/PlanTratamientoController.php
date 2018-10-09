@@ -19,17 +19,16 @@ class PlanTratamientoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($id)
+    public function index($id,$validador)
     {
         $citaGeneral = Events::find($id);
-
 
         $paciente = Paciente::select('id')->where('id',$citaGeneral->paciente_id)->value('id');
         $persona = Paciente::select('nombre1','nombre2','nombre3','apellido1','apellido2')->where('id',$citaGeneral->paciente_id)->get();
         $planTratamiento = Plan_Tratamiento::select('id','procedimiento_id','completo','en_proceso','no_iniciado')->where('events_id',$id)->orderBy('id','ASC')->paginate();
         $planValidador = Plan_Tratamiento::select('id')->where('events_id',$id)->where('en_proceso',true)->get();
         $proc = Procedimiento::paginate();
-        return view('planTratamiento.index',compact('planTratamiento','proc','id','paciente','persona','planValidador'));
+        return view('planTratamiento.index',compact('planTratamiento','proc','id','paciente','persona','planValidador','validador'));
     }
 
     /**
@@ -37,11 +36,11 @@ class PlanTratamientoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($id)
+    public function create($id,$validador)
     {
         $cita = Events::find($id);
         $procedimiento = Procedimiento::pluck('nombre','id')->toArray();
-        return view('planTratamiento.create',compact('id','procedimiento'));
+        return view('planTratamiento.create',compact('id','procedimiento','validador'));
     }
 
     /**
@@ -77,7 +76,7 @@ class PlanTratamientoController extends Controller
             $planT->save();
         }
 
-        return redirect()->route('planTratamiento.index',['cita'=>$request->events_id]);
+        return redirect()->route('planTratamiento.index',['cita'=>$request->events_id,'validador'=>$request->validador]);
     }
 
     /**
@@ -126,7 +125,7 @@ class PlanTratamientoController extends Controller
     }
 
 
-    public function agendar2($id,$paciente)
+    public function agendar2($id,$paciente,$planActual)
     {
         $loggedUser=Auth::id();
         $result =  DB::table('users')->join('role_user', 'users.id', '=', 'role_user.user_id')->where('users.id', '=', $loggedUser)->value('role_id');
@@ -141,6 +140,7 @@ class PlanTratamientoController extends Controller
         foreach ($events as $key => $event) {
             $paciente = Paciente::find($event->paciente_id);
             $planT = Plan_Tratamiento::where('events_id',$event->id)->get();
+            $validacion = Plan_Tratamiento::select('procedencia')->where('events_id',$event->id)->value('procedencia');
             if(sizeof($planT) > 1 || sizeof($planT) == 0){
                 $event_list[] =Calendar::event(
                     $paciente->nombre1." ".$paciente->nombre2." ".$paciente->nombre3." ".$paciente->apellido1." ".$paciente->apellido2,
@@ -153,6 +153,22 @@ class PlanTratamientoController extends Controller
                     'descripcion'       => $event->descripcion,
                     'textColor'         => $event->textcolor,
                     'durationEditable'  => false,
+                    ]
+                );
+            }elseif (sizeof($planT) == 1 && is_null($validacion)) {
+                $event_list[] =Calendar::event(
+                    $paciente->nombre1." ".$paciente->nombre2." ".$paciente->nombre3." ".$paciente->apellido1." ".$paciente->apellido2,
+                    false,
+                    new \DateTime($event->start_date),
+                    new \DateTime($event->end_date),
+                    $event->id,
+                    [
+                    'descripcion'       => $event->descripcion,
+                    'textColor'         => $event->textcolor,
+                    'durationEditable'  => false,
+                    'expediente'        => $paciente->expediente,
+                    'paciente'          => $paciente->id,
+                    'validador'         => 1,
                     ]
                 );
             }else{
@@ -268,7 +284,7 @@ class PlanTratamientoController extends Controller
 
             ]);
 
-        return view('planTratamiento.agenda',compact('procesos','calendar_details','paciente','encendido','id'));
+        return view('planTratamiento.agenda',compact('procesos','calendar_details','paciente','encendido','id','planActual'));
     }
 
     public function addEvent(Request $request){
@@ -298,13 +314,21 @@ class PlanTratamientoController extends Controller
         $event->descripcion         = $request['txtDescripcion'];
         $event->save();
 
-        $plan = new Plan_Tratamiento();
-        $plan->events_id = $event->id;
-        $plan->procedimiento_id = $request->txtProcedimiento_id;
-        $plan->save();
+        $tratamiento_cita = new Plan_Tratamiento();
+        $tratamiento_cita->no_de_piezas        = $request->no_de_piezas;
+        $tratamiento_cita->honorarios          = $request->honorarios;
+        $tratamiento_cita->procedimiento_id    = $request->txtProcedimiento_id;
+        $tratamiento_cita->events_id           = $event->id;
+        $tratamiento_cita->activo              = false;
+        $tratamiento_cita->completo            = false;
+        $tratamiento_cita->en_proceso          = false;
+        $tratamiento_cita->no_iniciado         = false;
+        $tratamiento_cita->procedencia         = 1;
+        $tratamiento_cita->referencia          = $request->referencia;
+        $tratamiento_cita->save();
 
         \Session::flash('success','Cita añadida exitosamente');
-        return redirect()->route('planTratamiento.agenda',['procedimiento'=>$request['txtProcedimiento_id'], 'paciente' => $request['pacienteID']])->with('info','Cita guardada con exito');
+        return redirect()->route('planTratamiento.agenda',['procedimiento'=>$request['txtProcedimiento_id'], 'paciente' => $request['pacienteID'],'planTratamiento'=>$request->referencia])->with('info','Cita guardada con exito');
 
         }elseif (isset($_POST["btnModificar"])) {
             $event = Events::find($request["txtID"]);

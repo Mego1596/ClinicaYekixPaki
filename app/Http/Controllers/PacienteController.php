@@ -485,6 +485,7 @@ class PacienteController extends Controller
         foreach ($events as $key => $event) {
             $paciente = Paciente::find($event->paciente_id);
             $planT = Plan_Tratamiento::where('events_id',$event->id)->get();
+            $validacion = Plan_Tratamiento::select('procedencia')->where('events_id',$event->id)->value('procedencia');
             if(sizeof($planT) > 1 || sizeof($planT) == 0 ){
                 $event_list[] =Calendar::event(
                     $paciente->nombre1." ".$paciente->nombre2." ".$paciente->nombre3." ".$paciente->apellido1." ".$paciente->apellido2,
@@ -499,8 +500,26 @@ class PacienteController extends Controller
                     'durationEditable'  => false,
                     ]
                 );
+            }elseif (sizeof($planT) == 1 && is_null($validacion)) {
+                $event_list[] =Calendar::event(
+                    $paciente->nombre1." ".$paciente->nombre2." ".$paciente->nombre3." ".$paciente->apellido1." ".$paciente->apellido2,
+                    false,
+                    new \DateTime($event->start_date),
+                    new \DateTime($event->end_date),
+                    $event->id,
+                    [
+                    'descripcion'       => $event->descripcion,
+                    'textColor'         => $event->textcolor,
+                    'durationEditable'  => false,
+                    'expediente'        => $paciente->expediente,
+                    'paciente'          => $paciente->id,
+                    'validador'         => 1,
+                    ]
+                );
             }else{
                 $planT = Plan_Tratamiento::where('events_id',$event->id)->value('procedimiento_id');
+                $planVigente = Plan_Tratamiento::where('events_id',$event->id)->value('no_de_piezas');
+                $planVigente2 = Plan_Tratamiento::where('events_id',$event->id)->value('honorarios');
                 $proceso = Procedimiento::where('id',$planT)->value('color');
                 $proc1   = Procedimiento::where('id',$planT)->value('id');
                 $event_list[] =Calendar::event(
@@ -514,6 +533,8 @@ class PacienteController extends Controller
                     'descripcion'       => $event->descripcion,
                     'textColor'         => $event->textcolor,
                     'procedimiento'     => $proc1,
+                    'no_de_piezas'      => $planVigente,
+                    'honorarios'        => $planVigente2,
                     'durationEditable'  => false,
                     ]
                 );
@@ -583,6 +604,8 @@ class PacienteController extends Controller
                     $("#start_date").val(horaInicio[0]);
                     $("#end_date").val(horaFin[0]);
                     $("#procedimiento_id").val(calEvent.procedimiento);
+                    $("#no_de_piezas2").val(calEvent.no_de_piezas);
+                    $("#honorarios2").val(calEvent.honorarios);
                     if(calEvent.procedimiento == null){
                             $("#cosa").prop("checked",false);
                             $("#cosa2").prop("checked",true);
@@ -591,6 +614,10 @@ class PacienteController extends Controller
                             if($("#cosa2").prop("checked")==true){
                               document.getElementById("procedimiento").style.visibility = "hidden";
                               document.getElementById("procedimiento_id").style.visibility ="hidden";
+                              document.getElementById("no_de_piezas1").style.visibility = "hidden";
+                              document.getElementById("no_de_piezas2").style.visibility = "hidden";
+                              document.getElementById("honorarios1").style.visibility = "hidden";
+                              document.getElementById("honorarios2").style.visibility = "hidden";
                             }
                     }else{
                             $("#cosa").prop("checked",true);
@@ -600,6 +627,10 @@ class PacienteController extends Controller
                             if($("#cosa").prop("checked")==true){
                               document.getElementById("procedimiento").style.visibility ="visible";
                               document.getElementById("procedimiento_id").style.visibility ="visible";
+                              document.getElementById("no_de_piezas1").style.visibility = "visible";
+                              document.getElementById("no_de_piezas2").style.visibility = "visible";
+                              document.getElementById("honorarios1").style.visibility = "visible";
+                              document.getElementById("honorarios2").style.visibility = "visible";
                             }
                         }
                     $("#exampleModal").modal();     
@@ -726,12 +757,19 @@ class PacienteController extends Controller
                 $event->descripcion         = $request['txtDescripcion'];
                 $event->save();
                 $tratamiento_cita = new Plan_Tratamiento();
-                $tratamiento_cita->procedimiento_id = $request->procedimiento_id;
-                $tratamiento_cita->events_id        = $event->id;
+                $tratamiento_cita->no_de_piezas        = $request->no_de_piezas;
+                $tratamiento_cita->honorarios          = $request->honorarios;
+                $tratamiento_cita->procedimiento_id    = $request->procedimiento_id;
+                $tratamiento_cita->events_id           = $event->id;
+                $tratamiento_cita->activo              = true;
+                $tratamiento_cita->completo            = false;
+                $tratamiento_cita->en_proceso          = true;
+                $tratamiento_cita->no_iniciado         = false;
+                $tratamiento_cita->procedencia         = 1;
                 $tratamiento_cita->save();
                 \Session::flash('success','Cita añadida exitosamente');
                 return redirect()->route('paciente.agenda',$request->pacienteID)->with('info','Cita guardada con exito');
-            }
+            } 
         }elseif (isset($_POST["btnModificar"])) {
             if($request->procedimiento_id==NULL){
                 $event = Events::find($request["txtID"]);
