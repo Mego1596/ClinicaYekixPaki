@@ -19,6 +19,7 @@ class CreatePlanTratamientosTable extends Migration
             $table->foreign('procedimiento_id')->references('id')->on('procedimientos')->nullable();
             $table->integer('events_id')->nullable()->unsigned();
             $table->foreign('events_id')->references('id')->on('events')->onDelete('cascade');
+            $table->integer('referencia')->nullable()->unsigned();
             $table->foreign('referencia')->references('id')->on('plan__tratamientos')->onDelete('cascade');
             $table->integer('no_de_piezas')->unsigned();
             $table->double('honorarios', 5, 2);
