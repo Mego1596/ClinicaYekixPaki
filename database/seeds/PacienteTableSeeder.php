@@ -3,6 +3,7 @@
 use Illuminate\Database\Seeder;
 use App\User;
 use App\Paciente;
+use App\Events;
 
 class PacienteTableSeeder extends Seeder
 {
@@ -25,5 +26,12 @@ class PacienteTableSeeder extends Seeder
         	'domicilio'			=> 'Col.Libertad Av.Washington #414, San Salvador',
         	'expediente'		=> 'XXXX-XX',
         	]);
+        Events::create([
+            'start_date'        => '1900-01-01 00:00:00',
+            'end_date'          => '1900-01-01 00:30:00',
+            'textcolor'         => '#FFFFFF',
+            'descripcion'       => 'cita por defecto',
+            'paciente_id'       => 1,
+            ]);
     }
 }

@@ -22,10 +22,14 @@ class PlanTratamientoController extends Controller
     public function index($id)
     {
         $citaGeneral = Events::find($id);
-        $paciente = Paciente::where('id',$citaGeneral->paciente_id)->value('id');
-        $planTratamiento = Plan_Tratamiento::where('events_id',$id)->paginate();
+
+
+        $paciente = Paciente::select('id')->where('id',$citaGeneral->paciente_id)->value('id');
+        $persona = Paciente::select('nombre1','nombre2','nombre3','apellido1','apellido2')->where('id',$citaGeneral->paciente_id)->get();
+        $planTratamiento = Plan_Tratamiento::select('id','procedimiento_id','completo','en_proceso','no_iniciado')->where('events_id',$id)->orderBy('id','ASC')->paginate();
+        $planValidador = Plan_Tratamiento::select('id')->where('events_id',$id)->where('en_proceso',true)->get();
         $proc = Procedimiento::paginate();
-        return view('planTratamiento.index',compact('planTratamiento','proc','id','paciente'));
+        return view('planTratamiento.index',compact('planTratamiento','proc','id','paciente','persona','planValidador'));
     }
 
     /**
@@ -35,7 +39,9 @@ class PlanTratamientoController extends Controller
      */
     public function create($id)
     {
-        //
+        $cita = Events::find($id);
+        $procedimiento = Procedimiento::pluck('nombre','id')->toArray();
+        return view('planTratamiento.create',compact('id','procedimiento'));
     }
 
     /**
@@ -46,7 +52,32 @@ class PlanTratamientoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $planTratamiento = Plan_Tratamiento::where('events_id',$request->events_id)->get();
+        if(sizeof($planTratamiento) <= 0){
+            $planT = new Plan_Tratamiento();
+            $planT->no_de_piezas        = $request->no_de_piezas;
+            $planT->honorarios          = $request->honorarios;
+            $planT->procedimiento_id    = $request->procedimiento_id;
+            $planT->events_id           = $request->events_id;
+            $planT->activo              = true;
+            $planT->completo            = false;
+            $planT->en_proceso          = true;
+            $planT->no_iniciado         = false;
+            $planT->save();
+        }else{
+            $planT = new Plan_Tratamiento();
+            $planT->no_de_piezas        = $request->no_de_piezas;
+            $planT->honorarios          = $request->honorarios;
+            $planT->procedimiento_id    = $request->procedimiento_id;
+            $planT->events_id           = $request->events_id;
+            $planT->activo              = true;
+            $planT->completo            = false;
+            $planT->en_proceso          = false;
+            $planT->no_iniciado         = true;
+            $planT->save();
+        }
+
+        return redirect()->route('planTratamiento.index',['cita'=>$request->events_id]);
     }
 
     /**

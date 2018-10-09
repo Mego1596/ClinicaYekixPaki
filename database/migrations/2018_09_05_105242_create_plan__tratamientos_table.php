@@ -19,6 +19,12 @@ class CreatePlanTratamientosTable extends Migration
             $table->foreign('procedimiento_id')->references('id')->on('procedimientos')->nullable();
             $table->integer('events_id')->nullable()->unsigned();
             $table->foreign('events_id')->references('id')->on('events')->onDelete('cascade');
+            $table->integer('no_de_piezas')->unsigned();
+            $table->double('honorarios', 5, 2);
+            $table->boolean('activo');
+            $table->boolean('completo');
+            $table->boolean('en_proceso');
+            $table->boolean('no_iniciado');
             $table->timestamps();
         });
     }

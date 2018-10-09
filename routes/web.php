@@ -121,11 +121,11 @@ Route::middleware(['auth'])->group(function(){
 
 	Route::get('planTratamiento/create/{cita}', 'PlanTratamientoController@create')->name('planTratamiento.create')->middleware('permission:planTratamientos.create');
 
-	Route::put('planTratamiento/update/{planTratamiento}', 'PlanTratamientoController@update')->name('planTratamiento.update')->middleware('permission:procedimientos.edit');
+	Route::put('planTratamiento/update/{planTratamiento}/{cita}', 'PlanTratamientoController@update')->name('planTratamiento.update')->middleware('permission:procedimientos.edit');
 
 	Route::get('planTratamiento/show/{cita}/{planTratamiento}', 'PlanTratamientoController@show')->name('planTratamiento.show')->middleware('permission:planTratamientos.show');
 
-	Route::delete('planTratamiento/destroy/{planTratamiento}', 'PlanTratamientoController@destroy')->name('planTratamiento.destroy')->middleware('permission:planTratamientos.destroy');
+	Route::delete('planTratamiento/destroy/{planTratamiento}/', 'PlanTratamientoController@destroy')->name('planTratamiento.destroy')->middleware('permission:planTratamientos.destroy');
 
 	Route::get('planTratamiento/edit/{cita}/{planTratamiento}', 'PlanTratamientoController@edit')->name('planTratamiento.edit')->middleware('permission:planTratamientos.edit');
 
