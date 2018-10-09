@@ -126,7 +126,7 @@ class RecetasController extends Controller
         $fecha = substr($receta->created_at, 0,11);
         $newDate = date("d/m/Y", strtotime($fecha));
         $detalles = DetalleReceta::where('receta_id',$id2)->get();
-        $pdf = PDF::loadView('receta.show',compact('paciente','receta','newDate','detalles','edad'));
+        $pdf = PDF::loadView('receta.copyshow',compact('paciente','receta','newDate','detalles','edad'));
         $pdf->setPaper('A4','Portrait');
 
         if(isset($paciente->email)){
