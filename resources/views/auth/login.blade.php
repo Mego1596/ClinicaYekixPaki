@@ -1,13 +1,13 @@
 @extends('layouts.app')
-
+@section('card-header')
+    <div class="col-md-2 col-sm-12">
+    </div>
+    <div class="col-md-8" style="text-align: center">
+        <a class="navbar-brand" href="{{ url('/') }}">Clinica Dental de Atencion</a>
+        <a class="navbar-brand" href="{{ url('/') }}">Integral y Preventiva Yekixpaki</a>
+    </div>
+@endsection
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Iniciar Sesion') }}</div>
-
-                <div class="card-body">
                     <form method="POST" action="{{ route('login') }}" aria-label="{{ __('Login') }}" autocomplete="off">
                         @csrf
 
@@ -53,7 +53,7 @@
 
                         <div class="form-group row mb-0">
                             <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn btn-success">
+                                <button type="submit" class="btn btn-primary">
                                     {{ __('Iniciar Sesion') }}
                                 </button>
 
@@ -63,9 +63,4 @@
                             </div>
                         </div>
                     </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 @endsection
