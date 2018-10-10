@@ -125,9 +125,10 @@ class PlanTratamientoController extends Controller
     }
 
 
-    public function agendar2($id,$paciente,$planActual)
+    public function agendar2($id2,$id,$paciente,$planActual,$validador)
     {
         $loggedUser=Auth::id();
+        $procesos2 = Procedimiento::get();
         $result =  DB::table('users')->join('role_user', 'users.id', '=', 'role_user.user_id')->where('users.id', '=', $loggedUser)->value('role_id');
         if($result == 1 or $result == 3){
             $encendido = true;
@@ -284,7 +285,7 @@ class PlanTratamientoController extends Controller
 
             ]);
 
-        return view('planTratamiento.agenda',compact('procesos','calendar_details','paciente','encendido','id','planActual'));
+        return view('planTratamiento.agenda',compact('procesos','calendar_details','paciente','encendido','id','id2','planActual','validador','procesos2'));
     }
 
     public function addEvent(Request $request){

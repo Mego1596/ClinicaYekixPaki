@@ -129,7 +129,7 @@ Route::middleware(['auth'])->group(function(){
 
 	Route::get('planTratamiento/edit/{cita}/{planTratamiento}', 'PlanTratamientoController@edit')->name('planTratamiento.edit')->middleware('permission:planTratamientos.edit');
 
-	Route::get('planTratamiento/{procedimiento}/{paciente}/{planTratamiento}/events','PlanTratamientoController@agendar2')->name('planTratamiento.agenda');
+	Route::get('planTratamiento/{cita}/{procedimiento}/{paciente}/{planTratamiento}/{validador}/events','PlanTratamientoController@agendar2')->name('planTratamiento.agenda');
 	Route::post('planTratamiento/events', 'PlanTratamientoController@addEvent')->name('planTratamiento.add');
 
 	//Recetas

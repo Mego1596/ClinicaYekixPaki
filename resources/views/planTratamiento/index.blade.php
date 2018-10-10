@@ -87,7 +87,7 @@
 												@if($proceso->en_proceso == true)
 											<td width="10px">
 												@can('planTratamientos.create')
-												<a href="{{ route('planTratamiento.agenda',[ 'procedimiento'=> $procedimiento->id, 'paciente'=> $paciente,'planTratamiento'=>$proceso->id] )}}" class="btn btn-sm btn-default bg-dark" style="color: white">Agendar Cita
+												<a href="{{ route('planTratamiento.agenda',['cita'=> $id, 'procedimiento'=> $procedimiento->id, 'paciente'=> $paciente,'planTratamiento'=>$proceso->id,'validador'=>$validador] )}}" class="btn btn-sm btn-default bg-dark" style="color: white">Agendar Cita
 											</a>
 												@endcan
 											</td>
