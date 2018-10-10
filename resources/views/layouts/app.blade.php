@@ -22,10 +22,16 @@
   <body class="bg-dark">
 
     <div class="container">
-      <div class="card  mx-auto mt-5">
+      <div class="card card-login mx-auto mt-5">
         <div class="card-header">
-          <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
             @yield('card-header')
+          <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
+            <div class="row">
+                <div class="col-md-7 col-sm-12">
+                    <a class="navbar-brand" href="{{ url('/') }}">Clinica Dental de Atencion</a>
+                    <a class="navbar-brand" href="{{ url('/') }}">Integral y Preventiva Yekixpaki</a>
+                </div>
+            </div>
           </nav>
         </div>
         <div class="card-body">
