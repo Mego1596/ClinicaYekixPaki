@@ -14,20 +14,20 @@
 				<div class="card card-default">
 					<div class="card-header text-center">
 						<div class="row">
-			            	<div class="col-md-1">
-			                	<a href="/home" class="btn btn-block btn-secondary" style="width: 130%">
+			            	<div class="col-md-2 col-sm-12">
+			                	<a href="/home" class="btn btn-block btn-secondary" style="width: 100%">
 			                	<i class="fa fa-arrow-circle-left"></i> Atrás</a>
 			              	</div>
-			              	<div class="col-md-10">
+			              	<div class="col-md-8">
 								<h4>{{$head}}</h4>
 			              	</div>
           				</div>
 					</div>
 					<br/>
 					@role('admin')
-					<div class="row" style="align-self: left"> 
-						<div style="margin-left: 33px">
-						    {!! Form::open(array('route' => 'user.search2','id'=> 'form', 'method' => 'POST','class' => 'd-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0', 'autocomplete'=>'off') ) !!}
+					<div class="row"> 
+						<div class="col-md-2 col-sm-12" style="margin-left: 2%">
+						    {!! Form::open(array('route' => 'user.search2','id'=> 'form', 'method' => 'POST', 'autocomplete'=>'off') ) !!}
 						    	<div>
 									<select class="form-control" name="buscador" id="buscador">
 										<option id="0">Buscar Por...</option>
@@ -37,7 +37,8 @@
 									</select>
 								</div>
 						</div>
-						<div style="margin-left: 0px">
+						<br />
+						<div class="col-md-4 col-sm-12" style="margin-left: 2%">
 						        <div class="input-group">
 						          <input type="text" class="form-control" placeholder="Buscar..." aria-label="Search" aria-describedby="basic-addon2" id="buscar" name="buscar">
 						          <div class="input-group-append">
@@ -47,7 +48,8 @@
 						          </div>
 						        </div>
 						</div>
-						<div style="margin-left: 15px">
+						<br />
+						<div class="col-md-4 col-sm-12" style="margin-left: 2%">
 							<a class="btn btn-primary" href="{{route('user.asistente')}}"><i class="fa fa-list"></i> Ver Lista Completa</a>
 						</div>
 						    {!! Form::close() !!}

@@ -18,11 +18,11 @@
 				<div class="card card-default">
 					<div class="card-header text-center">
 						<div class="row">
-							<div class="col-md-1">
-								<a href="{{ route('receta.index',['cita' => $id ]) }}" class="btn btn-block btn-secondary" style="width: 130%">
+							<div class="col-md-2 col-sm-12">
+								<a href="{{ route('receta.index',['cita' => $id ]) }}" class="btn btn-block btn-secondary" style="width: 100%">
 								<li class="fa fa-arrow-circle-left"></li>Atrás</a>
 							</div>
-							<div class="col-md-10">
+							<div class="col-md-8">
 								<h4>Crear Receta</h4>
 							</div>
 						</div>

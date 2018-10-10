@@ -15,44 +15,45 @@
 				<div class="card">
 					<div class="card-header text-center">
 						<div class="row">
-			            	<div class="col-md-1">
-			                	<a href="/home" class="btn btn-block btn-secondary" style="width: 130%">
+			            	<div class="col-md-2 col-sm-12">
+			                	<a href="/home" class="btn btn-block btn-secondary" style="width: 100%">
 			                	<i class="fa fa-arrow-circle-left"></i>Atrás</a>
 			              	</div>
-			              	<div class="col-md-10">
+			              	<div class="col-md-8">
 			                	<h4>{{$head}}</h4>
 			              	</div>
           				</div>
 					</div>
 					<br/>
 					@can('pacientes.create')
-					<div class="row" style="align-self: left"> 
-					<div style="margin-left: 33px">
-				    {!! Form::open(array('route' => 'paciente.search','id'=> 'form', 'method' => 'POST','class' => 'd-none d-md-inline-block form-inline ml-auto mr-9 mr-md-5 my-2 my-md-0', 'autocomplete'=>'off') ) !!}
-							<select class="form-control" name="buscador" id="buscador">
-								<option id="0">Buscar Por...</option>
-								<option id="1">Nombre</option>
-								<option id="2">Apellido</option>
-								<option id="3" selected>Expediente</option>
-								<option id="4">Nombre de Usuario</option>
-							</select>
-				        <br/>
-				    </div>
-				    <div style="margin-left:-35px"> 
-				    	<div class="input-group">
+					<div class="row"> 
+						<div class="col-md-2 col-sm-12" style="margin-left: 2%">
+					    {!! Form::open(array('route' => 'paciente.search','id'=> 'form', 'method' => 'POST','autocomplete'=>'off') ) !!}
+								<select class="form-control" name="buscador" id="buscador">
+									<option id="0">Buscar Por...</option>
+									<option id="1">Nombre</option>
+									<option id="2">Apellido</option>
+									<option id="3" selected>Expediente</option>
+									<option id="4">Nombre de Usuario</option>
+								</select>
+				    	</div>
+				    	<br />
+				    	<div class="col-md-4 col-sm-12" style="margin-left: 2%">
+				    		<div class="input-group">
 				          		<input type="text" class="form-control" placeholder="Buscar..." aria-label="Search" aria-describedby="basic-addon2" id="buscar" name="buscar">
 				          		<div class="input-group-append">
 				            		<button class="btn btn-primary" type="submit">
-				              			<i class="fa fa-search"></i>
+				              		  <i class="fa fa-search"></i>
 				            		</button>
-				          		</div>
+				            	</div>
+				          	</div>
 						</div>
-				    </div>
-				    {!! Form::close() !!}
-				    <div style="margin-left: 20px"> 
-				        <a class="btn btn-primary" href="{{route('paciente.index')}}"><i class="fa fa-list"></i> Ver Lista Completa</a>
-				    </div>
-				    @endcan
+						<br />
+				    	<div class="col-md-4 col-sm-12" style="margin-left: 2%"> 
+					    		<a class="btn btn-primary" href="{{route('paciente.index')}}"><i class="fa fa-list"></i> Ver Lista Completa</a>
+				    		{!! Form::close() !!}
+				    	</div>
+				    	@endcan
 					</div>
 					<div class="card-body">
 						<table class="table table-striped table-hover table-responsive-md">

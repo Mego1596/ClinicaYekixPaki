@@ -17,18 +17,18 @@
 			<div class="col-md-12 col-md-offset-2">
 				<div class="card panel-default">
 					<div class="card-header text-center">
-					<div class="row">
-							<div class="col-md-1">
-								<a href="/events" class="btn btn-block btn-secondary" style="width: 130%">
+						<div class="row">
+							<div class="col-md-2 col-sm-12">
+								<a href="/events" class="btn btn-block btn-secondary" style="width: 100%">
 								<li class="fa fa-arrow-circle-left"></li> Atrás</a>
 							</div>
-							<div class="col-md-10">
+							<div class="col-md-8">
 								<h4>Lista de recetas</h4>
 							</div>
-					</div>
+						</div>
 					</div>
 					<div class="card-body">
-						<table class="table table-striped table-hover" >
+						<table class="table table-striped table-hover table-responsive-md" >
 							<thead>
 								<tr>
 									<th width="10px">ID</th>

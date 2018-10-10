@@ -12,11 +12,11 @@
 	<div class="panel panel-primary">
 		<div class="panel-heading">
           <div class="row">
-              <div class="col-md-1">
-                <a href="/home" class="btn btn-block btn-secondary" style="width: 130%">
+              <div class="col-md-2 col-sm-12">
+                <a href="/home" class="btn btn-block btn-secondary" style="width: 100%">
                 <i class="fa fa-arrow-circle-left"></i>Atrás</a>
               </div>
-              <div class="col-md-10">
+              <div class="col-md-8">
                 <h3 align="center">Citas:</h3>
               </div>
           </div>

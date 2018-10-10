@@ -111,8 +111,8 @@ $(document).ready(function(){
 	<div class="panel panel-primary">
 		<div class="panel-heading">
           <div class="row">
-              <div class="col-md-2">
-                <a href="/paciente/{{$paciente->id}}" class="btn btn-block btn-secondary" style="width: 50%">
+              <div class="col-md-2 col-sm-12">
+                <a href="/paciente/{{$paciente->id}}" class="btn btn-block btn-secondary" style="width: 100%">
                 <i class="fa fa-arrow-circle-left"></i>Atrás</a>
               </div>
               <div class="col-md-10">
@@ -196,7 +196,6 @@ $(document).ready(function(){
       		<div class="form-group col-md-12">
       			{!! Form::label('paciente_id', 'Paciente:',['id' => 'tit']) !!}
       			{!! Form::text('paciente_id', null, ['class' => 'form-control', 'placeholder' => 'Titulo del Evento', 'id' => 'txtTitulo']) !!}
-      			
       		</div>
       	</div>
         <div class="form-group">
@@ -236,7 +235,7 @@ $(document).ready(function(){
       <!-- EN EL SELECT VA LA VARIABLE PROCEDIMIENTO -->
         <div class="form-group">
           {!! Form::label('procedimiento_id', 'Procedimiento:',['style' => 'visibility:hidden', 'id' => 'procedimiento'])!!}
-          {!! Form::select('procedimiento_id', $procedimiento, null, ['placeholder' => 'Elija un procedimiento', 'style' => 'visibility:hidden','id' =>'procedimiento_id'])!!}
+          {!! Form::select('procedimiento_id', $procedimiento, null, ['placeholder' => 'Elija un procedimiento', 'style' => 'visibility:hidden','id' =>'procedimiento_id','class' => 'form-control'])!!}
         </div>
         <div class="form-group">
             {{ Form::label('no_de_piezas', 'No. de Piezas',['id'=>'no_de_piezas1','style' => 'display:none']) }}
@@ -248,12 +247,21 @@ $(document).ready(function(){
             {{ Form::number('honorarios', null, ['class' => 'form-control', 'step' => '0.10', 'min'=>'0','max'=>'600','id'=>'honorarios2','style' => 'display:none'])}}
         </div>
         @endcan
-      <div class="modal-footer">
-		    {!! Form::submit('Añadir Cita', ['class' => 'btn btn-success','id' => 'btnAgregar', 'name' => 'btnAgregar']) !!}
-		{!! Form::submit('Modificar Cita', ['class' => 'btn btn-success','id' => 'btnModificar','name' => 'btnModificar']) !!}
-		{!! Form::submit('Borrar', ['class' => 'btn btn-danger ','id' => 'btnEliminar','name' => 'btnEliminar']) !!}
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-        {!! Form::close() !!}
+        <div class="form-row">
+            <div class="col-md-3 col-sm-12">
+  		        {!! Form::submit('Añadir Cita', ['class' => 'btn btn-success','id' => 'btnAgregar', 'name' => 'btnAgregar','style'=>'width=100%']) !!}
+            </div>
+            <div class="col-md-3 col-sm-12">
+  		        {!! Form::submit('Modificar Cita', ['class' => 'btn btn-success','id' => 'btnModificar','name' => 'btnModificar','style'=>'width=100%']) !!}
+            </div>
+  		      <div class="col-md-3 col-sm-12">
+              {!! Form::submit('Borrar', ['class' => 'btn btn-danger ','id' => 'btnEliminar','name' => 'btnEliminar','style'=>'width=100%']) !!}
+            </div>
+            <div class="col-md-3 col-sm-12">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+          {!! Form::close() !!}
       </div>
     </div>
   </div>

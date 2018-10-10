@@ -161,13 +161,13 @@ window.onload = function() {
 			<div class="card">
 				<div class="card-header text-center">
 					<div class="row">
-						<div class="col-md-1">
+						<div class="col-md-2 col-sm-12">
 						@if($idRole == 'doctor')
-							<a href="{{ route('user.index') }}" class="btn btn-block btn-secondary" style="width: 130%">
+							<a href="{{ route('user.index') }}" class="btn btn-block btn-secondary" style="width: 100%">
 							<i class="fa fa-arrow-circle-left"></i> Atrás</a>
 						@endif
 						@if($idRole == 'asistente')
-							<a href="{{ route('user.asistente') }}" class="btn btn-block btn-secondary" style="width: 130%">
+							<a href="{{ route('user.asistente') }}" class="btn btn-block btn-secondary" style="width: 100%">
 							<i class="fa fa-arrow-circle-left"></i> Atrás</a>
 						@endif
 						</div>

@@ -21,11 +21,11 @@
 				<div class="card card-default">
 					<div class="card-header text-center">
 						<div class="row">
-							<div class="col-md-1">
-								<a href="{{route('detalleReceta.index', ['cita' => $id3, 'receta' => $id2])}}" class="btn btn-block btn-secondary">
-								Atrás</a>
+							<div class="col-md-2 col-sm-12">
+								<a href="{{route('detalleReceta.index', ['cita' => $id3, 'receta' => $id2])}}" class="btn btn-block btn-secondary" style="width: 100%">
+								<li class="fa fa-arrow-circle-left"></li> Atrás</a>
 							</div>
-							<div class="col-md-10">
+							<div class="col-md-8">
 								<h4>Detalle de Receta</h4>
 							</div>
 						</div>
