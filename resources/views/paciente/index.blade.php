@@ -17,7 +17,7 @@
 						<div class="row">
 			            	<div class="col-md-2 col-sm-12">
 			                	<a href="/home" class="btn btn-block btn-secondary" style="width: 100%">
-			                	<i class="fa fa-arrow-circle-left"></i>Atrás</a>
+			                	<i class="fa fa-arrow-circle-left"></i> Atrás</a>
 			              	</div>
 			              	<div class="col-md-8">
 			                	<h4>{{$head}}</h4>
@@ -62,6 +62,7 @@
 									<th>Nombre</th>
 									<th>No. Expediente</th>
 									<th>Nombre de Usuario</th>
+									<th style="text-align: center;">Plan de Tratamiento</th>
 									@if (sizeof($pacientes) == 0)
 										<th width="237">
 											@can('pacientes.create')
@@ -89,54 +90,137 @@
 											@if($paciente->user_id !=null)
 												@foreach($user as $users)
 													@if($paciente->user_id == $users->id)
-														<tr>
-															<td>{{$paciente->nombre1." ".$paciente->nombre2." ".$paciente->nombre3." ".$paciente->apellido1." ".$paciente->apellido2}}</td>
-															<td>{{$paciente->expediente}}</td>
-															<td>{{$users->name}}</td>
-															<td width="10px">
-																@can('pacientes.show')
-																	<a href="{{ route('paciente.show', $paciente->id) }}" class="btn btn-sm btn-default bg-info" style="color: white"><i class="fa fa-folder-open-o"></i> Expediente
-																	</a>
-																@endcan
-															</td>
-															<td width="10px">
-																@can('pacientes.edit')
-																	<a href="{{ route('paciente.edit', $paciente->id) }}" class="btn btn-sm  btn-default bg-success" style="color: white"><i class="fa fa-edit"></i> Editar</a>
-																@endcan
-															</td>
-														</tr>
+														@foreach($eventos as $cita)	
+																@if($cita->paciente_id == $paciente->id)
+																		@php
+																			$ninguna = 0;
+																		@endphp
+																		<tr>
+																			<td>{{$paciente->nombre1." ".$paciente->nombre2." ".$paciente->nombre3." ".$paciente->apellido1." ".$paciente->apellido2}}</td>
+																			<td>{{$paciente->expediente}}</td>
+																			<td>{{$users->name}}</td>
+																			{{----}}
+																			<td style="text-align: center;"><a href="{{route('planTratamiento.index',['cita'=> $cita->id,'validador' => 1])}}" class="btn btn-sm btn-default bg-dark" style="color: white">Ver Plan Activo</a>
+																			</td>
+																			<td width="10px">
+																			@can('pacientes.show')
+																				<a href="{{ route('paciente.show', $paciente->id) }}" class="btn btn-sm btn-default bg-info" style="color: white"><i class="fa fa-folder-open-o"></i> Expediente
+																				</a>
+																			@endcan
+																			</td>
+																			<td width="10px">
+																				@can('pacientes.edit')
+																					<a href="{{ route('paciente.edit', $paciente->id) }}" class="btn btn-sm  btn-default bg-success" style="color: white"><i class="fa fa-edit"></i> Editar</a>
+																				@endcan
+																			</td>
+																		</tr>
+																		@break
+																@else($cita->paciente_id != $paciente->id)
+																	@php
+																		$ninguna = $loop->iteration+1;
+																	@endphp
+																	@if($ninguna == sizeof($eventos)+1)
+																		<tr>
+																			<td>{{$paciente->nombre1." ".$paciente->nombre2." ".$paciente->nombre3." ".$paciente->apellido1." ".$paciente->apellido2}}</td>
+																			<td>{{$paciente->expediente}}</td>
+																			<td>{{$users->name}}</td>
+																			<td></td>
+																			<td width="10px">
+																				@can('pacientes.show')
+																					<a href="{{ route('paciente.show', $paciente->id) }}" class="btn btn-sm btn-default bg-info" style="color: white"><i class="fa fa-folder-open-o"></i> Expediente
+																					</a>
+																				@endcan
+																			</td>
+																			<td width="10px">
+																				@can('pacientes.edit')
+																					<a href="{{ route('paciente.edit', $paciente->id) }}" class="btn btn-sm  btn-default bg-success" style="color: white"><i class="fa fa-edit"></i> Editar</a>
+																				@endcan
+																			</td>
+																		</tr>
+																	@endif
+																@endif
+														@endforeach
 													@endif
 												@endforeach
 											@else
-												<tr>
-													<td>{{$paciente->nombre1." ".$paciente->nombre2." ".$paciente->nombre3." ".$paciente->apellido1." ".$paciente->apellido2}}</td>
-													<td>{{$paciente->expediente}}</td>
-													<td>Sin Usuario</td>
-													@if($paciente->id == 1)
-													<td width="10px" colspan="3">
-														@can('pacientes.show')
-															<a href="{{ route('paciente.show', $paciente->id) }}" class="btn btn-sm btn-default bg-info" style="color: white;width: 100%"><i class="fa fa-folder-open-o"></i> Expediente
-															</a>
-														@endcan
-													</td>
-													@else
-													<td width="10px">
-														@can('pacientes.show')
-															<a href="{{ route('paciente.show', $paciente->id) }}" class="btn btn-sm btn-default bg-info" style="color: white"><i class="fa fa-folder-open-o"></i> Expediente
-															</a>
-														@endcan
-													</td>
-													@endif
-													@if($paciente->id != 1)
-													<td width="10px">
-														@can('pacientes.edit')
-															<a href="{{ route('paciente.edit', $paciente->id) }}" class="btn btn-sm  btn-default bg-success" style="color: white"><i class="fa fa-edit"></i> Editar</a>
-														@endcan
-													</td>
-													@endif
-													@if($paciente->id != 1)
-													@endif
-												</tr>
+												@foreach($eventos as $cita)	
+																@if($cita->paciente_id == $paciente->id)
+																		@php
+																			$ninguna = 0;
+																		@endphp
+																		<tr>
+																			<td>{{$paciente->nombre1." ".$paciente->nombre2." ".$paciente->nombre3." ".$paciente->apellido1." ".$paciente->apellido2}}</td>
+																			<td>{{$paciente->expediente}}</td>
+																			<td>Sin Usuario</td>
+																			<td style="text-align: center;"><a href="{{route('planTratamiento.index',['cita'=> $cita->id,'validador' => 1])}}" class="btn btn-sm btn-default bg-dark" style="color: white">Ver Plan Activo</a>
+																			</td>
+																			@if($paciente->id == 1)
+																			<td width="10px" colspan="3">
+																				@can('pacientes.show')
+																					<a href="{{ route('paciente.show', $paciente->id) }}" class="btn btn-sm btn-default bg-info" style="color: white;width: 100%"><i class="fa fa-folder-open-o"></i> Expediente
+																					</a>
+																				@endcan
+																			</td>
+																			@else
+																			<td width="10px">
+																				@can('pacientes.show')
+																					<a href="{{ route('paciente.show', $paciente->id) }}" class="btn btn-sm btn-default bg-info" style="color: white"><i class="fa fa-folder-open-o"></i> Expediente
+																					</a>
+																				@endcan
+																			</td>
+																			@endif
+																			@if($paciente->id != 1)
+
+																			<td width="10px">
+																				@can('pacientes.edit')
+																					<a href="{{ route('paciente.edit', $paciente->id) }}" class="btn btn-sm  btn-default bg-success" style="color: white"><i class="fa fa-edit"></i> Editar</a>
+																				@endcan
+																			</td>
+																			@endif
+																			@if($paciente->id != 1)
+																			@endif
+																		</tr>
+																		@break
+																@else($cita->paciente_id != $paciente->id)
+																	@php
+																		$ninguna = $loop->iteration+1;
+																	@endphp
+																	@if($ninguna == sizeof($eventos)+1)
+																		<tr>
+																			<td>{{$paciente->nombre1." ".$paciente->nombre2." ".$paciente->nombre3." ".$paciente->apellido1." ".$paciente->apellido2}}</td>
+																			<td>{{$paciente->expediente}}</td>
+																			<td>Sin Usuario</td>
+																			<td></td>
+																			</td>
+																			@if($paciente->id == 1)
+																			<td width="10px" colspan="3">
+																				@can('pacientes.show')
+																					<a href="{{ route('paciente.show', $paciente->id) }}" class="btn btn-sm btn-default bg-info" style="color: white;width: 100%"><i class="fa fa-folder-open-o"></i> Expediente
+																					</a>
+																				@endcan
+																			</td>
+																			@else
+																			<td width="10px">
+																				@can('pacientes.show')
+																					<a href="{{ route('paciente.show', $paciente->id) }}" class="btn btn-sm btn-default bg-info" style="color: white"><i class="fa fa-folder-open-o"></i> Expediente
+																					</a>
+																				@endcan
+																			</td>
+																			@endif
+																			@if($paciente->id != 1)
+
+																			<td width="10px">
+																				@can('pacientes.edit')
+																					<a href="{{ route('paciente.edit', $paciente->id) }}" class="btn btn-sm  btn-default bg-success" style="color: white"><i class="fa fa-edit"></i> Editar</a>
+																				@endcan
+																			</td>
+																			@endif
+																			@if($paciente->id != 1)
+																			@endif
+																		</tr>
+																	@endif
+																@endif
+														@endforeach
 											@endif
 										@else
 											@if($paciente->user_id !=null)
@@ -145,6 +229,7 @@
 												<tr style="background: #ffb3b3">
 													<td>{{$paciente->nombre1." ".$paciente->nombre2." ".$paciente->nombre3." ".$paciente->apellido1." ".$paciente->apellido2}}</td>
 													<td>{{$paciente->expediente}}</td>
+													<td></td>
 													<td></td>
 													<td colspan="3">
 														@can('pacientes.habilitarPaciente')

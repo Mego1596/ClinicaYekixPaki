@@ -146,8 +146,12 @@ class PacienteController extends Controller
                 }
             }
             $pacientes = Paciente::paginate(10);
-            $user = User::paginate(10); 
-            return view('paciente.index', compact("pacientes",'head','user','bloqueoOrdenado')); 
+            $user = User::paginate(10);
+            $ninguna=0;
+            $string = "SELECT paciente_id,id FROM events WHERE id IN (SELECT events_id FROM plan__tratamientos AS tbl
+                WHERE id = (SELECT MAX(id) FROM plan__tratamientos WHERE activo = TRUE AND events_id = tbl.events_id));";
+            $eventos = DB::select(DB::raw($string));
+            return view('paciente.index', compact("pacientes",'head','user','bloqueoOrdenado','eventos','ninguna')); 
         }
     }
 
@@ -815,7 +819,9 @@ class PacienteController extends Controller
                     $head = 'Lista de Pacientes';
                     $cantidad = Paciente::max("id");
                     $bloqueoOrdenado = Events::where('paciente_id', $cantidad)->count();
-                    return view('paciente.index', compact("pacientes",'head','user','bloqueoOrdenado'))
+                    $string = "SELECT paciente_id,id FROM events WHERE id IN (SELECT events_id FROM plan__tratamientos AS tbl WHERE id = (SELECT MAX(id) FROM plan__tratamientos WHERE events_id = tbl.events_id));";
+                    $eventos = DB::select(DB::raw($string));
+                    return view('paciente.index', compact("pacientes",'head','user','bloqueoOrdenado','eventos'))
                             ->with('info', 'Busqueda Exitosa');
                 }
                 else{
@@ -824,7 +830,9 @@ class PacienteController extends Controller
                     $head = 'Lista de Pacientes';
                     $cantidad = Paciente::max("id");
                     $bloqueoOrdenado = Events::where('paciente_id', $cantidad)->count();
-                    return view('paciente.index', compact("pacientes",'head','user'));
+                    $string = "SELECT paciente_id,id FROM events WHERE id IN (SELECT events_id FROM plan__tratamientos AS tbl WHERE id = (SELECT MAX(id) FROM plan__tratamientos WHERE events_id = tbl.events_id));";
+                    $eventos = DB::select(DB::raw($string));
+                    return view('paciente.index', compact("pacientes",'head','user','bloqueoOrdenado','eventos'));
                 }
             }elseif ($request['buscador'] == 'Apellido') {
                 if(!is_null($request['buscar'])){
@@ -833,7 +841,9 @@ class PacienteController extends Controller
                     $head = 'Lista de Pacientes';
                     $cantidad = Paciente::max("id");
                     $bloqueoOrdenado = Events::where('paciente_id', $cantidad)->count();
-                    return view('paciente.index', compact("pacientes",'head','user','bloqueoOrdenado'))
+                    $string = "SELECT paciente_id,id FROM events WHERE id IN (SELECT events_id FROM plan__tratamientos AS tbl WHERE id = (SELECT MAX(id) FROM plan__tratamientos WHERE events_id = tbl.events_id));";
+                    $eventos = DB::select(DB::raw($string));
+                    return view('paciente.index', compact("pacientes",'head','user','bloqueoOrdenado','eventos'))
                             ->with('info', 'Busqueda Exitosa');
                 }
                 else{
@@ -842,7 +852,9 @@ class PacienteController extends Controller
                     $head = 'Lista de Pacientes';
                     $cantidad = Paciente::max("id");
                     $bloqueoOrdenado = Events::where('paciente_id', $cantidad)->count();
-                    return view('paciente.index', compact("pacientes",'head','user','bloqueoOrdenado'));
+                    $string = "SELECT paciente_id,id FROM events WHERE id IN (SELECT events_id FROM plan__tratamientos AS tbl WHERE id = (SELECT MAX(id) FROM plan__tratamientos WHERE events_id = tbl.events_id));";
+                    $eventos = DB::select(DB::raw($string));
+                    return view('paciente.index', compact("pacientes",'head','user','bloqueoOrdenado','eventos'));
                 }
             }elseif ($request['buscador'] == 'Expediente') {
                if(!is_null($request['buscar'])){
@@ -851,7 +863,9 @@ class PacienteController extends Controller
                     $head = 'Lista de Pacientes';
                     $cantidad = Paciente::max("id");
                     $bloqueoOrdenado = Events::where('paciente_id', $cantidad)->count();
-                    return view('paciente.index', compact("pacientes",'head','user','bloqueoOrdenado'))
+                    $string = "SELECT paciente_id,id FROM events WHERE id IN (SELECT events_id FROM plan__tratamientos AS tbl WHERE id = (SELECT MAX(id) FROM plan__tratamientos WHERE events_id = tbl.events_id));";
+                    $eventos = DB::select(DB::raw($string));
+                    return view('paciente.index', compact("pacientes",'head','user','bloqueoOrdenado','eventos'))
                             ->with('info', 'Busqueda Exitosa');
                 }
                 else{
@@ -860,7 +874,9 @@ class PacienteController extends Controller
                     $head = 'Lista de Pacientes';
                     $cantidad = Paciente::max("id");
                     $bloqueoOrdenado = Events::where('paciente_id', $cantidad)->count();
-                    return view('paciente.index', compact("pacientes",'head','user','bloqueoOrdenado'));
+                    $string = "SELECT paciente_id,id FROM events WHERE id IN (SELECT events_id FROM plan__tratamientos AS tbl WHERE id = (SELECT MAX(id) FROM plan__tratamientos WHERE events_id = tbl.events_id));";
+                    $eventos = DB::select(DB::raw($string));
+                    return view('paciente.index', compact("pacientes",'head','user','bloqueoOrdenado','eventos'));
                 }
             }elseif ($request['buscador'] == 'Nombre de Usuario') {
                 if(!is_null($request['buscar'])){
@@ -876,7 +892,9 @@ class PacienteController extends Controller
                     $head = 'Lista de Pacientes';
                     $cantidad = Paciente::max("id");
                     $bloqueoOrdenado = Events::where('paciente_id', $cantidad)->count();
-                    return view('paciente.index', compact("pacientes",'head','user','bloqueoOrdenado'))
+                    $string = "SELECT paciente_id,id FROM events WHERE id IN (SELECT events_id FROM plan__tratamientos AS tbl WHERE id = (SELECT MAX(id) FROM plan__tratamientos WHERE events_id = tbl.events_id));";
+                    $eventos = DB::select(DB::raw($string));
+                    return view('paciente.index', compact("pacientes",'head','user','bloqueoOrdenado','eventos'))
                             ->with('info', 'Busqueda Exitosa');
                 }
                 else{
@@ -885,7 +903,9 @@ class PacienteController extends Controller
                     $head = 'Lista de Pacientes';
                     $cantidad = Paciente::max("id");
                     $bloqueoOrdenado = Events::where('paciente_id', $cantidad)->count();
-                    return view('paciente.index', compact("pacientes",'head','user','bloqueoOrdenado'));
+                    $string = "SELECT paciente_id,id FROM events WHERE id IN (SELECT events_id FROM plan__tratamientos AS tbl WHERE id = (SELECT MAX(id) FROM plan__tratamientos WHERE events_id = tbl.events_id));";
+                    $eventos = DB::select(DB::raw($string));
+                    return view('paciente.index', compact("pacientes",'head','user','bloqueoOrdenado','eventos'));
                 }
             }else{
                 $pacientes = Paciente::paginate(10);
@@ -893,7 +913,9 @@ class PacienteController extends Controller
                 $head = 'Lista de Pacientes';
                 $cantidad = Paciente::max("id");
                 $bloqueoOrdenado = Events::where('paciente_id', $cantidad)->count();
-                return view('paciente.index', compact("pacientes",'head','user','bloqueoOrdenado'));
+                $string = "SELECT paciente_id,id FROM events WHERE id IN (SELECT events_id FROM plan__tratamientos AS tbl WHERE id = (SELECT MAX(id) FROM plan__tratamientos WHERE events_id = tbl.events_id));";
+                    $eventos = DB::select(DB::raw($string));
+                return view('paciente.index', compact("pacientes",'head','user','bloqueoOrdenado','eventos'));
             }
         }else{
              $pacientes = Paciente::paginate(10);
@@ -901,7 +923,9 @@ class PacienteController extends Controller
                 $head = 'Lista de Pacientes';
                 $cantidad = Paciente::max("id");
                 $bloqueoOrdenado = Events::where('paciente_id', $cantidad)->count();
-                return view('paciente.index', compact("pacientes",'head','user','bloqueoOrdenado'));
+                $string = "SELECT paciente_id,id FROM events WHERE id IN (SELECT events_id FROM plan__tratamientos AS tbl WHERE id = (SELECT MAX(id) FROM plan__tratamientos WHERE events_id = tbl.events_id));";
+                    $eventos = DB::select(DB::raw($string));
+                return view('paciente.index', compact("pacientes",'head','user','bloqueoOrdenado','eventos'));
         }
     }
 
