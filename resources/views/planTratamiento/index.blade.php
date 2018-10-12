@@ -41,7 +41,7 @@
 									<th width="10px">Estado</th>
 									<th width="120px">No de Piezas</th>
 									<th width="10px">Honorarios</th>
-									@if($validador != 2)
+									@if($validador == 1 )
 										@if (sizeof($planTratamiento) == 0)
 												<th width="237">
 													@can('planTratamientos.create')
@@ -62,7 +62,7 @@
 													@endcan
 												</th>
 											@else
-												<th colspan="5" width="237">
+												<th colspan="5" width="237"></th>
 											@endif
 										@endif
 									@else
@@ -117,7 +117,7 @@
 										@endforeach
 										<td width="10px">
 											@can('planTratamientos.edit')
-												<a href="{{ route('planTratamiento.edit', ['cita' =>$id, 'planTratamiento'=> $proceso->id ]) }}" class="btn btn-sm btn-default bg-success" style="color: white"><i class="fa fa-edit"></i> Editar</a>
+												<a href="{{ route('planTratamiento.edit', ['cita' =>$id, 'planTratamiento'=> $proceso->id,'validador'=> $validador ]) }}" class="btn btn-sm btn-default bg-success" style="color: white"><i class="fa fa-edit"></i> Editar</a>
 											@endcan
 										</td>
 										<td width="10px">

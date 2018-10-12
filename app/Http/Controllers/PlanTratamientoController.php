@@ -99,9 +99,10 @@ class PlanTratamientoController extends Controller
      * @param  \App\Plan_Tratamiento  $plan_Tratamiento
      * @return \Illuminate\Http\Response
      */
-    public function edit($id,Plan_Tratamiento $plan_Tratamiento)
+    public function edit($id,$id2,$validador)
     {
-        //
+        $plan_trat = Plan_Tratamiento::find($id2);
+        return view('planTratamiento.edit', compact('id','plan_trat','validador'));
     }
 
     /**
@@ -111,9 +112,16 @@ class PlanTratamientoController extends Controller
      * @param  \App\Plan_Tratamiento  $plan_Tratamiento
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Plan_Tratamiento $plan_Tratamiento)
+    public function update(Request $request, $id)
     {
-        //
+        $planUpdate = Plan_Tratamiento::find($id);
+        $planUpdate->no_de_piezas = $request->no_de_piezas;
+        $planUpdate->honorarios   = $request->honorarios;
+        $planUpdate->save();
+            
+        return redirect()->route('planTratamiento.index',['cita' => $request->events_id,'validador'=>$request->validador])
+                ->with('info','Plan actualizado con exito');
+            
     }
 
     /**
