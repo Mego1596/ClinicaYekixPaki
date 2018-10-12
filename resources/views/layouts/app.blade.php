@@ -27,9 +27,9 @@
             @yield('card-header')
           <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
             <div class="row">
-                <div class="col-md-7 col-sm-12">
-                    <a class="navbar-brand" href="{{ url('/') }}">Clinica Dental de Atencion</a>
-                    <a class="navbar-brand" href="{{ url('/') }}">Integral y Preventiva Yekixpaki</a>
+                <div class="col-md-12 col-sm-12 text-center">
+                    <a class="navbar-brand mr-0 font-weight-normal" href="{{ url('/') }}">Clinica Dental de Atencion</a>
+                    <a class="navbar-brand mr-0 font-weight-normal" href="{{ url('/') }}">Integral y Preventiva Yekixpaki</a>
                 </div>
             </div>
           </nav>

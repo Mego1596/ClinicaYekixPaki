@@ -1,22 +1,25 @@
 @extends('layouts.app')
 @section('content')
 
-    <div class="col-md-8" style="text-align: center;">
-        <h3>Inicio de Sesion</h3>
-        <br />
+    <div class="row">
+        <div class="col-12 mb-3 text-center">
+            <h1 class="h3 font-weight-normal">Inicio de Sesion</h1>
+        </div>
     </div>
                     <form method="POST" action="{{ route('login') }}" aria-label="{{ __('Login') }}" autocomplete="off">
                         @csrf
 
-                        <div class="form-row" style="text-align: center;">
-                                <label for="name" class="col-sm-6 col-form-label text-md-right" >
-                                    <i class="btn btn-sm btn-dark disabled">
-                                        <span class="fa fa-user-o"> 
+                        <div class="form-row">
+                            <div class="col-md-6 col-sm-12">
+                                <label for="name" class="btn-block" >
+                                    <i class="btn btn-dark btn-block disabled">
+                                        <span class="fa fa-user-o">
                                             {{ __('Nombre de Usuario:') }}
                                         </span>
                                     </i>
                                 </label>
-                            <div class="col-md-6 col-sm-12" align="center">
+                            </div>
+                            <div class="col-md-6 col-sm-12">
                                 <input id="name" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" value="{{ old('name') }}" required autofocus>
 
                                 @if ($errors->has('name'))
@@ -27,14 +30,16 @@
                             </div>
                         </div>
                         <br />
-                        <div class="form-row" style="text-align: center;">
-                            <label for="name" class="col-sm-6 col-form-label text-md-right">
-                                    <i class="btn btn-sm btn-dark disabled">
-                                        <span class="fa fa-lock"> 
-                                            {{ __('Contraseña:') }}
-                                        </span>
+                        <div class="form-row">
+                            <div class="col-md-6 col-sm-12">
+                                <label for="name" class="btn-block">
+                                    <i class="btn btn-dark btn-block disabled">
+                                            <span class="fa fa-lock">
+                                                {{ __('Contraseña:') }}
+                                            </span>
                                     </i>
                                 </label>
+                            </div>
                             <div class="col-md-6">
                                 <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
 
@@ -47,13 +52,13 @@
                         </div>
                         <br />
 
-                        <div class="form-row">
-                            <div class="col-md-7 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
+                        <div class="form-row justify-content-center">
+                            <div c  lass="col-md-10 text-center">
+                                <button type="submit" class="btn btn-primary btn-block">
                                     {{ __('Iniciar Sesion') }}
                                 </button>
                             </div>
-                            <div class="col-md-12 offset-md-3">
+                            <div class="col-md-12 text-center">
                                 <a class="btn btn-link" href="{{ route('password.request') }}">
                                     {{ __('Olvidaste la Contraseña?') }}
                                 </a>
