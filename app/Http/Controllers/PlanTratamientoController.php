@@ -25,10 +25,13 @@ class PlanTratamientoController extends Controller
 
         $paciente = Paciente::select('id')->where('id',$citaGeneral->paciente_id)->value('id');
         $persona = Paciente::select('nombre1','nombre2','nombre3','apellido1','apellido2')->where('id',$citaGeneral->paciente_id)->get();
-        $planTratamiento = Plan_Tratamiento::select('id','procedimiento_id','completo','en_proceso','no_iniciado')->where('events_id',$id)->orderBy('id','ASC')->paginate();
+        $planTratamiento = Plan_Tratamiento::select('id','procedimiento_id','completo','en_proceso','no_iniciado','honorarios','no_de_piezas')->where('events_id',$id)->orderBy('id','ASC')->paginate();
         $planValidador = Plan_Tratamiento::select('id')->where('events_id',$id)->where('en_proceso',true)->get();
+        $planValidador2 = Plan_Tratamiento::select('id')->where('events_id',$id)->where('completo',true)->get();
         $proc = Procedimiento::paginate();
-        return view('planTratamiento.index',compact('planTratamiento','proc','id','paciente','persona','planValidador','validador'));
+
+        $presupuesto = Plan_Tratamiento::where('events_id',$id)->sum('honorarios');
+        return view('planTratamiento.index',compact('planTratamiento','proc','id','paciente','persona','planValidador','validador','planValidador2','presupuesto'));
     }
 
     /**

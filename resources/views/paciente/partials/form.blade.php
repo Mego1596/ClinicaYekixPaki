@@ -85,9 +85,9 @@
 		</div>
 	</div>
 	<div class="col-md-3{{$errors->has('fechaNacimiento') ? ' has-error':'' }}">
-		{{ Form::label('fechaNacimiento', 'Fecha de nacimiento *') }}
+		{{ Form::label('fechaNacimiento', 'Fecha de nacimiento(d/m/a)*') }}
 		{{ Form::date('fechaNacimiento', null, ['class' => 'form-control', 'type'=>'date', 
-		'style'=>'height: 38px','required','min'=>'1900-01-01','max'=>date("Y-m-d")]) }}
+		'style'=>'height: 38px','required','min'=>'1900-01-01','max'=>date("Y-m-d"),'placeholder' => 'dd/mm/aaaa']) }}
 		
 		@if($errors->has('fechaNacimiento'))
 		<div class="alert alert-warning">
@@ -99,7 +99,7 @@
 	<div class="col-md-3{{$errors->has('telefono') ? ' has-error':'' }}">
 		{{ Form::label('telefono', 'Telefono *') }}
 		{{ Form::tel('telefono', null, ['class'=>'form-control',
-		'required']) }}
+		'required','placeholder' => '####-####']) }}
 	
 	@if($errors->has('telefono'))
 	<div class="alert alert-warning">
