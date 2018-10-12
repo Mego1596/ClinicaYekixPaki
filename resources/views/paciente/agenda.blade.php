@@ -45,7 +45,7 @@ $(document).ready(function(){
 </li>
 
 <li class="breadcrumb-item">
-  <a class="breadcrumb-item active" ">Citas</a>
+  <a class="breadcrumb-item active">Citas</a>
 </li>
 @endsection
 
@@ -247,18 +247,18 @@ $(document).ready(function(){
             {{ Form::number('honorarios', null, ['class' => 'form-control', 'step' => '0.10', 'min'=>'0','max'=>'600','id'=>'honorarios2','style' => 'display:none'])}}
         </div>
         @endcan
-        <div class="form-row">
-            <div class="col-md-3 col-sm-12">
-  		        {!! Form::submit('Añadir Cita', ['class' => 'btn btn-success','id' => 'btnAgregar', 'name' => 'btnAgregar','style'=>'width=100%']) !!}
+        <div class="row justify-content-between">
+            <div class="col-md-3 col-sm-12 pr-md-1 mb-1 mb-md-0 text-center">
+  		        {!! Form::submit('Añadir Cita', ['class' => 'btn btn-success btn-block','id' => 'btnAgregar', 'name' => 'btnAgregar','style'=>'width=100%']) !!}
             </div>
-            <div class="col-md-3 col-sm-12">
-  		        {!! Form::submit('Modificar Cita', ['class' => 'btn btn-success','id' => 'btnModificar','name' => 'btnModificar','style'=>'width=100%']) !!}
+            <div class="col-md-3 col-sm-12 px-md-1 mb-1 mb-md-0 text-center">
+  		        {!! Form::submit('Modificar Cita', ['class' => 'btn btn-success btn-block px-0','id' => 'btnModificar','name' => 'btnModificar','style'=>'width=100%']) !!}
             </div>
-  		      <div class="col-md-3 col-sm-12">
-              {!! Form::submit('Borrar', ['class' => 'btn btn-danger ','id' => 'btnEliminar','name' => 'btnEliminar','style'=>'width=100%']) !!}
+  		      <div class="col-md-3 col-sm-12 px-md-1 mb-1 mb-md-0 text-center">
+              {!! Form::submit('Borrar', ['class' => 'btn btn-danger btn-block','id' => 'btnEliminar','name' => 'btnEliminar','style'=>'width=100%']) !!}
             </div>
-            <div class="col-md-3 col-sm-12">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+            <div class="col-md-3 col-sm-12 pl-md-1 text-center">
+              <button type="button" class="btn btn-default btn-block" data-dismiss="modal">Cancelar</button>
             </div>
         </div>
           {!! Form::close() !!}
