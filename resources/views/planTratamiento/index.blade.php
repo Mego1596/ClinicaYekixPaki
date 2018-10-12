@@ -219,7 +219,7 @@
 								<div class="col-md-2 col-sm-12">
 								</div>	
 								<div class="col-md-8 col-sm-12">
-									<label><strong><h5>Costo Total del Presupuesto: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{$presupuesto}}</h5></strong></label>
+									<label><strong><h5>Costo Total del Presupuesto: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${{$presupuesto}}</h5></strong></label>
 								</div>
 								<div class="col-md-2 col-sm-12">
 									<!-- Button trigger modal -->
