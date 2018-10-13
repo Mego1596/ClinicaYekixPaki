@@ -202,20 +202,20 @@
 				                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
 				                  <thead>
 				                  	<tr>
+				                  		<th>Numero de Plan</th>
 				                  		<th>Planes de Tratamiento
 				                  		</th>
-				                  		<th>Numero de Plan</th>
 				                  	</tr>
 				                  </thead>
 				                  <tbody>
 				                  	@foreach($planes as $plan)
 										@can('pacientes.trabajo')
 											<tr>
-												<td>	
-													<a href="{{ route('paciente.plan',['cita' => $plan->id])}}" class="btn btn-sm btn-default bg-info" style="color: white" target="_blank"><li class="fa fa-file-pdf-o"></li> Plan de Tratamiento
-												</td>
 												<td>
 													{{$loop->iteration}}
+												</td>
+												<td>	
+													<a href="{{ route('paciente.plan',['cita' => $plan->id])}}" class="btn btn-sm btn-default bg-info" style="color: white" target="_blank"><li class="fa fa-file-pdf-o"></li> Plan de Tratamiento
 												</td>
 											</tr>
 										@endcan
