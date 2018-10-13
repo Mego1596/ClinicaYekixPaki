@@ -196,7 +196,13 @@
 				          <div class="card mb-3">
 				            <div class="card-header">
 				              <i class="fa fa-table"></i>
-				              Planes de Tratamiento de {{$paciente->nombre1." ".$paciente->nombre2." ".$paciente->nombre3." ".$paciente->apellido1." ".$paciente->apellido2}}</div>
+				              Planes de Tratamiento  
+				              @if($paciente->id == 1)
+				              	No Aplica
+				              @else
+				              de: {{$paciente->nombre1." ".$paciente->nombre2." ".$paciente->nombre3." ".$paciente->apellido1." ".$paciente->apellido2}}
+				              @endif
+				          	</div>
 				            <div class="card-body">
 				              <div class="table-responsive">
 				                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -208,18 +214,21 @@
 				                  	</tr>
 				                  </thead>
 				                  <tbody>
-				                  	@foreach($planes as $plan)
-										@can('pacientes.trabajo')
-											<tr>
-												<td>
-													{{$loop->iteration}}
-												</td>
-												<td>	
-													<a href="{{ route('paciente.plan',['cita' => $plan->id])}}" class="btn btn-sm btn-default bg-info" style="color: white" target="_blank"><li class="fa fa-file-pdf-o"></li> Plan de Tratamiento
-												</td>
-											</tr>
-										@endcan
-									@endforeach
+				                  	@if($paciente->id != 1)
+					                  	@foreach($planes as $plan)
+											@can('pacientes.trabajo')
+												<tr>
+													<td>
+														{{$loop->iteration}}
+													</td>
+													<td>	
+														<a href="{{ route('paciente.plan',['cita' => $plan->id])}}" class="btn btn-sm btn-default bg-info" style="color: white" target="_blank"><li class="fa fa-file-pdf-o"></li> Plan de Tratamiento
+													</td>
+												</tr>
+											@endcan
+										@endforeach
+									@else
+									@endif
 				                  </tbody>
 				                </table>
 				              </div>
