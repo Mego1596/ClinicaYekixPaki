@@ -52,7 +52,7 @@
 													@endcan
 												</th>
 										@else
-											@if(sizeof($planValidador) == 1 || sizeof($planValidador2) == 1)
+											@if(sizeof($planValidador) == 1 || sizeof($planValidador2) > 1)
 												<th colspan="5" width="237">
 													@can('planTratamientos.create')
 													<a href="{{ route('planTratamiento.create', ['cita' =>$id,'validador' => $validador])}}" class="btn btn-block btn-success pull-right">
@@ -115,21 +115,46 @@
 												@endif
 											@endif
 										@endforeach
+										@if(sizeof($planValidador) == 1 || sizeof($planValidador2) > 1)
 										<td width="10px">
 											@can('planTratamientos.edit')
 												<a href="{{ route('planTratamiento.edit', ['cita' =>$id, 'planTratamiento'=> $proceso->id,'validador'=> $validador ]) }}" class="btn btn-sm btn-default bg-success" style="color: white"><i class="fa fa-edit"></i> Editar</a>
 											@endcan
 										</td>
 										<td width="10px">
-											@can('planTratamientos.destroy')
-												{!! Form::open(['route' => ['planTratamiento.destroy', $proceso->id],
-												'method' => 'DELETE']) !!}
-													<button class="btn btn-sm btn-default bg-danger" style="color: white">
-														<i class="fa fa-trash"></i> Eliminar
-													</button>
-												{!! Form::close() !!}
-											@endcan
-										</td> 
+											<!-- Button trigger modal -->
+											<button type="button" class="btn btn-sm btn-danger btn-block" data-toggle="modal" data-target="#Modal22{{$proceso->id}}"><i class="fa fa-trash"></i>
+											     Eliminar
+											</button>
+											{!! Form::open(['route' => ['planTratamiento.destroy', $proceso->id],'method' => 'DELETE']) !!}
+											<!-- Modal -->
+												<div class="modal fade" id="Modal22{{$proceso->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+													<div class="modal-dialog" role="document">
+														<div class="modal-content">
+															<div class="modal-header">
+																<h5 class="modal-title" id="exampleModalLabel">Plan de Tratamiento</h5>
+																<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+																	<span aria-hidden="true">&times;</span>
+																</button>
+															</div>
+															<div class="modal-body">
+																<label>¿Eliminar Tratamiento?
+																</label>
+																<br/>
+																<button type="button" class="btn btn-md btn-default" data-dismiss="modal">No
+																</button>
+																<button class="btn btn-md btn-default bg-danger" style="color: white">
+																	Si
+																</button>
+															</div>
+																<div class="modal-footer">
+																</div>
+														</div>
+													</div>
+												</div>
+											{!! Form::close() !!}
+											</td>
+											@endif
 										@if(sizeof($planValidador) == 1)
 											@if($proceso->en_proceso == true)
 												<td width="10px">
@@ -137,7 +162,7 @@
 													<button type="button" class="btn btn-sm btn-default bg-gray btn-block" data-toggle="modal" data-target="#Modal{{$proceso->id}}"><i class="fa fa-check"></i>
 													     Terminar
 													</button>
-												{!! Form::open() !!}
+												{!! Form::open(['route' => ['planTratamiento.terminar', $proceso->id],'method' => 'POST']) !!}
 												<!-- Modal -->
 													<div class="modal fade" id="Modal{{$proceso->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 														<div class="modal-dialog" role="document">
@@ -245,7 +270,7 @@
 													<button type="button" class="btn btn-sm btn-default bg-gray btn-block" data-toggle="modal" data-target="#Modal{{$proceso->id}}"><i class="fa fa-check"></i>
 													     Iniciar
 													</button>
-													{!! Form::open() !!}
+													{!! Form::open(['route' => ['planTratamiento.iniciar', $proceso->id],'method' => 'POST']) !!}
 												<!-- Modal -->
 													<div class="modal fade" id="Modal{{$proceso->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 														<div class="modal-dialog" role="document">
@@ -294,7 +319,7 @@
 								</button>
 							</div>
 						</div>
-						{!! Form::open() !!}
+						{!! Form::open(['route' => ['planTratamiento.finalizar', 'cita' => $id],'method' => 'POST']) !!}
 							<!-- Modal -->
 							<div class="modal fade" id="Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 								<div class="modal-dialog" role="document">

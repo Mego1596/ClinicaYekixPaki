@@ -129,8 +129,15 @@ Route::middleware(['auth'])->group(function(){
 
 	Route::get('planTratamiento/edit/{cita}/{planTratamiento}/{validador}', 'PlanTratamientoController@edit')->name('planTratamiento.edit')->middleware('permission:planTratamientos.edit');
 
-	Route::get('planTratamiento/{cita}/{procedimiento}/{paciente}/{planTratamiento}/{validador}/events','PlanTratamientoController@agendar2')->name('planTratamiento.agenda');
-	Route::post('planTratamiento/events', 'PlanTratamientoController@addEvent')->name('planTratamiento.add');
+	Route::get('planTratamiento/{cita}/{procedimiento}/{paciente}/{planTratamiento}/{validador}/events','PlanTratamientoController@agendar2')->name('planTratamiento.agenda')->middleware('permission:planTratamientos.index');
+	
+	Route::post('planTratamiento/events', 'PlanTratamientoController@addEvent')->name('planTratamiento.add')->middleware('permission:planTratamientos.index');
+
+	Route::post('planTratamiento/terminar/{planTratamiento}', 'PlanTratamientoController@terminar')->name('planTratamiento.terminar')->middleware('permission:planTratamientos.index');
+
+	Route::post('planTratamiento/iniciar/{planTratamiento}', 'PlanTratamientoController@iniciar')->name('planTratamiento.iniciar')->middleware('permission:planTratamientos.index');
+
+	Route::post('planTratamiento/finalizar/{cita}', 'PlanTratamientoController@finalizar')->name('planTratamiento.finalizar')->middleware('permission:planTratamientos.index');
 
 	//Recetas
 	Route::post('receta/store', 'RecetasController@store')->name('receta.store')->middleware('permission:recetas.create');
@@ -147,7 +154,8 @@ Route::middleware(['auth'])->group(function(){
 
 	Route::get('receta/edit/{cita}/{receta}', 'RecetasController@edit')->name('receta.edit')->middleware('permission:recetas.edit');
 	Route::get('receta/enviar/{cita}/{receta}','RecetasController@sendMail')->name('receta.email')->middleware('permission:recetas.email');
-	//dealle Receta
+	
+	//detalle Receta
 	Route::post('detalleReceta/store', 'DetalleRecetaController@store')->name('detalleReceta.store')->middleware('permission:admin.crearHistoria');
 
 	Route::get('detalleReceta/{receta}/{cita}', 'DetalleRecetaController@index')->name('detalleReceta.index')->middleware('permission:detalleRecetas.index');

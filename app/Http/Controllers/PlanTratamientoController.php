@@ -26,8 +26,8 @@ class PlanTratamientoController extends Controller
         $paciente = Paciente::select('id')->where('id',$citaGeneral->paciente_id)->value('id');
         $persona = Paciente::select('nombre1','nombre2','nombre3','apellido1','apellido2')->where('id',$citaGeneral->paciente_id)->get();
         $planTratamiento = Plan_Tratamiento::select('id','procedimiento_id','completo','en_proceso','no_iniciado','honorarios','no_de_piezas')->where('events_id',$id)->orderBy('id','ASC')->paginate();
-        $planValidador = Plan_Tratamiento::select('id')->where('events_id',$id)->where('en_proceso',true)->get();
-        $planValidador2 = Plan_Tratamiento::select('id')->where('events_id',$id)->where('completo',true)->get();
+        $planValidador = Plan_Tratamiento::select('id')->where('events_id',$id)->where('en_proceso',true)->where('activo',true)->get();
+        $planValidador2 = Plan_Tratamiento::select('id')->where('events_id',$id)->where('completo',true)->where('activo',true)->get();
         $proc = Procedimiento::paginate();
 
         $presupuesto = Plan_Tratamiento::where('events_id',$id)->sum('honorarios');
@@ -79,7 +79,7 @@ class PlanTratamientoController extends Controller
             $planT->save();
         }
 
-        return redirect()->route('planTratamiento.index',['cita'=>$request->events_id,'validador'=>$request->validador]);
+        return redirect()->route('planTratamiento.index',['cita'=>$request->events_id,'validador'=>$request->validador])->with('info','Procedimiento añadido al plan de tratamiento');
     }
 
     /**
@@ -120,7 +120,7 @@ class PlanTratamientoController extends Controller
         $planUpdate->save();
             
         return redirect()->route('planTratamiento.index',['cita' => $request->events_id,'validador'=>$request->validador])
-                ->with('info','Plan actualizado con exito');
+                ->with('info','Procedimiento del plan actualizado con exito');
             
     }
 
@@ -130,9 +130,11 @@ class PlanTratamientoController extends Controller
      * @param  \App\Plan_Tratamiento  $plan_Tratamiento
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Plan_Tratamiento $plan_Tratamiento)
-    {
-        //
+    public function destroy($id)
+    {   
+        $plan_Tratamiento = Plan_Tratamiento::find($id);
+        $plan_Tratamiento->delete();
+        return back()->with('info','Procedimiento eliminado del plan de tratamiento');
     }
 
 
@@ -362,5 +364,40 @@ class PlanTratamientoController extends Controller
         }
 
         
+    }
+
+
+    public function terminar($id)
+    {
+        $planActual = Plan_Tratamiento::find($id);
+        $planActual->completo   = true;
+        $planActual->en_proceso = false;
+        $planActual->save();
+
+        return back()->with('info','Procedimiento Completado');
+    }
+
+    public function iniciar($id)
+    {
+        $planActual = Plan_Tratamiento::find($id);
+        $planActual->en_proceso  = true;
+        $planActual->no_iniciado = false;
+        $planActual->save();
+        return back()->with('info','Procedimiento Iniciado');
+    }
+
+    public function finalizar($cita)
+    {
+        $planActual = Plan_Tratamiento::where('events_id',$cita)->get();
+
+        foreach ($planActual as $key => $value) {
+            $value->activo          = false;
+            $value->completo        = true;
+            $value->en_proceso      = false;
+            $value->no_iniciado     = false;
+            $value->save();
+        }
+
+        return back()->with('info','Plan de Tratamiento Finalizado');
     }
 }
