@@ -31,9 +31,53 @@
 						{!! Form::model($paciente, ['route' => ['paciente.update', $paciente->id]]) !!}
 						<div class="row pt-3">
 						@can('pacientes.citas')
-							<div class="col-md-3 col-sm-12">
-							<a href="{{ route('paciente.agenda', $paciente->id) }}" class="btn btn-block btn-primary bg-primary" role="button"><i class="fa fa-calendar"></i>   Citas</a>	
-							</div>
+							@role('admin')
+								@if($paciente->id != 1)
+									@if($x != 'positivo')
+										<div class="col-md-3 col-sm-12">
+										<a href="{{ route('paciente.agenda', $paciente->id) }}" class="btn btn-block btn-primary bg-primary" role="button"><i class="fa fa-calendar"></i>   Citas</a>	
+										</div>
+									@else
+									@endif
+								@else
+									<div class="col-md-3 col-sm-12">
+										<a href="{{ route('paciente.agenda', $paciente->id) }}" class="btn btn-block btn-primary bg-primary" role="button"><i class="fa fa-calendar"></i>   Citas</a>	
+										</div>
+								@endif
+							@endrole
+							@role('asistente')
+								@if($paciente->id != 1)
+									@if($x != 'positivo')
+										<div class="col-md-3 col-sm-12">
+										<a href="{{ route('paciente.agenda', $paciente->id) }}" class="btn btn-block btn-primary bg-primary" role="button"><i class="fa fa-calendar"></i>   Citas</a>	
+										</div>
+									@else
+									@endif
+								@else
+									<div class="col-md-3 col-sm-12">
+										<a href="{{ route('paciente.agenda', $paciente->id) }}" class="btn btn-block btn-primary bg-primary" role="button"><i class="fa fa-calendar"></i>   Citas</a>	
+										</div>
+								@endif
+							@endrole
+							@role('doctor')
+								@if($paciente->id != 1)
+									@if($x != 'positivo')
+										<div class="col-md-3 col-sm-12">
+										<a href="{{ route('paciente.agenda', $paciente->id) }}" class="btn btn-block btn-primary bg-primary" role="button"><i class="fa fa-calendar"></i>   Citas</a>	
+										</div>
+									@else
+									@endif
+								@else
+									<div class="col-md-3 col-sm-12">
+										<a href="{{ route('paciente.agenda', $paciente->id) }}" class="btn btn-block btn-primary bg-primary" role="button"><i class="fa fa-calendar"></i>   Citas</a>	
+										</div>
+								@endif
+							@endrole
+							@role('paciente')
+								<div class="col-md-3 col-sm-12">
+								<a href="{{ route('paciente.agenda', $paciente->id) }}" class="btn btn-block btn-primary bg-primary" role="button"><i class="fa fa-calendar"></i>   Citas</a>	
+								</div>
+							@endrole
 						@endcan
 							<div class="col-md-5 col-sm-12">
 							@can('admin.crearHistoria')

@@ -82,6 +82,9 @@
 											</a>
 											@endcan
 										</th>
+										@else
+										<th></th>
+										<th></th>
 										@endif
 									@endif
 								</tr>
@@ -164,6 +167,10 @@
 																				@endcan
 																			</td>
 																			@else
+																			@can('pacientes.trabajo')
+																				<td style="text-align: center;"><a href="{{route('planTratamiento.index',['cita'=> $cita->id,'validador' => 1])}}" class="btn btn-sm btn-default bg-dark" style="color: white">Ver Plan Activo</a>
+																				</td>
+																			@endcan
 																			<td width="10px">
 																				@can('pacientes.show')
 																					<a href="{{ route('paciente.show', $paciente->id) }}" class="btn btn-sm btn-default bg-info" style="color: white"><i class="fa fa-folder-open-o"></i> Expediente
@@ -172,10 +179,6 @@
 																			</td>
 																			@endif
 																			@if($paciente->id != 1)
-																			@can('pacientes.trabajo')
-																				<td style="text-align: center;"><a href="{{route('planTratamiento.index',['cita'=> $cita->id,'validador' => 1])}}" class="btn btn-sm btn-default bg-dark" style="color: white">Ver Plan Activo</a>
-																				</td>
-																			@endcan
 																			<td width="10px">
 																				@can('pacientes.edit')
 																					<a href="{{ route('paciente.edit', $paciente->id) }}" class="btn btn-sm  btn-default bg-success" style="color: white"><i class="fa fa-edit"></i> Editar</a>

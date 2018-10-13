@@ -38,7 +38,11 @@ class PacienteController extends Controller
             $pacientes = Paciente::where('email',Auth::user()->email)->paginate(1);
             $user = User::where('email','=',Auth::user()->email)->paginate(1);
             $head = 'Paciente';
-            return view('paciente.index', compact('pacientes','head','user'));
+            $bloqueoOrdenado = 0;
+            $string = "SELECT paciente_id,id FROM events WHERE id IN (SELECT events_id FROM plan__tratamientos AS tbl
+                WHERE id = (SELECT MAX(id) FROM plan__tratamientos WHERE activo = TRUE AND events_id = tbl.events_id));";
+            $eventos = DB::select(DB::raw($string));
+            return view('paciente.index', compact('pacientes','head','user','bloqueoOrdenado','eventos'));
         }else{
             $pacientes = Paciente::paginate(10);
             $head = 'Lista de Pacientes';
@@ -306,7 +310,18 @@ class PacienteController extends Controller
         foreach ($historias as $key => $value) {
             $value->descripcion;
         }
-        return view('paciente.show', compact('paciente','historias','edad','nuevaFecha'));
+        //BLOQUEO DE BOTON CITAS SI UN PACIENTE POSEE UN PLAN ACTIVO (SOLO SE GESTIONAN LAS CITAS DIRECTAMENTE DESDE EL PLAN DE TRATAMIENTO ACTIVO)
+        $string = "SELECT paciente_id,id FROM events WHERE id IN (SELECT events_id FROM plan__tratamientos AS tbl WHERE paciente_id =".$paciente->id." AND id = (SELECT MAX(id) FROM plan__tratamientos WHERE activo = TRUE AND events_id = tbl.events_id))";
+            $eventos = DB::select(DB::raw($string));
+            $x = 'negativo';
+            foreach ($eventos as $key => $cita) {
+                if ($cita->paciente_id == $paciente->id) {
+                    $x = 'positivo';
+                }else{
+                    $x = 'negativo';
+                }
+            }
+        return view('paciente.show', compact('paciente','historias','edad','nuevaFecha','x'));
     }
 
     /**

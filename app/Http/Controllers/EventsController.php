@@ -31,6 +31,22 @@ class EventsController extends Controller
             $paciente = Paciente::find($event->paciente_id);
             $planT = Plan_Tratamiento::where('events_id',$event->id)->get();
             $validacion = Plan_Tratamiento::select('procedencia')->where('events_id',$event->id)->value('procedencia');
+
+            //OBTENIENDO PACIENTES CON UN PLAN DE TRATAMIENTO ACTIVO PARA RESTRINGIR TODAS LAS
+            //POSTERIORES BLOQUEADAS PARA REALIZAR UN PLAN DE TRATAMIENTO
+
+            $string = "SELECT paciente_id,id FROM events WHERE id IN (SELECT events_id FROM plan__tratamientos AS tbl
+                WHERE id = (SELECT MAX(id) FROM plan__tratamientos WHERE activo = TRUE AND events_id = tbl.events_id));";
+            $eventos = DB::select(DB::raw($string));
+
+            foreach ($eventos as $key => $cita) {
+                if ($cita->paciente_id == $paciente->id) {
+                    $x = 'positivo';
+                }else{
+                    $x = 'negativo';
+                }
+            }
+
             if(sizeof($planT) > 1 || sizeof($planT) == 0){
                 $event_list[] =Calendar::event(
                     $paciente->nombre1." ".$paciente->nombre2." ".$paciente->nombre3." ".$paciente->apellido1." ".$paciente->apellido2,
@@ -45,6 +61,7 @@ class EventsController extends Controller
                     'expediente'        => $paciente->expediente,
                     'paciente'          => $paciente->id,
                     'validador'         => 1,
+                    'estado'            => $x,
                     ]
                 );
             }elseif (sizeof($planT) == 1 && is_null($validacion)) {
@@ -61,6 +78,7 @@ class EventsController extends Controller
                     'expediente'        => $paciente->expediente,
                     'paciente'          => $paciente->id,
                     'validador'         => 1,
+                    'estado'            => $x,
                     ]
                 );
             }else{
@@ -119,11 +137,12 @@ class EventsController extends Controller
                         $("#btnAsignar").show();
                     }else{
                         $("#plan").hide();
-                        if(calEvent.validador == 1){
+                        $("#modificar").hide();
+                        if(calEvent.validador == 1 && calEvent.estado == "negativo"){
                             $("#plan").show();
+                            $("#modificar").show();
                         }
                         $("#receta").show();
-                        $("#modificar").show();
                         $("#btnAsignar").hide();   
                     }
 				 	$("#txtColor").val(calEvent.color);
