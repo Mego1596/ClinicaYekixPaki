@@ -38,7 +38,7 @@ class EventsController extends Controller
             $string = "SELECT paciente_id,id FROM events WHERE id IN (SELECT events_id FROM plan__tratamientos AS tbl
                 WHERE id = (SELECT MAX(id) FROM plan__tratamientos WHERE activo = TRUE AND events_id = tbl.events_id));";
             $eventos = DB::select(DB::raw($string));
-
+            $x='negativo';
             foreach ($eventos as $key => $cita) {
                 if ($cita->paciente_id == $paciente->id) {
                     $x = 'positivo';

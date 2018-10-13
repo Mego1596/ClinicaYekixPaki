@@ -11,6 +11,10 @@
 
 @endsection
 
+@section('javascript')
+<link href="{{ asset('css/dataTables.bootstrap4.css')}}" rel="stylesheet">
+@endsection
+
 @section('content')
 	<div>
 		<div class="row">
@@ -192,20 +196,26 @@
 				          <div class="card mb-3">
 				            <div class="card-header">
 				              <i class="fa fa-table"></i>
-				              Planes de Tratamiento</div>
+				              Planes de Tratamiento de {{$paciente->nombre1." ".$paciente->nombre2." ".$paciente->nombre3." ".$paciente->apellido1." ".$paciente->apellido2}}</div>
 				            <div class="card-body">
 				              <div class="table-responsive">
 				                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
 				                  <thead>
-				                  	<th>Planes de Tratamiento de: {{$paciente->nombre1." ".$paciente->nombre2." ".$paciente->nombre3." ".$paciente->apellido1." ".$paciente->apellido2}}</th>
+				                  	<tr>
+				                  		<th>Planes de Tratamiento
+				                  		</th>
+				                  		<th>Numero de Plan</th>
+				                  	</tr>
 				                  </thead>
 				                  <tbody>
 				                  	@foreach($planes as $plan)
 										@can('pacientes.trabajo')
 											<tr>
 												<td>	
-													<a href="{{ route('paciente.plan',['cita' => $plan->id])}}" class="btn btn-sm btn-default bg-info" style="color: white" target="_blank"><li class="fa fa-file-pdf-o"></li> Plan de Tratamiento {{$loop->iteration}}
-													</a>
+													<a href="{{ route('paciente.plan',['cita' => $plan->id])}}" class="btn btn-sm btn-default bg-info" style="color: white" target="_blank"><li class="fa fa-file-pdf-o"></li> Plan de Tratamiento
+												</td>
+												<td>
+													{{$loop->iteration}}
 												</td>
 											</tr>
 										@endcan
@@ -420,4 +430,12 @@
 			</div>
 		</div>
 	</div>
+@endsection
+
+@section('calendar')
+    <!-- Page level plugin JavaScript-->
+    <script src="{{ asset('js/jquery.dataTables.js')}}"></script>
+    <script src="{{ asset('js/dataTables.bootstrap4.js')}}"></script>
+    <!-- Demo scripts for this page-->
+    <script src="{{ asset('js/datatables-demo.js')}}"></script>
 @endsection
