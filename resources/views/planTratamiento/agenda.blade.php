@@ -85,10 +85,12 @@
       </div>
       <div class="modal-body">
       	<input type="hidden" name="txtID" id="txtID"/>
+        <input type="hidden" name="cita" id="cita" value="{{$id2}}">
       	<input type="hidden" name="txtFecha" id="txtFecha"/>
         <input type="hidden" name="pacienteID" id="pacienteID" value="{{$paciente->id}}">
         <input type="hidden" name="encendido" id="encendido" value="{{$encendido}}">
         <input type="hidden" name="txtProcedimiento_id" id="txtProcedimiento_id" value="{{$id}}">
+        <input type="hidden" name="txtValidador" id="txtValidador" value="{{$validador}}">
         <input type="hidden" name="referencia" id="referencia" value="{{$planActual}}">
 
       	<div class="form-row">	

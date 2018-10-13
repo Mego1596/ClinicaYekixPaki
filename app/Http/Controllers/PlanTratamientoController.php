@@ -341,8 +341,7 @@ class PlanTratamientoController extends Controller
         $tratamiento_cita->referencia          = $request->referencia;
         $tratamiento_cita->save();
 
-        \Session::flash('success','Cita añadida exitosamente');
-        return redirect()->route('planTratamiento.agenda',['procedimiento'=>$request['txtProcedimiento_id'], 'paciente' => $request['pacienteID'],'planTratamiento'=>$request->referencia])->with('info','Cita guardada con exito');
+        return redirect()->route('planTratamiento.agenda',['procedimiento'=>$request['txtProcedimiento_id'], 'paciente' => $request['pacienteID'],'planTratamiento'=>$request->referencia,'validador'=> $request->txtValidador,'cita' => $request->cita])->with('info','Cita guardada con exito');
 
         }elseif (isset($_POST["btnModificar"])) {
             $event = Events::find($request["txtID"]);
@@ -352,14 +351,14 @@ class PlanTratamientoController extends Controller
             //$event->procedimiento_id    = $request['procedimiento_id'];
             $event->descripcion         = $request['txtDescripcion'];
             $event->save();
-            return redirect()->route('planTratamiento.agenda',['procedimiento'=>$request['txtProcedimiento_id'], 'paciente' => $request['pacienteID']])->with('info','Cita actualizada con exito');
+            return redirect()->route('planTratamiento.agenda',['procedimiento'=>$request['txtProcedimiento_id'], 'paciente' => $request['pacienteID'],'planTratamiento'=>$request->referencia,'validador'=> $request->txtValidador,'cita' => $request->cita])->with('info','Cita Actualizada con exito');
 
         }elseif (isset($_POST['btnEliminar'])) {
             $event = Events::find($request["txtID"]);
             $plan = Plan_Tratamiento::where('events_id',$event->id);
             $plan->delete();
             $event->delete();
-            return redirect()->route('planTratamiento.agenda',['procedimiento'=>$request['txtProcedimiento_id'], 'paciente' => $request['pacienteID']])->with('info','Cita eliminada con exito');
+            return redirect()->route('planTratamiento.agenda',['procedimiento'=>$request['txtProcedimiento_id'], 'paciente' => $request['pacienteID'],'planTratamiento'=>$request->referencia,'validador'=> $request->txtValidador,'cita' => $request->cita])->with('info','Cita Eliminada con exito');
 
         }
 
