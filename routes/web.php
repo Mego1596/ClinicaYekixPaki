@@ -104,6 +104,7 @@ Route::middleware(['auth'])->group(function(){
 
 	Route::post('paciente/{paciente}','PacienteController@habilitar')->name('paciente.habilitarPaciente')->middleware('permission:pacientes.habilitarPaciente');
 
+	Route::get('paciente/showPlan/{cita}', 'PacienteController@showPlan')->name('paciente.plan')->middleware('permission:paciente.create');
 
 
 	//Historia Medica

@@ -321,7 +321,10 @@ class PacienteController extends Controller
                     $x = 'negativo';
                 }
             }
-        return view('paciente.show', compact('paciente','historias','edad','nuevaFecha','x'));
+
+        $string2 ="SELECT paciente_id,id FROM events WHERE id IN (SELECT events_id FROM plan__tratamientos AS tbl WHERE paciente_id =2 AND id = (SELECT MAX(id) FROM plan__tratamientos WHERE events_id = tbl.events_id));";
+        $planes = DB::select(DB::raw($string2));
+        return view('paciente.show', compact('paciente','historias','edad','nuevaFecha','x','planes'));
     }
 
     /**

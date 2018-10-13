@@ -187,6 +187,34 @@
 								{{ Form::textarea('historiaOdontologica',null,['class' => 	'form-control','disabled','rows' => '3'])}}
 							</div>
 						</div>
+						<!-- DataTables Example -->
+						<br />
+				          <div class="card mb-3">
+				            <div class="card-header">
+				              <i class="fa fa-table"></i>
+				              Planes de Tratamiento</div>
+				            <div class="card-body">
+				              <div class="table-responsive">
+				                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+				                  <thead>
+				                  	<th>Planes de Tratamiento de: {{$paciente->nombre1." ".$paciente->nombre2." ".$paciente->nombre3." ".$paciente->apellido1." ".$paciente->apellido2}}</th>
+				                  </thead>
+				                  <tbody>
+				                  	@foreach($planes as $plan)
+										@can('pacientes.trabajo')
+											<tr>
+												<td>	
+													<a href="{{ route('paciente.plan',['cita' => $plan->id])}}" class="btn btn-sm btn-default bg-info" style="color: white" target="_blank"><li class="fa fa-file-pdf-o"></li> Plan de Tratamiento {{$loop->iteration}}
+													</a>
+												</td>
+											</tr>
+										@endcan
+									@endforeach
+				                  </tbody>
+				                </table>
+				              </div>
+				            </div>
+				          </div>
 						{!! Form::close() !!}
 						<!--Anexo de pacientes-->
 						<div class="row pt-3">
