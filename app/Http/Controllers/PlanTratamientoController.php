@@ -26,8 +26,8 @@ class PlanTratamientoController extends Controller
         $paciente = Paciente::select('id')->where('id',$citaGeneral->paciente_id)->value('id');
         $persona = Paciente::select('nombre1','nombre2','nombre3','apellido1','apellido2')->where('id',$citaGeneral->paciente_id)->get();
         $planTratamiento = Plan_Tratamiento::select('id','procedimiento_id','completo','en_proceso','no_iniciado','honorarios','no_de_piezas')->where('events_id',$id)->orderBy('id','ASC')->paginate();
-        $planValidador = Plan_Tratamiento::select('id')->where('events_id',$id)->where('en_proceso',true)->where('activo',true)->get();
-        $planValidador2 = Plan_Tratamiento::select('id')->where('events_id',$id)->where('completo',true)->where('activo',true)->get();
+        $planValidador = Plan_Tratamiento::select('id')->where('events_id',$id)->where('en_proceso',true)->where('activo',true)->whereNull('procedencia')->get();
+        $planValidador2 = Plan_Tratamiento::select('id')->where('events_id',$id)->where('completo',true)->where('activo',true)->whereNull('procedencia')->get();
         $proc = Procedimiento::paginate();
 
         $presupuesto = Plan_Tratamiento::where('events_id',$id)->sum('honorarios');

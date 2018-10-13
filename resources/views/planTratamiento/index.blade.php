@@ -52,7 +52,7 @@
 													@endcan
 												</th>
 										@else
-											@if(sizeof($planValidador) == 1 || sizeof($planValidador2) > 1)
+											@if(sizeof($planValidador) == 1 || sizeof($planValidador2) >= 1)
 												<th colspan="5" width="237">
 													@can('planTratamientos.create')
 													<a href="{{ route('planTratamiento.create', ['cita' =>$id,'validador' => $validador])}}" class="btn btn-block btn-success pull-right">
@@ -87,6 +87,7 @@
 													</td>
 													<td>{{$proceso->no_de_piezas}}</td>
 													<td style="text-align: center;">${{$proceso->honorarios}}</td>
+													@if(sizeof($planValidador) == 1 || sizeof($planValidador2) >= 1)
 													<td width="10px">
 													@can('planTratamientos.create')
 														<a href="{{ route('planTratamiento.agenda',['cita'=> $id, 'procedimiento'=> $procedimiento->id, 'paciente'=> $paciente,'planTratamiento'=>$proceso->id,'validador'=>$validador] )}}" class="btn btn-sm btn-default bg-dark" style="color: white">
@@ -94,6 +95,9 @@
 														</a>
 													@endcan
 													</td>
+													@else
+													<td></td>
+													@endif
 												@elseif($proceso->completo == true)
 													<td width="150px">
 														<label><strong>Completo</strong></label>
@@ -115,7 +119,7 @@
 												@endif
 											@endif
 										@endforeach
-										@if(sizeof($planValidador) == 1 || sizeof($planValidador2) > 1)
+										@if(sizeof($planValidador) == 1 || sizeof($planValidador2) >= 1)
 										<td width="10px">
 											@can('planTratamientos.edit')
 												<a href="{{ route('planTratamiento.edit', ['cita' =>$id, 'planTratamiento'=> $proceso->id,'validador'=> $validador ]) }}" class="btn btn-sm btn-default bg-success" style="color: white"><i class="fa fa-edit"></i> Editar</a>
@@ -191,42 +195,41 @@
 												{!! Form::close() !!}
 												</td>
 											@else
-
-												<td width="10px">
-													<!-- Button trigger modal -->
-													<button type="button" class="btn btn-sm btn-default bg-gray btn-block" data-toggle="modal" data-target="#Modal{{$proceso->id}}"><i class="fa fa-exclamation"></i>
-													     Emergencia
-													</button>
-													{!! Form::open() !!}
-												<!-- Modal -->
-													<div class="modal fade" id="Modal{{$proceso->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-														<div class="modal-dialog" role="document">
-															<div class="modal-content">
-																<div class="modal-header">
-																	<h5 class="modal-title" id="exampleModalLabel">Plan de Tratamiento</h5>
-																	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-																		<span aria-hidden="true">&times;</span>
-																	</button>
-																</div>
-																<div class="modal-body">
-																	<label>Emergencia
-																	</label>
-																	<br/>
-																	<button type="button" class="btn btn-md btn-default" data-dismiss="modal">No
-																	</button>
-																	@can('planTratamientos.create')
-																		<a href="{{ route('planTratamiento.agenda',['cita'=> $id, 'procedimiento'=> $procedimiento->id, 'paciente'=> $paciente,'planTratamiento'=>$proceso->id,'validador'=>$validador] )}}" class="btn btn-success" style="color: white">
-																			Si
-																		</a>
-																	@endcan
-																</div>
-																	<div class="modal-footer">
+													<td width="10px">
+														<!-- Button trigger modal -->
+														<button type="button" class="btn btn-sm btn-default bg-gray btn-block" data-toggle="modal" data-target="#Modal{{$proceso->id}}"><i class="fa fa-exclamation"></i>
+														     Emergencia
+														</button>
+														{!! Form::open() !!}
+													<!-- Modal -->
+														<div class="modal fade" id="Modal{{$proceso->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+															<div class="modal-dialog" role="document">
+																<div class="modal-content">
+																	<div class="modal-header">
+																		<h5 class="modal-title" id="exampleModalLabel">Plan de Tratamiento</h5>
+																		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+																			<span aria-hidden="true">&times;</span>
+																		</button>
 																	</div>
-																</div>
+																	<div class="modal-body">
+																		<label>Emergencia
+																		</label>
+																		<br/>
+																		<button type="button" class="btn btn-md btn-default" data-dismiss="modal">No
+																		</button>
+																		@can('planTratamientos.create')
+																			<a href="{{ route('planTratamiento.agenda',['cita'=> $id, 'procedimiento'=> $procedimiento->id, 'paciente'=> $paciente,'planTratamiento'=>$proceso->id,'validador'=>$validador] )}}" class="btn btn-success" style="color: white">
+																				Si
+																			</a>
+																		@endcan
+																	</div>
+																		<div class="modal-footer">
+																		</div>
+																	</div>
+															</div>
 														</div>
-													</div>
-												{!! Form::close() !!}
-												</td>
+													{!! Form::close() !!}
+													</td>
 											@endif
 										@else
 											@if($proceso->completo == true)
