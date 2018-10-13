@@ -145,7 +145,7 @@ class PacienteController extends Controller
                     }
                 }
             }
-            $pacientes = Paciente::paginate(10);
+            $pacientes = Paciente::select()->orderBy('id','ASC')->paginate(10);
             $user = User::paginate(10);
             $ninguna=0;
             $string = "SELECT paciente_id,id FROM events WHERE id IN (SELECT events_id FROM plan__tratamientos AS tbl
