@@ -155,12 +155,9 @@
 															<td>{{$paciente->nombre1." ".$paciente->nombre2." ".$paciente->nombre3." ".$paciente->apellido1." ".$paciente->apellido2}}</td>
 															<td>{{$paciente->expediente}}</td>
 															<td>Sin Usuario</td>
-															@can('pacientes.trabajo')
-																			<td style="text-align: center;"><a href="{{route('planTratamiento.index',['cita'=> $cita->id,'validador' => 1])}}" class="btn btn-sm btn-default bg-dark" style="color: white">Ver Plan Activo</a>
-																			</td>
-																			@endcan
 																			@if($paciente->id == 1)
-																			<td width="10px" colspan="3">
+																			<td></td>
+																			<td width="10px" colspan="2">
 																				@can('pacientes.show')
 																					<a href="{{ route('paciente.show', $paciente->id) }}" class="btn btn-sm btn-default bg-info" style="color: white;width: 100%"><i class="fa fa-folder-open-o"></i> Expediente
 																					</a>
@@ -175,7 +172,10 @@
 																			</td>
 																			@endif
 																			@if($paciente->id != 1)
-
+																			@can('pacientes.trabajo')
+																				<td style="text-align: center;"><a href="{{route('planTratamiento.index',['cita'=> $cita->id,'validador' => 1])}}" class="btn btn-sm btn-default bg-dark" style="color: white">Ver Plan Activo</a>
+																				</td>
+																			@endcan
 																			<td width="10px">
 																				@can('pacientes.edit')
 																					<a href="{{ route('paciente.edit', $paciente->id) }}" class="btn btn-sm  btn-default bg-success" style="color: white"><i class="fa fa-edit"></i> Editar</a>

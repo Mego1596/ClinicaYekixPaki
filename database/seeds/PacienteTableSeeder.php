@@ -4,6 +4,7 @@ use Illuminate\Database\Seeder;
 use App\User;
 use App\Paciente;
 use App\Events;
+use App\Plan_Tratamiento;
 
 class PacienteTableSeeder extends Seeder
 {
@@ -32,6 +33,16 @@ class PacienteTableSeeder extends Seeder
             'textcolor'         => '#FFFFFF',
             'descripcion'       => 'cita por defecto',
             'paciente_id'       => 1,
+            ]);
+        Plan_Tratamiento::create([
+            'procedimiento_id'  => 1,
+            'events_id'         => 1,
+            'no_de_piezas'      => 0,
+            'honorarios'        => 0,
+            'activo'            => true,
+            'completo'          => true,
+            'en_proceso'        => false,
+            'no_iniciado'       => false,
             ]);
     }
 }
