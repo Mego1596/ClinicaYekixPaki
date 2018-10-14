@@ -95,7 +95,11 @@
 						<div class="row pt-3">
 							<div class="col-md-4">
 								{{ Form::label('created_at', 'Fecha:') }}
-								{{ Form::datetime('created_at', $nuevaFecha, ['class' => 'form-control','disabled'])}}
+								@php
+									$date=date_create($paciente->created_at);
+									$aux= date_format($date,"d/m/Y H:i:s");
+								@endphp
+								{{ Form::datetime('created_at', $aux, ['class' => 'form-control','disabled'])}}
 							</div>
 							<div class="col-md-4">
 								{{ Form::label('expediente', 'No. Expediente') }}
@@ -209,8 +213,8 @@
 				                  <thead>
 				                  	<tr>
 				                  		<th>Numero de Plan</th>
-				                  		<th>Planes de Tratamiento
-				                  		</th>
+				                  		<th>Planes de Tratamiento</th>
+				                  		<th>Fecha</th>
 				                  	</tr>
 				                  </thead>
 				                  <tbody>
@@ -223,6 +227,12 @@
 													</td>
 													<td>	
 														<a href="{{ route('paciente.plan',['cita' => $plan->id])}}" class="btn btn-sm btn-default bg-info" style="color: white" target="_blank"><li class="fa fa-file-pdf-o"></li> Plan de Tratamiento
+													</td>
+													<td>
+														@php
+															$date=date_create($plan->created_at);
+															echo date_format($date,"d/m/Y H:i:s");
+														@endphp
 													</td>
 												</tr>
 											@endcan
