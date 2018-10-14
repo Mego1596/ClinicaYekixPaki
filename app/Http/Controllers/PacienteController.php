@@ -322,7 +322,7 @@ class PacienteController extends Controller
                 }
             }
 
-        $string2 ="SELECT paciente_id,id,created_at FROM events WHERE id IN (SELECT events_id FROM plan__tratamientos AS tbl WHERE paciente_id =".$paciente->id." AND id = (SELECT MAX(id) FROM plan__tratamientos WHERE events_id = tbl.events_id));";
+        $string2 ="SELECT paciente_id,id,created_at FROM events WHERE id IN (SELECT events_id FROM plan__tratamientos AS tbl WHERE paciente_id =".$paciente->id." AND id = (SELECT MAX(id) FROM plan__tratamientos WHERE referencia IS NULL AND events_id = tbl.events_id));";
         $planes = DB::select(DB::raw($string2));
         return view('paciente.show', compact('paciente','historias','edad','nuevaFecha','x','planes'));
     }

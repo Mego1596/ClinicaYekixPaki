@@ -87,7 +87,7 @@
 													</td>
 													<td>{{$proceso->no_de_piezas}}</td>
 													<td style="text-align: center;">${{$proceso->honorarios}}</td>
-													@if(sizeof($planValidador) == 1 || sizeof($planValidador2) >= 1)
+													
 													<td width="10px">
 													@can('planTratamientos.create')
 														<a href="{{ route('planTratamiento.agenda',['cita'=> $id, 'procedimiento'=> $procedimiento->id, 'paciente'=> $paciente,'planTratamiento'=>$proceso->id,'validador'=>$validador] )}}" class="btn btn-sm btn-default bg-dark" style="color: white">
@@ -95,9 +95,6 @@
 														</a>
 													@endcan
 													</td>
-													@else
-													<td></td>
-													@endif
 												@elseif($proceso->completo == true)
 													<td width="150px">
 														<label><strong>Completo</strong></label>
