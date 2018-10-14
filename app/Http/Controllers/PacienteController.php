@@ -955,6 +955,14 @@ class PacienteController extends Controller
 
     public function showPlan($cita)
     {
-        
+        $planTratamiento = Plan_Tratamiento::where('events_id',$cita)->get();
+        $y=0.0;
+        foreach($planTratamiento as $plan){
+            $y+=$plan->honorarios;
+        }
+        $procesos = Procedimiento::get();
+        $pdf = PDF::loadView('planTratamiento.show',compact('procesos','planTratamiento','y'));
+        $pdf->setPaper('A4','Portrait');
+        return $pdf->stream(); 
     }
 }
