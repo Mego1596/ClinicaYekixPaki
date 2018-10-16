@@ -15,6 +15,11 @@ class CreatePagosTable extends Migration
     {
         Schema::create('pagos', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('events_id')->nullable()->unsigned();
+            $table->foreign('events_id')->references('id')->on('events')->onDelete('cascade');
+            $table->double('abono',5,2)->default(0);
+            $table->double('saldo',5,2)->default(0);
+            $table->dateTime('proximaCita')->nullable();
             $table->timestamps();
         });
     }
