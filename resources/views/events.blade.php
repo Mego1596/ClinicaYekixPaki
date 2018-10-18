@@ -133,7 +133,7 @@
         @can('planTratamientos.index')
         <div class="row">
           <div class="col-md-4">
-              <a class="btn btn-info" href="#" name="plan" id="plan">
+              <a class="btn btn-sm btn-default bg-dark" href="#" style="color: white" name="plan" id="plan">
               <i class="fa fa-list-alt"></i> Gestionar Plan de Tratamiento</a>
           </div>
         </div>
@@ -141,7 +141,7 @@
         @can('recetas.index')
         <div class="row">
           <div class="col-md-4" style="margin-top: 10px">
-              <a class="btn btn-info" href="#" name="receta" id="receta">
+              <a class="btn btn-sm btn-default bg-dark" href="#" style="color: white" name="receta" id="receta">
               <i class="fa fa-file-text-o"></i> Gestionar Receta</a>
           </div>
         </div>
@@ -149,9 +149,17 @@
         @can('pacientes.create')
           <div class="row">
             <div class="col-md-4" style="margin-top: 10px">
-              <a class="btn btn-info" href="#" style="color: white" name="modificar" id="modificar"><i class="fa fa-address-card-o"></i> Gestionar Cita</a>
+              <a class="btn btn-sm btn-default bg-dark" href="#" style="color: white" name="modificar" id="modificar"><i class="fa fa-address-card-o"></i> Gestionar Cita</a>
             </div>
           </div>
+        @endcan
+        @can('pacientes.trabajo')
+        <div class="row">
+          <div class="col-md-4" style="margin-top: 10px">
+              <a class="btn btn-sm btn-default bg-dark" href="#" style="color: white" name="pago" id="pago">
+              <i class="fa fa-file-text-o"></i> Gestionar Pago</a>
+          </div>
+        </div>
         @endcan
       <div class="modal-footer">
 		{!! Form::submit('Añadir Cita', ['class' => 'btn btn-success','id' => 'btnAgregar', 'name' => 'btnAgregar']) !!}
@@ -174,6 +182,12 @@
           var x=parseInt($('#txtID').val());
           var y=parseInt($('#txtValidador').val());
           this.setAttribute("href","planTratamiento/"+x+"/"+y);
+        }
+</script>
+<script type="text/javascript">
+        document.getElementById("pago").onclick = function() {
+          var x=parseInt($('#txtID').val());
+          this.setAttribute("href","pago/"+x);
         }
 </script>
 <script type="text/javascript">

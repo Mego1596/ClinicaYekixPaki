@@ -172,4 +172,19 @@ Route::middleware(['auth'])->group(function(){
 	Route::delete('detalleReceta/destroy/{detalle}', 'DetalleRecetaController@destroy')->name('detalleReceta.destroy')->middleware('permission:admin.eliminarHistoria');
 
 
+	//Recetas
+	Route::post('pago/store', 'PagoController@store')->name('pago.store')->middleware('permission:recetas.create');
+
+	Route::get('pago/{cita}', 'PagoController@index')->name('pago.index')->middleware('permission:recetas.index');
+
+	Route::get('pago/create/{cita}', 'PagoController@create')->name('pago.create')->middleware('permission:recetas.create');
+
+	Route::put('pago/update/{pago}', 'PagoController@update')->name('pago.update')->middleware('permission:recetas.edit');
+
+	Route::get('pago/show/{cita}/{pago}', 'PagoController@show')->name('pago.show')->middleware('permission:recetas.show');
+
+	Route::delete('pago/destroy/{pago}', 'PagoController@destroy')->name('pago.destroy')->middleware('permission:recetas.destroy');
+
+	Route::get('pago/edit/{cita}/{pago}', 'PagoController@edit')->name('pago.edit')->middleware('permission:recetas.edit');
+
 });

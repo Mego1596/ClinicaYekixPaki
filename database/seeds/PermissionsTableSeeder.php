@@ -306,5 +306,37 @@ class PermissionsTableSeeder extends Seeder
             'slug' => 'recetas.email',
             'description' => 'Lista y Navega todos los usuarios asistente del Sistema',
         ]);
+
+
+        //Gestion de Pago
+        Permission::create([
+            'name' => 'Navegar Pagos',
+            'slug' => 'pagos.index',
+            'description' => 'Lista y Navega todos los Pagos del Sistema',
+        ]);
+
+        Permission::create([
+            'name' => 'Ver Detalle de Pago',
+            'slug' => 'pagos.show',
+            'description' => 'Ver en detalle cada Pago del sistema',
+        ]);
+
+        Permission::create([
+            'name' => 'Creacion de Pagos',
+            'slug' => 'pagos.create',
+            'description' => 'Editar cualquier dato de un Pago del sistema',
+        ]);
+
+        Permission::create([
+            'name' => 'Edicion de Pagos',
+            'slug' => 'pagos.edit',
+            'description' => 'Editar cualquier dato de un Pago del sistema',
+        ]);
+
+        Permission::create([
+            'name' => 'Eliminar Pagos',
+            'slug' => 'pagos.destroy',
+            'description' => 'Eliminar cualquier dato de un Pago del sistema',
+        ]);
     }
 }

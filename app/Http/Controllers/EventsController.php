@@ -35,7 +35,7 @@ class EventsController extends Controller
             //OBTENIENDO PACIENTES CON UN PLAN DE TRATAMIENTO ACTIVO PARA RESTRINGIR TODAS LAS
             //POSTERIORES BLOQUEADAS PARA REALIZAR UN PLAN DE TRATAMIENTO
 
-            $string = "SELECT paciente_id,id FROM events WHERE id IN (SELECT events_id FROM plan__tratamientos AS tbl
+            $string = "SELECT paciente_id,id FROM events WHERE paciente_id=".$paciente->id." AND id IN (SELECT events_id FROM plan__tratamientos AS tbl
                 WHERE id = (SELECT MAX(id) FROM plan__tratamientos WHERE activo = TRUE AND events_id = tbl.events_id));";
             $eventos = DB::select(DB::raw($string));
             $x='negativo';
@@ -98,6 +98,7 @@ class EventsController extends Controller
                     'expediente'        => $paciente->expediente,
                     'paciente'          => $paciente->id,
                     'validador'         => 0,
+                    'pago'              => 'si',
                     ]
                 );
             }
@@ -138,10 +139,15 @@ class EventsController extends Controller
                     }else{
                         $("#plan").hide();
                         $("#modificar").hide();
+                        $("#pago").hide();
                         if(calEvent.validador == 1 && calEvent.estado == "negativo"){
                             $("#plan").show();
                             $("#modificar").show();
                         }
+                        if(calEvent.pago == "si"){
+                            $("#pago").show();
+                        }
+
                         $("#receta").show();
                         $("#btnAsignar").hide();   
                     }
