@@ -14,6 +14,7 @@ use App\Paciente;
 use App\User;
 use App\HistoriaMedica;
 use App\Plan_Tratamiento;
+use App\Pago;
 use Calendar;
 use Validator;
 use PDF;
@@ -955,14 +956,19 @@ class PacienteController extends Controller
 
     public function showPlan($cita)
     {
-        $planTratamiento = Plan_Tratamiento::where('events_id',$cita)->get();
+        $planTratamiento = Plan_Tratamiento::where('events_id',$cita)->orderBy('id')->get();
+        $evento = Events::where('id',$cita)->get();
+        $eventos= Events::get();
         $y=0.0;
         foreach($planTratamiento as $plan){
             $y+=$plan->honorarios;
         }
         $procesos = Procedimiento::get();
-        $pdf = PDF::loadView('planTratamiento.show',compact('procesos','planTratamiento','y'));
+        $pagos = Pago::where('events_id',$cita)->get();
+        $pagosGenerales = Pago::get();
+        $planTratamientoGeneral = Plan_Tratamiento::get();
+        $pdf = PDF::loadView('planTratamiento.show',compact('procesos','planTratamiento','y','pagos','pagosGenerales','planTratamientoGeneral','evento','eventos'));
         $pdf->setPaper('A4','Portrait');
-        return $pdf->stream(); 
+        return $pdf->stream();
     }
 }

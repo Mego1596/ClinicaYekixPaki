@@ -39,7 +39,7 @@
 									<th>Proxima Cita</th>
 									@if (sizeof($pagos) == 0)
 									<th width="237">
-										@can('procedimientos.create')
+										@can('pagos.create')
 										<a href="{{ route('pago.create',['cita' => $id]) }}" class="btn btn-block btn-success pull-right">
 										<i class="fa fa-money"></i>	
 										Crear Pago
@@ -47,8 +47,8 @@
 										@endcan
 									</th>
 									@else
-									<th colspan="3" width="237">
-										@can('procedimientos.create')
+									<th width="237">
+										@can('pagos.create')
 										<a href="{{ route('pago.create', ['cita' => $id]) }}" class="btn btn-block btn-success pull-right">
 										<i class="fa fa-money"></i>	
 										Crear Pago
@@ -76,13 +76,8 @@
 									@endphp
 									<td align="center">{{$aux}}</td>
 									<td width="10px">
-										@can('procedimientos.edit')
-											<a href="{{ route('procedimiento.edit', $proceso->id) }}" class="btn btn-sm btn-default bg-success" style="color: white"><i class="fa fa-edit"></i> Editar</a>
-										@endcan
-									</td>
-									<td width="10px">
-										@can('procedimientos.destroy')
-											<button type="button" class="btn btn-sm btn-default btn btn-danger" data-toggle="modal" data-target="#Modal{{$proceso->id}}"><i class="fa fa-trash"></i>
+										@can('pagos.destroy')
+											<button type="button" class="btn btn-sm btn-default btn btn-danger" data-toggle="modal" data-target="#Modal{{$proceso->id}}" style="width: 100%"><i class="fa fa-trash"></i>
 													  					Eliminar
 																	</button>
 																	{!! Form::open(['route' => ['pago.destroy', $proceso->id],'method' => 'DELETE']) !!}

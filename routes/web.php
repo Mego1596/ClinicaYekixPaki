@@ -179,12 +179,6 @@ Route::middleware(['auth'])->group(function(){
 
 	Route::get('pago/create/{cita}', 'PagoController@create')->name('pago.create')->middleware('permission:recetas.create');
 
-	Route::put('pago/update/{pago}', 'PagoController@update')->name('pago.update')->middleware('permission:recetas.edit');
-
-	Route::get('pago/show/{cita}/{pago}', 'PagoController@show')->name('pago.show')->middleware('permission:recetas.show');
-
 	Route::delete('pago/destroy/{pago}', 'PagoController@destroy')->name('pago.destroy')->middleware('permission:recetas.destroy');
-
-	Route::get('pago/edit/{cita}/{pago}', 'PagoController@edit')->name('pago.edit')->middleware('permission:recetas.edit');
 
 });

@@ -53,7 +53,7 @@ class PagoController extends Controller
         $nuevoPago->proximaCita = $request->proximaCita;
 
         //Creacion del campo Saldo hasta ese pago para un plan activo
-        $reconocimiento = Plan_Tratamiento::select('referencia')->where('events_id',$request->cita)->get();
+        $reconocimiento = Plan_Tratamiento::select('referencia')->where('events_id',$request->cita)->value('referencia');
         if(!is_null($reconocimiento)){
             $string = "SELECT referencia FROM plan__tratamientos AS tbl WHERE id = (SELECT MAX(id) FROM plan__tratamientos WHERE referencia IS NOT NULL AND events_id = ".$request->cita.");";
             $plan = DB::select(DB::raw($string));
@@ -64,11 +64,18 @@ class PagoController extends Controller
 
             $planPertenece = Plan_Tratamiento::select('events_id')->where('id', $ref)->value('events_id');
             $planT = Plan_Tratamiento::where('events_id',$planPertenece)->get();
+            $verificarPago = Pago::select('id')->where('events_id',$planPertenece)->get();
+            $pago = Pago::select('abono')->where('events_id',$planPertenece)->value('abono');
             $y=0.0;
             foreach($planT as $planDetalle){
-                $y+=$planDetalle->honorarios;
+                $y+=($planDetalle->honorarios);
             }
 
+            if(sizeof($verificarPago) == 0){
+            }else{
+                $y-=$pago;
+            }
+            var_dump($y);
             $planVigente = Plan_Tratamiento::where('events_id', $planPertenece)->get();
             $planes = Plan_Tratamiento::get();
             
@@ -101,48 +108,32 @@ class PagoController extends Controller
                     $nuevoPago->save();
                 }
             }
+
+
+
         }else{
-            
+
+            $string = "SELECT id,honorarios FROM plan__tratamientos AS tbl WHERE id = (SELECT MAX(id) FROM plan__tratamientos WHERE referencia IS NULL AND events_id =".$request->cita." AND procedencia = 1);";
+            $plan = DB::select(DB::raw($string));
+
+            $nuevoPago = new Pago();
+
+            $nuevoPago->events_id   = $request->cita;
+            $nuevoPago->abono       = $request->abono;
+            $nuevoPago->proximaCita = $request->proximaCita;
+
+            //Creacion del campo Saldo hasta ese pago para un plan activo
+            foreach ($plan as $key => $value) {
+                $nuevoPago->saldo = $value->honorarios-$request->abono;
+            }
+
+            $nuevoPago->save();
         }
 
 
         return redirect()->route('pago.index',$request->cita)
                 ->with('info','Pago asignado con exito')
                 ->with('tipo', 'success');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Pago  $pago
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Pago $pago)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Pago  $pago
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Pago $pago)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Pago  $pago
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Pago $pago)
-    {
-        //
     }
 
     /**
