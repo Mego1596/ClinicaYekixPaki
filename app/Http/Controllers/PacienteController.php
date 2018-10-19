@@ -712,9 +712,10 @@ class PacienteController extends Controller
         }
         $procesos = Procedimiento::get();
         $procedimiento = Procedimiento::pluck('nombre','id')->toArray();
-        $events = Events::select('id','paciente_id','start_date','end_date','descripcion')->get();
+        $events = Events::select('id','paciente_id','start_date','end_date','descripcion','reprogramada')->get();
         $event_list= [];
         foreach ($events as $key => $event) {
+            if($event->reprogramada !== true){
                 $event_list[] =Calendar::event(
                     "Ocupado",
                     false,
@@ -727,6 +728,20 @@ class PacienteController extends Controller
                     'durationEditable'  => false,
                     ]
                 );
+            }else{
+                $event_list[] =Calendar::event(
+                    "Reprogramada",
+                    false,
+                    new \DateTime($event->start_date),
+                    new \DateTime($event->end_date),
+                    $event->id,
+                    [
+                    'descripcion'       => $event->descripcion,
+                    'textColor'         => $event->textcolor,
+                    'durationEditable'  => false,
+                    ]
+                );
+            }
         }
         
         
@@ -823,7 +838,6 @@ class PacienteController extends Controller
             $event = Events::find($request["txtID"]);
             $event->delete();
             return redirect()->route('paciente.agenda',$request->pacienteID)->with('info','Cita eliminada con exito');
-
         }
 
         

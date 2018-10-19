@@ -105,36 +105,72 @@ class PacienteEventRequest extends FormRequest
         /***
          * REGLA DE NO CHOQUES DE CITAS
          */
-       
-        /*concatena formato concordante a  bd*/
-        $fechaHoraInicio=$request['txtFecha']." ".$request['start_date'];
-        $fechaHoraFin=$request['txtFecha']." ".$request['end_date'];
-        if($x == 0){
-            $fechaHoraInicio=$str." ".$request['start_date'];
-            $fechaHoraFin=$str." ".$request['end_date'];
-        }elseif ($x == 1) {
-            $fechaHoraInicio= $request['txtFecha']." ".$request['start_date'];
-            $fechaHoraFin= $request['txtFecha']." ".$request['end_date'];
-        }
-       /*comparacion por ambos lados de rangos existentes */
-        $comparacionInferior= Events::where('start_date','>',$fechaHoraInicio)
-        ->where('start_date','<',$fechaHoraFin)->get();
-        $comparacionSuperior= Events::where('end_date','>',$fechaHoraInicio)
-        ->where('end_date','<',$fechaHoraFin)->get();
-       /*compara limites inferiores dentro de un mismo dia*/ 
-        $comparacionExterior=Events::where('start_date','<=',$fechaHoraInicio)
-        ->where('end_date','>=',$fechaHoraFin)
-        ->where('start_date','>=',$this->fechaRequest.' 00:00:00')
-        ->where('end_date','<=',$this->fechaRequest.' 23:59:59')->get();
+        if($request['reprogramacion'] != 1){
 
-        /*si existe un elemento en el array lo fuerza*/
-        if(count($comparacionInferior)>0||count($comparacionSuperior)>0){
-           
-            $request['choques']='a';
-        }
-        else if(count($comparacionExterior)>0)
-        {
-        $request['choques']='a'; //fuerza a que sea 'a' para no ser integer 1
+            /*concatena formato concordante a  bd*/
+            $fechaHoraInicio=$request['txtFecha']." ".$request['start_date'];
+            $fechaHoraFin=$request['txtFecha']." ".$request['end_date'];
+            if($x == 0){
+                $fechaHoraInicio=$str." ".$request['start_date'];
+                $fechaHoraFin=$str." ".$request['end_date'];
+            }elseif ($x == 1) {
+                $fechaHoraInicio= $request['txtFecha']." ".$request['start_date'];
+                $fechaHoraFin= $request['txtFecha']." ".$request['end_date'];
+            }
+
+           /*comparacion por ambos lados de rangos existentes */
+            $comparacionInferior= Events::where('start_date','>',$fechaHoraInicio)
+            ->where('start_date','<',$fechaHoraFin)->get();
+            $comparacionSuperior= Events::where('end_date','>',$fechaHoraInicio)
+            ->where('end_date','<',$fechaHoraFin)->get();
+           /*compara limites inferiores dentro de un mismo dia*/ 
+            $comparacionExterior=Events::where('start_date','<=',$fechaHoraInicio)
+            ->where('end_date','>=',$fechaHoraFin)
+            ->where('start_date','>=',$this->fechaRequest.' 00:00:00')
+            ->where('end_date','<=',$this->fechaRequest.' 23:59:59')->get();
+
+            /*si existe un elemento en el array lo fuerza*/
+            if(count($comparacionInferior)>0||count($comparacionSuperior)>0){
+               
+                $request['choques']='a';
+            }
+            else if(count($comparacionExterior)>0)
+            {
+            $request['choques']='a'; //fuerza a que sea 'a' para no ser integer 1
+            }
+
+        }else{
+
+            $fechaHoraInicio=$request['txtFecha']." ".$request['start_date'];
+            $fechaHoraFin=$request['txtFecha']." ".$request['end_date'];
+            if($x == 0){
+                $fechaHoraInicio=$str." ".$request['start_date'];
+                $fechaHoraFin=$str." ".$request['end_date'];
+            }elseif ($x == 1) {
+                $fechaHoraInicio= $request['txtFecha']." ".$request['start_date'];
+                $fechaHoraFin= $request['txtFecha']." ".$request['end_date'];
+            }
+
+            /*comparacion por ambos lados de rangos existentes */
+                $comparacionInferior= Events::where('start_date','>',$fechaHoraInicio)
+                ->where('start_date','<',$fechaHoraFin)->where('reprogramada',false)->get();
+                $comparacionSuperior= Events::where('end_date','>',$fechaHoraInicio)
+                ->where('end_date','<',$fechaHoraFin)->where('reprogramada',false)->get();
+               /*compara limites inferiores dentro de un mismo dia*/ 
+                $comparacionExterior=Events::where('start_date','<=',$fechaHoraInicio)
+                ->where('end_date','>=',$fechaHoraFin)->where('reprogramada',false)
+                ->where('start_date','>=',$this->fechaRequest.' 00:00:00')
+                ->where('end_date','<=',$this->fechaRequest.' 23:59:59')->get();
+
+                /*si existe un elemento en el array lo fuerza*/
+                if(count($comparacionInferior)>0 || count($comparacionSuperior)>0){
+                   
+                    $request['choques']='a';
+                }
+                else if(count($comparacionExterior)>0)
+                {
+                $request['choques']='a'; //fuerza a que sea 'a' para no ser integer 1
+                }
         }
 
         /**

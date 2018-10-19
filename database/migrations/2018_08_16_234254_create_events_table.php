@@ -20,8 +20,7 @@ class CreateEventsTable extends Migration
             $table->string('textcolor',255)->default('#FFFFFF');
             $table->string('descripcion',255)->nullable();
             $table->timestamps();
-/*          $table->integer('procedimiento_id')->nullable()->unsigned();
-            $table->foreign('procedimiento_id')->references('id')->on('procedimientos')->nullable();*/
+            $table->boolean('reprogramada')->default(false)->nullable();
             $table->integer('paciente_id')->unsigned();
             $table->foreign('paciente_id')->references('id')->on('pacientes');
         });

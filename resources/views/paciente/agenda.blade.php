@@ -225,27 +225,47 @@ $(document).ready(function(){
       		{!! Form::label('txtDescripcion', 'Descripcion:')!!}
       		{!! Form::textarea('txtDescripcion', null, ['class' => 'form-control', 'rows' => '2', 'id' => 'txtDescripcion'])!!}
       	</div>
-
-        {!! Form::label('pregunta', 'Paciente con Procedimiento?',['style' => 'visibility:visible', 'id'=>'pregunta'])!!}
-        <br/>
-        <input type="checkbox" name="cosa" value="1" id="cosa" >
-        {{ Form::label('radio', 'Si ', ['style' => 'visibility:visible','id' => 'radio']) }}
-        <input type="checkbox" name="cosa2" value="2" id="cosa2" >
-        {{ Form::label('radio2', 'No ', ['style' => 'visibility:visible','id' => 'radio2']) }}
-      <!-- EN EL SELECT VA LA VARIABLE PROCEDIMIENTO -->
-        <div class="form-group">
-          {!! Form::label('procedimiento_id', 'Procedimiento:',['style' => 'visibility:hidden', 'id' => 'procedimiento'])!!}
-          {!! Form::select('procedimiento_id', $procedimiento, null, ['placeholder' => 'Elija un procedimiento', 'style' => 'visibility:hidden','id' =>'procedimiento_id','class' => 'form-control'])!!}
-        </div>
-        <div class="form-group">
-            {{ Form::label('no_de_piezas', 'No. de Piezas',['id'=>'no_de_piezas1','style' => 'display:none']) }}
-            {{ Form::number('no_de_piezas', null, ['class' => 'form-control', 'step' => '0.10', 'min'=>'0','max'=>'600','id'=>'no_de_piezas2', 'style' => 'display:none'])}}
-        </div>
         @can('pacientes.create')
-        <div class="form-group">
-            {{ Form::label('honorarios', 'Honorarios:',['id'=>'honorarios1','style' => 'display:none']) }}
-            {{ Form::number('honorarios', null, ['class' => 'form-control', 'step' => '0.10', 'min'=>'0','max'=>'600','id'=>'honorarios2','style' => 'display:none'])}}
-        </div>
+          {{ Form::label('reprogramacion','¿Cita por reprogramacion?',['id'=>'labelReprogramacion']) }}
+          <br />
+          <div class="row">
+            <div class="col-md-2">
+              {{ Form::radio('reprogramacion', '1', false, ['id'=> 'siReprogramacion'] )}}
+              <label for="siReprogramacion">Si</label>
+            </div>
+            <div class="col-md-2">
+              {{ Form::radio('reprogramacion', '2', true, ['id'=> 'noReprogramacion'] )}}
+              <label for="noReprogramacion">No</label>
+            </div>
+          </div>
+          
+        @endcan
+        {!! Form::label('pregunta', 'Paciente con Procedimiento?',['style' => 'visibility:visible', 'id'=>'pregunta'])!!}
+          <br/>
+          <div class="row">
+            <div class="col-md-2">
+              <input type="checkbox" name="cosa" value="1" id="cosa" >
+              {{ Form::label('radio', 'Si ', ['style' => 'visibility:visible','id' => 'radio']) }}
+            </div>
+            <div class="col-md-2">
+              <input type="checkbox" name="cosa2" value="2" id="cosa2" >
+              {{ Form::label('radio2', 'No ', ['style' => 'visibility:visible','id' => 'radio2']) }}
+            </div>
+          </div>
+        <!-- EN EL SELECT VA LA VARIABLE PROCEDIMIENTO -->
+          <div class="form-group">
+            {!! Form::label('procedimiento_id', 'Procedimiento:',['style' => 'visibility:hidden', 'id' => 'procedimiento'])!!}
+            {!! Form::select('procedimiento_id', $procedimiento, null, ['placeholder' => 'Elija un procedimiento', 'style' => 'visibility:hidden','id' =>'procedimiento_id','class' => 'form-control'])!!}
+          </div>
+          <div class="form-group">
+              {{ Form::label('no_de_piezas', 'No. de Piezas',['id'=>'no_de_piezas1','style' => 'display:none']) }}
+              {{ Form::number('no_de_piezas', null, ['class' => 'form-control', 'step' => '0.10', 'min'=>'0','max'=>'600','id'=>'no_de_piezas2', 'style' => 'display:none'])}}
+          </div>
+        @can('pacientes.create')
+          <div class="form-group">
+              {{ Form::label('honorarios', 'Honorarios:',['id'=>'honorarios1','style' => 'display:none']) }}
+              {{ Form::number('honorarios', null, ['class' => 'form-control', 'step' => '0.10', 'min'=>'0','max'=>'600','id'=>'honorarios2','style' => 'display:none'])}}
+          </div>
         @endcan
         <div class="row justify-content-between">
             <div class="col-md-3 col-sm-12 pr-md-1 mb-1 mb-md-0 text-center">
