@@ -67,7 +67,7 @@
 									@endphp
 									<td width="106px" align="center">{{$aux}}</td>
 									<td width="100px" align="center">{{$procesoNombre}}</td>
-									<td align="center"></td>
+									<td align="center">{{$proceso->realizoTto}}</td>
 									<td align="center">${{$proceso->abono}}</td>
 									<td align="center">${{$proceso->saldo}}</td>
 									@php

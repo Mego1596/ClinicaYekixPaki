@@ -141,19 +141,38 @@
                             $aux= date_format($date,"d-m-Y");
                         @endphp
                         <td class="td-proc fuente">{{$aux}}</td>
-                        @foreach($planTratamiento as $plan1)
-                            @foreach($procesos as $proceso)
-                                @if($plan1->procedimiento_id == $proceso->id)
-                                    @foreach($evento as $cita)
-                                        @if($plan1->events_id == $cita->id)
-                                            <td class="td-proc fuente">{{$proceso->nombre}}<br />
-                                            {{$cita->descripcion}}</td>
+                        @if(sizeof($planTratamiento) < 2)
+                            @foreach($planTratamiento as $plan1)
+                                @foreach($procesos as $proceso)
+                                    @if($plan1->procedimiento_id == $proceso->id)
+                                        @foreach($evento as $cita)
+                                            @if($plan1->events_id == $cita->id)
+                                                <td class="td-proc fuente">{{$proceso->nombre}}<br />
+                                                {{$cita->descripcion}}</td>
+                                                @break
+                                            @endif
+                                        @endforeach
+                                    @endif
+                                @endforeach
+                            @endforeach
+                        @else
+                            @foreach($planTratamiento as $plan1)
+                                @if($loop->iteration == 1)
+                                    @foreach($procesos as $proceso)
+                                        @if($plan1->procedimiento_id == $proceso->id)
+                                            @foreach($evento as $cita)
+                                                @if($plan1->events_id == $cita->id)
+                                                    <td class="td-proc fuente">Revision General:<br />
+                                                    {{$cita->descripcion}}</td>
+                                                @endif
+                                            @endforeach
                                         @endif
                                     @endforeach
                                 @endif
                             @endforeach
-                        @endforeach
-                        <td class="td-proc fuente">alguien por ahorita</td>
+                        @endif
+                        
+                        <td class="td-proc fuente">{{$pagoCita->realizoTto}}</td>
                         <td class="td-proc fuente">$ {{$pagoCita->abono}}</td>
                         <td class="td-proc fuente">$ {{$pagoCita->saldo}}</td>
                         @php

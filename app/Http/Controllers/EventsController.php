@@ -10,6 +10,7 @@ use App\Procedimiento;
 use App\Events;
 use App\Paciente;
 use App\Plan_Tratamiento;
+use App\Pago;
 use Calendar;
 use Validator;
 
@@ -47,6 +48,54 @@ class EventsController extends Controller
                 }
             }
 
+            //RESTRICCION DE PAGOS PARA PERSONAS QUE TENGAN EL PAGO DEL PLAN DE TRATAMIENTO
+            //PAGADO EN SU TOTALIDAD
+            $string = "SELECT id FROM events WHERE paciente_id=".$event->paciente_id." AND id IN (SELECT events_id FROM plan__tratamientos AS tbl
+                WHERE id = (SELECT MAX(id) FROM plan__tratamientos WHERE activo = TRUE AND events_id = tbl.events_id));";
+            $citaPlanPersonal = DB::select(DB::raw($string));
+
+            foreach ($citaPlanPersonal as $key => $value) {
+               $cita = $value->id;
+            }
+            $citaPlan = Plan_Tratamiento::where('id','<>',1)->whereNull('referencia')->where('procedencia',1)->where('events_id',$event->id)->orWhere( function( $query) use($event){
+                $query->where('id','<>',1)
+                      ->whereNull('referencia')
+                      ->whereNull('procedencia')
+                      ->where('events_id',$event->id);
+            })->select('events_id')->get();
+            //imprimir en for citaPlan
+            $x =0.0;
+            $getPagoAdd = Pago::select('abono')->where('events_id',$cita)->get('abono');
+            if (sizeof($getPagoAdd) == 0) {
+                    $x = 0.0;
+            }else{
+                foreach ($getPagoAdd as $key => $pagoPlan) {
+                    $x+= $pagoPlan->abono;
+                }
+            }
+            $planActivoPersonal = Plan_Tratamiento::where('events_id', $cita)->get();
+            $planAll            = Plan_Tratamiento::get();
+            $pago               = Pago::get();
+            $y=0.0;
+            foreach ($planActivoPersonal as $key => $value) {
+                $y += $value->honorarios;
+            }
+
+            foreach ($planActivoPersonal as $key => $value) {
+                if($value->id != 1){
+                    foreach ($planAll as $key => $planes1) {
+                        if($value->id == $planes1->referencia){
+                            $pagoAuxiliar = Pago::select('abono')->where('events_id',$planes1->events_id)->value('abono');
+                            $x+= $pagoAuxiliar;
+                        }
+                    }
+                }
+            }
+            if($x == $y){
+                $solvente = 'si';
+            }else{
+                $solvente = 'no';
+            }
             if(sizeof($planT) > 1 || sizeof($planT) == 0){
                 $event_list[] =Calendar::event(
                     $paciente->nombre1." ".$paciente->nombre2." ".$paciente->nombre3." ".$paciente->apellido1." ".$paciente->apellido2,
@@ -99,6 +148,7 @@ class EventsController extends Controller
                     'paciente'          => $paciente->id,
                     'validador'         => 0,
                     'pago'              => 'si',
+                    'solvente'          => $solvente,
                     ]
                 );
             }
@@ -144,7 +194,7 @@ class EventsController extends Controller
                             $("#plan").show();
                             $("#modificar").show();
                         }
-                        if(calEvent.pago == "si"){
+                        if(calEvent.pago == "si" && calEvent.solvente == "no"){
                             $("#pago").show();
                         }
 

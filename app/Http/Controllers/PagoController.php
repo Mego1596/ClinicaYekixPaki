@@ -51,6 +51,7 @@ class PagoController extends Controller
         $nuevoPago->events_id   = $request->cita;
         $nuevoPago->abono       = $request->abono;
         $nuevoPago->proximaCita = $request->proximaCita;
+        $nuevoPago->realizoTto  = $request->realizoTto;
 
         //Creacion del campo Saldo hasta ese pago para un plan activo
         $reconocimiento = Plan_Tratamiento::select('referencia')->where('events_id',$request->cita)->value('referencia');
@@ -67,6 +68,7 @@ class PagoController extends Controller
             $verificarPago = Pago::select('id')->where('events_id',$planPertenece)->get();
             $pago = Pago::select('abono')->where('events_id',$planPertenece)->value('abono');
             $y=0.0;
+            
             foreach($planT as $planDetalle){
                 $y+=($planDetalle->honorarios);
             }
