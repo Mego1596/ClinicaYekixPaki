@@ -19,10 +19,14 @@ class PagoController extends Controller
      */
     public function index($id)
     {
+        
         $pagos = Pago::where('events_id', $id)->paginate();
+        $abonoValidar = Pago::select('abono')->where('events_id', $id)->value('abono');
+        if($abonoValidar == null){
+            $abonoValidar= -1;
+        }
         $planT = Plan_Tratamiento::where('events_id',$id)->value('procedimiento_id');
         $procesoNombre = Procedimiento::where('id',$planT)->value('nombre');
-
         //OBTENIENDO EL SALDO PENDIENTE DEL PLAN DE TRATAMIENTO
         $plan = Plan_Tratamiento::where('events_id',$id)->whereNull('referencia')->get();
         $saldo = 0.0;
@@ -89,9 +93,7 @@ class PagoController extends Controller
             }
         }
 
-
-
-        return view('pago.index',compact('pagos','procesoNombre','id','idPaciente','saldo'));
+        return view('pago.index',compact('pagos','procesoNombre','id','idPaciente','saldo','abonoValidar'));
     }
 
     /**
@@ -209,7 +211,7 @@ class PagoController extends Controller
         }
 
 
-        return redirect()->route('pago.index',$request->cita)
+        return redirect()->route('pago.index',['cita' => $request->cita])
                 ->with('info','Pago asignado con exito')
                 ->with('tipo', 'success');
     }

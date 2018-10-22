@@ -8,6 +8,7 @@ use App\Events;
 use App\Paciente;
 use App\Procedimiento;
 use App\Pago;
+use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
@@ -185,6 +186,53 @@ class PlanTratamientoController extends Controller
             $paciente = Paciente::find($event->paciente_id);
             $planT = Plan_Tratamiento::where('events_id',$event->id)->get();
             $validacion = Plan_Tratamiento::select('procedencia')->where('events_id',$event->id)->value('procedencia');
+
+
+
+
+            //RESTRICCION DE PAGOS PARA PERSONAS QUE TENGAN EL PAGO DEL PLAN DE TRATAMIENTO
+            //PAGADO EN SU TOTALIDAD
+            $string = "SELECT id FROM events WHERE paciente_id=".$event->paciente_id." AND id IN (SELECT events_id FROM plan__tratamientos AS tbl
+                WHERE id = (SELECT MAX(id) FROM plan__tratamientos WHERE plan_valido = TRUE AND activo = TRUE AND events_id = tbl.events_id));";
+            $citaPlanPersonal = DB::select(DB::raw($string));
+
+            foreach ($citaPlanPersonal as $key => $value) {
+               $cita = $value->id;
+            }
+
+            $x =0.0;
+            $getPagoAdd = Pago::select('abono')->where('events_id',$cita)->get('abono');
+            if (sizeof($getPagoAdd) == 0) {
+                    $x = 0.0;
+            }else{
+                foreach ($getPagoAdd as $key => $pagoPlan) {
+                    $x+= $pagoPlan->abono;
+                }
+            }
+            $planActivoPersonal = Plan_Tratamiento::where('events_id', $cita)->get();
+            $planAll            = Plan_Tratamiento::get();
+            
+            $y=0.0;
+            foreach ($planActivoPersonal as $key => $value) {
+                $y += $value->honorarios;
+            }
+
+            foreach ($planActivoPersonal as $key => $value) {
+                if($value->id != 1){
+                    foreach ($planAll as $key => $planes1) {
+                        if($value->id == $planes1->referencia){
+                            $pagoAuxiliar = Pago::select('abono')->where('events_id',$planes1->events_id)->value('abono');
+                            $x+= $pagoAuxiliar;
+                        }
+                    }
+                }
+            }
+            //SI LOS ABONOS DE TODO EL PLAN DE TRATAMIENTO ES IGUAL AL TOTAL DE HONORARIOS EN EL PLAN DE TRATAMIENTO SE DICE QUE SE ESTA PAGADO TOTALMENTE EL PLAN DE TRATAMIENTO DE LO CONTRARIO ES NECESARIO UN PAGO PARA UNA CITA.
+            if($x == $y){
+                $solvente = 'si';
+            }else{
+                $solvente = 'no';
+            }
             if(sizeof($planT) > 1 || sizeof($planT) == 0){
                 $event_list[] =Calendar::event(
                     $paciente->nombre1." ".$paciente->nombre2." ".$paciente->nombre3." ".$paciente->apellido1." ".$paciente->apellido2,
@@ -286,7 +334,7 @@ class PlanTratamientoController extends Controller
                     $("#start_date").val(horaInicio[0]);
                     $("#end_date").val(horaFin[0]);
                     //$("#procedimiento_id").val(calEvent.procedimiento);
-                    $("#exampleModal").modal();     
+                    $("#exampleModal").modal(); 
                 }else{
                     $("#btnAgregar").hide();
                     $("#btnEliminar").hide();
@@ -328,7 +376,7 @@ class PlanTratamientoController extends Controller
 
             ]);
 
-        return view('planTratamiento.agenda',compact('procesos','calendar_details','paciente','encendido','id','id2','planActual','validador','procesos2'));
+        return view('planTratamiento.agenda',compact('procesos','calendar_details','paciente','encendido','id','id2','planActual','validador','procesos2','solvente'));
     }
 
     public function addEvent(Request $request){
@@ -352,9 +400,7 @@ class PlanTratamientoController extends Controller
             $event->start_date          = $request['txtFecha']." ".$request['start_date'];
             $event->end_date            = $request['txtFecha']." ".$request['end_date'];
         }
-       // if(!is_null($request['procedimiento_id'])){
-       //     $event->procedimiento_id    = $request['procedimiento_id'];
-       // }
+
         $event->descripcion         = $request['txtDescripcion'];
         $event->save();
 
@@ -371,6 +417,17 @@ class PlanTratamientoController extends Controller
         $tratamiento_cita->referencia          = $request->referencia;
         $tratamiento_cita->save();
 
+        if($request->txtSolvencia == 'si'){
+            $pagoSolvente = new Pago();
+            $pagoSolvente->abono = 0.0;
+            $pagoSolvente->saldo = 0.0;
+            $doctor = User::where('id',1)->get();
+            foreach ($doctor as $key => $value) {
+            $pagoSolvente->realizoTto  = $value->nombre1.' '.$value->nombre2.' '.$value->nombre3.' '.$value->apellido1.' '.$value->apellido2.'- '.$value->numeroJunta;
+            }
+            $pagoSolvente->events_id  = $event->id;
+            $pagoSolvente->save();
+        } 
         return redirect()->route('planTratamiento.agenda',['procedimiento'=>$request['txtProcedimiento_id'], 'paciente' => $request['pacienteID'],'planTratamiento'=>$request->referencia,'validador'=> $request->txtValidador,'cita' => $request->cita])->with('info','Cita guardada con exito');
 
         }elseif (isset($_POST["btnModificar"])) {

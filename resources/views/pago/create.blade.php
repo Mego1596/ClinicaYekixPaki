@@ -6,7 +6,7 @@
   <a href="{{route('events.index')}}">Citas</a>
 </li>
 <li class="breadcrumb-item">
-  <a href="{{route('pago.index', $id )}}">Gestionar Pago</a>
+  <a href="{{route('pago.index',['cita' => $id] )}}">Gestionar Pago</a>
 </li>
 <li class="breadcrumb-item">
   <a class="breadcrumb-item active">Realizar Pago</a>
@@ -23,7 +23,7 @@
 					<div class="card-header text-center">
 						<div class="row">
 							<div class="col-md-2 col-sm-12">
-								<a href="{{ route('pago.index',$id) }}" class="btn btn-block btn-secondary" style="width: 100%">
+								<a href="{{ route('pago.index',['cita' => $id]) }}" class="btn btn-block btn-secondary" style="width: 100%">
 								<i class="fa fa-arrow-circle-left"></i> Atrás</a>
 							</div>
 							<div class="col-md-8">

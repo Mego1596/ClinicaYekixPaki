@@ -92,6 +92,7 @@
         <input type="hidden" name="txtProcedimiento_id" id="txtProcedimiento_id" value="{{$id}}">
         <input type="hidden" name="txtValidador" id="txtValidador" value="{{$validador}}">
         <input type="hidden" name="referencia" id="referencia" value="{{$planActual}}">
+        <input type="hidden" name="txtSolvencia" id="txtSolvencia" value="{{$solvente}}">
 
       	<div class="form-row">	
       		<div class="form-group col-md-12">

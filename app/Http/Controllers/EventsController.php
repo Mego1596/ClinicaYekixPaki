@@ -99,7 +99,12 @@ class EventsController extends Controller
                 $repro    = 'si';
             }
 
-
+            $pagoGratis = Pago::where('events_id',$cita)->get();
+            if(sizeof($pagoGratis) != 0){
+                $restriccion = 1;
+            }else{
+                $restriccion = 0;
+            }
 
             if(sizeof($planT) > 1 || sizeof($planT) == 0){
                 $event_list[] =Calendar::event(
@@ -160,6 +165,7 @@ class EventsController extends Controller
                     'solvente'          => $solvente,
                     'reprogramar'       => $repro,
                     'idReprogramar'     => 1,
+                    'validar'           => $restriccion,
                     ]
                 );
             }
@@ -235,6 +241,10 @@ class EventsController extends Controller
                         }else{
                             $("#reprogramacion").hide();
                         }
+
+                        if(calEvent.validar == 1){
+                            $("#reprogramacion").hide();
+                        }
                         $("#btnAsignar").hide();   
                     }
 				 	$("#txtColor").val(calEvent.color);
@@ -284,6 +294,7 @@ class EventsController extends Controller
         
         $citaActual = Events::where('id',$cita)->get();
         $planActual = Plan_Tratamiento::where('events_id', $cita)->get();
+        $procedimientoPlan = Plan_Tratamiento::where('events_id', $cita)->value('procedimiento_id');
         foreach ($planActual as $key => $value) {
             $value->plan_valido = false;
             if($value->activo){
@@ -296,9 +307,77 @@ class EventsController extends Controller
             $value1->reprogramada = true;
             $value1->save();
         }
+        $pagoGratis = Pago::where('events_id',$cita)->get();
 
-        $pagoReprogramar = new Pago();
+            if(sizeof($pagoGratis) != 1){
+            $pagoReprogramar = new Pago();
 
+            $pagoReprogramar->abono = 0.0;
+
+            //CREACION DE CAMPO SALDO PARA CITAS REPROGRAMADAS (REPETIR EL SALDO ANTERIOR)
+            $reconocimiento = Plan_Tratamiento::select('referencia')->where('events_id',$cita)->value('referencia');
+            if(!is_null($reconocimiento)){
+                 $string = "SELECT referencia FROM plan__tratamientos AS tbl WHERE id = (SELECT MAX(id) FROM plan__tratamientos WHERE referencia IS NOT NULL AND events_id = ".$cita.");";
+                $plan = DB::select(DB::raw($string));
+                $ref;
+                foreach ($plan as $key => $value) {
+                    $ref = $value->referencia;
+                }
+
+
+                $planPertenece = Plan_Tratamiento::select('events_id')->where('id', $ref)->value('events_id');
+                $planT = Plan_Tratamiento::where('events_id',$planPertenece)->get();
+                $verificarPago = Pago::select('id')->where('events_id',$planPertenece)->get();
+                $pago = Pago::select('abono')->where('events_id',$planPertenece)->value('abono');
+                $y=0.0;
+                foreach($planT as $planDetalle){
+                    $y+=($planDetalle->honorarios);
+                }
+
+                if(sizeof($verificarPago) == 0){
+                }else{
+                    $y-=$pago;
+                }
+                var_dump($y);
+                $planVigente = Plan_Tratamiento::where('events_id', $planPertenece)->get();
+                $planes = Plan_Tratamiento::get();
+                
+                $x=0.0;
+                foreach ($planes as $key => $plan1) {
+                    foreach ($planVigente as $key => $plan2) {
+                        if($plan1->referencia == $plan2->id){
+                            $pagoAuxiliar = Pago::select('abono')->where('events_id',$plan1->events_id)->value('abono');
+                            $x += $pagoAuxiliar;
+                        }
+                    }
+                }
+
+                $totalAbonos =$x+$pagoReprogramar->abono;
+
+                if($x != 0){
+                    if($y != $totalAbonos){
+                        $pagoReprogramar->saldo   = $y-$x-$pagoReprogramar->abono;
+                    }else{
+                        $pagoReprogramar->saldo   = 0.0;
+                    }
+                }else{
+                    if($y != $totalAbonos){
+                        $pagoReprogramar->saldo   = $y-$pagoReprogramar->abono;
+                    }else{
+                        $pagoReprogramar->saldo   = 0.0;
+                    }
+                }
+            }
+
+            $pagoReprogramar->realizoTto = '-';
+            $pagoReprogramar->events_id = $cita;
+            $pagoReprogramar->save();
+        }else{
+            foreach ($pagoGratis as $key => $pagoGratis1) {
+                $pagoGratis1->descripcion = $pagoGratis1->descripcion."\nReprogramada";
+            }
+            
+        }
         return redirect()->route('home')->with('info','Cita invalidada con exito, proceda a asignar la nueva cita en el plan de tratamiento activo del paciente');
     }
 }
