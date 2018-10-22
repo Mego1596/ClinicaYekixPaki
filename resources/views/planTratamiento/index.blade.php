@@ -318,6 +318,11 @@
 								     Finalizar Plan
 								</button>
 							</div>
+							<div class="col-md-2 col-sm-12">
+							</div>
+							<div class="col-md-8 col-sm-12">
+								<label><strong><h5>Abono Total del Presupuesto: &nbsp;&nbsp;&nbsp;${{$abono}}</h5></strong></label>
+							</div>
 						</div>
 						{!! Form::open(['route' => ['planTratamiento.finalizar', 'cita' => $id],'method' => 'POST']) !!}
 							<!-- Modal -->

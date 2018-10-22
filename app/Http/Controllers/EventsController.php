@@ -297,6 +297,7 @@ class EventsController extends Controller
             $value1->save();
         }
 
+        $pagoReprogramar = new Pago();
 
         return redirect()->route('home')->with('info','Cita invalidada con exito, proceda a asignar la nueva cita en el plan de tratamiento activo del paciente');
     }

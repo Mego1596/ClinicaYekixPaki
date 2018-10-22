@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Events;
 use App\Paciente;
 use App\Procedimiento;
+use App\Pago;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
@@ -31,7 +32,36 @@ class PlanTratamientoController extends Controller
         $proc = Procedimiento::paginate();
 
         $presupuesto = Plan_Tratamiento::where('events_id',$id)->where('plan_valido',true)->sum('honorarios');
-        return view('planTratamiento.index',compact('planTratamiento','proc','id','paciente','persona','planValidador','validador','planValidador2','presupuesto'));
+
+
+        //OBTENIENDO EL ABONO A LA CITA QUE REPRESENTA EL PLAN SI EXISTE UN PAGO
+
+        $planCitaPlan = Plan_Tratamiento::where('events_id',$id)->whereNull('referencia')->get();
+        $abono = 0.0;
+        if(sizeof($planCitaPlan)!=0){
+            $pagoCitaPlan = Pago::where('events_id',$id)->get();
+            foreach ($pagoCitaPlan as $key => $value) {
+                $abono = $value->abono;
+            }
+        }
+
+        //OBTENIENDO EL TOTAL DE ABONOS REALIZADOS AL PLAN DE TRATAMIENTO
+        $planTratamientos1 = Plan_Tratamiento::where('events_id',$id)->get();
+        $planAll           = Plan_Tratamiento::get();
+        foreach ($planTratamientos1 as $key => $padre) {
+            foreach ($planAll as $key => $hijo) {
+                if ($padre->id == $hijo->referencia) {
+                    $pagosHijos = Pago::where('events_id', $hijo->events_id)->get();
+                    if(sizeof($pagosHijos)!= 0){
+                        foreach ($pagosHijos as $key => $pagos) {
+                            $abono += $pagos->abono;
+
+                        }
+                    }
+                }
+            }
+        }
+        return view('planTratamiento.index',compact('planTratamiento','proc','id','paciente','persona','planValidador','validador','planValidador2','presupuesto','abono'));
     }
 
     /**

@@ -33,6 +33,10 @@ class PagoController extends Controller
                     $saldo = (double) $value->saldo;
                 }
             }else{
+                foreach ($plan as $key => $value) {
+                    $saldo += $value->honorarios;
+                }
+
             }
             $planActual = Plan_Tratamiento::where('events_id',$id)->get();
             $planAll    = Plan_Tratamiento::get();
