@@ -205,7 +205,7 @@
                                     @endforeach
                                     @endif
                                 @endforeach
-                                <td class="td-proc fuente">alguien por ahorita</td>
+                                <td class="td-proc fuente">{{$pagosGral->realizoTto}}</td>
                                 <td class="td-proc fuente">${{$pagosGral->abono}}</td>
                                 <td class="td-proc fuente">${{$pagosGral->saldo}}</td>
                                 @php

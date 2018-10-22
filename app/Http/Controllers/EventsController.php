@@ -26,7 +26,7 @@ class EventsController extends Controller
         }
     	//$procedimiento = Procedimiento::pluck('nombre', 'id')->toArray();
         $procesos = Procedimiento::paginate();
-    	$events = Events::select('id','paciente_id','start_date','end_date','descripcion')->get();
+    	$events = Events::select('id','paciente_id','start_date','end_date','descripcion','reprogramada')->get();
         $event_list= [];
         foreach ($events as $key => $event) {
             $paciente = Paciente::find($event->paciente_id);
@@ -37,33 +37,26 @@ class EventsController extends Controller
             //POSTERIORES BLOQUEADAS PARA REALIZAR UN PLAN DE TRATAMIENTO
 
             $string = "SELECT paciente_id,id FROM events WHERE paciente_id=".$paciente->id." AND id IN (SELECT events_id FROM plan__tratamientos AS tbl
-                WHERE id = (SELECT MAX(id) FROM plan__tratamientos WHERE activo = TRUE AND events_id = tbl.events_id));";
+                WHERE id = (SELECT MAX(id) FROM plan__tratamientos WHERE plan_valido = TRUE AND activo = TRUE AND events_id = tbl.events_id));";
             $eventos = DB::select(DB::raw($string));
-            $x='negativo';
+            $planvigente='negativo';
             foreach ($eventos as $key => $cita) {
                 if ($cita->paciente_id == $paciente->id) {
-                    $x = 'positivo';
+                    $planvigente = 'positivo';
                 }else{
-                    $x = 'negativo';
+                    $planvigente = 'negativo';
                 }
             }
-
             //RESTRICCION DE PAGOS PARA PERSONAS QUE TENGAN EL PAGO DEL PLAN DE TRATAMIENTO
             //PAGADO EN SU TOTALIDAD
             $string = "SELECT id FROM events WHERE paciente_id=".$event->paciente_id." AND id IN (SELECT events_id FROM plan__tratamientos AS tbl
-                WHERE id = (SELECT MAX(id) FROM plan__tratamientos WHERE activo = TRUE AND events_id = tbl.events_id));";
+                WHERE id = (SELECT MAX(id) FROM plan__tratamientos WHERE plan_valido = TRUE AND activo = TRUE AND events_id = tbl.events_id));";
             $citaPlanPersonal = DB::select(DB::raw($string));
 
             foreach ($citaPlanPersonal as $key => $value) {
                $cita = $value->id;
             }
-            $citaPlan = Plan_Tratamiento::where('id','<>',1)->whereNull('referencia')->where('procedencia',1)->where('events_id',$event->id)->orWhere( function( $query) use($event){
-                $query->where('id','<>',1)
-                      ->whereNull('referencia')
-                      ->whereNull('procedencia')
-                      ->where('events_id',$event->id);
-            })->select('events_id')->get();
-            //imprimir en for citaPlan
+
             $x =0.0;
             $getPagoAdd = Pago::select('abono')->where('events_id',$cita)->get('abono');
             if (sizeof($getPagoAdd) == 0) {
@@ -75,7 +68,7 @@ class EventsController extends Controller
             }
             $planActivoPersonal = Plan_Tratamiento::where('events_id', $cita)->get();
             $planAll            = Plan_Tratamiento::get();
-            $pago               = Pago::get();
+            
             $y=0.0;
             foreach ($planActivoPersonal as $key => $value) {
                 $y += $value->honorarios;
@@ -91,11 +84,23 @@ class EventsController extends Controller
                     }
                 }
             }
+            //SI LOS ABONOS DE TODO EL PLAN DE TRATAMIENTO ES IGUAL AL TOTAL DE HONORARIOS EN EL PLAN DE TRATAMIENTO SE DICE QUE SE ESTA PAGADO TOTALMENTE EL PLAN DE TRATAMIENTO DE LO CONTRARIO ES NECESARIO UN PAGO PARA UNA CITA.
             if($x == $y){
                 $solvente = 'si';
             }else{
                 $solvente = 'no';
             }
+
+            //SI LA CITA ESTA REPROGRAMADA FORZAR SOLVENCIA PARA ESA CITA Y NO SE PUEDE VOLVER A REPROGRAMAR
+            if($event->reprogramada == true){
+                $solvente = 'si';
+                $repro    = 'no';
+            }else{
+                $repro    = 'si';
+            }
+
+
+
             if(sizeof($planT) > 1 || sizeof($planT) == 0){
                 $event_list[] =Calendar::event(
                     $paciente->nombre1." ".$paciente->nombre2." ".$paciente->nombre3." ".$paciente->apellido1." ".$paciente->apellido2,
@@ -110,7 +115,9 @@ class EventsController extends Controller
                     'expediente'        => $paciente->expediente,
                     'paciente'          => $paciente->id,
                     'validador'         => 1,
-                    'estado'            => $x,
+                    'estado'            => $planvigente,
+                    'reprogramar'       => 'no',
+                    'idReprogramar'     => 0,
                     ]
                 );
             }elseif (sizeof($planT) == 1 && is_null($validacion)) {
@@ -127,7 +134,9 @@ class EventsController extends Controller
                     'expediente'        => $paciente->expediente,
                     'paciente'          => $paciente->id,
                     'validador'         => 1,
-                    'estado'            => $x,
+                    'estado'            => $planvigente,
+                    'reprogramar'       => 'no',
+                    'idReprogramar'     => 0,
                     ]
                 );
             }else{
@@ -149,6 +158,8 @@ class EventsController extends Controller
                     'validador'         => 0,
                     'pago'              => 'si',
                     'solvente'          => $solvente,
+                    'reprogramar'       => $repro,
+                    'idReprogramar'     => 1,
                     ]
                 );
             }
@@ -190,15 +201,40 @@ class EventsController extends Controller
                         $("#plan").hide();
                         $("#modificar").hide();
                         $("#pago").hide();
+                        $("#reprogramacion").hide();
+                        $("#receta").hide();
                         if(calEvent.validador == 1 && calEvent.estado == "negativo"){
                             $("#plan").show();
                             $("#modificar").show();
+                            $("#receta").show();
                         }
-                        if(calEvent.pago == "si" && calEvent.solvente == "no"){
+                        if(calEvent.pago == "si"){
                             $("#pago").show();
                         }
-
-                        $("#receta").show();
+                        if(calEvent.reprogramar == "si"){
+                            $("#reprogramacion").show();
+                            $("#receta").show();
+                        }
+                        if(calEvent.solvente == "si"){
+                            $("#txtSolvencia").val("Plan de Tratamiento pagado totalmente");
+                        }else{
+                            $("#txtSolvencia").val("Plan de Tratamiento pagado parcialmente o sin pagar");
+                        }
+                        if(calEvent.idReprogramar == 0){
+                            $("#txtSolvencia").val("No Aplica");
+                        }
+                        if(calEvent.solvente == "si" && calEvent.reprogramar == "no"){
+                            $("#txtSolvencia").val("Cita Reprogramada");
+                        }
+                        if(calEvent.reprogramar == "no" && calEvent.idReprogramar == 0){
+                            $("#reprogramacion").hide();
+                            $("#receta").show();
+                        }
+                        if(calEvent.reprogramar == "si" && calEvent.idReprogramar == 1){
+                            $("#reprogramacion").show();
+                        }else{
+                            $("#reprogramacion").hide();
+                        }
                         $("#btnAsignar").hide();   
                     }
 				 	$("#txtColor").val(calEvent.color);
@@ -242,5 +278,26 @@ class EventsController extends Controller
             $event->save();
         }
         return redirect()->route('events.index')->with('info','Cita asignada con exito');
+    }
+
+    public function reprogramarCita($cita){
+        
+        $citaActual = Events::where('id',$cita)->get();
+        $planActual = Plan_Tratamiento::where('events_id', $cita)->get();
+        foreach ($planActual as $key => $value) {
+            $value->plan_valido = false;
+            if($value->activo){
+                $value->activo = false;
+            }
+            $value->save();
+        }
+        foreach ($citaActual as $key => $value1) {
+            $value1->descripcion = $value1->descripcion."\nReprogramada";
+            $value1->reprogramada = true;
+            $value1->save();
+        }
+
+
+        return redirect()->route('home')->with('info','Cita invalidada con exito, proceda a asignar la nueva cita en el plan de tratamiento activo del paciente');
     }
 }

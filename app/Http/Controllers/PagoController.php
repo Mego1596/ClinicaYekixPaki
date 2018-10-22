@@ -6,6 +6,7 @@ use App\Pago;
 use App\Plan_Tratamiento;
 use App\Procedimiento;
 use App\Events;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -22,7 +23,71 @@ class PagoController extends Controller
         $planT = Plan_Tratamiento::where('events_id',$id)->value('procedimiento_id');
         $procesoNombre = Procedimiento::where('id',$planT)->value('nombre');
 
-        return view('pago.index',compact('pagos','procesoNombre','id','idPaciente'));
+        //OBTENIENDO EL SALDO PENDIENTE DEL PLAN DE TRATAMIENTO
+        $plan = Plan_Tratamiento::where('events_id',$id)->whereNull('referencia')->get();
+        $saldo = 0.0;
+        if(sizeof($plan)!=0){
+            $pagos3 = Pago::where('events_id', $id)->get();
+            if(sizeof($pagos3) != 0){
+                foreach ($pagos3 as $key => $value) {
+                    $saldo = (double) $value->saldo;
+                }
+            }else{
+            }
+            $planActual = Plan_Tratamiento::where('events_id',$id)->get();
+            $planAll    = Plan_Tratamiento::get();
+            foreach ($planActual as $key => $value) {
+                foreach ($planAll as $key => $value1) {
+                    if($value->id == $value1->referencia){
+                        $pagos2 = Pago::where('events_id', $value1->events_id)->get();
+                        if(sizeof($pagos2) != 0){
+                            foreach ($pagos2 as $key => $value3) {
+                                $saldo = (double) $value3->saldo;
+                            }
+                        }else{
+                            $saldo += (double) $value->honorarios;
+                        }
+                    }
+                }
+            }
+
+        }
+
+        $planPadre = Plan_Tratamiento::select('referencia')->where('events_id', $id)->value('referencia');
+        $citaPlan = Plan_Tratamiento::select('events_id')->where('id', $planPadre)->value('events_id');
+        $planT = Plan_Tratamiento::select('honorarios')->where('events_id', $planPadre)->get();
+        $pagos1 = Pago::where('events_id', $citaPlan)->get();
+        if(sizeof($pagos1) != 0){
+            foreach ($pagos1 as $key => $value) {
+                $saldo = (double) $value->saldo;
+            }
+        }else{
+            foreach ($planT as $key => $value) {
+                $saldo += (double) $value->honorarios;
+            }
+        }
+
+
+        $planActual = Plan_Tratamiento::where('events_id',$citaPlan)->get();
+        $planAll    = Plan_Tratamiento::get();
+        foreach ($planActual as $key => $value) {
+            foreach ($planAll as $key => $value1) {
+                if($value->id == $value1->referencia){
+                    $pagos2 = Pago::where('events_id', $value1->events_id)->get();
+                    if(sizeof($pagos2) != 0){
+                        foreach ($pagos2 as $key => $value3) {
+                            $saldo = (double) $value3->saldo;
+                        }
+                    }else{
+                        $saldo += (double) $value1->honorarios;
+                    }
+                }
+            }
+        }
+
+
+
+        return view('pago.index',compact('pagos','procesoNombre','id','idPaciente','saldo'));
     }
 
     /**
@@ -32,7 +97,7 @@ class PagoController extends Controller
      */
     public function create($id)
     {
-        $users = DB::table('users')->join('role_user', 'users.id', '=', 'role_user.user_id')->where('role_user.role_id', '=', 2)->orWhere('role_user.role_id', '=', 1)->select('users.id' , 'users.nombre1','users.nombre2','users.nombre3','users.apellido1','users.apellido2','users.numeroJunta','users.name')->paginate();
+        $users = DB::table('users')->join('role_user', 'users.id', '=', 'role_user.user_id')->where('role_user.role_id', '=', 2)->orWhere('role_user.role_id', '=', 1)->select('users.id' , 'users.nombre1','users.nombre2','users.nombre3','users.apellido1','users.apellido2','users.numeroJunta','users.name')->orderBy('id')->paginate();
 
         return view('pago.create',compact('id','users','idPaciente'));
     }
@@ -47,11 +112,13 @@ class PagoController extends Controller
     {
 
         $nuevoPago = new Pago();
-
         $nuevoPago->events_id   = $request->cita;
         $nuevoPago->abono       = $request->abono;
         $nuevoPago->proximaCita = $request->proximaCita;
-        $nuevoPago->realizoTto  = $request->realizoTto;
+        $user = User::where('id',$request->realizoTto)->get();
+        foreach ($user as $key => $value) {
+            $nuevoPago->realizoTto  = $value->nombre1.' '.$value->nombre2.' '.$value->nombre3.' '.$value->apellido1.' '.$value->apellido2.'- '.$value->numeroJunta;
+        }
 
         //Creacion del campo Saldo hasta ese pago para un plan activo
         $reconocimiento = Plan_Tratamiento::select('referencia')->where('events_id',$request->cita)->value('referencia');
@@ -123,6 +190,11 @@ class PagoController extends Controller
             $nuevoPago->events_id   = $request->cita;
             $nuevoPago->abono       = $request->abono;
             $nuevoPago->proximaCita = $request->proximaCita;
+            $user = User::where('id',$request->realizoTto)->get();
+            foreach ($user as $key => $value) {
+                $nuevoPago->realizoTto  = $value->nombre1.' '.$value->nombre2.' '.$value->nombre3.' '.$value->apellido1.' '.$value->apellido2.'- '.$value->numeroJunta;
+            }
+            
 
             //Creacion del campo Saldo hasta ese pago para un plan activo
             foreach ($plan as $key => $value) {
@@ -146,6 +218,7 @@ class PagoController extends Controller
      */
     public function destroy(Pago $pago)
     {
-        //
+        $pago->delete();
+        return back()->with('info','Pago eliminado con exito');
     }
 }

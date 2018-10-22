@@ -28,6 +28,7 @@ class CreatePlanTratamientosTable extends Migration
             $table->boolean('en_proceso')->nullable();
             $table->boolean('no_iniciado')->nullable();
             $table->integer('procedencia')->nullable();
+            $table->boolean('plan_valido')->default(true);
             $table->timestamps();
         });
     }

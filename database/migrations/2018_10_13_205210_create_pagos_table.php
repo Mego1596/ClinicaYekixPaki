@@ -19,7 +19,7 @@ class CreatePagosTable extends Migration
             $table->foreign('events_id')->references('id')->on('events')->onDelete('cascade');
             $table->double('abono',5,2)->default(0);
             $table->double('saldo',5,2)->default(0);
-            $table->string('realitoTto',250);
+            $table->string('realizoTto',250);
             $table->dateTime('proximaCita')->nullable();
             $table->timestamps();
         });

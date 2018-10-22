@@ -21,7 +21,10 @@
 			                	<a href="/events" class="btn btn-block btn-secondary" style="width: 100%">
 			                	<i class="fa fa-arrow-circle-left"></i> Atrás</a>
 			              	</div>
-			              	<div class="col-md-8">
+			              	<div class="col-md-2">
+								<strong>Saldo Pendiente: ${{$saldo}}</strong>
+			              	</div>
+			              	<div class="col-md-3">
 								<h4>Realizar Pago</h4>
 			              	</div>
           				</div>

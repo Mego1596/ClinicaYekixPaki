@@ -6,7 +6,7 @@
 			<select style="visibility: display;" id="realizoTto" class="form-control" name="realizoTto">
 				<option selected="selected" value> Elija un Odontologo</option>
 				@foreach($users as $doctor)
-					<option value="Dr.{{$doctor->nombre1.' '.$doctor->nombre2.' '.$doctor->nombre3.' '.$doctor->apellido1.' '.$doctor->apellido2.'- '.$doctor->numeroJunta}}">Dr. {{$doctor->nombre1.' '.$doctor->nombre2.' '.$doctor->nombre3.' '.$doctor->apellido1.' '.$doctor->apellido2.'- '.$doctor->numeroJunta}}</option>
+					<option value="{{$doctor->id}}">Dr. {{$doctor->nombre1.' '.$doctor->nombre2.' '.$doctor->nombre3.' '.$doctor->apellido1.' '.$doctor->apellido2.'- '.$doctor->numeroJunta}}</option>
 				@endforeach
 			</select>
 		</div>

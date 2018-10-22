@@ -219,23 +219,28 @@
 				                  </thead>
 				                  <tbody>
 				                  	@if($paciente->id != 1)
+				                  		@php
+				                  			$x=0;
+				                  		@endphp
 					                  	@foreach($planes as $plan)
-											@can('pacientes.trabajo')
-												<tr>
-													<td>
-														{{$loop->iteration}}
-													</td>
-													<td>	
-														<a href="{{ route('paciente.plan',['cita' => $plan->id])}}" class="btn btn-sm btn-default bg-info" style="color: white" target="_blank"><li class="fa fa-file-pdf-o"></li> Plan de Tratamiento
-													</td>
-													<td>
-														@php
-															$date=date_create($plan->created_at);
-															echo date_format($date,"d/m/Y H:i:s");
-														@endphp
-													</td>
-												</tr>
-											@endcan
+													@can('pacientes.trabajo')
+														<tr>
+															<td>
+																@php
+																	echo ++$x;
+																@endphp
+															</td>
+															<td>	
+																<a href="{{ route('paciente.plan',['cita' => $plan->id])}}" class="btn btn-sm btn-default bg-info" style="color: white" target="_blank"><li class="fa fa-file-pdf-o"></li> Plan de Tratamiento
+															</td>
+															<td>
+																@php
+																	$date=date_create($plan->created_at);
+																	echo date_format($date,"d/m/Y H:i:s");
+																@endphp
+															</td>
+														</tr>
+													@endcan
 										@endforeach
 									@else
 									@endif

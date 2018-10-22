@@ -78,6 +78,8 @@ Route::middleware(['auth'])->group(function(){
 	Route::get('events', 'EventsController@index')->name('events.index')->middleware('permission:pacientes.trabajo');
 	Route::post('events', 'EventsController@addEvent')->name('events.add');
 
+	Route::get('events/reprogramacion/{cita}', 'EventsController@reprogramarCita')->name('events.reprogramar');
+
 	//Pacientes
 	Route::get('file/{file}/download', 'AnexoController@download')->name('file.download');
 	

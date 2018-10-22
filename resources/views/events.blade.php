@@ -130,6 +130,10 @@
       		{!! Form::label('txtDescripcion', 'Descripcion:')!!}
       		{!! Form::textarea('txtDescripcion', null, ['class' => 'form-control', 'rows' => '2'])!!}
       	</div>
+        <div class="form-group">
+          {!! Form::label('txtSolvencia', 'Solvencia:')!!}
+          {!! Form::text('txtSolvencia', null, ['class' => 'form-control','disabled'])!!}
+        </div>
         @can('planTratamientos.index')
         <div class="row">
           <div class="col-md-4">
@@ -160,6 +164,14 @@
               <i class="fa fa-file-text-o"></i> Gestionar Pago</a>
           </div>
         </div>
+        @endcan
+        @can('pagos.create')
+            <div class="row">
+              <div class="col-md-5" style="margin-top: 10px">
+                <a class="btn btn-sm btn-default bg-dark" href="#" style="color: white" name="reprogramacion" id="reprogramacion">
+                <i class="fa fa-calendar-times-o"></i> Reprogramar Cita</a>
+              </div>
+            </div>
         @endcan
       <div class="modal-footer">
 		{!! Form::submit('Añadir Cita', ['class' => 'btn btn-success','id' => 'btnAgregar', 'name' => 'btnAgregar']) !!}
@@ -202,6 +214,17 @@
           this.setAttribute("href","paciente/"+x+"/events");
         }
 </script>
+<script type="text/javascript">
+          document.getElementById("reprogramacion").onclick = function() {
+          var x=parseInt($('#txtID').val());
+          this.setAttribute("href","events/reprogramacion/"+x);
+        }
+</script>
+<script type="text/javascript">
+  function clickChildModalButton(argument) {
+      $('#exampleModal').show();
+  }
+</script>
     {!! $calendar_details->script() !!}
 
 <script type="text/javascript">
@@ -217,4 +240,5 @@
   		//$('#procedimiento_id').val("");
 	 }
 </script>
+
 @endsection
