@@ -56,7 +56,7 @@ class ProcedimientosTableSeeder extends Seeder
     	]);
 
     	Procedimiento::create([
-    		'nombre' => 'Cirujia de Cordales',
+    		'nombre' => 'Cirugia de Cordales',
     		'descripcion' => 'se realiza en los casos en los que dan sintomatologia (dolor grave o agudo, infecciones de repeticion, caries en los segundos molares por mala higiene, etc.) o se encuentra algun signo radiologico patologico (algun quiste o erosión de raices de otras piezas).',
     		'color' => '#996600',
     	]);
