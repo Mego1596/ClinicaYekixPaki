@@ -425,7 +425,9 @@ class PlanTratamientoController extends Controller
             foreach ($doctor as $key => $value) {
             $pagoSolvente->realizoTto  = $value->nombre1.' '.$value->nombre2.' '.$value->nombre3.' '.$value->apellido1.' '.$value->apellido2.'- '.$value->numeroJunta;
             }
-            $pagoSolvente->events_id  = $event->id;
+            $pagoSolvente->events_id    = $event->id;
+            $pagoSolvente->gratis       = true;
+            $pagoSolvente->reprogramado = false;
             $pagoSolvente->save();
         } 
         return redirect()->route('planTratamiento.agenda',['procedimiento'=>$request['txtProcedimiento_id'], 'paciente' => $request['pacienteID'],'planTratamiento'=>$request->referencia,'validador'=> $request->txtValidador,'cita' => $request->cita])->with('info','Cita guardada con exito');

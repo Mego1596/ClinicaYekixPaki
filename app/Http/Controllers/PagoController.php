@@ -222,9 +222,4 @@ class PagoController extends Controller
      * @param  \App\Pago  $pago
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Pago $pago)
-    {
-        $pago->delete();
-        return back()->with('info','Pago eliminado con exito');
-    }
 }

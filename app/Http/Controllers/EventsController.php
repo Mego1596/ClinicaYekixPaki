@@ -99,13 +99,21 @@ class EventsController extends Controller
                 $repro    = 'si';
             }
 
-            $pagoGratis = Pago::where('events_id',$cita)->get();
+            $pagoGratis = Pago::where('events_id',$event->id)->get();
+            $restriccion=1;
             if(sizeof($pagoGratis) != 0){
-                $restriccion = 1;
+                foreach ($pagoGratis as $key => $value) {
+                   if($value->reprogramado == true){
+                        $restriccion = 1;
+                   }
+
+                   if($value->gratis == true){
+                        $restriccion = 0;
+                   }
+                }
             }else{
                 $restriccion = 0;
             }
-
             if(sizeof($planT) > 1 || sizeof($planT) == 0){
                 $event_list[] =Calendar::event(
                     $paciente->nombre1." ".$paciente->nombre2." ".$paciente->nombre3." ".$paciente->apellido1." ".$paciente->apellido2,
@@ -369,8 +377,10 @@ class EventsController extends Controller
                 }
             }
 
-            $pagoReprogramar->realizoTto = '-';
-            $pagoReprogramar->events_id = $cita;
+            $pagoReprogramar->realizoTto        = '-';
+            $pagoReprogramar->events_id         = $cita;
+            $pagoReprogramar->reprogramado      = true;
+            $pagoReprogramar->gratis            =false;
             $pagoReprogramar->save();
         }else{
             foreach ($pagoGratis as $key => $pagoGratis1) {

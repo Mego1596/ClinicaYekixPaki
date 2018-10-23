@@ -20,6 +20,8 @@ class CreatePagosTable extends Migration
             $table->double('abono',5,2)->default(0);
             $table->double('saldo',5,2)->default(0);
             $table->string('realizoTto',250);
+            $table->boolean('gratis')->nullable();
+            $table->boolean('reprogramado')->nullable();
             $table->dateTime('proximaCita')->nullable();
             $table->timestamps();
         });

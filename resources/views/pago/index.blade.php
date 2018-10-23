@@ -98,46 +98,11 @@
 									<td align="center">${{$proceso->abono}}</td>
 									<td align="center">${{$proceso->saldo}}</td>
 									@php
-										$date=date_create($proceso->proximaCita);
-										$aux= date_format($date,"d-m-Y");
+										$date2=date_create($proceso->proximaCita);
+										$aux2= date_format($date2,"d-m-Y");
 									@endphp
-									<td align="center">{{$aux}}</td>
-									@if($abonoValidar != 0)
-										<td width="10px">
-											@can('pagos.destroy')
-												<button type="button" class="btn btn-sm btn-default btn btn-danger" data-toggle="modal" data-target="#Modal{{$proceso->id}}" style="width: 100%"><i class="fa fa-trash"></i>
-														  					Eliminar
-																		</button>
-																		{!! Form::open(['route' => ['pago.destroy', $proceso->id],'method' => 'DELETE']) !!}
-																			<!-- Modal -->
-																			<div class="modal fade" id="Modal{{$proceso->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-																				<div class="modal-dialog" role="document">
-																			    	<div class="modal-content">
-																			    		<div class="modal-header">
-																			        		<h5 class="modal-title" id="exampleModalLabel">Eliminar Pago</h5>
-																			        			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-																			          				<span aria-hidden="true">&times;</span>
-																			        			</button>
-																			      		</div>
-																			      		<div class="modal-body">
-																			      			<label>Estas seguro?</label>
-																			      			<br/>
-																			      			<button type="button" class="btn btn-md btn-default" data-dismiss="modal">No</button>
-																			        		<button class="btn btn-md btn-default bg-danger" style="color: white">
-																								Si
-																							</button>
-																			      		</div>
-																			      		<div class="modal-footer">
-																			      		</div>
-																			    	</div>
-																				</div>
-																			</div>
-																		{!! Form::close() !!}
-											@endcan
-										</td>
-										@else
-										<td></td>
-										@endif
+									<td align="center">{{$aux2}}</td>
+									<td></td>
 								</tr>
 								@endforeach
 							</tbody>

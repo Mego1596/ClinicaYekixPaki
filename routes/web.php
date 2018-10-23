@@ -181,6 +181,4 @@ Route::middleware(['auth'])->group(function(){
 
 	Route::get('pago/create/{cita}/', 'PagoController@create')->name('pago.create')->middleware('permission:recetas.create');
 
-	Route::delete('pago/destroy/{pago}', 'PagoController@destroy')->name('pago.destroy')->middleware('permission:recetas.destroy');
-
 });
