@@ -608,7 +608,7 @@ class PlanTratamientoController extends Controller
                 }
             //***********************************************************************************//
             }
-            //return redirect()->route('planTratamiento.agenda',['procedimiento'=>$request['txtProcedimiento_id'], 'paciente' => $request['pacienteID'],'planTratamiento'=>$request->referencia,'validador'=> $request->txtValidador,'cita' => $request->cita])->with('info','Cita Eliminada con exito');
+            return redirect()->route('planTratamiento.agenda',['procedimiento'=>$request['txtProcedimiento_id'], 'paciente' => $request['pacienteID'],'planTratamiento'=>$request->referencia,'validador'=> $request->txtValidador,'cita' => $request->cita])->with('info','Cita Eliminada con exito');
 
         }
 
