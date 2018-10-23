@@ -22,16 +22,6 @@
 	</div>
 </div>
 
-<div class="row">
-	<div class="col-md-4">
-		<div class="form-group">
-			{{ Form::label('proximaCita', 'Proxima Cita(d/m/a)*:') }}
-			{{ Form::date('proximaCita', null, ['class' => 'form-control', 'type'=>'date','required','placeholder' => 'dd/mm/aaaa']) }}
-		</div>
-	</div>
-</div>
-
-
 <div class="row pt-3">
 	<div class="col-md-4">
 		*Campos obligatorios

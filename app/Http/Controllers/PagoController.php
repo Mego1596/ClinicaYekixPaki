@@ -195,7 +195,6 @@ class PagoController extends Controller
 
             $nuevoPago->events_id   = $request->cita;
             $nuevoPago->abono       = $request->abono;
-            $nuevoPago->proximaCita = $request->proximaCita;
             $user = User::where('id',$request->realizoTto)->get();
             foreach ($user as $key => $value) {
                 $nuevoPago->realizoTto  = $value->nombre1.' '.$value->nombre2.' '.$value->nombre3.' '.$value->apellido1.' '.$value->apellido2.'- '.$value->numeroJunta;

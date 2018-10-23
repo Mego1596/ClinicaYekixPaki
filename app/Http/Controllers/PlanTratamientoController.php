@@ -417,6 +417,83 @@ class PlanTratamientoController extends Controller
         $tratamiento_cita->referencia          = $request->referencia;
         $tratamiento_cita->save();
 
+        //***********************************************************************************//
+        //ASIGNACION AUTOMATICA DE PROXIMA CITA AL PAGO ANTERIOR DENTRO DEL PLAN DE TRATAMIENTO
+        //RESTRICCION DE PAGOS PARA PERSONAS QUE TENGAN EL PAGO DEL PLAN DE TRATAMIENTO
+        //PAGADO EN SU TOTALIDAD
+            $string = "SELECT id FROM events WHERE paciente_id=".$event->paciente_id." AND id IN (SELECT events_id FROM plan__tratamientos AS tbl
+                WHERE id = (SELECT MAX(id) FROM plan__tratamientos WHERE plan_valido = TRUE AND activo = TRUE AND events_id = tbl.events_id));";
+            $citaPlanPersonal = DB::select(DB::raw($string));
+
+            foreach ($citaPlanPersonal as $key => $value) {
+               $cita = $value->id;
+            }
+
+            $getPagoAdd         = Pago::where('events_id',$cita)->get();
+            $planActivoPersonal = Plan_Tratamiento::where('events_id', $cita)->get();
+            $planAll            = Plan_Tratamiento::get();
+            $z = 0;
+            foreach ($planActivoPersonal as $key => $value) {
+                if($value->id != 1){
+                    foreach ($planAll as $key => $planes1) {
+                        if($value->id == $planes1->referencia){
+                            $z++;
+                        }
+                    }
+                }
+            }
+
+            $auxiliar = null;
+            if (sizeof($getPagoAdd) == 0) {
+                    if($z >= 1){
+                        foreach ($planActivoPersonal as $key => $value) {
+                            if($value->id != 1){
+                                foreach ($planAll as $key => $planes1) {
+                                    if($value->id == $planes1->referencia){
+                                        $reconocimientoPago = Pago::select('id')->where('events_id',$planes1->events_id)->value('id');
+                                        if(!is_null($reconocimientoPago)){
+                                            $auxiliar = $reconocimientoPago;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        $pagoParcial = Pago::where('id',$auxiliar)->get();
+                        foreach ($pagoParcial as $key => $value) {
+                            $value->proximaCita = $event->start_date;
+                            $value->save();
+                        }
+                    }
+            }else{
+                if($z == 1 || $z == 0){
+                    foreach ($getPagoAdd as $key => $pagoPlan) {
+                        if(is_null($pagoPlan->proximaCita)){
+                            $pagoPlan->proximaCita = $event->start_date;
+                            $pagoPlan->save();
+                        }
+                    }
+                }else{
+                    foreach ($planActivoPersonal as $key => $value) {
+                        if($value->id != 1){
+                            foreach ($planAll as $key => $planes1) {
+                                if($value->id == $planes1->referencia){
+                                    $reconocimientoPago = Pago::select('id')->where('events_id',$planes1->events_id)->value('id');
+                                    if(!is_null($reconocimientoPago)){
+                                        $auxiliar = $reconocimientoPago;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    $pagoParcial = Pago::where('id',$auxiliar)->get();
+                    foreach ($pagoParcial as $key => $value) {
+                        $value->proximaCita = $event->start_date;
+                        $value->save();
+                    }
+                }
+            }
+        //***********************************************************************************//
+
         if($request->txtSolvencia == 'si'){
             $pagoSolvente = new Pago();
             $pagoSolvente->abono = 0.0;
@@ -430,6 +507,7 @@ class PlanTratamientoController extends Controller
             $pagoSolvente->reprogramado = false;
             $pagoSolvente->save();
         } 
+            
         return redirect()->route('planTratamiento.agenda',['procedimiento'=>$request['txtProcedimiento_id'], 'paciente' => $request['pacienteID'],'planTratamiento'=>$request->referencia,'validador'=> $request->txtValidador,'cita' => $request->cita])->with('info','Cita guardada con exito');
 
         }elseif (isset($_POST["btnModificar"])) {
@@ -442,12 +520,95 @@ class PlanTratamientoController extends Controller
             $event->save();
             return redirect()->route('planTratamiento.agenda',['procedimiento'=>$request['txtProcedimiento_id'], 'paciente' => $request['pacienteID'],'planTratamiento'=>$request->referencia,'validador'=> $request->txtValidador,'cita' => $request->cita])->with('info','Cita Actualizada con exito');
 
+
+
+
+
         }elseif (isset($_POST['btnEliminar'])) {
             $event = Events::find($request["txtID"]);
             $plan = Plan_Tratamiento::where('events_id',$event->id);
+            $eventoAux = Events::where('id', $request->txtID)->get();
             $plan->delete();
             $event->delete();
-            return redirect()->route('planTratamiento.agenda',['procedimiento'=>$request['txtProcedimiento_id'], 'paciente' => $request['pacienteID'],'planTratamiento'=>$request->referencia,'validador'=> $request->txtValidador,'cita' => $request->cita])->with('info','Cita Eliminada con exito');
+            foreach ($eventoAux as $key => $value5) {
+            //***********************************************************************************//
+            //ASIGNACION AUTOMATICA DE PROXIMA CITA AL PAGO ANTERIOR DENTRO DEL PLAN DE TRATAMIENTO
+            //RESTRICCION DE PAGOS PARA PERSONAS QUE TENGAN EL PAGO DEL PLAN DE TRATAMIENTO
+            //PAGADO EN SU TOTALIDAD
+                $string = "SELECT id FROM events WHERE paciente_id=".$value5->paciente_id." AND id IN (SELECT events_id FROM plan__tratamientos AS tbl
+                    WHERE id = (SELECT MAX(id) FROM plan__tratamientos WHERE plan_valido = TRUE AND activo = TRUE AND events_id = tbl.events_id));";
+                $citaPlanPersonal = DB::select(DB::raw($string));
+
+                foreach ($citaPlanPersonal as $key => $value) {
+                   $cita = $value->id;
+                }
+
+                $getPagoAdd         = Pago::where('events_id',$cita)->get();
+                $planActivoPersonal = Plan_Tratamiento::where('events_id', $cita)->get();
+                $planAll            = Plan_Tratamiento::get();
+                $z = 0;
+                foreach ($planActivoPersonal as $key => $value) {
+                    if($value->id != 1){
+                        foreach ($planAll as $key => $planes1) {
+                            if($value->id == $planes1->referencia){
+                                $z++;
+                            }
+                        }
+                    }
+                }
+
+                $auxiliar = null;
+                if (sizeof($getPagoAdd) == 0) {
+                        if($z >= 1){
+                            foreach ($planActivoPersonal as $key => $value) {
+                                if($value->id != 1){
+                                    foreach ($planAll as $key => $planes1) {
+                                        if($value->id == $planes1->referencia){
+                                            $reconocimientoPago = Pago::select('id')->where('events_id',$planes1->events_id)->value('id');
+                                            if(!is_null($reconocimientoPago)){
+                                                $auxiliar = $reconocimientoPago;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        $pagoParcial = Pago::where('id',$auxiliar)->get();
+                        foreach ($pagoParcial as $key => $value) {
+                                $value->proximaCita = null;
+                                $value->save();
+                        }
+                }else{
+                    if($z == 1 || $z == 0){
+                        foreach ($getPagoAdd as $key => $pagoPlan) {
+                            if(is_null($pagoPlan->proximaCita)){
+                                $pagoPlan->proximaCita = null;
+                                $pagoPlan->save();
+                            }
+                        }
+                    }else{
+                        foreach ($planActivoPersonal as $key => $value) {
+                            if($value->id != 1){
+                                foreach ($planAll as $key => $planes1) {
+                                    if($value->id == $planes1->referencia){
+                                        $reconocimientoPago = Pago::select('id')->where('events_id',$planes1->events_id)->value('id');
+                                        if(!is_null($reconocimientoPago)){
+                                            $auxiliar = $reconocimientoPago;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        $pagoParcial = Pago::where('id',$auxiliar)->get();
+                        foreach ($pagoParcial as $key => $value) {
+                            $value->proximaCita = null;
+                            $value->save();
+                        }
+                    }
+                }
+            //***********************************************************************************//
+            }
+            //return redirect()->route('planTratamiento.agenda',['procedimiento'=>$request['txtProcedimiento_id'], 'paciente' => $request['pacienteID'],'planTratamiento'=>$request->referencia,'validador'=> $request->txtValidador,'cita' => $request->cita])->with('info','Cita Eliminada con exito');
 
         }
 
