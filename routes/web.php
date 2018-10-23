@@ -85,6 +85,8 @@ Route::middleware(['auth'])->group(function(){
 	
 	Route::delete('file/{file}/delete', 'AnexoController@destroy')->name('file.destroy');
 
+	Route::get('paciente/{paciente}/odontograma', 'OdontogramaController@index')->name('odontograma.index');
+
 	Route::post('paciente/store', 'PacienteController@store')->name('paciente.store')->middleware('permission:pacientes.create');
 
 	Route::get('paciente', 'PacienteController@index')->name('paciente.index')->middleware('permission:pacientes.index');

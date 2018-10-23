@@ -91,6 +91,10 @@
 							</button>
 							@endcan	
 							</div>
+							<!--Odontograma -->
+							<div class="col-md-4 col-sm-12">
+							<a href="{{route('odontograma.index', $paciente)}}" class="btn btn-block btn-info"><i class="fa fa-search"></i>Odontograma</a>
+							</div>
 						</div>
 						<div class="row pt-3">
 							<div class="col-md-4">
