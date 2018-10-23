@@ -179,7 +179,11 @@
                             $date=date_create($pagoCita->proximaCita);
                             $aux= date_format($date,"d-m-Y");
                         @endphp
-                        <td class="td-proc fuente">{{$aux}}</td>
+                        @if(is_null($pagoCita->proximaCita))
+                            <td class="td-proc fuente"></td>
+                        @else
+                            <td class="td-proc fuente">{{$aux}}</td>
+                        @endif
                     </tr>
 
                 @endforeach
@@ -212,7 +216,11 @@
                                     $date=date_create($pagosGral->proximaCita);
                                     $aux= date_format($date,"d-m-Y");
                                 @endphp
-                                <td class="td-proc fuente">{{$aux}}</td>
+                                @if(is_null($pagosGral->proximaCita))
+                                    <td class="td-proc fuente"></td>
+                                @else
+                                    <td class="td-proc fuente">{{$aux}}</td>
+                                @endif
                                 </tr>
                             @endif
                         @endforeach
