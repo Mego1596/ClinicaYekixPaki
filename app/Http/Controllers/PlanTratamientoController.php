@@ -467,10 +467,8 @@ class PlanTratamientoController extends Controller
             }else{
                 if($z == 1 || $z == 0){
                     foreach ($getPagoAdd as $key => $pagoPlan) {
-                        if(is_null($pagoPlan->proximaCita)){
                             $pagoPlan->proximaCita = $event->start_date;
                             $pagoPlan->save();
-                        }
                     }
                 }else{
                     foreach ($planActivoPersonal as $key => $value) {
@@ -581,10 +579,8 @@ class PlanTratamientoController extends Controller
                 }else{
                     if($z == 1 || $z == 0){
                         foreach ($getPagoAdd as $key => $pagoPlan) {
-                            if(is_null($pagoPlan->proximaCita)){
                                 $pagoPlan->proximaCita = null;
                                 $pagoPlan->save();
-                            }
                         }
                     }else{
                         foreach ($planActivoPersonal as $key => $value) {
