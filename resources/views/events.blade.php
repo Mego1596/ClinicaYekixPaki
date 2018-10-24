@@ -76,7 +76,7 @@
 	</div>
 <!-- Modal -->
 {!! Form::open(array('route' => 'events.add','id'=> 'form', 'method' => 'POST') ) !!}
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" data-backdrop="static" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -165,14 +165,56 @@
           </div>
         </div>
         @endcan
-        @can('pagos.create')
-            <div class="row">
-              <div class="col-md-5" style="margin-top: 10px">
-                <a class="btn btn-sm btn-default bg-dark" href="#" style="color: white" name="reprogramacion" id="reprogramacion">
-                <i class="fa fa-calendar-times-o"></i> Reprogramar Cita</a>
-              </div>
-            </div>
+        <br />
+        @can('pacientes.create')
+        <td>
+          <button id="reprogramacion" type="button" class="btn btn-sm btn-default bg-dark" data-toggle="modal" data-target="#ModalReprogramar" style="color:white"><i class="fa fa-calendar-times-o"></i> Reprogamar Cita</button>
+        </td>
         @endcan
+                        {!! Form::open() !!}
+                          <!-- Modal -->
+                          <div class="modal fade" id="ModalReprogramar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-sm" role="document">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h5 class="modal-title" id="exampleModalLabel">Reprogramar Cita</h5>
+                                </div>
+                                <div class="modal-body">
+                                <label>¿Esta seguro de reprogramar la cita?</label>
+                                  <br/>
+                                  <button type="button" class="btn btn-md btn-default" id="noReprogramar">No</button>
+                                  @can('pagos.create')
+                                      <div class="row">
+                                        <div class="col-md-5" style="margin-top: 10px">
+                                          <a class="btn btn-sm btn-default bg-dark" href="#" style="color: white" name="reprogramacion" id="reprogramacion">
+                                          <i class="fa fa-angle-double-right"></i> Si</a>
+                                        </div>
+                                      </div>
+                                  @endcan
+                                </div>
+                                <div class="modal-footer">
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
       <div class="modal-footer">
 		{!! Form::submit('Añadir Cita', ['class' => 'btn btn-success','id' => 'btnAgregar', 'name' => 'btnAgregar']) !!}
 		{!! Form::submit('Modificar Cita', ['class' => 'btn btn-success','id' => 'btnModificar','name' => 'btnModificar']) !!}
@@ -225,6 +267,7 @@
       $('#exampleModal').show();
   }
 </script>
+
     {!! $calendar_details->script() !!}
 
 <script type="text/javascript">
