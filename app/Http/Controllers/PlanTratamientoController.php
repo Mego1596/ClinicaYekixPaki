@@ -304,6 +304,13 @@ class PlanTratamientoController extends Controller
                     $("#btnModificar").prop("disabled",true);
                     $("#tit").hide();
                     $("#txtTitulo").hide();
+                    $("#txtFecha").hide();
+                    $("#fecha").hide();
+                    $("#labelReprogramacion").show();
+                    $("#siReprogramacion").show();
+                    $("#siReprogramacion1").show();
+                    $("#noReprogramacion").show();
+                    $("#noReprogramacion1").show();
                     limpiarFormulario();
                     $("#txtFecha").val(date.format());
                     var horaInicio=String(date).substring(16,24);
@@ -321,9 +328,12 @@ class PlanTratamientoController extends Controller
                 if($("#encendido").val() == 1){
                     $("#btnAgregar").prop("disabled",true);
                     $("#btnEliminar").prop("disabled",false);
+                    $("#txtFecha").show();
+                    $("#tit").hide();
+                    $("#fecha").show();
                     $("#btnModificar").prop("disabled",false);
                     $("#txtDescripcion").val(calEvent.descripcion);
-                    $("#txtTitulo").val(calEvent.title);
+                    $("#txtTitulo").hide();
                     $("#txtID").val(calEvent.id);
                     $("#txtColor").val(calEvent.color);
                     FechaHora= calEvent.start._i.split("T");
@@ -334,6 +344,11 @@ class PlanTratamientoController extends Controller
                     $("#start_date").val(horaInicio[0]);
                     $("#end_date").val(horaFin[0]);
                     //$("#procedimiento_id").val(calEvent.procedimiento);
+                    $("#labelReprogramacion").hide();
+                    $("#siReprogramacion").hide();
+                    $("#siReprogramacion1").hide();
+                    $("#noReprogramacion").hide();
+                    $("#noReprogramacion1").hide();
                     $("#exampleModal").modal(); 
                 }else{
                     $("#btnAgregar").hide();
@@ -513,76 +528,44 @@ class PlanTratamientoController extends Controller
             $event->paciente_id         = $request['pacienteID'];
             $event->start_date          = $request['txtFecha']." ".$request['start_date'];
             $event->end_date            = $request['txtFecha']." ".$request['end_date'];
-            //$event->procedimiento_id    = $request['procedimiento_id'];
             $event->descripcion         = $request['txtDescripcion'];
             $event->save();
-            return redirect()->route('planTratamiento.agenda',['procedimiento'=>$request['txtProcedimiento_id'], 'paciente' => $request['pacienteID'],'planTratamiento'=>$request->referencia,'validador'=> $request->txtValidador,'cita' => $request->cita])->with('info','Cita Actualizada con exito');
-
-
-
-
-
-        }elseif (isset($_POST['btnEliminar'])) {
-            $event = Events::find($request["txtID"]);
-            $plan = Plan_Tratamiento::where('events_id',$event->id);
-            $eventoAux = Events::where('id', $request->txtID)->get();
-            $plan->delete();
-            $event->delete();
-            foreach ($eventoAux as $key => $value5) {
+            $pagoCita = Pago::where('events_id',$request->txtID)->get();
+            if(!is_null($pagoCita)){
+                foreach ($pagoCita as $key => $value) {
+                    $value->delete();
+                }
+                
+            }
             //***********************************************************************************//
             //ASIGNACION AUTOMATICA DE PROXIMA CITA AL PAGO ANTERIOR DENTRO DEL PLAN DE TRATAMIENTO
             //RESTRICCION DE PAGOS PARA PERSONAS QUE TENGAN EL PAGO DEL PLAN DE TRATAMIENTO
             //PAGADO EN SU TOTALIDAD
-                $string = "SELECT id FROM events WHERE paciente_id=".$value5->paciente_id." AND id IN (SELECT events_id FROM plan__tratamientos AS tbl
-                    WHERE id = (SELECT MAX(id) FROM plan__tratamientos WHERE plan_valido = TRUE AND activo = TRUE AND events_id = tbl.events_id));";
-                $citaPlanPersonal = DB::select(DB::raw($string));
+            $string = "SELECT id FROM events WHERE paciente_id=".$event->paciente_id." AND id IN (SELECT events_id FROM plan__tratamientos AS tbl
+                WHERE id = (SELECT MAX(id) FROM plan__tratamientos WHERE plan_valido = TRUE AND activo = TRUE AND events_id = tbl.events_id));";
+            $citaPlanPersonal = DB::select(DB::raw($string));
 
-                foreach ($citaPlanPersonal as $key => $value) {
-                   $cita = $value->id;
-                }
+            foreach ($citaPlanPersonal as $key => $value) {
+               $cita = $value->id;
+            }
 
-                $getPagoAdd         = Pago::where('events_id',$cita)->get();
-                $planActivoPersonal = Plan_Tratamiento::where('events_id', $cita)->get();
-                $planAll            = Plan_Tratamiento::get();
-                $z = 0;
-                foreach ($planActivoPersonal as $key => $value) {
-                    if($value->id != 1){
-                        foreach ($planAll as $key => $planes1) {
-                            if($value->id == $planes1->referencia){
-                                $z++;
-                            }
+            $getPagoAdd         = Pago::where('events_id',$cita)->get();
+            $planActivoPersonal = Plan_Tratamiento::where('events_id', $cita)->get();
+            $planAll            = Plan_Tratamiento::get();
+            $z = 0;
+            foreach ($planActivoPersonal as $key => $value) {
+                if($value->id != 1){
+                    foreach ($planAll as $key => $planes1) {
+                        if($value->id == $planes1->referencia){
+                            $z++;
                         }
                     }
                 }
+            }
 
-                $auxiliar = null;
-                if (sizeof($getPagoAdd) == 0) {
-                        if($z >= 1){
-                            foreach ($planActivoPersonal as $key => $value) {
-                                if($value->id != 1){
-                                    foreach ($planAll as $key => $planes1) {
-                                        if($value->id == $planes1->referencia){
-                                            $reconocimientoPago = Pago::select('id')->where('events_id',$planes1->events_id)->value('id');
-                                            if(!is_null($reconocimientoPago)){
-                                                $auxiliar = $reconocimientoPago;
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        $pagoParcial = Pago::where('id',$auxiliar)->get();
-                        foreach ($pagoParcial as $key => $value) {
-                                $value->proximaCita = null;
-                                $value->save();
-                        }
-                }else{
-                    if($z == 1 || $z == 0){
-                        foreach ($getPagoAdd as $key => $pagoPlan) {
-                                $pagoPlan->proximaCita = null;
-                                $pagoPlan->save();
-                        }
-                    }else{
+            $auxiliar = null;
+            if (sizeof($getPagoAdd) == 0) {
+                    if($z >= 1){
                         foreach ($planActivoPersonal as $key => $value) {
                             if($value->id != 1){
                                 foreach ($planAll as $key => $planes1) {
@@ -597,14 +580,52 @@ class PlanTratamientoController extends Controller
                         }
                         $pagoParcial = Pago::where('id',$auxiliar)->get();
                         foreach ($pagoParcial as $key => $value) {
-                            $value->proximaCita = null;
+                            $value->proximaCita = $event->start_date;
                             $value->save();
                         }
                     }
+            }else{
+                if($z == 1 || $z == 0){
+                    foreach ($getPagoAdd as $key => $pagoPlan) {
+                            $pagoPlan->proximaCita = $event->start_date;
+                            $pagoPlan->save();
+                    }
+                }else{
+                    foreach ($planActivoPersonal as $key => $value) {
+                        if($value->id != 1){
+                            foreach ($planAll as $key => $planes1) {
+                                if($value->id == $planes1->referencia){
+                                    $reconocimientoPago = Pago::select('id')->where('events_id',$planes1->events_id)->value('id');
+                                    if(!is_null($reconocimientoPago)){
+                                        $auxiliar = $reconocimientoPago;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    $pagoParcial = Pago::where('id',$auxiliar)->get();
+                    foreach ($pagoParcial as $key => $value) {
+                        $value->proximaCita = $event->start_date;
+                        $value->save();
                 }
             //***********************************************************************************//
             }
+            
+            foreach ($pagoCita as $key => $value) {
+                    $value->save();
+                }
+            //***********************************************************************************//
+
+            return redirect()->route('planTratamiento.agenda',['procedimiento'=>$request['txtProcedimiento_id'], 'paciente' => $request['pacienteID'],'planTratamiento'=>$request->referencia,'validador'=> $request->txtValidador,'cita' => $request->cita])->with('info','Cita Actualizada con exito');
+
+        }elseif (isset($_POST['btnEliminar'])) {
+            $event = Events::find($request["txtID"]);
+            $plan = Plan_Tratamiento::where('events_id',$event->id);
+            $eventoAux = Events::where('id', $request->txtID)->get();
+            $plan->delete();
+            $event->delete();
             return redirect()->route('planTratamiento.agenda',['procedimiento'=>$request['txtProcedimiento_id'], 'paciente' => $request['pacienteID'],'planTratamiento'=>$request->referencia,'validador'=> $request->txtValidador,'cita' => $request->cita])->with('info','Cita Eliminada con exito');
+            
 
         }
 

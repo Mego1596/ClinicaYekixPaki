@@ -86,22 +86,33 @@
       <div class="modal-body">
       	<input type="hidden" name="txtID" id="txtID"/>
         <input type="hidden" name="cita" id="cita" value="{{$id2}}">
-      	<input type="hidden" name="txtFecha" id="txtFecha"/>
         <input type="hidden" name="pacienteID" id="pacienteID" value="{{$paciente->id}}">
         <input type="hidden" name="encendido" id="encendido" value="{{$encendido}}">
         <input type="hidden" name="txtProcedimiento_id" id="txtProcedimiento_id" value="{{$id}}">
         <input type="hidden" name="txtValidador" id="txtValidador" value="{{$validador}}">
         <input type="hidden" name="referencia" id="referencia" value="{{$planActual}}">
         <input type="hidden" name="txtSolvencia" id="txtSolvencia" value="{{$solvente}}">
+        
+        <div class="form-row">
+          <div class="col-md-12">
+            <label for="txtFecha" id="fecha">Fecha:</label>
+          </div>
+          <div class="col-md-12">
+            <input type="date" name="txtFecha" id="txtFecha"/>
+          </div>
+          </div>
+        </div>
 
       	<div class="form-row">	
-      		<div class="form-group col-md-12">
+      		<div class="col-md-12">
       			{!! Form::label('paciente_id', 'Paciente:',['id' => 'tit']) !!}
+          </div>
+          <div class="col-md-12"> 
       			{!! Form::text('paciente_id', null, ['class' => 'form-control', 'placeholder' => 'Titulo del Evento', 'id' => 'txtTitulo']) !!}
       			{!! $errors->first('paciente_id','<p class="alert alert-danger">El titulo de la cita es requerido</p>') !!}
       		</div>
       	</div>
-        <div class="form-group">
+        <div class="col-md-12">
           {!! Form::label('start_date','Hora Inicio de la Cita:')!!}
           <div class="input-group clockpicker " data-autoclose="true">
             {!! Form::text('start_date', null, ['class' => 'form-control']) !!}
@@ -113,7 +124,7 @@
           </div>
         </div>
 
-        <div class="form-group">
+        <div class="col-md-12">
           {!! Form::label('end_date','Hora Fin de la Cita:')!!}
           <div class="input-group clockpicker " data-autoclose="true">
             {!! Form::text('end_date', null, ['class' => 'form-control']) !!}
@@ -124,20 +135,36 @@
             </span>
           </div>
         </div>
-      	<div class="form-group">
+      	<div class="col-md-12">
       		{!! Form::label('txtDescripcion', 'Descripcion:')!!}
       		{!! Form::textarea('txtDescripcion', null, ['class' => 'form-control', 'rows' => '2', 'id' => 'txtDescripcion'])!!}
       	</div>
-
+        <br />
+        @can('pacientes.create')
+          <div class="col-md-12">
+            {{ Form::label('reprogramacion','¿Cita por reprogramacion?',['id'=>'labelReprogramacion']) }}
+          </div>
+          <div class="col-md-12">
+            <div class="row">
+              <div class="col-md-2">
+                {{ Form::radio('reprogramacion', '1', false, ['id'=> 'siReprogramacion'] )}}
+                <label for="siReprogramacion" id="siReprogramacion1">Si</label>
+              </div>
+              <div class="col-md-2">
+                {{ Form::radio('reprogramacion', '2', true, ['id'=> 'noReprogramacion'] )}}
+                <label for="noReprogramacion" id="noReprogramacion1">No</label>
+              </div>
+            </div>
+          </div>          
+        @endcan
         <!-- EN EL SELECT VA LA VARIABLE PROCEDIMIENTO -->
 
 
 
       <div class="modal-footer">
-		{!! Form::submit('Añadir Cita', ['class' => 'btn btn-success','id' => 'btnAgregar', 'name' => 'btnAgregar']) !!}
-		{!! Form::submit('Modificar Cita', ['class' => 'btn btn-success','id' => 'btnModificar','name' => 'btnModificar']) !!}
-		{!! Form::submit('Borrar', ['class' => 'btn btn-danger ','id' => 'btnEliminar','name' => 'btnEliminar']) !!}
-
+		    {!! Form::submit('Añadir Cita', ['class' => 'btn btn-success','id' => 'btnAgregar', 'name' => 'btnAgregar']) !!}
+		    {!! Form::submit('Modificar Cita', ['class' => 'btn btn-success','id' => 'btnModificar','name' => 'btnModificar']) !!}
+        {!! Form::submit('Borrar', ['class' => 'btn btn-danger ','id' => 'btnEliminar','name' => 'btnEliminar']) !!}
         <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
         {!! Form::close() !!}
       </div>
