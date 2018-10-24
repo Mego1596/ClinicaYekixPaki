@@ -607,8 +607,8 @@ class PlanTratamientoController extends Controller
                     foreach ($pagoParcial as $key => $value) {
                         $value->proximaCita = $event->start_date;
                         $value->save();
+                    }
                 }
-            //***********************************************************************************//
             }
             
             foreach ($pagoCita as $key => $value) {
