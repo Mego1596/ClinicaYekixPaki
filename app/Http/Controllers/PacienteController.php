@@ -595,7 +595,11 @@ class PacienteController extends Controller
                     $("#cosa").prop("checked",false);
                     $("#cosa").prop("disabled",false);
                     document.getElementById("procedimiento").style.visibility = "hidden";
-                    document.getElementById("procedimiento_id").style.visibility = "hidden";            
+                    document.getElementById("procedimiento_id").style.visibility = "hidden";
+                    document.getElementById("no_de_piezas1").style.display = "none";
+                    document.getElementById("no_de_piezas2").style.display = "none";
+                    document.getElementById("honorarios1").style.display = "none";
+                    document.getElementById("honorarios2").style.display = "none";
                     limpiarFormulario();
                     $("#txtFecha").val(date.format());
                     var horaInicio=String(date).substring(16,24);
@@ -639,12 +643,12 @@ class PacienteController extends Controller
                             $("#cosa2").prop("disabled",true);
                             $("#cosa").prop("disabled",false);
                             if($("#cosa2").prop("checked")==true){
-                              document.getElementById("procedimiento").style.visibility = "hidden";
-                              document.getElementById("procedimiento_id").style.visibility ="hidden";
-                              document.getElementById("no_de_piezas1").style.visibility = "hidden";
-                              document.getElementById("no_de_piezas2").style.visibility = "hidden";
-                              document.getElementById("honorarios1").style.visibility = "hidden";
-                              document.getElementById("honorarios2").style.visibility = "hidden";
+                                document.getElementById("procedimiento").style.visibility = "hidden";
+                                document.getElementById("procedimiento_id").style.visibility ="hidden";
+                                document.getElementById("no_de_piezas1").style.display = "none";
+                                document.getElementById("no_de_piezas2").style.display = "none";
+                                document.getElementById("honorarios1").style.display = "none";
+                                document.getElementById("honorarios2").style.display = "none";
                             }
                     }else{
                             $("#cosa").prop("checked",true);
@@ -654,10 +658,10 @@ class PacienteController extends Controller
                             if($("#cosa").prop("checked")==true){
                               document.getElementById("procedimiento").style.visibility ="visible";
                               document.getElementById("procedimiento_id").style.visibility ="visible";
-                              document.getElementById("no_de_piezas1").style.visibility = "visible";
-                              document.getElementById("no_de_piezas2").style.visibility = "visible";
-                              document.getElementById("honorarios1").style.visibility = "visible";
-                              document.getElementById("honorarios2").style.visibility = "visible";
+                                document.getElementById("no_de_piezas1").style.display = "inline";
+                                document.getElementById("no_de_piezas2").style.display = "inline";
+                                document.getElementById("honorarios1").style.display = "inline";
+                                document.getElementById("honorarios2").style.display = "inline";
                             }
                         }
                     $("#exampleModal").modal();     
@@ -833,8 +837,15 @@ class PacienteController extends Controller
                 $planAnterior = Plan_Tratamiento::where('events_id',$event->id);
                 $planAnterior->delete();
                 $tratamiento_cita = new Plan_Tratamiento();
-                $tratamiento_cita->procedimiento_id = $request->procedimiento_id;
-                $tratamiento_cita->events_id        = $event->id;
+                $tratamiento_cita->no_de_piezas        = $request->no_de_piezas;
+                $tratamiento_cita->honorarios          = $request->honorarios;
+                $tratamiento_cita->procedimiento_id    = $request->procedimiento_id;
+                $tratamiento_cita->events_id           = $event->id;
+                $tratamiento_cita->activo              = true;
+                $tratamiento_cita->completo            = false;
+                $tratamiento_cita->en_proceso          = true;
+                $tratamiento_cita->no_iniciado         = false;
+                $tratamiento_cita->procedencia         = 1;
                 $tratamiento_cita->save();
                 return redirect()->route('paciente.agenda',$request->pacienteID)->with('info','Cita actualizada con exito');
             }

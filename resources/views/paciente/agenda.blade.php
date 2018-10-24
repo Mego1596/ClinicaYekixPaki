@@ -304,6 +304,8 @@ $(document).ready(function(){
 		$('#start_date').val("");
 		$('#end_date').val("");
 		$('#procedimiento_id').val("");
+    $('#no_de_piezas2').val("");
+    $('#honorarios2').val("");
 	}
 
 </script>
