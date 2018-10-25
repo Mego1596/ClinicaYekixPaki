@@ -44,3 +44,48 @@
 		</div>
 	</div>
 @endsection
+
+@section('javascript')
+<script>
+		//Función encargada de mostrar la modal con los datos a enviar
+		const verificarInfo = () => {
+
+			let trataRealizado = $("select[name='realizoTto'] option:selected").text()
+			let cantidadAbono = $("#abono1").val()
+
+			$("#odontologo").val(trataRealizado)
+			$("#abono").val(cantidadAbono)
+
+			let mensaje
+			let errores = false
+			if(!$("#realizoTto").val()){
+				mensaje = "Debe de seleccionar un Odontólogo. "
+				errores = true
+			}
+			if(cantidadAbono<=0 || cantidadAbono>99999.99){
+				mensaje = "El Abono debe esar entre $0.00 - $99999.99"
+				errores = true
+			}
+
+			if(errores){
+				document.getElementById('si').style.visibility = 'hidden'
+				$("#informacion").html("<strong>Corrija los errores: </strong>" + "<code>" + mensaje + "</code>")
+				document.getElementById('informacion').style.visibility = 'visible'
+			}else{
+				document.getElementById('si').style.visibility = 'visible'
+				document.getElementById('informacion').style.visibility = 'hidden'
+			}
+
+
+
+			$("#verificarModal").modal()
+		}
+
+		const habilitarEnvio = () => {
+			document.getElementById('btnVerificar').style.visibility = 'hidden'
+			document.getElementById('btnEnviar').style.visibility = 'visible'
+			document.getElementById('realizoTto').disabled = true
+			document.getElementById('abono1').disabled = true
+		}
+</script>
+@endsection
