@@ -185,7 +185,7 @@ class EventsController extends Controller
     		'editable' => false,
     		'themeSystem'=>'bootstrap4',
             'locale' => 'es',
-            'defaultView' => 'agendaDay',
+            'defaultView' => 'month',
     	    'header' => array(
                 'left' => 'prev,next today', 
                 'center' => 'title', 

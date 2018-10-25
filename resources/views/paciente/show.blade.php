@@ -102,11 +102,11 @@
 								{{ Form::datetime('created_at', $aux, ['class' => 'form-control','disabled'])}}
 							</div>
 							<div class="col-md-4">
-								{{ Form::label('expediente', 'No. Expediente') }}
+								{{ Form::label('expediente', 'No. Expediente:') }}
 								{{ Form::text('expediente', null, ['class' => 'form-control','disabled' ])}}
 							</div>
 							<div class=col-md-4>
-								{{Form::label('edad',"Edad")}}
+								{{Form::label('edad',"Edad:")}}
 								{{Form::text('edad',$edad,['class'=>'form-control','disabled'])}}
 								
 							</div>
@@ -114,84 +114,84 @@
 						<div class="row pt-3">
 							<div class="col-md-4">
 								<div class="form-group">
-									{{ Form::label('nombre1', 'Primer nombre') }}
+									{{ Form::label('nombre1', 'Primer nombre:') }}
 									{{ Form::text('nombre1', null, ['class' => 'form-control', 'disabled'])}}
 								</div>
 							</div>
 							<div class="col-md-4">
 								<div class="form-group">
-									{{ Form::label('nombre2', 'Segundo nombre') }}
+									{{ Form::label('nombre2', 'Segundo nombre:') }}
 									{{ Form::text('nombre2', null, ['class' => 'form-control', 'disabled'])}}
 								</div>
 							</div>
 							<div class="col-md-4">
 								<div class="form-group">
-									{{ Form::label('nombre3', 'Tercer nombre') }}
+									{{ Form::label('nombre3', 'Tercer nombre:') }}
 									{{ Form::text('nombre3', null, ['class' => 'form-control', 'disabled'])}}
 								</div>
 							</div>
 							<div class="col-md-4">
 								<div class="form-group">
-									{{ Form::label('apellido1', 'Primer apellido') }}
+									{{ Form::label('apellido1', 'Primer apellido:') }}
 									{{ Form::text('apellido1', null, ['class' => 'form-control', 'disabled'])}}
 								</div>
 							</div>
 							<div class="col-md-4">
 								<div class="form-group">
-									{{ Form::label('apellido2', 'Segundo apellido') }}
+									{{ Form::label('apellido2', 'Segundo apellido:') }}
 									{{ Form::text('apellido2', null, ['class' => 'form-control', 'disabled'])}}
 								</div>
 							</div>
 							<div class="col-md-4">
-								{{ Form::label('fechaNacimiento', 'Fecha de nacimiento') }}
+								{{ Form::label('fechaNacimiento', 'Fecha de nacimiento:') }}
 								{{ Form::date('fechaNacimiento',$paciente->fechaNacimiento, ['class' => 'form-control', 'type'=>'date', 'style'=>'height: 38px', 'disabled']) }}
 							</div>
 							<div class="col-md-4">
-								{{ Form::label('telefono', 'Telefono') }}
+								{{ Form::label('telefono', 'Telefono:') }}
 								{{ Form::text('telefono', null, ['class'=>'form-control', 'disabled']) }}
 							</div>
 							<div class="col-md-4">
-								{{ Form::label('sexo', 'Sexo') }}
+								{{ Form::label('sexo', 'Sexo:') }}
 								{{ Form::text('sexo', null, ['class'=>'form-control', 'disabled']) }}
 							</div>
 							<div class="col-md-4">
-								{{ Form::label('email', 'Correo Electronico') }}
+								{{ Form::label('email', 'Correo Electronico:') }}
 								{{ Form::email('email', null, ['class'=>'form-control', 'disabled']) }}
 							</div>
 						</div>
 						<div class="row pt-3">
 							<div class="col-md-12">
-								{{ Form::label('ocupacion', 'Ocupacion') }}
+								{{ Form::label('ocupacion', 'Ocupacion:') }}
 								{{ Form::text('ocupacion', null, ['class' => 'form-control', 'disabled']) }}
 							</div>
 						</div>
 						<div class="row pt-3">
 							<div class="col-md-12">
-								{{ Form::label('domicilio', 'Domicilio') }}
+								{{ Form::label('domicilio', 'Domicilio:') }}
 								{{ Form::text('domicilio', null, ['class'=>'form-control', 'disabled']) }}
 							</div>
 						</div>
 						<div class="row pt-3">
 							<div class="col-md-12">
-								{{ Form::label('direccion_de_trabajo', 'Direccion de trabajo') }}
+								{{ Form::label('direccion_de_trabajo', 'Direccion de trabajo:') }}
 								{{ Form::text('direccion_de_trabajo', null, ['class'=>'form-control', 'disabled']) }}
 							</div>
 						</div>
 						<div class="row pt-3">
 							<div class="col-md-12">
-								{{ Form::label('responsable', 'Responsable') }}
+								{{ Form::label('responsable', 'Responsable:') }}
 								{{ Form::text('responsable', null, ['class'=>'form-control', 'disabled']) }}
 							</div>
 						</div>
 						<div class="row pt-3">	
 							<div class="col-md-12">
-								{{ Form::label('recomendado', 'Recomendado por') }}
+								{{ Form::label('recomendado', 'Recomendado por:') }}
 								{{ Form::email('recomendado', null, ['class'=>'form-control', 'disabled']) }}
 							</div>
 						</div>
 						<div class="row pt-3">
 							<div class="col-md-12">
-								{{ Form::label('historiaOdontologica','Historia Odontologica')}}
+								{{ Form::label('historiaOdontologica','Historia Odontologica:')}}
 								{{ Form::textarea('historiaOdontologica',null,['class' => 	'form-control','disabled','rows' => '3'])}}
 							</div>
 						</div>
