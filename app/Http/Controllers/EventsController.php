@@ -155,6 +155,7 @@ class EventsController extends Controller
             }else{
                 $planT = Plan_Tratamiento::where('events_id',$event->id)->value('procedimiento_id');
                 $proceso = Procedimiento::where('id',$planT)->value('color');
+                $procesoNombre = Procedimiento::where('id',$planT)->value('nombre');
                 $event_list[] =Calendar::event(
                     $paciente->nombre1." ".$paciente->nombre2." ".$paciente->nombre3." ".$paciente->apellido1." ".$paciente->apellido2,
                     false,
@@ -163,6 +164,7 @@ class EventsController extends Controller
                     $event->id,
                     [
                     'color'             => $proceso,
+                    'procedimiento'     => $procesoNombre,
                     'descripcion'       => $event->descripcion,
                     'textColor'         => $event->textcolor,
                     'durationEditable'  => false,
@@ -206,6 +208,7 @@ class EventsController extends Controller
 				 	$("#txtID").val(calEvent.id);
                     $("#txtPaciente_id").val(calEvent.paciente);
                     $("#txtValidador").val(calEvent.validador);
+                    $("#txtProcedimiento").val(calEvent.procedimiento);
                     if(calEvent.paciente == 1){
                         $("#plan").hide();
                         $("#receta").hide();

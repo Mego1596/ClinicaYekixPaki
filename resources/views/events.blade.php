@@ -94,6 +94,10 @@
         <a class="btn btn-primary" href="{{route('paciente.agenda2', 1)}}" target="_blank" id="cupos" name="cupos" style="display: none"><i class="fa fa-outdent"></i> Ver Cupos</a>
         @endcan
         <div class="form-group">
+          {!! Form::label('txtProcedimiento', 'Procedimiento a Realizar:')!!}
+          {!! Form::text('txtProcedimiento', null, ['class' => 'form-control','disabled'])!!}
+        </div>
+        <div class="form-group">
           {!! Form::label('txtExpediente', 'Expediente:')!!}
           {!! Form::text('txtExpediente', null, ['class' => 'form-control','disabled'])!!}
         </div>
