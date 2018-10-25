@@ -763,7 +763,7 @@ class PacienteController extends Controller
             'header'        => array(
                         'left' => 'prev,next today', 
                       'center' => 'title', 
-                       'right' => 'agendaWeek'
+                       'right' => 'month,agendaWeek,agendaDay'
             ),
 
             ]);
