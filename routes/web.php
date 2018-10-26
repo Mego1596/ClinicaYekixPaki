@@ -54,7 +54,7 @@ Route::middleware(['auth'])->group(function(){
 
 	Route::put('user/{user}', 'UserController@update')->name('user.update')->middleware('permission:users.edit');
 	
-	Route::get('user/show/{user}/{idrol}', 'UserController@show')->name('user.show')->middleware('permission:users.show');
+	Route::get('user/show/{user}/{idrol}', 'UserController@show')->name('user.show')->middleware('permission:users.show')->middleware('asistentes');
 
 	Route::delete('user/{user}/{idRole}', 'UserController@destroy')->name('user.destroy')->middleware('permission:users.destroy');
 
