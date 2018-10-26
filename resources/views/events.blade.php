@@ -6,6 +6,9 @@
 </li>
 @endsection
 
+@section('javascript')
+<link href="{{ asset('css/dataTables.bootstrap4.css')}}" rel="stylesheet">
+@endsection
 
 @section('content')
 	<div class="container">
@@ -21,51 +24,57 @@
               </div>
           </div>
           <div class="row">
-          <div class="col-md-3">
-            <button type="button" class="btn btn-block btn-primary" data-toggle="modal" data-target="#ModalX">
-                <i class="fa fa-list"></i>  Leyenda de Procedimientos
-              </button>
-            {!! Form::open() !!}
-            <!-- Modal -->
-            <div class="modal fade" id="ModalX" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-              <div class="modal-dialog" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Identificador de Procedimientos</h5>
-                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                              <span aria-hidden="true">&times;</span>
-                          </button>
-                      </div>
-                      <div class="modal-body" style="overflow-y: auto; max-height: calc(100vh - 150px);">
-                        <div class="row">
-                          <table align="center">
-                            <tr>
-                              <td style="text-align: center; background: black;color: white; border-radius: 10px;" width="200px">
-                              Revision General
-                              </td>
-                            </tr>
-                            <tr>
-                              <td style="color: white">.</td>
-                            </tr>
-                            @foreach($procesos as $p)
-                            <tr>
-                                <td style="text-align: center; background: {{$p->color}};color: white; border-radius: 10px" width="200px">
-                                  {{$p->nombre}}
-                                </td>
-                            </tr>
-                            <tr>
-                              <td style="color: white">.</td>
-                            </tr>
-                            @endforeach
-                          </table>
+            <div class="col-md-3">
+              <button type="button" class="btn btn-block btn-primary" data-toggle="modal" data-target="#ModalX">
+                  <i class="fa fa-list"></i>  Leyenda de Procedimientos
+                </button>
+              {!! Form::open() !!}
+              <!-- Modal -->
+              <div class="modal fade" data-backdrop="static" id="ModalX" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLabel">Identificador de Procedimientos</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
                         </div>
-                      </div>
-                  </div>
+                        <div class="modal-body" style="overflow-y: auto; max-height: calc(100vh - 150px);">
+                          <div class="card-body">
+                            <div class="table-responsive">
+                              <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <thead>
+                                  <tr>
+                                    <th>No</th>
+                                    <th>Procedimiento</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr>
+                                    <td>1</td>
+                                    <td style="text-align: center; background: black;color: white; border-radius: 10px">
+                                      Revision General
+                                    </td>
+                                  </tr>
+                                  @foreach($procesos as $p)
+                                  <tr>
+                                      <td>{{$loop->iteration+1}}</td>
+                                      <td style="text-align: center; background: {{$p->color}};color: white; border-radius: 10px">
+                                        {{$p->nombre}}
+                                      </td>
+                                  </tr>
+                                  @endforeach
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                </div>
               </div>
+              {!! Form::close() !!}
             </div>
-            {!! Form::close() !!}
           </div>
-    </div>
       <div class="panel-body">
         <br/>
 				{!! $calendar_details->calendar() !!}
@@ -287,5 +296,11 @@
   		//$('#procedimiento_id').val("");
 	 }
 </script>
+
+    <!-- Page level plugin JavaScript-->
+    <script src="{{ asset('js/jquery.dataTables.js')}}"></script>
+    <script src="{{ asset('js/dataTables.bootstrap4.js')}}"></script>
+    <!-- Demo scripts for this page-->
+    <script src="{{ asset('js/datatables-demo.js')}}"></script>
 
 @endsection

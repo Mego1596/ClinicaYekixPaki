@@ -25,7 +25,7 @@ class EventsController extends Controller
             $encendido = false;
         }
     	//$procedimiento = Procedimiento::pluck('nombre', 'id')->toArray();
-        $procesos = Procedimiento::paginate();
+        $procesos = Procedimiento::paginate(100);
     	$events = Events::select('id','paciente_id','start_date','end_date','descripcion','reprogramada')->get();
         $event_list= [];
         foreach ($events as $key => $event) {
