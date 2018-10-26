@@ -16,7 +16,7 @@ class ProcedimientosTableSeeder extends Seeder
     	Procedimiento::create([
     		'nombre' => 'Guardas Oclusales',
     		'descripcion' => 'Consiste en un aparato bucal de plastico que se coloca en una de las arcadas dentarias para evitar que entren en contacto unos dientes con otros, para llevar la mandibula a una posicion articularmente adecuada cuando se muerde sobre ella, bien para "olvidar" las posiciones mandibulares inadecuadas e incorrectas de los dientes cuando se mantienen apretados, o bien para evitar el desgaste de los dientes (bruxismo), ya que el plastico de la placa es mas blando y desgastable que estos.',
-    		'color' => '#000099',
+    		'color' => '#610B0B',
     	]);
 
 		Procedimiento::create([
@@ -28,13 +28,13 @@ class ProcedimientosTableSeeder extends Seeder
     	Procedimiento::create([
     		'nombre' => 'Protesis Parciales Fijas',
     		'descripcion' => 'Protesis completamente dentosoportadas, que toman apoyo unicamente en los dientes.',
-    		'color' => '#0066ff',
+    		'color' => '#B40404',
     	]);
 
     	Procedimiento::create([
     		'nombre' => 'Protesis Removibles Parciales y Totales',
     		'descripcion' => 'Tratamiento de Odontologia restauradora que, como su propio nombre indica, se diseñan y fabrican de modo que el paciente pueda colocarsela y quitarsela cuando lo necesite, lo que facilita enormemente su higiene.',
-    		'color' => '#660066',
+    		'color' => '#DF0101',
     	]);
 
 		Procedimiento::create([
@@ -76,7 +76,7 @@ class ProcedimientosTableSeeder extends Seeder
 		Procedimiento::create([
     		'nombre' => 'Obturaciones Esteticas (Rellenos)',
     		'descripcion' => 'Limpiar la cavidad resultante de una caries para luego rellenarla con algún material.',
-    		'color' => '#006600',
+    		'color' => '#088A08',
 		]);
 		
 		Procedimiento::create([
@@ -130,7 +130,7 @@ class ProcedimientosTableSeeder extends Seeder
 		Procedimiento::create([
     		'nombre' => 'Blanqueamiento Dental',
     		'descripcion' => 'El blanqueamiento dental es un procedimiento clínico que trata de conseguir el aclaramiento del color de uno o varios dientes aplicando un agente químico, y tratando de no alterar su estructura básica.',
-    		'color' => '#BF0FF',
+    		'color' => '#BF00FF',
 		]);
 
 		Procedimiento::create([
