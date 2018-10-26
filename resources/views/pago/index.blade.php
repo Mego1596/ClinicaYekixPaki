@@ -83,6 +83,9 @@
 											@endif
 										@endif
 									@endif
+									@can('pago.edit')
+									<th>Editar</th>
+									@endcan
 								</tr>
 							</thead>
 							<tbody>
@@ -103,6 +106,7 @@
 									@endphp
 									<td align="center">{{$aux2}}</td>
 									<td></td>
+								<td><a href="{{ route('pago.edit', $proceso->id) }}" class="btn btn-info">Editar</a></td>
 								</tr>
 								@endforeach
 							</tbody>

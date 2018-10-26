@@ -215,10 +215,28 @@ class PagoController extends Controller
                 ->with('tipo', 'success');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Pago  $pago
-     * @return \Illuminate\Http\Response
-     */
+    public function edit(Pago $pago)
+    {
+        $users = DB::table('users')->join('role_user', 'users.id', '=', 'role_user.user_id')->where('role_user.role_id', '=', 2)->orWhere('role_user.role_id', '=', 1)->select('users.id' , 'users.nombre1','users.nombre2','users.nombre3','users.apellido1','users.apellido2','users.numeroJunta','users.name')->orderBy('id')->paginate();
+        return view('pago.edit')->with('pago', $pago)->with('users', $users);
+    }
+
+    public function update(Request $request, Pago $pago)
+    {
+        $tipoMensaje = "info";
+        $mensaje = "El pago ha sido modificado correctamente";
+        if($request->realizoTto){
+            $user = User::where('id',$request->realizoTto)->get();
+            foreach ($user as $key => $value) {
+                $pago->realizoTto  = $value->nombre1.' '.$value->nombre2.' '.$value->nombre3.' '.$value->apellido1.' '.$value->apellido2.'- '.$value->numeroJunta;
+            }
+            $pago->update();
+        }else {
+            $tipoMensaje = "error";
+            $mensaje = "Debe de seleccionar un Médico en el pago";
+        }
+
+        return redirect()->route('pago.index',['cita' => $pago->events_id])
+               ->with($tipoMensaje, $mensaje);
+    }
 }

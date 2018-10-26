@@ -6,7 +6,11 @@
 			<select style="visibility: display;" id="realizoTto" class="form-control" name="realizoTto" required>
 				<option selected="selected" value=""> Elija un Odontologo</option>
 				@foreach($users as $doctor)
+					@if(isset($pago))
+					<option {{($pago->realizoTto==$doctor->nombre1.' '.$doctor->nombre2.' '.$doctor->nombre3.' '.$doctor->apellido1.' '.$doctor->apellido2.'- '.$doctor->numeroJunta? "selected":"")}} value="{{$doctor->id}}">Dr. {{$doctor->nombre1.' '.$doctor->nombre2.' '.$doctor->nombre3.' '.$doctor->apellido1.' '.$doctor->apellido2.'- '.$doctor->numeroJunta}}</option>
+					@else
 					<option value="{{$doctor->id}}">Dr. {{$doctor->nombre1.' '.$doctor->nombre2.' '.$doctor->nombre3.' '.$doctor->apellido1.' '.$doctor->apellido2.'- '.$doctor->numeroJunta}}</option>
+					@endif
 				@endforeach
 			</select>
 		</div>
