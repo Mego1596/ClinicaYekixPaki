@@ -33,7 +33,7 @@
 					
 					</div>
 					<div class="card-body">
-						{!! Form::open(['route' => 'pago.store', 'autocomplete'=> 'off', 'onsubmit' => 'envio()']) !!}
+						{!! Form::open(['route' => 'pago.store', 'autocomplete'=> 'off', 'onsubmit' => 'return envio()']) !!}
 
 							@include('pago.partials.form')
 							{!! Form::hidden('cita', $id, ['class' => 'form-control'])!!}
@@ -47,11 +47,14 @@
 
 @section('javascript')
 <script>
-
+		let formValidado = false;
 		const envio = () => {
-			document.getElementById('realizoTto').disabled = false
-			document.getElementById('abono1').disabled = false
-			document.getElementById('btnEnviar').disabled = true
+			if(formValidado){
+				document.getElementById('realizoTto').disabled = false
+				document.getElementById('abono1').disabled = false
+				document.getElementById('btnEnviar').disabled = true
+			}
+			return formValidado;
 		}
 		//Función encargada de mostrar la modal con los datos a enviar
 		const verificarInfo = () => {
@@ -92,6 +95,7 @@
 			document.getElementById('btnEnviar').style.visibility = 'visible'
 			document.getElementById('realizoTto').disabled = true
 			document.getElementById('abono1').disabled = true
+			formValidado = true
 		}
 </script>
 @endsection
