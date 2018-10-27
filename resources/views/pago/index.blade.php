@@ -82,6 +82,7 @@
 													</th>
 												@else
 												<th></th>
+												<th></th>
 												@endif
 											@endif
 										@endif
