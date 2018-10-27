@@ -162,21 +162,32 @@
               <td class="tg-0lax" colspan="2">Recomendado Por: {{$paciente->recomendado}}</td>
               </tr>
               <tr>
-              <td class="tg-0lax" colspan="2">Historia Odontologica Anterior</td>
+              <td class="tg-0lax" colspan="2">Historia Odontologica Anterior:</td>
               </tr>
               <tr>
+                @if(!is_null($paciente->historiaOdontologica))
                 <td class="tg-0lax" colspan="2">{{$paciente->historiaOdontologica}}</td>
+                @else
+                    <td class="tg-0lax" colspan="2">
+                        <br />
+                    </td>
+                @endif
               </tr>
               <tr>
                 <td class="tg-0lax" colspan="2">Historia Medica Anterior:</td>
               </tr>
               <tr>
-                  
-                <td class="tg-0lax" colspan="2">
-                    @foreach($historias_medicas as $historia)
-                    {{$historia->descripcion}}<br>
-                    @endforeach
-                </td>
+                @if(sizeof($historias_medicas) != 0)
+                    <td class="tg-0lax" colspan="2">
+                        @foreach($historias_medicas as $historia)
+                        {{$historia->descripcion}}<br>
+                        @endforeach
+                    </td>
+                @else
+                    <td class="tg-0lax" colspan="2">
+                        <br />
+                    </td>
+                @endif
               </tr>
             </table>
 
