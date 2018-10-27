@@ -5,10 +5,16 @@
     <style type="text/css">
     .titulo{
         text-align: center;
-        padding-bottom: 2rem;
+        padding-bottom: -1rem;
         font-family: Arial, Helvetica, sans-serif;
         font-weight:bolder;
-        font-size: 20px;
+        font-size: 17px;
+    }
+
+    .titulo2{
+        text-align: center;
+        padding-bottom: -1rem;
+        padding-top: -1rem;
     }
     .tabla-tra{
         margin-left: 19rem;
@@ -57,12 +63,116 @@
     .pac{
         padding-left: 5rem;
     }
+    .odonto{
+        padding-left: 1rem;
+    }
     div.page_break{
     page-break-before: always;
     }
     </style>
 </head>
 <body>
+
+<div>
+
+
+        
+    <style type="text/css">
+        .tg2  {border-collapse:collapse;border-spacing:0;}
+        .tg2 td{font-family:Arial, sans-serif;font-size:14px;padding:1px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}
+        .tg2 th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:1px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}
+        .tg2 .tg-y9452{font-size:20px;font-family:"Arial Black", Gadget, sans-serif !important;;border-color:#ffffff;text-align:center;}
+        .tg2 .tg-dfg12{font-size:10px;border-color:#ffffff;text-align:center;vertical-align:top}
+        .tg2 .tg-401l2{font-size:11px;border-color:#ffffff;text-align:center;}
+        .tg2 .tg-ior22{font-size:11px;border-color:#ffffff;text-align:center;vertical-align:top}
+        </style>
+        <table class="tg2">
+          <tr>
+            <th class="tg-401l2" rowspan="2"><img src="img/titulo-yekixpaki.png" alt="Clinica YekiXPaki" width="365" height="95"></th>
+            <th class="tg-y9452"><span style="font-weight:bold">FICHA ODONTOLÓGICA</span></th>
+          </tr>
+          <tr>
+            <td class="tg-401l2">Coronas, placas, puentes, rellenos, endodoncias, ortodoncias,<br>todo lo relacionado con Odontologia general, estetica e infantil.</td>
+          </tr>
+          <tr>
+            <td class="tg-ior22" rowspan="2"><br>Col. Libertad, Av. Washington #414, San Salvador.<br>Telefono: 2102 - 2198</td>
+            <td class="tg-ior22">De Lunes a miercoles, viernes y sabado de 2:00 pm a 6:00 pm</td>
+          </tr>
+          <tr>
+            <td class="tg-dfg12"><span style="font-weight:bold">Telefono: (503) 6420-8735</span> - Domingos por cita</td>
+          </tr>
+        </table>
+        <p class="titulo2">--------------------------------------------------------------------------------------------------------------------------------</p>
+        <p class="titulo " style="font-weight:bold">DATOS DEL PACIENTE</p>
+
+
+        <style type="text/css">
+            .tg  {border-collapse:collapse;border-spacing:0;padding-left: .5rem;}
+            .tg td{font-family:Arial, sans-serif;font-size:11px;padding:3px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black; width: 400px;}
+            .tg th{font-family:Arial, sans-serif;font-size:11px;font-weight:normal;padding:3px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}
+            .tg .tg-s268{text-align:left}
+            .tg .tg-0lax{text-align:left;vertical-align:top}
+            .tg .bordes1{border-right: 1px solid white;border-left: 1px solid white;border-top: 1px solid white;}
+            .tg .der{border-right: 1px solid white;}
+            </style>
+            <table class="tg" style="undefined;table-layout: fixed; width: 685px">
+            <colgroup>
+            <col style="width: 337px">
+            <col style="width: 239px">
+            </colgroup>
+              <tr>
+                <th class="tg-s268 bordes1">Fecha: {{$nuevaFecha}}  </th>
+                <th class="tg-0lax bordes1">Ficha#: {{$cit->id}} </th>
+              </tr>
+              <tr>
+              <td class="tg-0lax">E-mail: {{$paciente->email}}</td>
+              <td class="tg-0lax">FC: {{$paciente->expediente}}</td>
+              </tr>
+              <tr>
+               <td class="tg-0lax">Nombre: {{$paciente->nombre1}} {{$paciente->nombre2}} {{$paciente->nombre3}} {{$paciente->apellido1}} {{$paciente->apellido2}} </td>
+             <td class="tg-0lax">Edad: {{$edad}} años</td>
+              </tr>
+              <tr>
+              <td class="tg-0lax">Ocupacion: {{$paciente->ocupacion}}</td>
+              <td class="tg-0lax">Responsable: {{$paciente->responsable}}</td>
+              </tr>
+              <tr>
+              <td class="tg-0lax" colspan="2">Domicilio: {{$paciente->domicilio}}</td>
+              </tr>
+              <tr>
+                <td class="tg-0lax der"></td>
+              <td class="tg-0lax">Telefono: {{$paciente->telefono}}</td>
+              </tr>
+              <tr>
+              <td class="tg-0lax" colspan="2">Recomendado Por: {{$paciente->recomendado}}</td>
+              </tr>
+              <tr>
+              <td class="tg-0lax" colspan="2">Historia Odontologica Anterior</td>
+              </tr>
+              <tr>
+                <td class="tg-0lax" colspan="2">{{$paciente->historiaOdontologica}}</td>
+              </tr>
+              <tr>
+                <td class="tg-0lax" colspan="2">Historia Medica Anterior:</td>
+              </tr>
+              <tr>
+                  
+                <td class="tg-0lax" colspan="2">
+                    @foreach($historias_medicas as $historia)
+                    {{$historia->descripcion}}<br>
+                    @endforeach
+                </td>
+              </tr>
+            </table>
+
+</div>
+
+
+<div>
+        <p class="titulo " style="font-weight:bold">ODONTOGRAMA</p>
+        <img src="img/odontograma.png" alt="ODONTOGRAMA" width="660" height="210" class="odonto">
+</div>
+
 <div>
 
     <p class="titulo" style="font-weight:bold">PLANES DE TRATAMIENTO</p>
@@ -117,7 +227,7 @@
                     
                     <td class="firmas">F: ____________________________</td>
                 </tr>
-                <tr><td width="325px" class="firmas pac">Paciente</td><td class="firmas" style="text-align:center">Medica</td></tr>              
+                <tr><td width="325px" class="firmas pac">Paciente</td><td class="firmas" style="text-align:center">Medico</td></tr>              
             </table>
 </div>
 

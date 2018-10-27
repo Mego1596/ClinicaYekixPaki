@@ -988,6 +988,11 @@ class PacienteController extends Controller
         $planTratamiento = Plan_Tratamiento::where('events_id',$cita)->orderBy('id')->get();
         $evento = Events::where('id',$cita)->get();
         $eventos= Events::get();
+        $cit = Events::find($cita);
+        $paciente = Paciente::find($cit->paciente_id);
+        $edad= Carbon::parse($paciente->fechaNacimiento)->age;
+        $nuevaFecha = date("d/m/Y", strtotime($paciente->created_at));
+        $historias_medicas= HistoriaMedica::where('paciente_id',$paciente->id)->get();
         $y=0.0;
         foreach($planTratamiento as $plan){
             $y+=$plan->honorarios;
@@ -996,7 +1001,7 @@ class PacienteController extends Controller
         $pagos = Pago::where('events_id',$cita)->get();
         $pagosGenerales = Pago::get();
         $planTratamientoGeneral = Plan_Tratamiento::get();
-        $pdf = PDF::loadView('planTratamiento.show',compact('procesos','planTratamiento','y','pagos','pagosGenerales','planTratamientoGeneral','evento','eventos'));
+        $pdf = PDF::loadView('planTratamiento.show',compact('procesos','planTratamiento','y','pagos','pagosGenerales','planTratamientoGeneral','evento','eventos','paciente','edad','historias_medicas','cit','nuevaFecha'));
         $pdf->setPaper('A4','Portrait');
         return $pdf->stream();
     }
