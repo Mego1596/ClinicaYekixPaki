@@ -199,7 +199,7 @@
                                   @can('pagos.create')
                                       <div class="row">
                                         <div class="col-md-5" style="margin-top: 10px">
-                                          <a class="btn btn-sm btn-default bg-dark" href="#" style="color: white" name="reprogramacion" id="reprogramacion">
+                                          <a class="btn btn-sm btn-default bg-dark" href="#" style="color: white" name="reprogramacion1" id="reprogramacion1">
                                           <i class="fa fa-angle-double-right"></i> Si</a>
                                         </div>
                                       </div>
@@ -252,7 +252,7 @@
         }
 </script>
 <script type="text/javascript">
-          document.getElementById("reprogramacion").onclick = function() {
+          document.getElementById("reprogramacion1").onclick = function() {
           var x=parseInt($('#txtID').val());
           this.setAttribute("href","events/reprogramacion/"+x);
         }

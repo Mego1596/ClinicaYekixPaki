@@ -110,6 +110,10 @@ class EventsController extends Controller
                    if($value->gratis == true){
                         $restriccion = 0;
                    }
+
+                   if($value->gratis == false && $value->reprogramado == false){
+                        $restriccion = 0;
+                   }
                 }
             }else{
                 $restriccion = 0;

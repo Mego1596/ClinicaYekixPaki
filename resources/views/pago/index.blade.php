@@ -46,9 +46,10 @@
 										@else
 											@if($saldo == 0)
 											<th></th>
+											<th></th>
 											@else
 												@if(sizeof($pagos) > 1)
-												
+
 												@else
 													<th width="237">
 														@can('pagos.create')
@@ -63,9 +64,11 @@
 										@endif
 									@else
 										@if($abonoValidar == 0)
-										
+										<th></th>
+										<th></th>
 										@else
 											@if($saldo == 0)
+											<th></th>
 											<th></th>
 											@else
 												@if(sizeof($pagos) > 1)
@@ -83,9 +86,6 @@
 											@endif
 										@endif
 									@endif
-									@can('pago.edit')
-									<th>Editar</th>
-									@endcan
 								</tr>
 							</thead>
 							<tbody>
@@ -106,7 +106,11 @@
 									@endphp
 									<td align="center">{{$aux2}}</td>
 									<td></td>
-								<td><a href="{{ route('pago.edit', $proceso->id) }}" class="btn btn-info">Editar</a></td>
+									@can('pago.edit')
+										<td>
+											<a href="{{ route('pago.edit', $proceso->id) }}" class="btn btn-info">Editar</a>
+										</td>
+									@endcan
 								</tr>
 								@endforeach
 							</tbody>
