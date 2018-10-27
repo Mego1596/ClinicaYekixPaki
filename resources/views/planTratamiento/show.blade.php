@@ -16,6 +16,16 @@
         padding-bottom: -1rem;
         padding-top: -1rem;
     }
+
+    .titulo3{
+        text-align: center;
+        font-family: Arial, Helvetica, sans-serif;
+        font-weight:bolder;
+        font-size: 15px;
+        padding-bottom: -5rem;
+        padding-top: .5rem;
+    }
+
     .tabla-tra{
         margin-left: 19rem;
     }
@@ -65,6 +75,11 @@
     }
     .odonto{
         padding-left: 1rem;
+        margin-top:3rem;
+    }
+    .odonto2{
+        padding-left: 1rem;
+        margin-top: 3.5rem;
     }
     div.page_break{
     page-break-before: always;
@@ -169,11 +184,14 @@
 
 
 <div>
-        <p class="titulo " style="font-weight:bold">ODONTOGRAMA</p>
+        <p class="titulo" style="font-weight:bold">ODONTOGRAMA</p>
+        <p class="titulo3" style="font-weight:bold">Inicial</p>
         <img src="img/odontograma.png" alt="ODONTOGRAMA" width="660" height="210" class="odonto">
+        <p class="titulo3" style="font-weight:bold">Actual</p>
+        <img src="img/odontograma.png" alt="ODONTOGRAMA" width="660" height="210" class="odonto2">
 </div>
 
-<div>
+<div class="page_break">
 
     <p class="titulo" style="font-weight:bold">PLANES DE TRATAMIENTO</p>
 	<table border="solid" class="tabla-tra">
