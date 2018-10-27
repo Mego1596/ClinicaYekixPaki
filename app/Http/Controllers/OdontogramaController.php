@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Anexo;
+use App\TipoAnexo;
 
 class OdontogramaController extends Controller
 {
@@ -32,9 +34,34 @@ class OdontogramaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $paciente)
     {
-        //
+        $tipoMensaje = "success";
+        $mensaje = "Odontograma guardado con éxito";
+        $image = $request->imagen;
+        $image = str_replace('data:image/png;base64,', '', $image);
+        $image = str_replace(' ', '+', $image);
+        $generado = str_random(25) . '.png';
+        $guardado = \Storage::disk('dropbox')->put($generado,  base64_decode($image));
+
+        if($guardado) {
+            $anexo = new Anexo();
+            $anexo->nombreOriginal = $generado;
+            $anexo->ruta = $generado;
+            $anexo->pacienteId = $paciente;
+            $anexo->tipoAnexoId = TipoAnexo::ODONTOGRAMA;
+            $anexo->save();
+
+            return redirect()
+                    ->route('paciente.show', $paciente)
+                    ->with('info','Odontograma guardado con exito')
+                    ->with('tipo', 'success');
+        }else {
+            return redirect()
+                    ->route('paciente.show', $paciente)
+                    ->with('error', 'No se pudo guardar el odontograma.')
+                    ->with('tipo', 'danger');
+        }        
     }
 
     /**

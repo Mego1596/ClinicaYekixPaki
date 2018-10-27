@@ -355,7 +355,11 @@ CanvasRenderingContext2D.prototype.clear = function () {
 
 /********/
         this.save = function () {
-            alert("Not implemented !");
+            var imagen = document.getElementById('imagen');
+            imagen.value = document.getElementsByTagName('canvas')[0].toDataURL('image/png');
+            document.forms['formCanvas'].submit();
+
+
             // Extract the Base64 data from the canvas and post it to the server
 //            var image = canvas.background.canvas.toDataURL("image/png");
 //            image = image.replace('data:image/png;base64,', '');

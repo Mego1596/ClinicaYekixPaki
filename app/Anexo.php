@@ -12,4 +12,9 @@ class Anexo extends Model
     {
         return $this->belongsTo('App\Paciente', 'pacienteId');
     }
+
+    public function tipoAnexo()
+    {
+        return $this->belongsTo('App\TipoAnexo', 'tipoAnexoId');
+    }
 }

@@ -300,7 +300,7 @@
 											</tr>
 										</thead>
 										<tbody>
-											@foreach ($paciente->anexos as $anexo)
+											@foreach ($paciente->anexos()->where('tipoAnexoId', App\TipoAnexo::ARCHIVO_NORMAL)->get() as $anexo)
 											<tr>
 												<td><a title="Clic para Descargar" class="btn btn-outline-secondary" href="{{ route('file.download', $anexo->ruta) }}"> <i class="fa fa-file-text"></i> {{$anexo->nombreOriginal}}</a></td>	
 												@can('pacientes.create')

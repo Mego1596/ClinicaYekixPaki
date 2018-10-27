@@ -50,12 +50,9 @@
                                             <input type="button" style="background-image: url({{asset('img/cuadradoRelleno.png')}})" value="cuadrado lleno"     onclick="canvasManager.activateRectangle()" />
                                             <input type="button" style="background-image: url({{asset('img/linea.png')}})" value="linea"              onclick="canvasManager.activateLine()" />
                                             <input type="button" style="background-image: url({{asset('img/spray.png')}})" value="spray"              onclick="canvasManager.activateSpray()" />
-                                            <input type="button" style="background-image: url({{asset('img/dibujo.png')}})" value="imagen de fondo"    onclick="canvasManager.loadBackgroundImage('images/dibujo1.png')"/>
-                                            <input type="button" style="background-image: url({{asset('img/texto.png')}})" value="texto"              onclick="canvasManager.text()"/>
                                             <input type="button" style="background-image: url({{asset('img/save.png')}})" value="guardar"            onclick="canvasManager.save()" />
                                             <input type="button" style="background-image: url({{asset('img/undo.png')}})" value="undo"               onclick="canvasManager.undo()" />
                                             <input type="button" style="background-image: url({{asset('img/redo.png')}})" value="redo"               onclick="canvasManager.redo()" />
-                                            <input type="button" style="background-image: url({{asset('img/new.png')}})" value="nuevo"              onclick="canvasManager.clearAll()" />
                                         </fieldset>
                                             
                                         <fieldset class="toolsBar">
@@ -100,7 +97,12 @@
                             </div>
                             <div class="col-md-8 col-sm-12">
                                     <div style="width: 100%; height: 400px; border: solid 2px" class="canvas"></div>
-                            </div> 
+                            </div>
+                            
+                        <form method="POST" id="formCanvas" action="{{route('odontograma.store', $paciente)}}">
+                            {{ csrf_field() }}
+                            <input type="hidden" name="imagen" id="imagen">
+                        </form>
 
                         
                         </div>
@@ -122,15 +124,16 @@
     var canvasManager;
         $(window).load(function () {
             canvasManager = $(".canvas").canvasPaint();
-            canvasManager.loadBackgroundImage("{{asset('img/odontograma.png')}}")
+            //canvasManager.loadBackgroundImage("{{asset('img/odontograma.png')}}")
 
-        //var canvas = document.getElementsByTagName("canvas")[0];
-        //var ctx = canvas.getContext("2d");
+        var canvas = document.getElementsByTagName("canvas")[0];
+        var ctx = canvas.getContext("2d");
 
-        //var img = new Image();
-        //img.src = "{{asset('img/odontograma.png')}}";
-        //ctx.drawImage(img, 0, 0);
-        //console.log(img);
+        var img = new Image();
+        img.src = "{{asset('img/odontograma.png')}}";
+        img.onload = function(){
+            ctx.drawImage(img, 0, 0);
+        }
         });
 
 </script>
