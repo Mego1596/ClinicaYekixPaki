@@ -20,7 +20,7 @@ class PagoController extends Controller
     public function index($id)
     {
         
-        $pagos = Pago::where('events_id', $id)->paginate();
+        $pagos = Pago::where('events_id', $id)->paginate(100);
         $abonoValidar = Pago::select('abono')->where('events_id', $id)->value('abono');
         if($abonoValidar == null){
             $abonoValidar= -1;

@@ -620,13 +620,50 @@ class PlanTratamientoController extends Controller
 
         }elseif (isset($_POST['btnEliminar'])) {
             $event = Events::find($request["txtID"]);
-            $plan = Plan_Tratamiento::where('events_id',$event->id);
+            $planT = Plan_Tratamiento::where('events_id',$event->id)->whereNull('referencia')->get();
+            $plan = Plan_Tratamiento::where('events_id',$event->id)->get();
             $eventoAux = Events::where('id', $request->txtID)->get();
-            $plan->delete();
-            $event->delete();
-            return redirect()->route('planTratamiento.agenda',['procedimiento'=>$request['txtProcedimiento_id'], 'paciente' => $request['pacienteID'],'planTratamiento'=>$request->referencia,'validador'=> $request->txtValidador,'cita' => $request->cita])->with('info','Cita Eliminada con exito');
-            
 
+            foreach ($eventoAux as $key => $value) {
+                $pagoPrincipal = Pago::where('events_id', $value->id);
+                $pagoPrincipal->delete();
+            }
+
+            if(sizeof($planT)!=0){
+                $planT = Plan_Tratamiento::where('events_id',$event->id)->whereNull('referencia');
+                foreach ($plan as $key => $value) {
+                    $hijos = Plan_Tratamiento::where('referencia', $value->id)->get();
+                    if(sizeof($plan) >= 1){
+                        if(sizeof($hijos) != 0){
+                            foreach ($hijos as $key => $planHijo) {
+                                $evento = Events::select('id')->where('id',$planHijo->events_id)->get();
+                                $eventoDelete = Events::where('id',$planHijo->events_id);
+
+                                foreach ($evento as $key => $value1) {
+                                    $pagoHijo = Pago::where('events_id',$value1->id);
+                                    $pagoHijo->delete();
+                                }
+                                $eventoDelete->delete();
+                            }        
+                            $planHijo->delete();
+                        }else{
+                            $value->delete();
+                        }
+                    }else{
+                        $planT->delete();
+                        $event->delete();  
+                    }
+                    $value->delete();
+                }
+                $event->delete(); 
+                return redirect()->route('paciente.index')->with('info','Cita Eliminada con exito');  
+            }else{
+                $planT = Plan_Tratamiento::where('events_id',$event->id);
+                $planT->delete();
+                $event->delete();
+                return redirect()->route('planTratamiento.agenda',['procedimiento'=>$request['txtProcedimiento_id'], 'paciente' => $request['pacienteID'],'planTratamiento'=>$request->referencia,'validador'=> $request->txtValidador,'cita' => $request->cita])->with('info','Cita Eliminada con exito');
+            }
+            //hasta aqui termina
         }
 
         

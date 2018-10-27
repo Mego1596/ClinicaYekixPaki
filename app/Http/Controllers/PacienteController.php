@@ -814,7 +814,7 @@ class PacienteController extends Controller
                 $tratamiento_cita->procedencia         = 1;
                 $tratamiento_cita->save();
                 \Session::flash('success','Cita añadida exitosamente');
-                return redirect()->route('paciente.agenda',$request->pacienteID)->with('info','Cita guardada con exito');
+                return redirect()->route('paciente.index')->with('info','Cita guardada con exito');
             } 
         }elseif (isset($_POST["btnModificar"])) {
             if($request->procedimiento_id==NULL){
@@ -847,7 +847,7 @@ class PacienteController extends Controller
                 $tratamiento_cita->no_iniciado         = false;
                 $tratamiento_cita->procedencia         = 1;
                 $tratamiento_cita->save();
-                return redirect()->route('paciente.agenda',$request->pacienteID)->with('info','Cita actualizada con exito');
+                return redirect()->route('paciente.index')->with('info','Cita actualizada con exito');
             }
         }elseif (isset($_POST['btnEliminar'])) {
             $event = Events::find($request["txtID"]);
