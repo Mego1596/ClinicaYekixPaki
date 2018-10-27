@@ -213,6 +213,7 @@ class EventsController extends Controller
                         $("#plan").hide();
                         $("#receta").hide();
                         $("#modificar").hide();
+                        $("#pago").hide();
                         $("#btnAsignar").show();
                     }else{
                         $("#plan").hide();

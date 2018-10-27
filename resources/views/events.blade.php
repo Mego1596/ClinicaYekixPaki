@@ -210,24 +210,6 @@
                               </div>
                             </div>
                           </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
       <div class="modal-footer">
 		{!! Form::submit('Añadir Cita', ['class' => 'btn btn-success','id' => 'btnAgregar', 'name' => 'btnAgregar']) !!}
 		{!! Form::submit('Modificar Cita', ['class' => 'btn btn-success','id' => 'btnModificar','name' => 'btnModificar']) !!}
@@ -278,6 +260,11 @@
 <script type="text/javascript">
   function clickChildModalButton(argument) {
       $('#exampleModal').show();
+  }
+</script>
+<script type="text/javascript">
+  document.getElementById('noReprogramar').onclick = function(){
+    $('#ModalReprogramar').modal('hide');
   }
 </script>
 
