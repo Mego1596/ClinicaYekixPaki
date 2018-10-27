@@ -70,43 +70,43 @@ class ProcedimientosTableSeeder extends Seeder
 		Procedimiento::create([
     		'nombre' => 'Recubrimiento Pulpar',
     		'descripcion' => 'El recubrimiento pulpar es un procedimiento de endodoncia que se realiza con fines preventivos para evitar lesiones irreversibles de la pulpa así como preservar la vitalidad pulpar cuando se ve afectada por una inflamación o una infección.',
-    		'color' => '#0B610B',
+    		'color' => '#003300',
     	]);
 
 		Procedimiento::create([
     		'nombre' => 'Obturaciones Esteticas (Rellenos)',
     		'descripcion' => 'Limpiar la cavidad resultante de una caries para luego rellenarla con algún material.',
-    		'color' => '#088A08',
+    		'color' => '#004d00',
 		]);
 		
 		Procedimiento::create([
     		'nombre' => 'Pines de Fibra',
     		'descripcion' => 'Los postes de endodoncia son pequeños pilares de solo unos milímetros de largo que los odontólogos colocan en el conducto de la raíz o raíces de un diente que ha sido endodonciado. ',
-    		'color' => '#04B404',
+    		'color' => '#006600',
 		]);
 		
 		Procedimiento::create([
     		'nombre' => 'Reconstrucciones',
     		'descripcion' => 'La reconstrucción dental es uno de los procedimientos más frecuentes de cuantos se realizan en odontología y puede implicar la reparación del diente o su sustitución, con el objetivo de mantener la dentadura completa y toda su funcionalidad.',
-    		'color' => '#01DF01',
+    		'color' => '#008000',
 		]);
 		
 		Procedimiento::create([
     		'nombre' => 'Laminados',
     		'descripcion' => 'Una especie de capa externa para los dientes que consigue un acabado natural y una estética dental idéntica o superior al diente natural.',
-    		'color' => '#00FF00',
+    		'color' => '#009900',
 		]);
 		
 		Procedimiento::create([
     		'nombre' => 'Incrustaciones',
     		'descripcion' => 'Este tratamiento está indicado para la restauración dentaria en dientes posteriores (Molares y Premolares) que sufran de caries de leves a moderadas y también en casos de fracturas o fisuras siempre que el daño no sea tan importante como para indicar una corona.',
-    		'color' => '#2EFE2E',
+    		'color' => '#00b300',
 		]);
 		
 		Procedimiento::create([
     		'nombre' => 'Sellante de fosas y Fisuras',
     		'descripcion' => 'Los selladores son sustancias químicas que actúan como barrera física impidiendo que las bacterias y restos de alimentos penetren en las fosas y fisuras y evitando la aparición de caries producida por las bacterias.',
-    		'color' => '#81F781',
+    		'color' => '#00cc00',
     	]);
 
     	Procedimiento::create([
@@ -167,85 +167,85 @@ class ProcedimientosTableSeeder extends Seeder
 		Procedimiento::create([
     		'nombre' => 'Cirugia de Cordales impactadas, retenidas y/o enclavadas',
     		'descripcion' => 'se realiza en los casos en los que dan sintomatologia (dolor grave o agudo, infecciones de repeticion, caries en los segundos molares por mala higiene, etc.) o se encuentra algun signo radiologico patologico (algun quiste o erosión de raices de otras piezas).',
-    		'color' => '#080B3B',
+    		'color' => '#001a33',
 		]);
 		
 		Procedimiento::create([
     		'nombre' => 'Apicectomia endodontica',
     		'descripcion' => 'Es un procedimiento quirúrgico cuyo objetivo es eliminar una infección que afecta a la raíz de una pieza dental y a los tejidos adyacentes.',
-    		'color' => '#0B0B61',
+    		'color' => '#00264d',
 		]);
 		
 		Procedimiento::create([
     		'nombre' => 'Frenectomia',
     		'descripcion' => 'La frenilectomía es un procedimiento quirúrgico odontológico por el cual se elimina una brida o frenillo que une la lengua o el labio inferior a la encía, afectando a la posición dentaria, protésica o a la movilidad lingual o labial.',
-    		'color' => '#08088A',
+    		'color' => '#003366',
 		]);
 		
 		Procedimiento::create([
     		'nombre' => 'Rescate de caninos retenidos',
     		'descripcion' => 'La retención, es decir, la no erupción de un diente permanente más allá de un año después de la edad normal de erupción, es relativamente poco frecuente si exceptuamos el caso de los terceros molares y los caninos superiores.',
-    		'color' => '#0404B4',
+    		'color' => '#004080',
 		]);
 
 		Procedimiento::create([
     		'nombre' => 'Extraccion de supernumerarios',
     		'descripcion' => 'Un diente supernumerario es un germen dentario de más que aparecen de forma adicional al número de piezas de la dotación dental normal, excediendo el número de dientes de la arcada maxilar o mandibular.',
-    		'color' => '#0101DF',
+    		'color' => '#004d99',
 		]);
 
 		Procedimiento::create([
     		'nombre' => 'Frenoplastias',
     		'descripcion' => 'Una frenuloplasty es la alteración quirúrgica de un frenillo cuando su presencia restringe la amplitud del movimiento entre tejidos interconectados.',
-    		'color' => '#0000FF',
+    		'color' => '#0059b3',
 		]);
 
 		Procedimiento::create([
     		'nombre' => 'Gingivectomias',
     		'descripcion' => 'La gingivectomía es un procedimiento quirúrgico por el que se extirpa una parte lesionada de la encía (tejido gingival) para eliminar o reducir una bolsa periodontal, es decir, el espacio que se forma entre la encía y el diente como consecuencia de la acumulación de placa bacteriana bajo de la encía',
-    		'color' => '#2E8EFE',
+    		'color' => '#0066cc',
 		]);
 
 		Procedimiento::create([
     		'nombre' => 'Gingivoplastias',
     		'descripcion' => 'La gingivoplastia es un procedimiento similar al de la gingivectomía pero se emplea con un fin diferente, ya que su propósito es el de volver a contornear la encía en ausencia de bolsas, buscando devolverle su arquitectura y fisiología normales.',
-    		'color' => '#5858FA',
+    		'color' => '#0073e6',
 		]);
 
 		Procedimiento::create([
     		'nombre' => 'Exodoncia o extraccion complicada',
     		'descripcion' => 'Las exodoncias complejas son aquellas que presentan una dificultad que convierte una exodoncia convencional en una extracción con exigencia de medios especiales técnicos, médicos, farmacológicos o de cualquier otro tipo, y en la mayoría de los casos se traduce en la existencia de realizar una exodoncia quirúrgica.',
-    		'color' => '#0174DF',
+    		'color' => '#0080ff',
 		]);
 
 		Procedimiento::create([
     		'nombre' => 'Exodoncia o extraccion de resto radicular',
     		'descripcion' => 'No Disponible',
-    		'color' => '#00BFFF',
+    		'color' => '#1a8cff',
 		]);
 
 		Procedimiento::create([
     		'nombre' => 'Exodoncia o Extraccion Simple',
     		'descripcion' => 'La exodoncia es una intervención quirúrgica dentro de la odontología que consiste en la extracción de un diente. Esta operación se realiza bajo anestesia y no conlleva grandes peligros salvo leves infecciones que ocurren con poca frecuencia.',
-    		'color' => '#013ADF',
+    		'color' => '#3399ff',
 		]);
 
 		Procedimiento::create([
     		'nombre' => 'Cirugia periodontal',
     		'descripcion' => 'La cirugía periodontal es un tratamiento necesario en muchos pacientes que sufren periodontitis, la fase crónica de la enfermedad de las encías. La periodontitis es una infección bacteriana que destruye poco a poco el tejido que sostiene a los dientes: las encías, pero también el hueso y el ligamento periodontal.',
-    		'color' => '#0040FF',
+    		'color' => '#4da6ff',
 		]);
 
 		Procedimiento::create([
     		'nombre' => 'Alargamiento de corona',
     		'descripcion' => 'El alargamiento de corona es un procedimiento quirúrgico cuya función es la remodelación del contorno de los tejidos de la encía y, a menudo, del hueso subyacente, alrededor de uno o más dientes para que quede expuesta la suficiente de la pieza dental.',
-    		'color' => '#2E64FE',
+    		'color' => '#66b3ff',
 		]);
 
 		Procedimiento::create([
     		'nombre' => 'Cirugia de mucocele labial',
     		'descripcion' => 'Los mucoceles son lesiones que se manifiestan en la mucosa oral como consecuencia de una alteración en los conductos de las glándulas salivales menores, caracterizados por el cúmulo de material mucoide, bien porque se ha extravasado del conducto del conducto excretor, bien porque se ha retenido en este conducto, que presenta una dilatación muy importante.',
-    		'color' => '#5882FA',
+    		'color' => '#80bfff',
 		]);
 
     	Procedimiento::create([
