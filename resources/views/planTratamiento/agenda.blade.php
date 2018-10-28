@@ -27,7 +27,7 @@
                 <a href="{{ route('planTratamiento.index',['cita'=> $id2, 'validador'=> $validador])}}" class="btn btn-block btn-secondary" style="width: 50%">
                 <i class="fa fa-arrow-circle-left"></i>Atrás</a>
               </div>
-              <div class="col-md-10">
+              <div class="col-md-8">
                 <h3 align="center">Citas:</h3>
               </div>
           </div>
