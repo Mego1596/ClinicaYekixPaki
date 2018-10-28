@@ -95,6 +95,13 @@
 														</a>
 													@endcan
 													</td>
+													@if($proceso->procedencia == 1)
+														<td width="10px">
+															@can('planTratamientos.edit')
+																<a href="{{ route('planTratamiento.edit', ['cita' =>$id, 'planTratamiento'=> $proceso->id,'validador'=> $validador ]) }}" class="btn btn-sm btn-default bg-success" style="color: white"><i class="fa fa-edit"></i> Editar</a>
+															@endcan
+														</td>
+													@endif
 												@elseif($proceso->completo == true)
 													<td width="150px">
 														<label><strong>Completo</strong></label>
