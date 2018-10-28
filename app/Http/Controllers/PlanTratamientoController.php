@@ -27,7 +27,7 @@ class PlanTratamientoController extends Controller
 
         $paciente = Paciente::select('id')->where('id',$citaGeneral->paciente_id)->value('id');
         $persona = Paciente::select('nombre1','nombre2','nombre3','apellido1','apellido2')->where('id',$citaGeneral->paciente_id)->get();
-        $planTratamiento = Plan_Tratamiento::select('id','procedimiento_id','completo','en_proceso','no_iniciado','honorarios','no_de_piezas')->where('events_id',$id)->where('plan_valido',true)->orderBy('id','ASC')->paginate();
+        $planTratamiento = Plan_Tratamiento::select('id','procedimiento_id','completo','en_proceso','no_iniciado','honorarios','no_de_piezas','procedencia')->where('events_id',$id)->where('plan_valido',true)->orderBy('id','ASC')->paginate();
         $planValidador = Plan_Tratamiento::select('id')->where('events_id',$id)->where('en_proceso',true)->where('activo',true)->where('plan_valido',true)->whereNull('procedencia')->get();
         $planValidador2 = Plan_Tratamiento::select('id')->where('events_id',$id)->where('completo',true)->where('activo',true)->where('plan_valido',true)->whereNull('procedencia')->get();
         $proc = Procedimiento::get();
