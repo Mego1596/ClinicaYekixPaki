@@ -164,6 +164,22 @@ class PlanTratamientoController extends Controller
     public function destroy($id)
     {   
         $plan_Tratamiento = Plan_Tratamiento::find($id);
+        $plan_TratamientoDelete =  Plan_Tratamiento::where('id', $id)->get();
+        foreach ($plan_TratamientoDelete as $key => $value) {
+            $hijos = Plan_Tratamiento::where('referencia', $value->id)->get();
+            if(sizeof($hijos) != 0){
+                foreach ($hijos as $key => $planHijo) {
+                    $evento = Events::select('id')->where('id',$planHijo->events_id)->get();
+                    $eventoDelete = Events::where('id',$planHijo->events_id);
+                    foreach ($evento as $key => $value1) {
+                        $pagoHijo = Pago::where('events_id',$value1->id);
+                        $pagoHijo->delete();
+                    }
+                    $eventoDelete->delete();
+                }        
+            }
+            $value->delete();
+        }
         $plan_Tratamiento->delete();
         return back()->with('info','Procedimiento eliminado del plan de tratamiento');
     }

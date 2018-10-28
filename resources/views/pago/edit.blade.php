@@ -53,7 +53,7 @@
             if(formulario.action.lastIndexOf("update")){
                 document.getElementById('btnVerificar').style.visibility = 'hidden'
                 document.getElementById('btnEnviar').style.visibility = 'visible'
-                document.getElementById('abono1').disabled = true
+                document.getElementById('abono1').disabled = false
             }
         })
 </script>

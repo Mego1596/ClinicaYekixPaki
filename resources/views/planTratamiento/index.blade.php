@@ -129,11 +129,15 @@
 												<a href="{{ route('planTratamiento.edit', ['cita' =>$id, 'planTratamiento'=> $proceso->id,'validador'=> $validador ]) }}" class="btn btn-sm btn-default bg-success" style="color: white"><i class="fa fa-edit"></i> Editar</a>
 											@endcan
 										</td>
+										@if($proceso->completo != true)
 										<td width="10px">
 											<!-- Button trigger modal -->
 											<button type="button" class="btn btn-sm btn-danger btn-block" data-toggle="modal" data-target="#Modal22{{$proceso->id}}"><i class="fa fa-trash"></i>
 											     Eliminar
 											</button>
+										@else
+										<td></td>
+										@endif
 											{!! Form::open(['route' => ['planTratamiento.destroy', $proceso->id],'method' => 'DELETE']) !!}
 											<!-- Modal -->
 												<div class="modal fade" id="Modal22{{$proceso->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

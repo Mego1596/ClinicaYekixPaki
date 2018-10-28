@@ -22,6 +22,7 @@ class PagoController extends Controller
         
         $pagos = Pago::where('events_id', $id)->paginate(100);
         $abonoValidar = Pago::select('abono')->where('events_id', $id)->value('abono');
+
         if($abonoValidar == null){
             $abonoValidar= -1;
         }
@@ -42,6 +43,7 @@ class PagoController extends Controller
                 }
 
             }
+
             $planActual = Plan_Tratamiento::where('events_id',$id)->get();
             $planAll    = Plan_Tratamiento::get();
             foreach ($planActual as $key => $value) {
@@ -61,38 +63,38 @@ class PagoController extends Controller
 
         }
 
-        $planPadre = Plan_Tratamiento::select('referencia')->where('events_id', $id)->value('referencia');
-        $citaPlan = Plan_Tratamiento::select('events_id')->where('id', $planPadre)->value('events_id');
-        $planT = Plan_Tratamiento::select('honorarios')->where('events_id', $planPadre)->get();
-        $pagos1 = Pago::where('events_id', $citaPlan)->get();
-        if(sizeof($pagos1) != 0){
-            foreach ($pagos1 as $key => $value) {
-                $saldo = (double) $value->saldo;
+            $planPadre = Plan_Tratamiento::select('referencia')->where('events_id', $id)->value('referencia');
+            $citaPlan = Plan_Tratamiento::select('events_id')->where('id', $planPadre)->value('events_id');
+            $planT = Plan_Tratamiento::select('honorarios')->where('events_id', $citaPlan)->get();
+            $pagos1 = Pago::where('events_id', $citaPlan)->get();
+            if(sizeof($pagos1) != 0){
+                foreach ($pagos1 as $key => $value) {
+                    $saldo = (double) $value->saldo;
+                }
+            }else{
+                foreach ($planT as $key => $value) {
+                    $saldo += (double) $value->honorarios;
+                }
             }
-        }else{
-            foreach ($planT as $key => $value) {
-                $saldo += (double) $value->honorarios;
-            }
-        }
 
 
-        $planActual = Plan_Tratamiento::where('events_id',$citaPlan)->get();
-        $planAll    = Plan_Tratamiento::get();
-        foreach ($planActual as $key => $value) {
-            foreach ($planAll as $key => $value1) {
-                if($value->id == $value1->referencia){
-                    $pagos2 = Pago::where('events_id', $value1->events_id)->get();
-                    if(sizeof($pagos2) != 0){
-                        foreach ($pagos2 as $key => $value3) {
-                            $saldo = (double) $value3->saldo;
+            $planActual = Plan_Tratamiento::where('events_id',$citaPlan)->get();
+            $planAll    = Plan_Tratamiento::get();
+            foreach ($planActual as $key => $value) {
+                foreach ($planAll as $key => $value1) {
+                    if($value->id == $value1->referencia){
+                        $pagos2 = Pago::where('events_id', $value1->events_id)->get();
+                        if(sizeof($pagos2) != 0){
+                            foreach ($pagos2 as $key => $value3) {
+                                $saldo = (double) $value3->saldo;
+                            }
+                        }else{
+                            $saldo += (double) $value1->honorarios;
                         }
-                    }else{
-                        $saldo += (double) $value1->honorarios;
                     }
                 }
             }
-        }
-
+        
         return view('pago.index',compact('pagos','procesoNombre','id','idPaciente','saldo','abonoValidar'));
     }
 
