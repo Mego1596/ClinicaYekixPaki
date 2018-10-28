@@ -230,6 +230,13 @@ class PagoController extends Controller
             foreach ($user as $key => $value) {
                 $pago->realizoTto  = $value->nombre1.' '.$value->nombre2.' '.$value->nombre3.' '.$value->apellido1.' '.$value->apellido2.'- '.$value->numeroJunta;
             }
+            $abonoOld = $pago->abono;
+            $abonoNew = $request->abono;
+            if($abonoNew < $abonoOld)
+                $pago->saldo = $pago->saldo + ($abonoOld - $abonoNew);
+            else
+                $pago->saldo = $pago->saldo - ($abonoNew - $abonoOld);
+            $pago->abono = $abonoNew;
             $pago->update();
         }else {
             $tipoMensaje = "error";
