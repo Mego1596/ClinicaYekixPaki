@@ -64,6 +64,7 @@ class Kernel extends HttpKernel
         'permission'    => \Caffeinated\Shinobi\Middleware\UserHasPermission::class,
         'pacientes' =>\App\Http\Middleware\listPacienteMiddleware::class,
         'asistentes' =>\App\Http\Middleware\AsistenteMiddleware::class,
+        'storePacientes'=>\App\Http\Middleware\storePacienteMiddleware::class,
 
     ];
 }

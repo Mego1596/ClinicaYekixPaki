@@ -31,6 +31,7 @@ class listPacienteMiddleware
         return $next($request);
     }
     else{
+        $request->session()->flash('error', "Acceso no permitido, retornado a pagina anterior");
         return back();
     }
 

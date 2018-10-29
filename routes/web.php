@@ -89,7 +89,7 @@ Route::middleware(['auth'])->group(function(){
 
 	Route::get('paciente', 'PacienteController@index')->name('paciente.index')->middleware('permission:pacientes.index');
 
-	Route::get('paciente/create', 'PacienteController@create')->name('paciente.create')->middleware('permission:pacientes.create');
+	Route::get('paciente/create', 'PacienteController@create')->name('paciente.create')->middleware('permission:pacientes.create')->middleware('storePacientes');
 
 	Route::put('paciente/{paciente}', 'PacienteController@update')->name('paciente.update')->middleware('permission:pacientes.edit');
 
