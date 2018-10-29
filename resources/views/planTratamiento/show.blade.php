@@ -326,46 +326,52 @@
                     </tr>
 
                 @endforeach
-            @endif
-            @foreach ($planTratamiento as $plan1) 
-                @foreach ($planTratamientoGeneral as $plan2) 
-                    @if($plan1->id == $plan2->referencia)
-                        @foreach ($pagosGenerales as $pagosGral)
-                            @if($plan2->events_id == $pagosGral->events_id)
-                                <tr align="center">
-                                @php
-                                    $date=date_create($pagosGral->created_at);
-                                    $aux= date_format($date,"d-m-Y");
-                                @endphp
-                                <td class="td-proc fuente">{{$aux}}</td>
-                                @foreach($procesos as $proceso)
-                                    @if($proceso->id == $plan2->procedimiento_id)
-                                        @foreach($eventos as $cita)
-                                        @if($plan2->events_id == $cita->id)
-                                            <td class="td-proc fuente">{{$proceso->nombre}}<br />
-                                            {{$cita->descripcion}}</td>
+            @endif 
+
+            
+                    @for($i = 0; $i < sizeof($arrayEventosPlan); $i++)
+                        @foreach ($pagosGenerales as $key => $pagos)
+                            @if($pagos->events_id == $arrayEventosPlan[$i])
+                                    <tr align="center">
+                                    @php
+                                        $date=date_create($pagos->created_at);
+                                        $aux= date_format($date,"d-m-Y");
+                                    @endphp
+                                    <td class="td-proc fuente">{{$aux}}</td>
+                                    @foreach($planTratamientoGeneral as $planHijo)
+                                        @if($planHijo->events_id == $arrayEventosPlan[$i] )
+                                            @foreach($procesos as $procedimiento)
+                                                @if($procedimiento->id == $planHijo->procedimiento_id)
+                                                    <td class="td-proc fuente">
+                                                    {{$procedimiento->nombre}}
+                                                    @foreach($eventos as $cita)
+                                                        @if($planHijo->events_id == $cita->id)
+                                                            <br />{{$cita->descripcion}}
+                                                        @endif
+                                                    @endforeach
+                                                    </td>
+                                                @endif
+                                            @endforeach
                                         @endif
                                     @endforeach
+                                    <td class="td-proc fuente">{{$pagos->realizoTto}}</td>
+                                    <td class="td-proc fuente">${{$pagos->abono}}</td>
+                                    <td class="td-proc fuente">${{$pagos->saldo}}</td>
+                                    @php
+                                        $date=date_create($pagos->proximaCita);
+                                        $aux= date_format($date,"d-m-Y");
+                                    @endphp
+                                    @if(is_null($pagos->proximaCita))
+                                        <td class="td-proc fuente"></td>
+                                    @else
+                                        <td class="td-proc fuente">{{$aux}}</td>
                                     @endif
-                                @endforeach
-                                <td class="td-proc fuente">{{$pagosGral->realizoTto}}</td>
-                                <td class="td-proc fuente">${{$pagosGral->abono}}</td>
-                                <td class="td-proc fuente">${{$pagosGral->saldo}}</td>
-                                @php
-                                    $date=date_create($pagosGral->proximaCita);
-                                    $aux= date_format($date,"d-m-Y");
-                                @endphp
-                                @if(is_null($pagosGral->proximaCita))
-                                    <td class="td-proc fuente"></td>
-                                @else
-                                    <td class="td-proc fuente">{{$aux}}</td>
-                                @endif
-                                </tr>
+                                    </tr>
+                            @else
+                                @continue
                             @endif
                         @endforeach
-                    @endif
-                @endforeach
-            @endforeach
+                    @endfor
         </tbody>
     </table>
 </div>

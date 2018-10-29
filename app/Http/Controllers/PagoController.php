@@ -26,10 +26,12 @@ class PagoController extends Controller
         if($abonoValidar == null){
             $abonoValidar= -1;
         }
+
         $planT = Plan_Tratamiento::where('events_id',$id)->value('procedimiento_id');
         $procesoNombre = Procedimiento::where('id',$planT)->value('nombre');
+
         //OBTENIENDO EL SALDO PENDIENTE DEL PLAN DE TRATAMIENTO
-        $plan = Plan_Tratamiento::where('events_id',$id)->whereNull('referencia')->get();
+        /*$plan = Plan_Tratamiento::where('events_id',$id)->whereNull('referencia')->get();
         $saldo = 0.0;
         if(sizeof($plan)!=0){
             $pagos3 = Pago::where('events_id', $id)->get();
@@ -93,7 +95,7 @@ class PagoController extends Controller
                         }
                     }
                 }
-            }
+            }*/
         
         return view('pago.index',compact('pagos','procesoNombre','id','idPaciente','saldo','abonoValidar'));
     }

@@ -142,6 +142,8 @@ Route::middleware(['auth'])->group(function(){
 
 	Route::post('planTratamiento/finalizar/{cita}', 'PlanTratamientoController@finalizar')->name('planTratamiento.finalizar')->middleware('permission:planTratamientos.index');
 
+	Route::get('iniciarPlanTratamiento/{cita}', 'PlanTratamientoController@iniciarPlanTratamiento')->name('planTratamiento.iniciarPlanTratamiento')->middleware('permission:planTratamientos.index');
+
 	//Recetas
 	Route::post('receta/store', 'RecetasController@store')->name('receta.store')->middleware('permission:recetas.create');
 

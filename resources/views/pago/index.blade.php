@@ -22,7 +22,7 @@
 			                	<i class="fa fa-arrow-circle-left"></i> Atrás</a>
 			              	</div>
 			              	<div class="col-md-2">
-								<strong>Saldo Pendiente: ${{$saldo}}</strong>
+								<strong></strong>
 			              	</div>
 			              	<div class="col-md-3">
 								<h4>Realizar Pago</h4>
@@ -44,10 +44,6 @@
 										@if($abonoValidar == 0 )
 
 										@else
-											@if($saldo == 0)
-											<th></th>
-											<th></th>
-											@else
 												@if(sizeof($pagos) > 1)
 
 												@else
@@ -60,17 +56,12 @@
 														@endcan
 													</th>
 												@endif
-											@endif
 										@endif
 									@else
 										@if($abonoValidar == 0)
 										<th></th>
 										<th></th>
 										@else
-											@if($saldo == 0)
-											<th></th>
-											<th></th>
-											@else
 												@if(sizeof($pagos) > 1)
 													<th width="237">
 														@can('pagos.create')
@@ -84,7 +75,6 @@
 												<th></th>
 												<th></th>
 												@endif
-											@endif
 										@endif
 									@endif
 								</tr>
