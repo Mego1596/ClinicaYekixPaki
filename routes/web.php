@@ -106,7 +106,7 @@ Route::middleware(['auth'])->group(function(){
 
 	Route::post('paciente/{paciente}','PacienteController@habilitar')->name('paciente.habilitarPaciente')->middleware('permission:pacientes.habilitarPaciente');
 
-	Route::get('paciente/showPlan/{cita}', 'PacienteController@showPlan')->name('paciente.plan')->middleware('permission:paciente.create');
+	Route::get('paciente/showPlan/{cita}', 'PacienteController@showPlan')->name('paciente.plan')->middleware('permission:pacientes.create');
 
 
 	//Historia Medica
@@ -142,6 +142,8 @@ Route::middleware(['auth'])->group(function(){
 
 	Route::post('planTratamiento/finalizar/{cita}', 'PlanTratamientoController@finalizar')->name('planTratamiento.finalizar')->middleware('permission:planTratamientos.index');
 
+	Route::get('iniciarPlanTratamiento/{cita}', 'PlanTratamientoController@iniciarPlanTratamiento')->name('planTratamiento.iniciarPlanTratamiento')->middleware('permission:planTratamientos.index');
+
 	//Recetas
 	Route::post('receta/store', 'RecetasController@store')->name('receta.store')->middleware('permission:recetas.create');
 
@@ -175,13 +177,13 @@ Route::middleware(['auth'])->group(function(){
 
 
 	//Pagos
-	Route::post('pago/store', 'PagoController@store')->name('pago.store')->middleware('permission:recetas.create');
+	Route::post('pago/store', 'PagoController@store')->name('pago.store')->middleware('permission:pagos.create');
 
-	Route::get('pago/{cita}/', 'PagoController@index')->name('pago.index')->middleware('permission:recetas.index');
+	Route::get('pago/{cita}/', 'PagoController@index')->name('pago.index')->middleware('permission:pagos.index');
 
-	Route::get('pago/create/{cita}/', 'PagoController@create')->name('pago.create')->middleware('permission:recetas.create');
+	Route::get('pago/create/{cita}/', 'PagoController@create')->name('pago.create')->middleware('permission:pagos.create');
 
-	Route::get('pago/{pago}/edit', 'PagoController@edit')->name('pago.edit')->middleware('permission:recetas.edit');
+	Route::get('pago/{pago}/edit', 'PagoController@edit')->name('pago.edit')->middleware('permission:pagos.edit');
 
-	Route::put('pago/{pago}/update', 'PagoController@update')->name('pago.update')->middleware('permission:recetas.edit');
+	Route::put('pago/{pago}/update', 'PagoController@update')->name('pago.update')->middleware('permission:pagos.edit');
 });

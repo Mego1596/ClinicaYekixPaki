@@ -332,11 +332,5 @@ class PermissionsTableSeeder extends Seeder
             'slug' => 'pagos.edit',
             'description' => 'Editar cualquier dato de un Pago del sistema',
         ]);
-
-        Permission::create([
-            'name' => 'Eliminar Pagos',
-            'slug' => 'pagos.destroy',
-            'description' => 'Eliminar cualquier dato de un Pago del sistema',
-        ]);
     }
 }

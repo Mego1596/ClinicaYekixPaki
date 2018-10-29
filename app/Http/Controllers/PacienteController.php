@@ -1002,7 +1002,20 @@ class PacienteController extends Controller
         $pagos = Pago::where('events_id',$cita)->get();
         $pagosGenerales = Pago::get();
         $planTratamientoGeneral = Plan_Tratamiento::get();
-        $pdf = PDF::loadView('planTratamiento.show',compact('procesos','planTratamiento','y','pagos','pagosGenerales','planTratamientoGeneral','evento','eventos','paciente','edad','historias_medicas','cit','nuevaFecha'));
+
+        $arrayEventosPlan = array();
+        $i = 0;
+        foreach ($planTratamiento as $key => $planPadre) {
+            foreach ($planTratamientoGeneral as $key => $planHijo) {
+                if($planHijo->referencia == $planPadre->id){
+                    $arrayEventosPlan[$i++] = $planHijo->events_id;
+                }
+            }
+        }
+
+        sort($arrayEventosPlan);
+        $eventosAll = Events::get();
+        $pdf = PDF::loadView('planTratamiento.show',compact('procesos','planTratamiento','y','pagos','pagosGenerales','planTratamientoGeneral','evento','eventos','paciente','edad','historias_medicas','cit','nuevaFecha','arrayEventosPlan','eventosAll'));
         $pdf->setPaper('A4','Portrait');
         return $pdf->stream();
     }

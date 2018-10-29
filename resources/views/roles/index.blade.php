@@ -29,6 +29,7 @@
 								<tr>
 									<th width="10px">ID</th>
 									<th width="100%">Rol</th>
+									<th></th>
 								</tr>
 							</thead>
 							<tbody>
