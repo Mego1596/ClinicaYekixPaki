@@ -53,6 +53,7 @@
 				document.getElementById('realizoTto').disabled = false
 				document.getElementById('abono1').disabled = false
 				document.getElementById('btnEnviar').disabled = true
+				enviado = false //Resetear el envio ya que los ENTER disparan el onSubmit y jamas se enviaría el formulario
 			}
 			return formValidado;
 		}

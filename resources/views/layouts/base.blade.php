@@ -49,6 +49,19 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         @yield('javascript')
   </head>
+  <script>
+    //Script que evita el envío doble de formularios
+    //Si ya hay un formulario en proceso de envío, se cancela el evento del segundo envío
+    let enviado = false
+      $(document).ready(function(){
+        let v = $("form").submit(function(e){
+          if(!enviado)
+            enviado = true
+          else
+            e.preventDefault()
+        })
+      })
+  </script>
 
   <body id="page-top">
 
