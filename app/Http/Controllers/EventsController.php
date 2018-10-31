@@ -133,6 +133,7 @@ class EventsController extends Controller
                     'paciente'          => $paciente->id,
                     'validador'         => 1,
                     'estado'            => $planvigente,
+                    'tipo'              => 2,
                     'reprogramar'       => 'no',
                     'idReprogramar'     => 0,
                     ]
@@ -152,6 +153,7 @@ class EventsController extends Controller
                     'paciente'          => $paciente->id,
                     'validador'         => 1,
                     'estado'            => $planvigente,
+                    'tipo'              => 2,
                     'reprogramar'       => 'no',
                     'idReprogramar'     => 0,
                     ]
@@ -160,6 +162,12 @@ class EventsController extends Controller
                 $planT = Plan_Tratamiento::where('events_id',$event->id)->value('procedimiento_id');
                 $proceso = Procedimiento::where('id',$planT)->value('color');
                 $procesoNombre = Procedimiento::where('id',$planT)->value('nombre');
+                $planAuxiliar = Plan_Tratamiento::where('events_id', $event->id)->value('procedencia');
+                if(!is_null($planAuxiliar)){
+                    $val = 1;
+                }else{
+                    $val = 0;
+                }
                 $event_list[] =Calendar::event(
                     $paciente->nombre1." ".$paciente->nombre2." ".$paciente->nombre3." ".$paciente->apellido1." ".$paciente->apellido2,
                     false,
@@ -174,8 +182,10 @@ class EventsController extends Controller
                     'durationEditable'  => false,
                     'expediente'        => $paciente->expediente,
                     'paciente'          => $paciente->id,
-                    'validador'         => 0,
+                    'validador'         => $val,
+                    'tipo'              => 1,
                     'pago'              => 'si',
+                    'estado'            => $planvigente,
                     'solvente'          => $solvente,
                     'reprogramar'       => $repro,
                     'idReprogramar'     => 1,
@@ -225,10 +235,13 @@ class EventsController extends Controller
                         $("#pago").hide();
                         $("#reprogramacion").hide();
                         $("#receta").hide();
-                        if(calEvent.validador == 1 && calEvent.estado == "negativo"){
+                        if(calEvent.validador == 1 && calEvent.estado == "negativo" && calEvent.tipo == 2){
                             $("#plan").show();
                             $("#modificar").show();
                             $("#receta").show();
+                        }
+                        if(calEvent.validador == 1 && calEvent.estado == "negativo" && calEvent.tipo == 1){
+                            $("#plan").show();
                         }
                         if(calEvent.pago == "si"){
                             $("#pago").show();
