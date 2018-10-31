@@ -558,7 +558,7 @@ class PlanTratamientoController extends Controller
             $value->save();
         }
 
-        return back()->with('info','Plan de Tratamiento Finalizado');
+        return redirect()->route('paciente.index')->with('info','Plan de Tratamiento Finalizado');
     }
 
     public function iniciarPlanTratamiento($cita){
@@ -570,5 +570,26 @@ class PlanTratamientoController extends Controller
             $value->save();
         }
         return back()->with('info','Plan de Tratamiento Iniciado');
+    }
+
+    public function habilitarPlanTratamiento($cita){
+        $planActual = Plan_Tratamiento::where('events_id',$cita)->get();
+
+        foreach ($planActual as $key => $value) {
+            $value->activo        = true;
+            $value->save();
+        }
+        return back()->with('info','Plan de Tratamiento Habilitado, puede continuar');
+    }
+
+    public function deshabilitarPlanTratamiento($cita){
+        $planActual = Plan_Tratamiento::where('events_id',$cita)->get();
+
+        foreach ($planActual as $key => $value) {
+            $value->activo        = false;
+            $value->save();
+        }
+
+        return redirect()->route('paciente.index')->with('info','Plan de Tratamiento Deshabilitado, proceda a asignar un nuevo plan de tratamiento');
     }
 }

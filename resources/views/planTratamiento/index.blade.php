@@ -31,9 +31,15 @@
 								@endforeach
 							</div>
 							<div class="col-md-12 col-sm-12">
-								<a href="{{ route('planTratamiento.iniciarPlanTratamiento', ['cita'=> $id] )}}" class="btn btn-sm btn-default bg-dark" style="color: white">
-									<i class="fa fa-cog"></i> Comenzar Plan de Tratamiento
-								</a>
+							@foreach($planTratamiento as $plan)
+								@if($loop->first)
+									@if($plan->comenzado != true)
+										<a href="{{ route('planTratamiento.iniciarPlanTratamiento', ['cita'=> $id] )}}" class="btn btn-sm btn-default bg-dark" style="color: white">
+										<i class="fa fa-cog"></i> Comenzar Plan de Tratamiento
+										</a>
+									@endif
+								@endif
+							@endforeach
 							</div>
 						</div>
 					</div>
@@ -57,18 +63,25 @@
 													@endcan
 												</th>
 										@else
-											@if(sizeof($planValidador) == 1 || sizeof($planValidador2) >= 1)
-												<th colspan="5" width="237">
-													@can('planTratamientos.create')
-													<a href="{{ route('planTratamiento.create', ['cita' =>$id,'validador' => $validador])}}" class="btn btn-block btn-success pull-right">
-													<i class="fa fa-tasks"></i>
-													<i class="fa fa-plus-square" style="font-size: 10px"></i> Crear Plan de Tratamiento
-													</a>
-													@endcan
-												</th>
-											@else
-												<th colspan="5" width="237"></th>
-											@endif
+											@foreach($planTratamiento as $plan)
+												@if($loop->first)
+													@if($plan->comenzado != true)
+														@if(sizeof($planValidador) == 1 || sizeof($planValidador2) >= 1)
+															<th colspan="5" width="237">
+																@can('planTratamientos.create')
+																<a href="{{ route('planTratamiento.create', ['cita' =>$id,'validador' => $validador])}}" class="btn btn-block btn-success pull-right">
+																<i class="fa fa-tasks"></i>
+																<i class="fa fa-plus-square" style="font-size: 10px"></i> Crear Plan de Tratamiento
+																</a>
+																@endcan
+															</th>
+														@else
+															<th colspan="5" width="237"></th>
+														@endif
+													@endif
+													<th colspan="5" width="237"></th>
+												@endif
+											@endforeach
 										@endif
 									@else
 									<td></td>
@@ -198,6 +211,8 @@
 												</td>
 												@else
 												<td width="105px"></td>
+												<td width="200px"></td>
+												<td></td>
 												@endif
 												
 												{!! Form::open(['route' => ['planTratamiento.terminar', $proceso->id],'method' => 'POST']) !!}
@@ -292,6 +307,80 @@
 							</div>
 						@endrole
 						@role('admin')
+						<div class="row">
+							<div class="col-md-4 col-sm-12">
+								
+							</div>
+							@foreach($planTratamiento as $plan)
+								@if($loop->first)
+									@if($plan->activo == false && $plan->comenzado == true)
+										<div class="col-md-4 col-sm-12">
+											<button type="button" class="btn btn-sm btn-block btn-success" data-toggle="modal" data-target="#ModalHabilitar"><i class="fa fa-check"></i>
+											     Habilitar Plan
+											</button>
+												{!! Form::open(['route' => ['planTratamiento.habilitarPlanTratamiento', 'cita' => $id],'method' => 'POST']) !!}
+													<!-- Modal -->
+													<div class="modal fade" id="ModalHabilitar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+														<div class="modal-dialog" role="document">
+													    	<div class="modal-content">
+																<div class="modal-header">
+													        		<h5 class="modal-title" id="exampleModalLabel"> Plan de Tratamiento</h5>
+													        			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+													          				<span aria-hidden="true">&times;</span>
+													        			</button>
+													      		</div>
+																<div class="modal-body">
+											        				<input type="hidden" name="events_id" id="events_id" value="{{$id}}">
+												        			<label>Habilitar Plan de Tratamiento?</label>
+																	<br />
+												        			<button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+													        		<button class="btn btn-md btn-default bg-success" style="color: white">Si</button>
+																</div>
+												      			<div class="modal-footer">
+																</div>
+											    			</div>
+														</div>
+													</div>
+												{!! Form::close() !!}
+										</div>
+									@endif
+									@if($plan->activo != false && $plan->comenzado == true)
+										<div class="col-md-4 col-sm-12">
+											<button type="button" class="btn btn-sm btn-block btn-danger" data-toggle="modal" data-target="#ModalDeshabilitar"><i class="fa fa-check"></i>
+											     Deshabilitar Plan
+											</button>
+												{!! Form::open(['route' => ['planTratamiento.deshabilitarPlanTratamiento', 'cita' => $id],'method' => 'POST']) !!}
+													<!-- Modal -->
+													<div class="modal fade" id="ModalDeshabilitar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+														<div class="modal-dialog" role="document">
+													    	<div class="modal-content">
+																<div class="modal-header">
+													        		<h5 class="modal-title" id="exampleModalLabel"> Plan de Tratamiento</h5>
+													        			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+													          				<span aria-hidden="true">&times;</span>
+													        			</button>
+													      		</div>
+																<div class="modal-body">
+											        				<input type="hidden" name="events_id" id="events_id" value="{{$id}}">
+												        			<label>Deshabilitar Plan de Tratamiento?</label>
+																	<br />
+												        			<button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+													        		<button class="btn btn-md btn-default bg-danger" style="color: white">Si</button>
+																</div>
+												      			<div class="modal-footer">
+																</div>
+											    			</div>
+														</div>
+													</div>
+												{!! Form::close() !!}
+										</div>
+									@endif
+								@endif
+							@endforeach
+							<div class="col-md-4 col-sm-12">
+								
+							</div>
+						</div>
 						<div class="row">
 							<div class="col-md-2 col-sm-12">
 							</div>	

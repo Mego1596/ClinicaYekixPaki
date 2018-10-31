@@ -144,6 +144,10 @@ Route::middleware(['auth'])->group(function(){
 
 	Route::get('iniciarPlanTratamiento/{cita}', 'PlanTratamientoController@iniciarPlanTratamiento')->name('planTratamiento.iniciarPlanTratamiento')->middleware('permission:planTratamientos.index');
 
+	Route::post('PlanTratamiento/habilitar/{cita}', 'PlanTratamientoController@habilitarPlanTratamiento')->name('planTratamiento.habilitarPlanTratamiento')->middleware('permission:planTratamientos.index');
+
+	Route::post('deshabilitarPlanTratamiento/{cita}', 'PlanTratamientoController@deshabilitarPlanTratamiento')->name('planTratamiento.deshabilitarPlanTratamiento')->middleware('permission:planTratamientos.index');
+
 	//Recetas
 	Route::post('receta/store', 'RecetasController@store')->name('receta.store')->middleware('permission:recetas.create');
 
