@@ -122,6 +122,11 @@
 																<a href="{{ route('planTratamiento.edit', ['cita' =>$id, 'planTratamiento'=> $proceso->id,'validador'=> $validador ]) }}" class="btn btn-sm btn-default bg-success" style="color: white"><i class="fa fa-edit"></i> Editar</a>
 															@endcan
 														</td>
+														<td></td>
+														<td></td>
+														<td></td>
+														<td></td>
+														<td></td>
 														@endif
 													@endif
 												@elseif($proceso->completo == true)
@@ -201,7 +206,6 @@
 											@endif
 										@if(sizeof($planValidador) == 1)
 											@if($proceso->en_proceso == true)
-												
 												@if($proceso->comenzado == true)
 												<td width="10px">
 													<!-- Button trigger modal -->
