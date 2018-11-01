@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 use App\Anexo;
+use App\Paciente;
 use App\TipoAnexo;
 
 class OdontogramaController extends Controller
@@ -13,9 +15,20 @@ class OdontogramaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($paciente)
+    public function index(Paciente $paciente)
     {
-        return view('odontograma.index')->with('paciente', $paciente);
+        //Provicional odontograma en la base de datos
+        $odontograma = $paciente->anexos->last();
+        //$ultimoOdontograma = $paciente->anexos->last();
+        //$odontograma = null;
+        //if($ultimoOdontograma) {
+        //    if(\Storage::disk('dropbox')->exists($ultimoOdontograma->ruta)) {
+        //        $odontograma = \Storage::disk('dropbox')->get($ultimoOdontograma->ruta);
+        //    }else {
+        //        $ultimoOdontograma->delete();
+        //    }
+        //}
+        return view('odontograma.index')->with('paciente', $paciente)->with('odontograma', $odontograma);
     }
 
     /**
@@ -34,9 +47,30 @@ class OdontogramaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, $paciente)
+    public function store(Request $request, Paciente $paciente)
     {
-        $tipoMensaje = "success";
+        //Guardado provicional de la imagen en la base de datos
+        //Borrar cualquier odontograma con fecha de HOY, para dejar solo uno por día
+        $hoy = Carbon::now()->toDateString();
+        $anexosHoy = $paciente->anexos()->where('tipoAnexoId', TipoAnexo::ODONTOGRAMA)->whereDate('created_at', $hoy)->get();
+        foreach ($anexosHoy as $anexoEliminar) {
+            $anexoEliminar->delete();
+        }
+
+        $anexo = new Anexo();
+        $anexo->nombreOriginal = str_random(25) . '.png';
+        $anexo->ruta = $request->imagen;
+        $anexo->pacienteId = $paciente->id;
+        $anexo->tipoAnexoId = TipoAnexo::ODONTOGRAMA;
+        $anexo->save();
+
+        return redirect()
+                    ->route('paciente.show', $paciente)
+                    ->with('info','Odontograma guardado con exito')
+                    ->with('tipo', 'success');
+
+
+        /*$tipoMensaje = "success";
         $mensaje = "Odontograma guardado con éxito";
         $image = $request->imagen;
         $image = str_replace('data:image/png;base64,', '', $image);
@@ -61,7 +95,7 @@ class OdontogramaController extends Controller
                     ->route('paciente.show', $paciente)
                     ->with('error', 'No se pudo guardar el odontograma.')
                     ->with('tipo', 'danger');
-        }        
+        }   */     
     }
 
     /**

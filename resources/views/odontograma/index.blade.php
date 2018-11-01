@@ -130,7 +130,12 @@
         var ctx = canvas.getContext("2d");
 
         var img = new Image();
+        @if($odontograma)
+        img.src = "{{$odontograma->ruta}}"
+        @else
         img.src = "{{asset('img/odontograma.png')}}";
+        @endif
+        console.log(img.src)
         img.onload = function(){
             ctx.drawImage(img, 0, 0);
         }
