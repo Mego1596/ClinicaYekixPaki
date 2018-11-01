@@ -1,5 +1,5 @@
 
-{{ Form::label('doctorAsignado', 'Realizo el Tratamiento:',['style' => 'visibility:display', 'id' => 'doctorAsignado1']) }}
+{{ Form::label('doctorAsignado', 'Realizo el Tratamiento: *',['style' => 'visibility:display', 'id' => 'doctorAsignado1']) }}
 
 <div class="row"> 
 		<div class="col-md-4 col-sm-12"> 
@@ -20,8 +20,17 @@
 <div class="row">
 	<div class="col-md-4">
 		<div class="form-group">
-			{{ Form::label('abono', 'Abono:',['style' => 'visibility:display', 'for' => 'abono1']) }}
+			{{ Form::label('abono', 'Abono: *',['style' => 'visibility:display', 'for' => 'abono1']) }}
 			{{ Form::number('abono', null, ['id' => 'abono1', 'class' => 'form-control', 'step' => '0.10', 'min'=>'0','max'=>'99999.99','required'])}}
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-4">
+		<div class="form-group">
+			{{ Form::label('proximaCita', 'Próxima Cita: ',['for' => 'proximaCita']) }}
+			{{ Form::date('proximaCita', null, ['class' => 'form-control']) }}
 		</div>
 	</div>
 </div>
@@ -58,6 +67,11 @@
 							<label for="abono">Abono</label>
 							<input id="abono" type="text" class="form-control" id="abono" disabled>
 					</div>
+
+					<div class="form-group">
+						<label for="proxima">Próxima Cita</label>
+						<input id="proxima" type="date" class="form-control" disabled>
+				</div>
 					<p id="informacion" style="visibility: hidden"></p>
 					<p><strong>¿Los datos de pago son correctos?</strong> <code>Una vez guardados no se podrá revertir la operación</code></p>
 			</div>

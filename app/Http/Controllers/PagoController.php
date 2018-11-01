@@ -120,7 +120,6 @@ class PagoController extends Controller
      */
     public function store(Request $request)
     {
-
         $nuevoPago = new Pago();
         $nuevoPago->events_id   = $request->cita;
         $nuevoPago->abono       = $request->abono;
@@ -199,6 +198,7 @@ class PagoController extends Controller
 
             $nuevoPago->events_id   = $request->cita;
             $nuevoPago->abono       = $request->abono;
+            $nuevoPago->proximaCita = $request->proximaCita;
             $user = User::where('id',$request->realizoTto)->get();
             foreach ($user as $key => $value) {
                 $nuevoPago->realizoTto  = $value->nombre1.' '.$value->nombre2.' '.$value->nombre3.' '.$value->apellido1.' '.$value->apellido2.'- '.$value->numeroJunta;
@@ -222,6 +222,8 @@ class PagoController extends Controller
     public function edit(Pago $pago)
     {
         $users = DB::table('users')->join('role_user', 'users.id', '=', 'role_user.user_id')->where('role_user.role_id', '=', 2)->orWhere('role_user.role_id', '=', 1)->select('users.id' , 'users.nombre1','users.nombre2','users.nombre3','users.apellido1','users.apellido2','users.numeroJunta','users.name')->orderBy('id')->paginate();
+
+        $pago->proximaCita = substr($pago->proximaCita, 0, 10);
         return view('pago.edit')->with('pago', $pago)->with('users', $users);
     }
 
@@ -241,6 +243,7 @@ class PagoController extends Controller
             else
                 $pago->saldo = $pago->saldo - ($abonoNew - $abonoOld);
             $pago->abono = $abonoNew;
+            $pago->proximaCita = $request->proximaCita;
             $pago->update();
         }else {
             $tipoMensaje = "error";

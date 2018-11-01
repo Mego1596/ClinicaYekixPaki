@@ -52,6 +52,7 @@
 			if(formValidado){
 				document.getElementById('realizoTto').disabled = false
 				document.getElementById('abono1').disabled = false
+				document.getElementById('proximaCita').disabled = false
 				document.getElementById('btnEnviar').disabled = true
 				enviado = false //Resetear el envio ya que los ENTER disparan el onSubmit y jamas se enviaría el formulario
 			}
@@ -62,9 +63,11 @@
 
 			let trataRealizado = $("select[name='realizoTto'] option:selected").text()
 			let cantidadAbono = $("#abono1").val()
+			let proximaCita = $("#proximaCita").val()
 
 			$("#odontologo").val(trataRealizado)
 			$("#abono").val(cantidadAbono)
+			$("#proxima").val(proximaCita)
 
 			let mensaje
 			let errores = false
@@ -96,6 +99,7 @@
 			document.getElementById('btnEnviar').style.visibility = 'visible'
 			document.getElementById('realizoTto').disabled = true
 			document.getElementById('abono1').disabled = true
+			document.getElementById('proximaCita').disabled = true
 			formValidado = true
 		}
 </script>
