@@ -18,7 +18,7 @@ class OdontogramaController extends Controller
     public function index(Paciente $paciente)
     {
         //Provicional odontograma en la base de datos
-        $odontograma = $paciente->anexos->last();
+        $odontograma = $paciente->anexos()->where('tipoAnexoId', TipoAnexo::ODONTOGRAMA)->get()->last();
         //$ultimoOdontograma = $paciente->anexos->last();
         //$odontograma = null;
         //if($ultimoOdontograma) {
@@ -29,16 +29,6 @@ class OdontogramaController extends Controller
         //    }
         //}
         return view('odontograma.index')->with('paciente', $paciente)->with('odontograma', $odontograma);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -98,48 +88,9 @@ class OdontogramaController extends Controller
         }   */     
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function historial(Paciente $paciente)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        $odontogramas = $paciente->anexos()->where('tipoAnexoId', TipoAnexo::ODONTOGRAMA)->orderBy('id', 'DEC')->get();
+        return view('odontograma.historial')->with('paciente', $paciente)->with('odontogramas', $odontogramas);
     }
 }

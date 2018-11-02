@@ -89,6 +89,8 @@ Route::middleware(['auth'])->group(function(){
 
 	Route::post('paciente/{paciente}/odontograma/store', 'OdontogramaController@store')->name('odontograma.store');
 
+	Route::get('paciente/{paciente}/odontograma/historial', 'OdontogramaController@historial')->name('odontograma.historial');
+
 	Route::post('paciente/store', 'PacienteController@store')->name('paciente.store')->middleware('permission:pacientes.create');
 
 	Route::get('paciente', 'PacienteController@index')->name('paciente.index')->middleware('permission:pacientes.index');

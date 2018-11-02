@@ -32,7 +32,7 @@
                     <div class="card-body">
                         <div class="row pt-3">
                             <div class="col-md-3 col-sm-12">
-                                <a href="#" class="btn btn-primary" role="button">Historial Odontogramas</a>
+                            <a href="{{route('odontograma.historial', $paciente)}}" class="btn btn-primary" role="button">Historial Odontogramas</a>
                             </div>
                         </div>
                         <div class="row">
