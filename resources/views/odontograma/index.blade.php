@@ -43,14 +43,13 @@
                                         <fieldset class="toolsBar">
                                             <legend>Herramientas</legend>
                                             <input type="button" style="background-image: url({{asset('img/lapiz.png')}})" value="lapiz"              onclick="canvasManager.activatePen()" />
-                                            <input type="button" style="background-image: url({{asset('img/borrador.png')}})" value="borrador"           onclick="canvasManager.activateEraser()" />
                                             <input type="button" style="background-image: url({{asset('img/circulo.png')}})" value="circulo vacio"      onclick="canvasManager.activateEmptyCircle()" />
                                             <input type="button" style="background-image: url({{asset('img/circuloRelleno.png')}})" value="circulo lleno"      onclick="canvasManager.activateCircle()" />
                                             <input type="button" style="background-image: url({{asset('img/cuadrado.png')}})" value="cuadrado vacio"     onclick="canvasManager.activateEmptyRectangle()" />
                                             <input type="button" style="background-image: url({{asset('img/cuadradoRelleno.png')}})" value="cuadrado lleno"     onclick="canvasManager.activateRectangle()" />
                                             <input type="button" style="background-image: url({{asset('img/linea.png')}})" value="linea"              onclick="canvasManager.activateLine()" />
                                             <input type="button" style="background-image: url({{asset('img/spray.png')}})" value="spray"              onclick="canvasManager.activateSpray()" />
-                                            <input type="button" style="background-image: url({{asset('img/save.png')}})" value="guardar"            onclick="canvasManager.save()" />
+                                            <input type="button" style="background-image: url({{asset('img/save.png')}})" value="guardar"            onclick="$('#confirmacionGuardar').modal()" />
                                             <input type="button" style="background-image: url({{asset('img/undo.png')}})" value="undo"               onclick="canvasManager.undo()" />
                                             <input type="button" style="background-image: url({{asset('img/redo.png')}})" value="redo"               onclick="canvasManager.redo()" />
                                         </fieldset>
@@ -105,6 +104,26 @@
                         </form>
 
                         
+                        </div>
+                    </div>
+                    <!-- Modal de Confirmación de guardar -->
+                    <div class="modal fade" id="confirmacionGuardar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Guardar Odontograma</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            </div>
+                            <div class="modal-body">
+                                <p>¿Está seguro que desea guardar el odontograma?. Esta acción no se puede revertir</p>
+                            </div>
+                            <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <button type="button" class="btn btn-primary" onclick="canvasManager.save()">Guardar</button>
+                            </div>
+                        </div>
                         </div>
                     </div>				
 				</div>
