@@ -92,9 +92,11 @@
 							@endcan	
 							</div>
 							<!--Odontograma -->
+							@can('odontograma.index')
 							<div class="col-md-4 col-sm-12">
 							<a href="{{route('odontograma.index', $paciente)}}" class="btn btn-block btn-info"><i class="fa fa-search"></i>Odontograma</a>
 							</div>
+							@endcan
 						</div>
 						<div class="row pt-3">
 							<div class="col-md-4">

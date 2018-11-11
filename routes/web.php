@@ -85,11 +85,11 @@ Route::middleware(['auth'])->group(function(){
 	
 	Route::delete('file/{file}/delete', 'AnexoController@destroy')->name('file.destroy');
 
-	Route::get('paciente/{paciente}/odontograma', 'OdontogramaController@index')->name('odontograma.index');
+	Route::get('paciente/{paciente}/odontograma', 'OdontogramaController@index')->name('odontograma.index')->middleware('permission:odontograma.index');
 
-	Route::post('paciente/{paciente}/odontograma/store', 'OdontogramaController@store')->name('odontograma.store');
+	Route::post('paciente/{paciente}/odontograma/store', 'OdontogramaController@store')->name('odontograma.store')->middleware('permission:odontograma.store');
 
-	Route::get('paciente/{paciente}/odontograma/historial', 'OdontogramaController@historial')->name('odontograma.historial');
+	Route::get('paciente/{paciente}/odontograma/historial', 'OdontogramaController@historial')->name('odontograma.historial')->middleware('permission:odontograma.historial');
 
 	Route::post('paciente/store', 'PacienteController@store')->name('paciente.store')->middleware('permission:pacientes.create');
 

@@ -31,11 +31,14 @@
                     </div>
                     <div class="card-body">
                         <div class="row pt-3">
+                            @can('odontograma.historial')
                             <div class="col-md-3 col-sm-12">
                             <a href="{{route('odontograma.historial', $paciente)}}" class="btn btn-primary" role="button">Historial Odontogramas</a>
                             </div>
+                            @endcan
                         </div>
                         <div class="row">
+                            @can('odontograma.store')
                             <div class="col-md-4 col-sm-12">
                                 
                                 <!--Inicio del dibujo--> 
@@ -94,18 +97,21 @@
                                         </fieldset>
                                     </div>
                             </div>
+                            @endcan
                             <div class="col-md-8 col-sm-12">
                                     <div style="width: 100%; height: 400px; border: solid 2px" class="canvas"></div>
                             </div>
-                            
+                           @can('odontograma.store') 
                         <form method="POST" id="formCanvas" action="{{route('odontograma.store', $paciente)}}">
                             {{ csrf_field() }}
                             <input type="hidden" name="imagen" id="imagen">
                         </form>
+                        @endcan
 
                         
                         </div>
                     </div>
+                    @can('odontograma.store')
                     <!-- Modal de Confirmación de guardar -->
                     <div class="modal fade" id="confirmacionGuardar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
@@ -125,7 +131,8 @@
                             </div>
                         </div>
                         </div>
-                    </div>				
+                    </div>
+                    @endcan				
 				</div>
 			</div>
 		</div>

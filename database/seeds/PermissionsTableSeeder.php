@@ -338,5 +338,24 @@ class PermissionsTableSeeder extends Seeder
             'slug' => 'pagos.destroy',
             'description' => 'Eliminar cualquier dato de un Pago del sistema',
         ]);
+
+        //Odontrograma
+        Permission::create([
+            'name'          =>  'Navegar Odontograma',
+            'slug'          =>  'odontograma.index',
+            'description'   =>  'Permite ver el odontograma de un paciente'
+        ]);
+
+        Permission::create([
+            'name'          =>  'Guardar o Actualizar Odontograma',
+            'slug'          =>  'odontograma.store',
+            'description'   =>  'Permitir Guardar o Modificar un Odontograma'
+        ]);
+
+        Permission::create([
+            'name'          =>  'Navegar Historial de Odontogramas',
+            'slug'          =>  'odontograma.historial',
+            'description'   =>  'Navegar por el historial de odontogramas'
+        ]);
     }
 }

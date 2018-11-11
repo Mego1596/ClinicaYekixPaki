@@ -61,7 +61,7 @@
                                             <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span>
                                             </button>
                                         </div>
-                                        <div class="modal-body">
+                                        <div class="modal-body" style="background-color: lightskyblue">
                                             <img id="image-gallery-image" class="img-responsive col-md-12" src="">
                                         </div>
                                         <div class="modal-footer">
