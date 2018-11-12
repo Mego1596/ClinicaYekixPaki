@@ -37,12 +37,16 @@ class eventPlanMiddleware
             }
         }
 
+        //test if it's user id equal to 1 
+    
+        $verifyGeneralUser= $this->ruta->paciente->id==1? true: false; 
+
         $user= Auth::user();
-       // dd($user->roles[0]);
+
 
         if($user->roles[0]->name!='Paciente')
         {
-            if($aux)
+            if($aux && !$verifyGeneralUser)
             {
                 $request->session()->flash('error', "Ruta bloqueada, existe plan habilitado, se retorna a la ultima ruta conocida");
                 return back();

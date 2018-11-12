@@ -120,7 +120,8 @@ Route::middleware(['auth'])->group(function(){
 	//Plan de Tratamiento
 	Route::post('planTratamiento/store/', 'PlanTratamientoController@store')->name('planTratamiento.store')->middleware('permission:planTratamientos.create');
 
-	Route::get('planTratamiento/{cita}/{validador}', 'PlanTratamientoController@index')->name('planTratamiento.index')->middleware('permission:planTratamientos.index');
+	Route::get('planTratamiento/{cita}/{validador}', 'PlanTratamientoController@index')->name('planTratamiento.index')
+	->middleware('permission:planTratamientos.index')->middleware('planTratamientoMiddleware:index');
 
 	Route::get('planTratamiento/create/{cita}/{validador}', 'PlanTratamientoController@create')->name('planTratamiento.create')->middleware('permission:planTratamientos.create');
 
@@ -132,7 +133,8 @@ Route::middleware(['auth'])->group(function(){
 
 	Route::get('planTratamiento/edit/{cita}/{planTratamiento}/{validador}', 'PlanTratamientoController@edit')->name('planTratamiento.edit')->middleware('permission:planTratamientos.edit');
 
-	Route::get('planTratamiento/{cita}/{procedimiento}/{paciente}/{planTratamiento}/{validador}/events','PlanTratamientoController@agendar2')->name('planTratamiento.agenda')->middleware('permission:planTratamientos.index');
+	Route::get('planTratamiento/{cita}/{procedimiento}/{paciente}/{planTratamiento}/{validador}/events','PlanTratamientoController@agendar2')->name('planTratamiento.agenda')
+	->middleware('permission:planTratamientos.index')->middleware('planTratamientoMiddleware:events');
 	
 	Route::post('planTratamiento/events', 'PlanTratamientoController@addEvent')->name('planTratamiento.add')->middleware('permission:planTratamientos.index');
 

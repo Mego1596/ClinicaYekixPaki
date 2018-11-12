@@ -66,5 +66,8 @@ class Kernel extends HttpKernel
         'asistentes' =>\App\Http\Middleware\AsistenteMiddleware::class,
         'storePacientes'=>\App\Http\Middleware\storePacienteMiddleware::class,
         'eventPlanMiddleware'=>\App\Http\Middleware\eventPlanMiddleware::class,
+        'planTratamientoMiddleware'=>\App\Http\Middleware\planTratamientoMiddleware::class,
+        
+
     ];
 }
