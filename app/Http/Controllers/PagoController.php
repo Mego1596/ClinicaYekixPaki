@@ -7,6 +7,7 @@ use App\Plan_Tratamiento;
 use App\Procedimiento;
 use App\Events;
 use App\User;
+use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -109,7 +110,7 @@ class PagoController extends Controller
     {
         $users = DB::table('users')->join('role_user', 'users.id', '=', 'role_user.user_id')->where('role_user.role_id', '=', 2)->orWhere('role_user.role_id', '=', 1)->select('users.id' , 'users.nombre1','users.nombre2','users.nombre3','users.apellido1','users.apellido2','users.numeroJunta','users.name')->orderBy('id')->paginate();
 
-        return view('pago.create',compact('id','users','idPaciente'));
+        return view('pago.create',compact('id','users','idPaciente'))->with('modoCrear', true);
     }
 
     /**
@@ -224,30 +225,35 @@ class PagoController extends Controller
         $users = DB::table('users')->join('role_user', 'users.id', '=', 'role_user.user_id')->where('role_user.role_id', '=', 2)->orWhere('role_user.role_id', '=', 1)->select('users.id' , 'users.nombre1','users.nombre2','users.nombre3','users.apellido1','users.apellido2','users.numeroJunta','users.name')->orderBy('id')->paginate();
 
         $pago->proximaCita = substr($pago->proximaCita, 0, 10);
-        return view('pago.edit')->with('pago', $pago)->with('users', $users);
+        return view('pago.edit')->with('pago', $pago)->with('users', $users)->with('modoCrear', false);
     }
 
     public function update(Request $request, Pago $pago)
     {
         $tipoMensaje = "info";
         $mensaje = "El pago ha sido modificado correctamente";
-        if($request->realizoTto){
-            $user = User::where('id',$request->realizoTto)->get();
-            foreach ($user as $key => $value) {
-                $pago->realizoTto  = $value->nombre1.' '.$value->nombre2.' '.$value->nombre3.' '.$value->apellido1.' '.$value->apellido2.'- '.$value->numeroJunta;
+        if(Auth::user()->roles[0]->id != 3) {
+            if($request->realizoTto){
+                $user = User::where('id',$request->realizoTto)->get();
+                foreach ($user as $key => $value) {
+                    $pago->realizoTto  = $value->nombre1.' '.$value->nombre2.' '.$value->nombre3.' '.$value->apellido1.' '.$value->apellido2.'- '.$value->numeroJunta;
+                }
+                $abonoOld = $pago->abono;
+                $abonoNew = $request->abono;
+                if($abonoNew < $abonoOld)
+                    $pago->saldo = $pago->saldo + ($abonoOld - $abonoNew);
+                else
+                    $pago->saldo = $pago->saldo - ($abonoNew - $abonoOld);
+                $pago->abono = $abonoNew;
+                $pago->proximaCita = $request->proximaCita;
+                $pago->update();
+            }else {
+                $tipoMensaje = "error";
+                $mensaje = "Debe de seleccionar un Médico en el pago";
             }
-            $abonoOld = $pago->abono;
-            $abonoNew = $request->abono;
-            if($abonoNew < $abonoOld)
-                $pago->saldo = $pago->saldo + ($abonoOld - $abonoNew);
-            else
-                $pago->saldo = $pago->saldo - ($abonoNew - $abonoOld);
-            $pago->abono = $abonoNew;
+        }else {
             $pago->proximaCita = $request->proximaCita;
             $pago->update();
-        }else {
-            $tipoMensaje = "error";
-            $mensaje = "Debe de seleccionar un Médico en el pago";
         }
 
         return redirect()->route('pago.index',['cita' => $pago->events_id])

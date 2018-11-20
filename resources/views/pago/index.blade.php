@@ -97,12 +97,12 @@
 									@endphp
 									<td align="center">{{$aux2}}</td>
 									<td></td>
-									@role('admin')
+									@can('pagos.edit')
 										<td>
 											<a href="{{ route('pago.edit', $proceso->id) }}" class="btn btn-info">Editar</a>
 										</td>
-									@endrole
-								</tr>
+									@endcan
+	pagos.edit		</tr>
 								@endforeach
 							</tbody>
 						</table>
