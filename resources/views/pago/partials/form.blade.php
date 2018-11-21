@@ -1,6 +1,6 @@
 
 {{ Form::label('doctorAsignado', 'Realizo el Tratamiento: *',['style' => 'visibility:display', 'id' => 'doctorAsignado1']) }}
-
+@if($modoCrear || Auth::user()->roles[0]->id != 3)
 <div class="row"> 
 		<div class="col-md-4 col-sm-12"> 
 			<select style="visibility: display;" id="realizoTto" class="form-control" name="realizoTto" required>
@@ -25,7 +25,7 @@
 		</div>
 	</div>
 </div>
-
+@endif
 <div class="row">
 	<div class="col-md-4">
 		<div class="form-group">
