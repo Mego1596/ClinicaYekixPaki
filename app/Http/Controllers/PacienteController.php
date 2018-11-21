@@ -88,7 +88,7 @@ class PacienteController extends Controller
                                             Mail::send('email.paciente',['user'=>$nuevo], function ($m) use ($nuevo,$value){
                                                 $m->to($nuevo->email,$value->nombre1);
                                                 $m->subject('Contraseña y nombre de usuario');
-                                                $m->from('clinicaYekixPaki@gmail.com','YekixPaki');
+                                                $m->from('clinicayekixpaki@gmail.com','YekixPaki');
                                                 });
                                                 $nuevo->password =bcrypt($password);
                                                 $nuevo->save();
@@ -248,7 +248,7 @@ class PacienteController extends Controller
             Mail::send('email.paciente', ['user'=>$user], function ($m) use ($user,$valores) {
                 $m->to($user->email,$valores['nombre1']);
                 $m->subject('Contraseña y nombre de usuario');
-                $m->from('clinicaYekixPaki@gmail.com','YekixPaki');
+                $m->from('clinicayekixpaki@gmail.com','YekixPaki');
             });
             $user->password =bcrypt($password);
             $user->save();
@@ -408,7 +408,7 @@ class PacienteController extends Controller
                 Mail::send('email.paciente', ['user'=>$nuevo], function ($m) use ($nuevo,$request) {
                 $m->to($nuevo->email,$request['nombre1']);
                 $m->subject('Contraseña y nombre de usuario');
-                $m->from('clinicaYekixPaki@gmail.com','YekixPaki');
+                $m->from('clinicayekixpaki@gmail.com','YekixPaki');
                 });
                 $nuevo->password =bcrypt($password);
                 $nuevo->save();

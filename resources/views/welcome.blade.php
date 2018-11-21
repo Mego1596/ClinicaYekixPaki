@@ -116,17 +116,15 @@
             <div class="service-box mt-5 mx-auto">
               <i class="fas fa-4x fa-tooth text-primary mb-3 sr-icon-1"></i>
               <h3 class="mb-3">Atención dental</h3>
-              <p class="text-muted mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-                Mollitia, distinctio corporis ab sed quidem aut labore enim minus beatae dicta, velit illo pariatur 
-                consequuntur adipisci earum, a esse explicabo. Inventore.</p>
+              <p class="text-muted mb-0">Atención dental especializada con diferentes servicios y planes de tratamiento a disposición de nuestros clientes</p>
             </div>
           </div>
           <div class="col-lg-3 col-md-6 text-center">
             <div class="service-box mt-5 mx-auto">
               <i class="fas fa-4x fa-users text-primary mb-3 sr-icon-2"></i>
               <h3 class="mb-3">Atención especializada</h3>
-              <p class="text-muted mb-0"> Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores accusamus, similique eos mollitia aut sit necessitatibus quidem
-                 autem suscipit natus ipsa, dolore pariatur et sequi voluptas perspiciatis eveniet. Ex, quidem.
+              <p class="text-muted mb-0"> 
+                Contamos con el equipo adecuado para brindarte un mejor servicio, lleno de calidad y adecuado a lo que se amerite.
               </p>
             </div>
           </div>
@@ -142,8 +140,9 @@
             <div class="service-box mt-5 mx-auto">
               <i class="fas fa-4x fa-briefcase-medical text-primary mb-3 sr-icon-4"></i>
               <h3 class="mb-3">Tratamientos</h3>
-              <p class="text-muted mb-0">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Error accusamus recusandae ut amet voluptate, dicta minus dolorem
-                 vel voluptatem doloremque eaque quidem delectus quibusdam harum aliquam enim non? Totam, accusamus!  </p>
+              <p class="text-muted mb-0">
+                Contamos con mas de 25 diferentes tipos de servicios, que pueden ser indicados en un plan de tratamiento accesible para nuestros clientes.  
+              </p>
             </div>
           </div>
         </div>
@@ -159,11 +158,10 @@
               <div class="portfolio-box-caption">
                 <div class="portfolio-box-caption-content">
                   <div class="project-category text-faded">
-                    Tema
+                    Equipo adecuado
                   </div>
                   <div class="project-name">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab totam, ratione quas explicabo veniam beatae accusamus cum voluptate 
-                    corporis at eligendi nam tempora illo enim numquam dolore, necessitatibus expedita debitis.
+                    Equipo adecuado en nuestras instalaciones a disposición para servirte.
                   </div>
                 </div>
               </div>
@@ -175,11 +173,10 @@
               <div class="portfolio-box-caption">
                 <div class="portfolio-box-caption-content">
                   <div class="project-category text-faded">
-                    Tema
+                    Participación
                   </div>
                   <div class="project-name">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Sed aperiam dignissimos delectus nesciunt ex recusandae tenetur inventore sapiente
-                     pariatur veritatis incidunt placeat accusantium, alias saepe ut, quos, deleniti quae blanditiis.
+                    Hablemos sobre salud dental
                   </div>
                 </div>
               </div>
@@ -191,11 +188,10 @@
               <div class="portfolio-box-caption">
                 <div class="portfolio-box-caption-content">
                   <div class="project-category text-faded">
-                    Tema
+                    Estamos para brindarte el mejor servicio
                   </div>
                   <div class="project-name">
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Molestiae debitis dicta, sit eum, eaque repudiandae, laudantium facere eveniet cum dolorum 
-                    impedit provident tenetur. Est, at natus. Similique officiis possimus beatae.
+                    Te brindamos el mejor servicio
                   </div>
                 </div>
               </div>
@@ -207,11 +203,10 @@
               <div class="portfolio-box-caption">
                 <div class="portfolio-box-caption-content">
                   <div class="project-category text-faded">
-                    Tema
+                    Salud dental
                   </div>
                   <div class="project-name">
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Molestiae debitis dicta, sit eum, 
-                    eaque repudiandae, laudantium facere eveniet cum dolorum impedit provident tenetur. Est, at natus. Similique officiis possimus beatae.
+                    Ir al dentista tambien puede ser divertido.
                   </div>
                 </div>
               </div>
@@ -223,11 +218,10 @@
               <div class="portfolio-box-caption">
                 <div class="portfolio-box-caption-content">
                   <div class="project-category text-faded">
-                    tema
+                    Progresión
                   </div>
                   <div class="project-name">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias in aliquam, iste necessitatibus aut magnam eveniet facere perspiciatis 
-                    eos laborum ipsum doloribus! Consectetur, perferendis est esse nihil dolore a? Tenetur!
+                    Antes y despues de nuestros tratamientos.
                   </div>
                 </div>
               </div>
@@ -238,13 +232,7 @@
               <img class="img-fluid" src="img/despliegue/6.jpg" alt="">
               <div class="portfolio-box-caption">
                 <div class="portfolio-box-caption-content">
-                  <div class="project-category text-faded">
-                    Tema
-                  </div>
-                  <div class="project-name">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit perferendis fugiat neque quo voluptatum 
-                  sit ut officia quia. Labore est, iure fuga fugit tempora eum odit sit rerum inventore doloribus.
-                  </div>
+               
                 </div>
               </div>
             </a>
@@ -291,7 +279,7 @@
           <div class="col-lg-4 ml-auto text-center">
             <i class="fas fa-envelope fa-3x mb-3 sr-contact-3"></i>
             <p>
-              <a href="mailto:your-email@your-domain.com">clinica@yekix.com </a>
+              <a href="mailto:your-email@your-domain.com">clinicayekixpaki@gmail.com </a>
             </p>
           </div>
         </div>

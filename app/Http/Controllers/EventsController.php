@@ -194,7 +194,10 @@ class EventsController extends Controller
                 );
             }
         }
-    	
+      	        //obtiene todos los planes de tratamientos terminados, pero donde la cita sea diferente al id=1
+        $planesTerminados=  Plan_Tratamiento::where('completo',true)->where('events_id','!=',1)->get();
+        $planesTerminados=$planesTerminados->pluck('events_id');
+    
 
     	$calendar_details = Calendar::addEvents($event_list)->setOptions([
     		'firstDay' => 1,
@@ -275,6 +278,12 @@ class EventsController extends Controller
                             $("#reprogramacion").hide();
                         }
                         $("#btnAsignar").hide();   
+                    }
+
+                    let arrayTerminados='.$planesTerminados.';
+                    if(arrayTerminados.includes(calEvent.id))
+                    {
+                        $("#plan").hide();
                     }
 				 	$("#txtColor").val(calEvent.color);
                     $("#txtExpediente").val(calEvent.expediente);

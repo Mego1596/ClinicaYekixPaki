@@ -35,7 +35,10 @@ class PacienteEventRequest extends FormRequest
         $request['RangoLibre']='1';
         $request['RangoStartHora']=Carbon::parse($request['start_date'])->hour."".Carbon::parse($request['start_date'])->format('i');
         $request['RangoEndHora']=Carbon::parse($request['end_date'])->hour."".Carbon::parse($request['end_date'])->format('i');        
+        //this allows following the rule in both cases
+       
         $request['choques']='1';
+      
         $request['minCita']='1';
         $request['maxCita']='1';
         $request['notEqualFree']='1';
@@ -124,11 +127,18 @@ class PacienteEventRequest extends FormRequest
             $comparacionSuperior= Events::where('end_date','>',$fechaHoraInicio)
             ->where('end_date','<',$fechaHoraFin)->get();
            /*compara limites inferiores dentro de un mismo dia*/ 
-            $comparacionExterior=Events::where('start_date','<=',$fechaHoraInicio)
+           if(!isset($request['plan'])){ //si esto viene de plan de tratamiento 
+           $comparacionExterior=Events::where('start_date','<=',$fechaHoraInicio)
             ->where('end_date','>=',$fechaHoraFin)
             ->where('start_date','>=',$this->fechaRequest.' 00:00:00')
             ->where('end_date','<=',$this->fechaRequest.' 23:59:59')->get();
-
+            }
+            else{
+                $comparacionExterior=Events::where('start_date','<',$fechaHoraInicio)
+                ->where('end_date','>',$fechaHoraFin)
+                ->where('start_date','>=',$this->fechaRequest.' 00:00:00')
+                ->where('end_date','<=',$this->fechaRequest.' 23:59:59')->get();
+            }
             /*si existe un elemento en el array lo fuerza*/
             if(count($comparacionInferior)>0||count($comparacionSuperior)>0){
                

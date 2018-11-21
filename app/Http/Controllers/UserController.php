@@ -115,7 +115,7 @@ class UserController extends Controller
         Mail::send('email.paciente', ['user'=>$user], function ($m) use ($user) {
                 $m->to($user->email,$user->nombre1);
                 $m->subject('Contraseña y nombre de usuario');
-                $m->from('clinicaYekixPaki@gmail.com','YekixPaki');
+                $m->from('clinicayekixpaki@gmail.com','YekixPaki');
         });
 
         $user->password =bcrypt($password);

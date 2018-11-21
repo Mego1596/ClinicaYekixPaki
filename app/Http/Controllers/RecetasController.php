@@ -135,7 +135,7 @@ class RecetasController extends Controller
             Mail::send('email.receta', ['paciente'=>$paciente], function ($m) use ($paciente,$pdf) {
             $m->to($paciente->email,$paciente->nombre1);
             $m->subject('Receta Medica');
-            $m->from('clinicaYekixPaki@gmail.com','YekixPaki');
+            $m->from('clinicayekixpaki@gmail.com','YekixPaki');
             $m->attachData($pdf->output(),'receta-'.$paciente->nombre1.'.pdf');
                                                                                                 });
             return back()->with('info','Email enviado correctamente');

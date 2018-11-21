@@ -110,6 +110,8 @@ $(document).ready(function(){
     </div>
   </div>
 </div>
+
+
 <!--fin en caso de error-->
 <div class="container">
 	<div class="panel panel-primary">

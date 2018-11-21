@@ -12,6 +12,7 @@ use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use App\Http\Requests\PacienteEventRequest;
 use Calendar;
 use Validator;
 class PlanTratamientoController extends Controller
@@ -298,8 +299,15 @@ class PlanTratamientoController extends Controller
             }
         }
         
-        
+/*
+        $eventsTratamiento=Plan_Tratamiento::all();
+        $eventsTratamiento=$eventsTratamiento->pluck("events_id")->toArray();
+   
 
+        $events=Events::whereIn('id',$eventsTratamiento)->get()->pluck('end_date');
+        
+        dd($events->toArray());
+*/
         $calendar_details = Calendar::addEvents($event_list)->setOptions([
             'firstDay'      => 1,
             'editable'      => false,
@@ -365,6 +373,17 @@ class PlanTratamientoController extends Controller
                     $("#siReprogramacion1").hide();
                     $("#noReprogramacion").hide();
                     $("#noReprogramacion1").hide();
+
+                    //this is going to disable some buttons, i add some hours at the top of the end hour events
+
+                    let now= new Date("'.Carbon::now().'");
+                    let citaFecha=new Date(calEvent.end);
+                    citaFecha.setHours(2);
+                    if(now.getTime()>citaFecha.getTime())
+                    {
+                        $("#btnEliminar").hide();
+                        $("#btnModificar").hide();
+                    }
                     $("#exampleModal").modal(); 
                 }else{
                     $("#btnAgregar").hide();
@@ -410,7 +429,7 @@ class PlanTratamientoController extends Controller
         return view('planTratamiento.agenda',compact('procesos','calendar_details','paciente','encendido','id','id2','planActual','validador','procesos2','solvente'));
     }
 
-    public function addEvent(Request $request){
+    public function addEvent(PacienteEventRequest $request){
         $validator = Validator::make($request->all(), [
             'pacienteID'        => 'required',
             'start_date'        => 'required',

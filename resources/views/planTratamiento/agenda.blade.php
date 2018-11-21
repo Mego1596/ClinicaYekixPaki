@@ -18,6 +18,62 @@
 @endsection
 
 @section('content')
+<!-- en caso de error -->
+<div>
+  <div class="row">
+    <div class="col-md-12 pt-3">
+      @if($errors->has('txtFecha'))
+      <div class="alert alert-warning">
+         {{$errors->first('txtFecha')}}
+      </div>
+      @elseif($errors->has('start_date'))
+      <div class="alert alert-warning">
+        {{$errors->first('start_date')}}
+      </div>		
+      @elseif($errors->has('end_date'))
+      <div class="alert alert-warning">
+        {{$errors->first('end_date')}}
+      </div>
+      @elseif($errors->has('RangoStartHora'))
+      <div class="alert alert-warning">
+         {{$errors->first('RangoStartHora')}}
+      </div>
+      @elseif($errors->has('RangoEndHora'))
+      <div class="alert alert-warning">
+        {{$errors->first('RangoEndHora')}}
+      </div>
+      @elseif($errors->has('RangoLibre'))
+      <div class="alert alert-warning">
+       {{$errors->first('RangoLibre')}}
+      </div>
+      @elseif($errors->has('notEqualFree'))
+      <div class="alert alert-warning">
+       {{$errors->first('notEqualFree')}}
+      </div>
+      @elseif($errors->has('horasFijas'))
+      <div class="alert alert-warning">
+       {{$errors->first('horasFijas')}}
+      </div>
+      @elseif($errors->has('choques'))
+      <div class="alert alert-warning">
+       {{$errors->first('choques')}}
+      </div>
+      @elseif($errors->has('minCita'))
+      <div class="alert alert-warning">
+       {{$errors->first('minCita')}}
+      </div>
+      @elseif($errors->has('maxCita'))
+      <div class="alert alert-warning">
+       {{$errors->first('maxCita')}}
+      </div>
+      @elseif($errors->has('notRangoFree'))
+      <div class="alert alert-warning">
+       {{$errors->first('notRangoFree')}}
+      </div>
+      @endif
+    </div>
+  </div>
+</div>
  <div class="container">
   <div class="panel panel-primary">
     <div class="panel-heading">
@@ -105,6 +161,7 @@
       <div class="modal-body">
       	<input type="hidden" name="txtID" id="txtID"/>
         <input type="hidden" name="cita" id="cita" value="{{$id2}}">
+        <input type="hiden" name="plan" id="plan" value='ok'>
         <input type="hidden" name="pacienteID" id="pacienteID" value="{{$paciente->id}}">
         <input type="hidden" name="encendido" id="encendido" value="{{$encendido}}">
         <input type="hidden" name="txtProcedimiento_id" id="txtProcedimiento_id" value="{{$id}}">
