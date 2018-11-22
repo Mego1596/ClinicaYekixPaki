@@ -10,6 +10,7 @@ use App\User;
 use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Http\Requests\PagoRequest;
 
 class PagoController extends Controller
 {
@@ -119,7 +120,7 @@ class PagoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PagoRequest $request)
     {
         $nuevoPago = new Pago();
         $nuevoPago->events_id   = $request->cita;
@@ -228,7 +229,7 @@ class PagoController extends Controller
         return view('pago.edit')->with('pago', $pago)->with('users', $users)->with('modoCrear', false);
     }
 
-    public function update(Request $request, Pago $pago)
+    public function update(PagoRequest $request, Pago $pago)
     {
         $tipoMensaje = "info";
         $mensaje = "El pago ha sido modificado correctamente";

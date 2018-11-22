@@ -13,6 +13,11 @@
 					@endif
 				@endforeach
 			</select>
+			@if($errors->has('realizoTto'))
+			<div class="form-control-feedback text-danger">
+		{{$errors->first('realizoTto')}}
+	</div>		
+@endif
 		</div>
 </div>
 
@@ -21,20 +26,32 @@
 	<div class="col-md-4">
 		<div class="form-group">
 			{{ Form::label('abono', 'Abono: *',['style' => 'visibility:display', 'for' => 'abono1']) }}
-			{{ Form::number('abono', null, ['id' => 'abono1', 'class' => 'form-control', 'step' => '0.10', 'min'=>'0','max'=>'99999.99','required'])}}
+			{{ Form::number('abono', null, ['id' => 'abono1', 'class' => 'form-control '.($errors->has('abono')?'is-invalid':''), 'step' => '0.10', 'min'=>'0','max'=>'99999.99','required'])}}
 		</div>
 	</div>
 </div>
 @endif
+
+@if($errors->has('abono'))
+<div class="form-control-feedback text-danger">
+		{{$errors->first('abono')}}
+	</div>		
+@endif
+
 <div class="row">
 	<div class="col-md-4">
 		<div class="form-group">
 			{{ Form::label('proximaCita', 'Próxima Cita: ',['for' => 'proximaCita']) }}
-			{{ Form::date('proximaCita', null, ['class' => 'form-control']) }}
+			{{ Form::date('proximaCita', null, ['class' => 'form-control '.($errors->has('proximaCita')?'is-invalid':'') ]) }}
 		</div>
 	</div>
 </div>
 
+@if($errors->has('proximaCita'))
+<div class="form-control-feedback text-danger">
+		{{$errors->first('proximaCita')}}
+	</div>		
+@endif
 <div class="row pt-3">
 	<div class="col-md-4">
 		*Campos obligatorios

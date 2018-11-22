@@ -3,33 +3,33 @@
 		{{ Form::hidden('idRole', $idRole , ['class' => 'form-control', 'id' => 'idRole'])}}
 		<div class="form-group">
 			{{ Form::label('nombre1', 'Primer Nombre*') }}
-			{{ Form::text('nombre1', null, ['class' => 'form-control','required'])}}
+			{{ Form::text('nombre1', null, ['class' => 'form-control '.($errors->has('nombre1')?'is-invalid':''),'required'])}}
 			@if($errors->has('nombre1'))
-			<div class="alert alert-warning">
-				<strong> {{$errors->first('nombre1')}}</strong>
-			</div>		
+			<div class="form-control-feedback text-danger">
+				{{$errors->first('nombre1')}}
+			</div>	
 			@endif
 		</div>
 	</div>
 	<div class="col-md-3">
 		<div class="form-group">
 			{{ Form::label('nombre2', 'Segundo Nombre') }}
-			{{ Form::text('nombre2', null, ['class' => 'form-control'])}}
+			{{ Form::text('nombre2', null, ['class' => 'form-control '.($errors->has('nombre2')?'is-invalid':'')])}}
 			@if($errors->has('nombre2'))
-			<div class="alert alert-warning">
-				<strong> {{$errors->first('nombre2')}}</strong>
-			</div>		
+			<div class="form-control-feedback text-danger">
+				{{$errors->first('nombre2')}}
+			</div>
 			@endif
 		</div>
 	</div>
 	<div class="col-md-3">
 		<div class="form-group">
 			{{ Form::label('nombre3', 'Tercer nombre ', ['style' => 'display:none','id'=>'nombre3.2']) }}
-			{{ Form::text('nombre3', null, ['class' => 'form-control', 'style'=>'display:none', 'id' => 'nombre3'])}}
+			{{ Form::text('nombre3', null, ['class' => 'form-control '.($errors->has('nombre3')?'is-invalid':''), 'style'=>'display:none', 'id' => 'nombre3'])}}
 			@if($errors->has('nombre3'))
-			<div class="alert alert-warning">
-				<strong> {{$errors->first('nombre3')}}</strong>
-			</div>		
+			<div class="form-control-feedback text-danger">
+				{{$errors->first('nombre3')}}
+			</div>
 			@endif
 		</div>
 	</div>
@@ -49,22 +49,22 @@
 		{{ Form::hidden('role',$idRole, ['class' => 'form-control']) }}
 		<div class="form-group">
 			{{ Form::label('apellido1', 'Primer apellido *') }}
-			{{ Form::text('apellido1', null, ['class' => 'form-control','required'])}}
+			{{ Form::text('apellido1', null, ['class' => 'form-control '.($errors->has('apellido1')?'is-invalid':''),'required'])}}
 			@if($errors->has('apellido1'))
-			<div class="alert alert-warning">
-				<strong> {{$errors->first('apellido1')}}</strong>
-			</div>		
+			<div class="form-control-feedback text-danger">
+				{{$errors->first('apellido1')}}
+			</div>
 			@endif
 		</div>
 	</div>
 	<div class="col-md-3">
 		<div class="form-group">
 			{{ Form::label('apellido2', 'Segundo apellido ') }}
-			{{ Form::text('apellido2', null, ['class' => 'form-control'])}}
+			{{ Form::text('apellido2', null, ['class' => 'form-control '.($errors->has('apellido2')?'is-invalid':'')])}}
 			@if($errors->has('apellido2'))
-			<div class="alert alert-warning">
-				<strong> {{$errors->first('apellido2')}}</strong>
-			</div>		
+			<div class="form-control-feedback text-danger">
+				{{$errors->first('apellido2')}}
+			</div>
 			@endif
 		</div>
 	</div>
@@ -72,11 +72,11 @@
 	<div class="col-md-3">
 		<div class="form-group">
 			{{ Form::label('numeroJunta', 'Numero de Junta*') }}
-			{{ Form::text('numeroJunta',null, ['class' => 'form-control','required'])}}
+			{{ Form::text('numeroJunta',null, ['class' => 'form-control '.($errors->has('numeroJunta')?'is-invalid':''),'required'])}}
 			@if($errors->has('numeroJunta'))
-			<div class="alert alert-warning">
-				<strong> {{$errors->first('numeroJunta')}}</strong>
-			</div>		
+			<div class="form-control-feedback text-danger">
+				{{$errors->first('numeroJunta')}}
+			</div>
 			@endif
 		</div>
 	</div>
@@ -85,11 +85,11 @@
 	<div class="col-md-3">
 		<div class="form-group">
 			{{ Form::label('numeroJunta', 'Numero de Junta ', ['style' => 'display:none','id'=>'numeroJunta2']) }}
-			{{ Form::text('numeroJunta', null, ['class' => 'form-control', 'style'=>'display:none', 'id' => 'numeroJunta'])}}
+			{{ Form::text('numeroJunta', null, ['class' => 'form-control '.($errors->has('numeroJunta')?'is-invalid':''), 'style'=>'display:none', 'id' => 'numeroJunta'])}}
 			@if($errors->has('numeroJunta'))
-			<div class="alert alert-warning">
-				<strong> {{$errors->first('numeroJunta')}}</strong>
-			</div>		
+			<div class="form-control-feedback text-danger">
+				{{$errors->first('numeroJunta')}}
+			</div>
 			@endif
 		</div>
 	</div>
@@ -110,11 +110,11 @@
 	<div class="col-md-3">
 		<div class="form-group">
 			{{ Form::label('description', 'E-Mail*') }}
-			{{ Form::text('email', null, ['class' => 'form-control','required'])}}
+			{{ Form::text('email', null, ['class' => 'form-control '.($errors->has('email')?'is-invalid':''),'required'])}}
 			@if($errors->has('email'))
-			<div class="alert alert-warning">
-				<strong> {{$errors->first('email')}}</strong>
-			</div>		
+			<div class="form-control-feedback text-danger">
+				{{$errors->first('email')}}
+			</div>
 			@endif
 		</div>
 	</div>
@@ -122,11 +122,11 @@
 	<div class="col-md-3">
 		<div class="form-group">
 			{{ Form::label('especialidad', 'Especialidad') }}
-			{{ Form::text('especialidad', null , ['class' => 'form-control'])}}
+			{{ Form::text('especialidad', null , ['class' => 'form-control '.($errors->has('especialidad')?'is-invalid':'')])}}
 			@if($errors->has('especialidad'))
-			<div class="alert alert-warning">
-				<strong> {{$errors->first('especialidad')}}</strong>
-			</div>		
+			<div class="form-control-feedback text-danger">
+				{{$errors->first('especialidad')}}
+			</div>
 			@endif
 		</div>
 	</div>
@@ -135,11 +135,11 @@
 	<div class="col-md-3">
 		<div class="form-group">
 			{{ Form::label('especialidad', 'Especialidad', ['style' => 'display:none','id'=>'especialidad2']) }}
-			{{ Form::text('especialidad', null, ['class' => 'form-control', 'style'=>'display:none', 'id' => 'especialidad'])}}
+			{{ Form::text('especialidad', null, ['class' => 'form-control '.($errors->has('especialidad')?'is-invalid':''), 'style'=>'display:none', 'id' => 'especialidad'])}}
 			@if($errors->has('especialidad'))
-			<div class="alert alert-warning">
-				<strong> {{$errors->first('especialidad')}}</strong>
-			</div>		
+			<div class="form-control-feedback text-danger">
+				{{$errors->first('especialidad')}}
+			</div>
 			@endif
 		</div>
 	</div>

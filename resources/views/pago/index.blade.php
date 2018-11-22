@@ -102,7 +102,7 @@
 											<a href="{{ route('pago.edit', $proceso->id) }}" class="btn btn-info">Editar</a>
 										</td>
 									@endcan
-	pagos.edit		</tr>
+	 			</tr>
 								@endforeach
 							</tbody>
 						</table>

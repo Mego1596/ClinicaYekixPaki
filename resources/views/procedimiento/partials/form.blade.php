@@ -1,29 +1,29 @@
 <div class="form-group">
 	{{ Form::label('nombre', 'Nombre del Procedimiento *') }}
-	{{ Form::text('nombre', null, ['class' => 'form-control','required'])}}
+	{{ Form::text('nombre', null, ['class' => 'form-control '.($errors->has('nombre')?'is-invalid':''),'required'])}}
 		@if($errors->has('nombre'))
-		<div class="alert alert-warning">
-			<strong> {{$errors->first('nombre')}}</strong>
-		</div>		
+		<div class="form-control-feedback text-danger">
+			{{$errors->first('nombre')}}
+		</div>
 		@endif
 
 </div>
 <div class="form-group">
 	{{ Form::label('descripcion', 'Descripcion del Procedimiento *') }}
-	{{ Form::textarea('descripcion', null, ['class' => 'form-control','required'])}}
+	{{ Form::textarea('descripcion', null, ['class' => 'form-control '.($errors->has('descripcion')?'is-invalid':''),'required'])}}
 	@if($errors->has('descripcion'))
-	<div class="alert alert-warning">
-		<strong> {{$errors->first('descripcion')}}</strong>
-	</div>		
+	<div class="form-control-feedback text-danger">
+		{{$errors->first('descripcion')}}
+	</div>
 	@endif
 </div>
 <div class="form-group">
 	{{ Form::label('color', 'Identificador del Procedimiento *') }}
-	{{ Form::input('color', 'color', null, array('class' => 'input-big')) }}
+	{{ Form::input('color', 'color', null, array('class' => 'input-big '.($errors->has('color')?'is-invalid':''))) }}
 	@if($errors->has('color'))
-	<div class="alert alert-warning">
-		<strong> {{$errors->first('color')}}</strong>
-	</div>		
+	<div class="form-control-feedback text-danger">
+		{{$errors->first('color')}}
+	</div>
 	@endif
 </div>
 <div class="row pt-3">

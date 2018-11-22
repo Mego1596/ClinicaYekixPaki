@@ -59,52 +59,52 @@ $(document).ready(function(){
   <div class="row">
     <div class="col-md-12 pt-3">
       @if($errors->has('txtFecha'))
-      <div class="alert alert-warning">
-         {{$errors->first('txtFecha')}}
+      <div class="alert alert-dismissible alert-danger">
+        <button class="close" type="button" data-dismiss="alert">×</button><strong>Un problema!</strong> {{$errors->first('txtFecha')}} 
       </div>
       @elseif($errors->has('start_date'))
-      <div class="alert alert-warning">
-        {{$errors->first('start_date')}}
+      <div class="alert alert-dismissible alert-danger">
+        <button class="close" type="button" data-dismiss="alert">×</button><strong>Un problema!</strong> {{$errors->first('start_date')}} 
       </div>		
       @elseif($errors->has('end_date'))
-      <div class="alert alert-warning">
-        {{$errors->first('end_date')}}
+      <div class="alert alert-dismissible alert-danger">
+        <button class="close" type="button" data-dismiss="alert">×</button><strong>Un problema!</strong> {{$errors->first('end_date')}} 
       </div>
       @elseif($errors->has('RangoStartHora'))
-      <div class="alert alert-warning">
-         {{$errors->first('RangoStartHora')}}
+      <div class="alert alert-dismissible alert-danger">
+        <button class="close" type="button" data-dismiss="alert">×</button><strong>Un problema!</strong> {{$errors->first('RangoStartHora')}} 
       </div>
       @elseif($errors->has('RangoEndHora'))
-      <div class="alert alert-warning">
-        {{$errors->first('RangoEndHora')}}
+      <div class="alert alert-dismissible alert-danger">
+        <button class="close" type="button" data-dismiss="alert">×</button><strong>Un problema!</strong> {{$errors->first('RangoEndHora')}} 
       </div>
       @elseif($errors->has('RangoLibre'))
-      <div class="alert alert-warning">
-       {{$errors->first('RangoLibre')}}
+      <div class="alert alert-dismissible alert-danger">
+        <button class="close" type="button" data-dismiss="alert">×</button><strong>Un problema!</strong> {{$errors->first('RangoLibre')}} 
       </div>
       @elseif($errors->has('notEqualFree'))
-      <div class="alert alert-warning">
-       {{$errors->first('notEqualFree')}}
+      <div class="alert alert-dismissible alert-danger">
+        <button class="close" type="button" data-dismiss="alert">×</button><strong>Un problema!</strong> {{$errors->first('notEqualFree')}} 
       </div>
       @elseif($errors->has('horasFijas'))
-      <div class="alert alert-warning">
-       {{$errors->first('horasFijas')}}
+      <div class="alert alert-dismissible alert-danger">
+        <button class="close" type="button" data-dismiss="alert">×</button><strong>Un problema!</strong> {{$errors->first('horasFijas')}} 
       </div>
       @elseif($errors->has('choques'))
-      <div class="alert alert-warning">
-       {{$errors->first('choques')}}
+      <div class="alert alert-dismissible alert-danger">
+        <button class="close" type="button" data-dismiss="alert">×</button><strong>Un problema!</strong> {{$errors->first('choques')}} 
       </div>
       @elseif($errors->has('minCita'))
-      <div class="alert alert-warning">
-       {{$errors->first('minCita')}}
+      <div class="alert alert-dismissible alert-danger">
+        <button class="close" type="button" data-dismiss="alert">×</button><strong>Un problema!</strong> {{$errors->first('minCita')}} 
       </div>
       @elseif($errors->has('maxCita'))
-      <div class="alert alert-warning">
-       {{$errors->first('maxCita')}}
+      <div class="alert alert-dismissible alert-danger">
+        <button class="close" type="button" data-dismiss="alert">×</button><strong>Un problema!</strong> {{$errors->first('maxCita')}} 
       </div>
       @elseif($errors->has('notRangoFree'))
-      <div class="alert alert-warning">
-       {{$errors->first('notRangoFree')}}
+      <div class="alert alert-dismissible alert-danger">
+        <button class="close" type="button" data-dismiss="alert">×</button><strong>Un problema!</strong> {{$errors->first('notRangoFree')}} 
       </div>
       @endif
     </div>
@@ -271,7 +271,7 @@ $(document).ready(function(){
           </div>
           <div class="form-group">
               {{ Form::label('no_de_piezas', 'No. de Piezas',['id'=>'no_de_piezas1','style' => 'display:none']) }}
-              {{ Form::number('no_de_piezas', null, ['class' => 'form-control', 'step' => '0.10', 'min'=>'0','max'=>'600','id'=>'no_de_piezas2', 'style' => 'display:none'])}}
+              {{ Form::number('no_de_piezas', null, ['class' => 'form-control', 'step' => '0.01', 'min'=>'0','max'=>'600','id'=>'no_de_piezas2', 'style' => 'display:none'])}}
           </div>
         @can('pacientes.create')
           <div class="form-group">

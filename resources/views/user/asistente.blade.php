@@ -59,7 +59,6 @@
 						<table class="table table-striped table-hover table-responsive-md">
 							<thead>
 								<tr>
-									<th width="10px">ID</th>
 									<th>Nombre</th>
 									<th>Nombre de Usuario</th>
 									@if(sizeof($users) == 0)
@@ -84,7 +83,6 @@
 							<tbody>
 								@foreach($users as $user)
 								<tr>
-									<td>{{$user->id}}</td>
 									<td>{{$user->nombre1." ".$user->nombre2." ".$user->nombre3." ".$user->apellido1." ".$user->apellido2}}</td>
 									<td>
 										{{$user->name}}

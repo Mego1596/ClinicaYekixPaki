@@ -31,6 +31,9 @@ class PacienteEventRequest extends FormRequest
             $this->fechaRequest=$request['txtFecha'];
             $x = 1;
         }
+        $request['dateStart']=$request['txtFecha']." ".$request['start_date'];
+        $request['dateEnd']=$request['txtFecha']." ".$request['end_date'];
+        //dd($request['dateStart']);
         /*request emergentes de ayuda a validaciones especiales*/
         $request['RangoLibre']='1';
         $request['RangoStartHora']=Carbon::parse($request['start_date'])->hour."".Carbon::parse($request['start_date'])->format('i');
@@ -227,11 +230,11 @@ class PacienteEventRequest extends FormRequest
                             'txtFecha'=>'after_or_equal:today',
                             'start_date'        => [
                                 'required',
-                                //'date_format:H:i',
                                 'before:end_date',
                                 'after_or_equal:08:00',
 
                             ],
+
                             'end_date'          => [
                                 'required',
                                 //'date_format:H:i',
@@ -257,14 +260,12 @@ class PacienteEventRequest extends FormRequest
                             'txtFecha'=>'after_or_equal:today',
                             'start_date'        => [
                                 'required',
-                                //'date_format:H:i',
                                 'before:end_date',
                                 'after_or_equal:08:00',
 
                             ],
                             'end_date'          => [
                                 'required',
-                                //'date_format:H:i',
                                 'after:start_date',
                                 'before_or_equal:15:00',
 
@@ -292,14 +293,14 @@ class PacienteEventRequest extends FormRequest
                         'txtFecha'=>'after_or_equal:today',
                         'start_date'        => [
                             'required',
-                            //'date_format:H:i',
                             'before:end_date',
                             'after_or_equal:08:00',
 
                         ],
+                        'dateStart'=>'date'
+                        ,
                         'end_date'          => [
                             'required',
-                            //'date_format:H:i',
                             'after:start_date',
                             'before_or_equal:18:00',
 
@@ -321,14 +322,12 @@ class PacienteEventRequest extends FormRequest
                         'txtFecha'=>'after_or_equal:today',
                         'start_date'        => [
                             'required',
-                            //'date_format:H:i',
                             'before:end_date',
                             'after_or_equal:08:00',
 
                         ],
                         'end_date'          => [
                             'required',
-                            //'date_format:H:i',
                             'after:start_date',
                             'before_or_equal:15:00',
 

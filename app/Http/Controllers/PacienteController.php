@@ -782,11 +782,13 @@ class PacienteController extends Controller
                     $str = substr($request['txtFecha'],0,-9);
                     $event->end_date            = $str." ".$request['end_date'];
                 }else{
+
                     $event->start_date          = $request['txtFecha']." ".$request['start_date'];
                     $event->end_date            = $request['txtFecha']." ".$request['end_date'];
                 }
                 $event->descripcion         = $request['txtDescripcion'];
                 $event->save();
+
                 \Session::flash('success','Cita añadida exitosamente ');
                 return redirect()->route('paciente.agenda',$request->pacienteID)->with('info','Cita guardada con exito');
                 
@@ -814,6 +816,7 @@ class PacienteController extends Controller
                 $tratamiento_cita->no_iniciado         = false;
                 $tratamiento_cita->procedencia         = 1;
                 $tratamiento_cita->save();
+
                 \Session::flash('success','Cita añadida exitosamente');
                 return redirect()->route('paciente.index')->with('info','Cita guardada con exito');
             } 

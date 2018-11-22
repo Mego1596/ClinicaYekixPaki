@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\PerfilController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -22,7 +24,11 @@ Route::get('/home', 'HomeController@index')->name('home');
 //Routes
 
 Route::middleware(['auth'])->group(function(){
+	//perfil routes
 
+	Route::get('/perfil','PerfilController@index')->name('perfil.index');
+	Route::post('/perfil','PerfilController@changePassword')->name('perfil.password');
+	Route::put('/perfil/user','PerfilController@changeUsername')->name('perfil.username');
 	//Roles
 	Route::get('roles', 'RoleController@index')->name('roles.index')->middleware('permission:roles.index');
 

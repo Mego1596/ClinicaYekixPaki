@@ -11,12 +11,12 @@
 	<div class="col-md-2">
 		<div class="form-group">
 			{{ Form::label('peso', 'Peso (lbs) *') }}
-			{{ Form::number('peso', null, ['class' => 'form-control', 'step' => '0.10', 'min'=>'0','max'=>'600','required'])}}
+			{{ Form::number('peso', null, ['class' => 'form-control '.($errors->has('peso')?'is-invalid':''), 'step' => '0.10', 'min'=>'0','max'=>'600','required'])}}
 	
 			@if($errors->has('peso'))
-			<div class="alert alert-warning">
-				<strong> {{$errors->first('peso')}}</strong>
-			</div>		
+			<div class="form-control-feedback text-danger">
+					{{$errors->first('peso')}}
+				</div>		
 			@endif
 		</div>
 	</div>

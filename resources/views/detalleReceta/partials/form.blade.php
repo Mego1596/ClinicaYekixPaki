@@ -3,12 +3,12 @@
 	<div class="col-md-5">
 		<div class="form-group">
 			{{ Form::label('medicamento', 'Medicamento*') }}
-			{{ Form::text('medicamento', null,['class' => 'form-control','required']) }}
+			{{ Form::text('medicamento', null,['class' => 'form-control '.($errors->has('medicamento')?'is-invalid':''),'required']) }}
 			
 			@if($errors->has('medicamento'))
-			<div class="alert alert-warning">
-				<strong> {{$errors->first('medicamento')}}</strong>
-			</div>		
+			<div class="form-control-feedback text-danger">
+					{{$errors->first('medicamento')}}
+				</div>	
 			@endif
 
 		</div>
@@ -18,12 +18,12 @@
 	<div class="col-md-5">
 		<div class="form-group">
 			{{ Form::label('dosis', 'Dosis*') }}
-			{{ Form::text('dosis', null, ['class' => 'form-control','required'])}}
+			{{ Form::text('dosis', null, ['class' => 'form-control '.($errors->has('dosis')?'is-invalid':''),'required'])}}
 			
 			@if($errors->has('dosis'))
-			<div class="alert alert-warning">
-				<strong> {{$errors->first('dosis')}}</strong>
-			</div>		
+			<div class="form-control-feedback text-danger">
+					{{$errors->first('dosis')}}
+				</div>	
 			@endif
 
 		</div>
@@ -33,12 +33,12 @@
 	<div class="col-md-5">
 		<div class="form-group">
 			{{ Form::label('cantidad', 'Cantidad*') }}
-			{{ Form::text('cantidad', null, ['class' => 'form-control','required'])}}
+			{{ Form::text('cantidad', null, ['class' => 'form-control '.($errors->has('cantidad')?'is-invalid':''),'required'])}}
 			
 			@if($errors->has('cantidad'))
-			<div class="alert alert-warning">
-				<strong> {{$errors->first('cantidad')}}</strong>
-			</div>		
+			<div class="form-control-feedback text-danger">
+					{{$errors->first('cantidad')}}
+				</div>	
 			@endif
 
 		</div>
