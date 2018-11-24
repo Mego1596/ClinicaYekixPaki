@@ -233,16 +233,26 @@
           this.setAttribute("href","planTratamiento/"+x+"/"+y);
         }
 </script>
-<script type="text/javascript">
-        document.getElementById("pago").onclick = function() {
-          var x=parseInt($('#txtID').val());
-          this.setAttribute("href","pago/"+x);
-        }
-</script>
+@role('doctor')
 <script type="text/javascript">
           document.getElementById("receta").onclick = function() {
           var x=parseInt($('#txtID').val());
           this.setAttribute("href","receta/"+x);
+        }
+</script>
+@endrole
+@role('admin')
+<script type="text/javascript">
+          document.getElementById("receta").onclick = function() {
+          var x=parseInt($('#txtID').val());
+          this.setAttribute("href","receta/"+x);
+        }
+</script>
+@endrole
+<script type="text/javascript">
+        document.getElementById("pago").onclick = function() {
+          var x=parseInt($('#txtID').val());
+          this.setAttribute("href","pago/"+x);
         }
 </script>
 <script type="text/javascript">

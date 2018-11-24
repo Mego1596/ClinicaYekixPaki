@@ -28,7 +28,7 @@ class PlanTratamientoController extends Controller
 
         $paciente = Paciente::select('id')->where('id',$citaGeneral->paciente_id)->value('id');
         $persona = Paciente::select('nombre1','nombre2','nombre3','apellido1','apellido2')->where('id',$citaGeneral->paciente_id)->get();
-        $planTratamiento = Plan_Tratamiento::select('id','procedimiento_id','completo','en_proceso','no_iniciado','honorarios','no_de_piezas','procedencia','activo','comenzado')->where('events_id',$id)->where('plan_valido',true)->orderBy('id','ASC')->paginate();
+        $planTratamiento = Plan_Tratamiento::select('id','procedimiento_id','completo','en_proceso','no_iniciado','honorarios','no_de_piezas','procedencia','activo','comenzado','deshabilitado')->where('events_id',$id)->where('plan_valido',true)->orderBy('id','ASC')->paginate();
         $planValidador = Plan_Tratamiento::select('id')->where('events_id',$id)->where('en_proceso',true)->where('activo',true)->where('plan_valido',true)->whereNull('procedencia')->get();
         $planValidador2 = Plan_Tratamiento::select('id')->where('events_id',$id)->where('completo',true)->where('activo',true)->where('plan_valido',true)->whereNull('procedencia')->get();
         $proc = Procedimiento::get();
@@ -94,6 +94,7 @@ class PlanTratamientoController extends Controller
             $planT->procedimiento_id    = $request->procedimiento_id;
             $planT->events_id           = $request->events_id;
             $planT->activo              = true;
+            $planT->deshabilitado       = false;
             $planT->completo            = false;
             $planT->en_proceso          = true;
             $planT->no_iniciado         = false;
@@ -105,6 +106,7 @@ class PlanTratamientoController extends Controller
             $planT->procedimiento_id    = $request->procedimiento_id;
             $planT->events_id           = $request->events_id;
             $planT->activo              = true;
+            $planT->deshabilitado       = false;
             $planT->completo            = false;
             $planT->en_proceso          = false;
             $planT->no_iniciado         = true;
@@ -571,6 +573,7 @@ class PlanTratamientoController extends Controller
 
         foreach ($planActual as $key => $value) {
             $value->activo          = false;
+            $value->deshabilitado   = false;
             $value->completo        = true;
             $value->en_proceso      = false;
             $value->no_iniciado     = false;
@@ -595,7 +598,8 @@ class PlanTratamientoController extends Controller
         $planActual = Plan_Tratamiento::where('events_id',$cita)->get();
 
         foreach ($planActual as $key => $value) {
-            $value->activo        = true;
+            $value->activo               = true;
+            $value->deshabilitado        = false;
             $value->save();
         }
         return back()->with('info','Plan de Tratamiento Habilitado, puede continuar');
@@ -606,9 +610,11 @@ class PlanTratamientoController extends Controller
 
         foreach ($planActual as $key => $value) {
             $value->activo        = false;
+            $value->deshabilitado = true;
             $value->save();
         }
 
         return redirect()->route('paciente.index')->with('info','Plan de Tratamiento Deshabilitado, proceda a asignar un nuevo plan de tratamiento');
     }
 }
+ 

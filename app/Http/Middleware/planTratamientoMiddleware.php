@@ -79,12 +79,8 @@ class planTratamientoMiddleware
                 $request->session()->flash('error', 'Ruta bloqueada, citas hijas no tienen capacidad de iniciar plan de tratamientos');
                 return back();
                 }
-            else if($tratamiento->completo){
-                $request->session()->flash('error', "Tratamiento {$tratamiento->id} completado, no hay acceso");
-                return back(); 
-            }
-            else if(!$tratamiento->activo){
-                $request->session()->flash('error', "Tratamiento {$tratamiento->id} deshabilitado, no hay acceso");
+            else if($tratamiento->activo == false && $tratamiento->deshabilitado == false){
+                $request->session()->flash('error', "Plan Tratamiento finalizado, no hay acceso");
                 return back(); 
             }
             else

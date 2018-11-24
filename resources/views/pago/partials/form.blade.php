@@ -1,6 +1,5 @@
-
-{{ Form::label('doctorAsignado', 'Realizo el Tratamiento: *',['style' => 'visibility:display', 'id' => 'doctorAsignado1']) }}
 @if($modoCrear || Auth::user()->roles[0]->id != 3)
+{{ Form::label('doctorAsignado', 'Realizo el Tratamiento: *',['style' => 'visibility:display', 'id' => 'doctorAsignado1']) }}
 <div class="row"> 
 		<div class="col-md-4 col-sm-12"> 
 			<select style="visibility: display;" id="realizoTto" class="form-control" name="realizoTto" required>
@@ -15,9 +14,9 @@
 			</select>
 			@if($errors->has('realizoTto'))
 			<div class="form-control-feedback text-danger">
-		{{$errors->first('realizoTto')}}
-	</div>		
-@endif
+				{{$errors->first('realizoTto')}}
+			</div>		
+			@endif
 		</div>
 </div>
 

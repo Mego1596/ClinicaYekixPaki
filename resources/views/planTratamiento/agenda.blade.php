@@ -148,7 +148,7 @@
 		</div>
 	</div>
 <!-- Modal -->
-{!! Form::open(array('route' => 'planTratamiento.add','id'=> 'form', 'method' => 'POST') ) !!}
+{!! Form::open(array('route' => 'planTratamiento.add','id'=> 'form', 'method' => 'POST', 'autocomplete' => 'off') ) !!}
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -161,7 +161,7 @@
       <div class="modal-body">
       	<input type="hidden" name="txtID" id="txtID"/>
         <input type="hidden" name="cita" id="cita" value="{{$id2}}">
-        <input type="hiden" name="plan" id="plan" value='ok'>
+        <input type="hidden" name="plan" id="plan" value='ok'>
         <input type="hidden" name="pacienteID" id="pacienteID" value="{{$paciente->id}}">
         <input type="hidden" name="encendido" id="encendido" value="{{$encendido}}">
         <input type="hidden" name="txtProcedimiento_id" id="txtProcedimiento_id" value="{{$id}}">
