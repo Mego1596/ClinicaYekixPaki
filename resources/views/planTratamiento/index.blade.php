@@ -44,7 +44,7 @@
 						</div>
 					</div>
 					<div class="card-body">
-						<table class="table table-striped table-hover table-responsive-md">
+						<table class="table table-striped table-hover table-responsive-md" border="solid">
 							<thead>
 								<tr>
 									<th width="10px">ID</th>
@@ -53,9 +53,10 @@
 									<th width="120px">No de Piezas</th>
 									<th width="10px">Honorarios</th>
 									<th></th>
+									<th width="350px"></th>
 									<th></th>
 									<th></th>
-									<th></th>
+									<th width="115px"></th>	
 									@if($validador == 1 )
 										@if (sizeof($planTratamiento) == 0)
 												<th width="237">
@@ -79,6 +80,7 @@
 																</a>
 																@endcan
 															</th>
+															<th></th>
 														@else
 															<th colspan="5" width="237"></th>
 														@endif
@@ -108,7 +110,8 @@
 													</td>
 													<td>{{$proceso->no_de_piezas}}</td>
 													<td style="text-align: center;">${{$proceso->honorarios}}</td>
-													<td width="10px" colspan="4">
+													<td></td>
+													<td width="10px">
 														@if($proceso->comenzado == true)
 															@can('planTratamientos.create')
 																<a href="{{ route('planTratamiento.agenda',['cita'=> $id, 'procedimiento'=> $procedimiento->id, 'paciente'=> $paciente,'planTratamiento'=>$proceso->id,'validador'=>$validador] )}}" class="btn btn-sm btn-default bg-dark" style="color: white">
@@ -148,7 +151,8 @@
 													<td style="text-align: center;">
 													${{$proceso->honorarios}}
 													</td>
-													<td width="10px" colspan="3">
+													<td></td>
+													<td width="10px">
 													@if($proceso->comenzado == true)
 													@can('planTratamientos.create')
 														<a href="{{ route('planTratamiento.agenda',['cita'=> $id, 'procedimiento'=> $procedimiento->id, 'paciente'=> $paciente,'planTratamiento'=>$proceso->id,'validador'=>$validador] )}}" class="btn btn-sm btn-default bg-dark" style="color: white">
@@ -160,14 +164,18 @@
 												@endif
 											@endif
 										@endforeach
+
 										@if(sizeof($planValidador) == 1 || sizeof($planValidador2) >= 1)
-										<td width="10px">
+										
 											@if($proceso->comenzado != true)
-											@can('planTratamientos.edit')
-												<a href="{{ route('planTratamiento.edit', ['cita' =>$id, 'planTratamiento'=> $proceso->id,'validador'=> $validador ]) }}" class="btn btn-sm btn-default bg-success" style="color: white"><i class="fa fa-edit"></i> Editar</a>
-											@endcan
+											<td colspan="4"></td>
+											<td width="10px">
+												@can('planTratamientos.edit')
+													<a href="{{ route('planTratamiento.edit', ['cita' =>$id, 'planTratamiento'=> $proceso->id,'validador'=> $validador ]) }}" class="btn btn-sm btn-default bg-success" style="color: white"><i class="fa fa-edit"></i> Editar</a>
+												@endcan
+											</td>
+											@else
 											@endif
-										</td>
 										@if($proceso->comenzado != true)
 											<td width="10px">
 												<!-- Button trigger modal -->
@@ -209,7 +217,7 @@
 										@if(sizeof($planValidador) == 1)
 											@if($proceso->en_proceso == true)
 												@if($proceso->comenzado == true)
-												<td width="10px">
+												<td width="10px" colspan="2">
 													<!-- Button trigger modal -->
 													<button type="button" class="btn btn-sm btn-default bg-gray btn-block" data-toggle="modal" data-target="#Modal{{$proceso->id}}"><i class="fa fa-check"></i>
 													     Terminar

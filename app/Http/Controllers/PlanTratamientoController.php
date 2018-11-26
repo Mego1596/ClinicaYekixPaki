@@ -29,8 +29,22 @@ class PlanTratamientoController extends Controller
         $paciente = Paciente::select('id')->where('id',$citaGeneral->paciente_id)->value('id');
         $persona = Paciente::select('nombre1','nombre2','nombre3','apellido1','apellido2')->where('id',$citaGeneral->paciente_id)->get();
         $planTratamiento = Plan_Tratamiento::select('id','procedimiento_id','completo','en_proceso','no_iniciado','honorarios','no_de_piezas','procedencia','activo','comenzado','deshabilitado')->where('events_id',$id)->where('plan_valido',true)->orderBy('id','ASC')->paginate();
+
+
+
+        //TENER POR LO MENOS 1 EN PROCESO 
         $planValidador = Plan_Tratamiento::select('id')->where('events_id',$id)->where('en_proceso',true)->where('activo',true)->where('plan_valido',true)->whereNull('procedencia')->get();
+        
+
+
+
+
+        //SI SOLO QUEDA 1 Y ES COMPLETO SE DEBE PODER AGREGAR 
         $planValidador2 = Plan_Tratamiento::select('id')->where('events_id',$id)->where('completo',true)->where('activo',true)->where('plan_valido',true)->whereNull('procedencia')->get();
+        
+
+
+
         $proc = Procedimiento::get();
 
         $presupuesto = Plan_Tratamiento::where('events_id',$id)->where('plan_valido',true)->sum('honorarios');
