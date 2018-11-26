@@ -55,7 +55,7 @@
 									<th width="350px"></th>
 									<th></th>
 									<th></th>
-									<th width="115px"></th>	
+									<th width="115px"></th>
 									@if($validador == 1 )
 										@if (sizeof($planTratamiento) == 0)
 												<th width="237">
@@ -69,6 +69,9 @@
 										@else
 											@foreach($planTratamiento as $plan)
 												@if($loop->first)
+												@if($plan->deshabilitado == true)
+													<th></th>
+												@endif	
 													@if($plan->comenzado != true)
 														@if(sizeof($planValidador) == 1 || sizeof($planValidador2) >= 1)
 															<th colspan="5" width="237">
@@ -116,6 +119,9 @@
 																	<i class="fa fa-calendar"></i> Agendar Cita
 																</a>
 															@endcan
+															@if($proceso->deshabilitado == true)
+															<td colspan="4"></td>
+															@endif
 														@endif
 													</td>
 													@if($proceso->procedencia == 1)
@@ -156,6 +162,9 @@
 														<a href="{{ route('planTratamiento.agenda',['cita'=> $id, 'procedimiento'=> $procedimiento->id, 'paciente'=> $paciente,'planTratamiento'=>$proceso->id,'validador'=>$validador] )}}" class="btn btn-sm btn-default bg-dark" style="color: white">
 															<i class="fa fa-calendar"></i> Agendar Cita
 														</a>
+														@if($proceso->deshabilitado == true)
+															<td colspan="3"></td>
+														@endif
 													@endcan
 													@endif
 													</td>
