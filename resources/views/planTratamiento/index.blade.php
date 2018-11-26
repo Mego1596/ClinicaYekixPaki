@@ -44,10 +44,9 @@
 						</div>
 					</div>
 					<div class="card-body">
-						<table class="table table-striped table-hover table-responsive-md" border="solid">
+						<table class="table table-striped table-hover table-responsive-md">
 							<thead>
 								<tr>
-									<th width="10px">ID</th>
 									<th width="10px">Nombre</th>
 									<th width="10px">Estado</th>
 									<th width="120px">No de Piezas</th>
@@ -100,7 +99,6 @@
 							<tbody>
 								@foreach($planTratamiento as $proceso)
 									<tr>
-										<td width="10px">{{$proceso->id}}</td>
 										@foreach($proc as $procedimiento)
 											@if($proceso->procedimiento_id == $procedimiento->id)
 												<td>{{$procedimiento->nombre}}</td>

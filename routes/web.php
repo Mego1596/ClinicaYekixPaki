@@ -162,7 +162,7 @@ Route::middleware(['auth'])->group(function(){
 	Route::get('receta/{cita}', 'RecetasController@index')->name('receta.index')->middleware('permission:recetas.index');
 
 	Route::get('receta/create/{cita}', 'RecetasController@create')->name('receta.create')->middleware('permission:recetas.create');
-
+ 
 	Route::put('receta/update/{receta}', 'RecetasController@update')->name('receta.update')->middleware('permission:recetas.edit');
 
 	Route::get('receta/show/{cita}/{receta}', 'RecetasController@show')->name('receta.show')->middleware('permission:recetas.show');
