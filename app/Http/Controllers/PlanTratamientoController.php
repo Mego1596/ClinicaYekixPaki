@@ -15,6 +15,7 @@ use Carbon\Carbon;
 use App\Http\Requests\PacienteEventRequest;
 use Calendar;
 use Validator;
+use App\Http\Requests\PlanTratamientoRequest;
 class PlanTratamientoController extends Controller
 {
     /**
@@ -94,7 +95,7 @@ class PlanTratamientoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PlanTratamientoRequest $request)
     {
         $planTratamiento = Plan_Tratamiento::where('events_id',$request->events_id)->get();
         if(sizeof($planTratamiento) <= 0){
