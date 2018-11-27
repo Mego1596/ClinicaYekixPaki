@@ -44,13 +44,13 @@
 						</div>
 					</div>
 					<div class="card-body">
-						<table class="table table-striped table-hover table-responsive-md">
+						<table class="table table-striped table-hover table-responsive-md" border="solid">
 							<thead>
 								<tr>
-									<th width="10px">Nombre</th>
-									<th width="10px">Estado</th>
-									<th width="120px">No de Piezas</th>
-									<th width="10px">Honorarios</th>
+									<th width="10px" style="text-align: center;">Nombre</th>
+									<th width="10px" style="text-align: center;">Estado</th>
+									<th width="120px" style="text-align: center;">No de Piezas</th>
+									<th width="10px" style="text-align: center;">Honorarios</th>
 									
 									@if($validador == 1 )
 										@if (sizeof($planTratamiento) == 0)
@@ -104,24 +104,28 @@
 											@if($proceso->procedimiento_id == $procedimiento->id)
 												<td>{{$procedimiento->nombre}}</td>
 												@if($proceso->en_proceso == true)
-													<td width="150px">
+													<td width="150px" style="text-align: center;">
 														<label><strong>En Proceso</strong></label>
 													</td>
-													<td>{{$proceso->no_de_piezas}}</td>
+													<td style="text-align: center;">{{$proceso->no_de_piezas}}</td>
 													<td style="text-align: center;">${{$proceso->honorarios}}</td>
 														@if($proceso->comenzado == true)
-														<td width="10px">
-															@can('planTratamientos.create')
-																<a href="{{ route('planTratamiento.agenda',['cita'=> $id, 'procedimiento'=> $procedimiento->id, 'paciente'=> $paciente,'planTratamiento'=>$proceso->id,'validador'=>$validador] )}}" class="btn btn-sm btn-default bg-dark" style="color: white">
-																	<i class="fa fa-calendar"></i> Agendar Cita
-																</a>
-															@endcan
-															@if($proceso->deshabilitado == true)
-															<td colspan="6"></td>
-															@else
-															
+															@if($proceso->deshabilitado != true)
+																<td width="10px" style="text-align: center;">
+																	@can('planTratamientos.create')
+																		<a href="{{ route('planTratamiento.agenda',['cita'=> $id, 'procedimiento'=> $procedimiento->id, 'paciente'=> $paciente,'planTratamiento'=>$proceso->id,'validador'=>$validador] )}}" class="btn btn-sm btn-default bg-dark" style="color: white">
+																			<i class="fa fa-calendar"></i> Agendar Cita
+																		</a>
+																	@endcan
+																</td>
 															@endif
-														</td>
+
+															@if($proceso->deshabilitado == true)
+																	<td></td>
+																	<td colspan="6"></td>
+															@else
+																	
+															@endif
 														@endif
 													
 													@if($proceso->procedencia == 1)
@@ -139,10 +143,10 @@
 														@endif
 													@endif
 												@elseif($proceso->completo == true)
-													<td width="150px">
+													<td width="150px" style="text-align: center;">
 														<label><strong>Completo</strong></label>
 													</td>
-													<td>{{$proceso->no_de_piezas}}</td>
+													<td style="text-align: center;">{{$proceso->no_de_piezas}}</td>
 													<td style="text-align: center;">
 													${{$proceso->honorarios}}
 													</td>
@@ -152,24 +156,27 @@
 															<td></td>
 													@endif
 												@else($proceso->no_iniciado == true)
-													<td width="150px">
+													<td width="150px" style="text-align: center;">
 														<label><strong>No Iniciado</strong></label>
 													</td>
-													<td>{{$proceso->no_de_piezas}}</td>
+													<td style="text-align: center;">{{$proceso->no_de_piezas}}</td>
 													<td style="text-align: center;">
 													${{$proceso->honorarios}}
 													</td>
 													@if($proceso->comenzado == true)
-													<td width="10px">
-														@can('planTratamientos.create')
-															<a href="{{ route('planTratamiento.agenda',['cita'=> $id, 'procedimiento'=> $procedimiento->id, 'paciente'=> $paciente,'planTratamiento'=>$proceso->id,'validador'=>$validador] )}}" class="btn btn-sm btn-default bg-dark" style="color: white">
-																<i class="fa fa-calendar"></i> Agendar Cita
-															</a>
-															@if($proceso->deshabilitado == true)
-																<td colspan="6"></td>
-															@endif
-														@endcan
-													</td>
+														@if($proceso->deshabilitado != true)
+															<td width="10px" style="text-align: center;">
+																@can('planTratamientos.create')
+																	<a href="{{ route('planTratamiento.agenda',['cita'=> $id, 'procedimiento'=> $procedimiento->id, 'paciente'=> $paciente,'planTratamiento'=>$proceso->id,'validador'=>$validador] )}}" class="btn btn-sm btn-default bg-dark" style="color: white">
+																		<i class="fa fa-calendar"></i> Agendar Cita
+																	</a>
+																@endcan
+															</td>
+														@endif
+														@if($proceso->deshabilitado == true)
+															<td></td>
+															<td colspan="6"></td>
+														@endif
 													@endif
 												@endif
 											@endif
@@ -178,7 +185,7 @@
 										@if(sizeof($planValidador) == 1 || sizeof($planValidador2) >= 1)
 										
 											@if($proceso->comenzado != true)
-											<td width="10px">
+											<td width="10px" style="text-align: center;">
 												@can('planTratamientos.edit')
 													<a href="{{ route('planTratamiento.edit', ['cita' =>$id, 'planTratamiento'=> $proceso->id,'validador'=> $validador ]) }}" class="btn btn-sm btn-default bg-success" style="color: white"><i class="fa fa-edit"></i> Editar</a>
 												@endcan
@@ -187,7 +194,7 @@
 
 											@endif
 										@if($proceso->comenzado != true)
-											<td width="10px">
+											<td width="10px" style="text-align: center;">
 												<!-- Button trigger modal -->
 												<button type="button" class="btn btn-sm btn-danger btn-block" data-toggle="modal" data-target="#Modal22{{$proceso->id}}"><i class="fa fa-trash"></i>
 												     Eliminar
