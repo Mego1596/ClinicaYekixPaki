@@ -44,7 +44,7 @@
 						</div>
 					</div>
 					<div class="card-body">
-						<table class="table table-striped table-hover table-responsive-md" border="solid">
+						<table class="table table-striped table-hover table-responsive-md">
 							<thead>
 								<tr>
 									<th width="10px" style="text-align: center;">Nombre</th>
