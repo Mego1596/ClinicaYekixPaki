@@ -35,7 +35,7 @@
 	<div class="col-md-2">
 		<div class="form-group">
 			{{ Form::label('honorarios', 'Honorarios') }}
-			{{ Form::number('honorarios', null, ['class' => 'form-control '.($errors->has("honorarios")? "is-invalid":""), 'step' => '0.01', 'min'=>'0','max'=>'999.99','required'])}}
+			{{ Form::number('honorarios', null, ['class' => 'form-control '.($errors->has("honorarios")? "is-invalid":""), 'step' => '0.01', 'min'=>'0','max'=>'999999.99','required'])}}
 		</div>
 		@if($errors->has('honorarios'))
 		<div class="form-control-feedback text-danger">
