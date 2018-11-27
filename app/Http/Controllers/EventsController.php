@@ -118,6 +118,14 @@ class EventsController extends Controller
             }else{
                 $restriccion = 0;
             }
+            $planesTerminados=  Plan_Tratamiento::where('activo',false)->where('deshabilitado', false)->where('events_id', $event->id)->get();
+
+            if(sizeof($planesTerminados)==0){
+                $planesTermi = -1;
+            }else{
+                $planesTermi = sizeof($planesTerminados);
+            }
+            $planesTerminados=$planesTerminados->pluck('events_id');
             if(sizeof($planT) > 1 || sizeof($planT) == 0){
                 $event_list[] =Calendar::event(
                     $paciente->nombre1." ".$paciente->nombre2." ".$paciente->nombre3." ".$paciente->apellido1." ".$paciente->apellido2,
@@ -136,6 +144,7 @@ class EventsController extends Controller
                     'tipo'              => 2,
                     'reprogramar'       => 'no',
                     'idReprogramar'     => 0,
+                    'planTerminado'     => $planesTermi,
                     ]
                 );
             }elseif (sizeof($planT) == 1 && is_null($validacion)) {
@@ -195,8 +204,7 @@ class EventsController extends Controller
             }
         }
       	        //obtiene todos los planes de tratamientos terminados, pero donde la cita sea diferente al id=1
-        $planesTerminados=  Plan_Tratamiento::where('completo',true)->where('events_id','!=',1)->get();
-        $planesTerminados=$planesTerminados->pluck('events_id');
+
     
 
     	$calendar_details = Calendar::addEvents($event_list)->setOptions([
@@ -279,11 +287,12 @@ class EventsController extends Controller
                         }
                         $("#btnAsignar").hide();   
                     }
-
-                    let arrayTerminados='.$planesTerminados.';
-                    if(arrayTerminados.includes(calEvent.id))
-                    {
-                        $("#plan").hide();
+                    if(calEvent.planTerminado != -1){
+                        let arrayTerminados='.$planesTerminados.';
+                        if(!arrayTerminados.includes(calEvent.id))
+                        {
+                            $("#plan").hide();
+                        }
                     }
 				 	$("#txtColor").val(calEvent.color);
                     $("#txtExpediente").val(calEvent.expediente);
