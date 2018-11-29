@@ -141,6 +141,12 @@
 
 @section('css')
 <link rel="stylesheet" href="{{asset('css/canvas.css')}}">
+<style>
+    canvas {
+        width: 100%;
+        height: 100%;
+    }
+</style>
 @endsection
 
 @section('javascript')
@@ -161,9 +167,8 @@
         @else
         img.src = "{{asset('img/odontograma.png')}}";
         @endif
-        console.log(img.src)
         img.onload = function(){
-            ctx.drawImage(img, 0, 0);
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
         }
         });
 
