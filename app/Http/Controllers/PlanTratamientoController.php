@@ -16,6 +16,7 @@ use App\Http\Requests\PacienteEventRequest;
 use Calendar;
 use Validator;
 use App\Http\Requests\PlanTratamientoRequest;
+use App\Http\Requests\PlanTratamientoUpdateRequest;
 class PlanTratamientoController extends Controller
 {
     /**
@@ -157,7 +158,7 @@ class PlanTratamientoController extends Controller
      * @param  \App\Plan_Tratamiento  $plan_Tratamiento
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(PlanTratamientoUpdateRequest $request, $id)
     {
         $planUpdate = Plan_Tratamiento::find($id);
         $planUpdate->no_de_piezas = $request->no_de_piezas;
