@@ -19,7 +19,11 @@ class UserTableSeeder extends Seeder
     		'password'       => bcrypt('admin'),
     		'remember_token' => 'qwertyuiop',
             'nombre1'        => 'Kimberly',
-            'apellido1'      => 'Yekixpaki'
+            'nombre2'        => 'Johanna',
+            'apellido1'      => 'Amaya',
+            'apellido2'      => 'Jimenez',
+            'numeroJunta'    => 'JVPO-5028',
+            'especialidad'   => 'Cirujano Dental',
     	]);
 
         
