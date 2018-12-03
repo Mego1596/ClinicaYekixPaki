@@ -28,7 +28,7 @@
 					@can('pacientes.create')
 					<div class="row"> 
 						<div class="col-md-2 col-sm-12" style="margin-left: 2%">
-					    {!! Form::open(array('route' => 'paciente.search','id'=> 'form', 'method' => 'POST','autocomplete'=>'off') ) !!}
+					    {!! Form::open(array('route' => 'paciente.search','id'=> 'form', 'method' => 'GET','autocomplete'=>'off') ) !!}
 								<select class="form-control" name="buscador" id="buscador">
 									<option id="0">Buscar Por...</option>
 									<option id="1">Nombre</option>
@@ -104,10 +104,10 @@
 																			<td>{{$paciente->nombre1." ".$paciente->nombre2." ".$paciente->nombre3." ".$paciente->apellido1." ".$paciente->apellido2}}</td>
 																			<td>{{$paciente->expediente}}</td>
 																			<td>{{$users->name}}</td>
-																			@can('pacientes.trabajo')
-																			<td style="text-align: center;"><a href="{{route('planTratamiento.index',['cita'=> $cita->id,'validador' => 1])}}" class="btn btn-sm btn-default bg-dark" style="color: white">Ver Plan Activo</a>
-																			</td>
-																			@endcan
+																				@can('pacientes.trabajo')
+																				<td style="text-align: center;"><a href="{{route('planTratamiento.index',['cita'=> $cita->id,'validador' => 1])}}" class="btn btn-sm btn-default bg-dark" style="color: white">Ver Plan Activo</a>
+																				</td>
+																				@endcan
 																			<td width="10px">
 																			@can('pacientes.show')
 																				<a href="{{ route('paciente.show', $paciente->id) }}" class="btn btn-sm btn-default bg-info" style="color: white"><i class="fa fa-folder-open-o"></i> Expediente

@@ -74,11 +74,11 @@ Route::middleware(['auth'])->group(function(){
 	
 	Route::get('user/{user}/revoke/{idrol}', 'UserController@revocarRol')->name('user.revoke');
 	
-	Route::post('busqueda1/', 'UserController@search1')->name('user.search1');
+	Route::get('busqueda1/', 'UserController@search1')->name('user.search1');
 	
-	Route::post('busqueda2/', 'UserController@search2')->name('user.search2');
+	Route::get('busqueda2/', 'UserController@search2')->name('user.search2');
 
-	Route::post('busqueda3/', 'UserController@search3')->name('user.search3');
+	Route::get('busqueda3/', 'UserController@search3')->name('user.search3');
 	//Full Calendar
 
 	Route::get('events', 'EventsController@index')->name('events.index')->middleware('permission:pacientes.trabajo');
@@ -106,9 +106,11 @@ Route::middleware(['auth'])->group(function(){
 	Route::get('paciente/edit/{paciente}', 'PacienteController@edit')->name('paciente.edit')->middleware('permission:pacientes.edit');
 
 	Route::get('paciente/{paciente}/events', 'PacienteController@agendar')->name('paciente.agenda')->middleware('pacientes')->middleware('eventPlanMiddleware');
+
 	Route::get('paciente/{paciente}/events/cupos', 'PacienteController@agendar2')->name('paciente.agenda2');
 	Route::post('paciente/events', 'PacienteController@addEvent')->name('paciente.add');
-	Route::post('busqueda/','PacienteController@search')->name('paciente.search')->middleware('permission:pacientes.create');
+
+	Route::get('busqueda/','PacienteController@search')->name('paciente.search')->middleware('permission:pacientes.create');
 
 	Route::post('paciente/{paciente}','PacienteController@habilitar')->name('paciente.habilitarPaciente')->middleware('permission:pacientes.habilitarPaciente');
 

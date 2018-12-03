@@ -37,7 +37,7 @@ $(document).ready(function(){
 					@role('admin')
 					<div class="row"> 
 						<div class="col-md-2 col-sm-12" style="margin-left: 2%">
-						    {!! Form::open(array('route' => 'user.search3','id'=> 'form', 'method' => 'POST', 'autocomplete'=>'off') ) !!}
+						    {!! Form::open(array('route' => 'user.search3','id'=> 'form', 'method' => 'GET', 'autocomplete'=>'off') ) !!}
 						    	<div>
 									<select class="form-control" name="buscador" id="buscador">
 										<option id="0">Buscar Por...</option>
