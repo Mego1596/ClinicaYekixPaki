@@ -498,9 +498,11 @@
 							</div>
 							<div class="col-md-2 col-sm-12">
 								<!-- Button trigger modal -->
+								@if($presupuesto == $abono)
 								<button type="button" class="btn btn-block btn-success" data-toggle="modal" data-target="#Modal"><i class="fa fa-check"></i>
 								     Finalizar Plan
 								</button>
+								@endif
 							</div>
 							<div class="col-md-2 col-sm-12">
 							</div>
