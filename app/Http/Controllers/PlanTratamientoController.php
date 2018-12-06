@@ -628,5 +628,67 @@ class PlanTratamientoController extends Controller
 
         return redirect()->route('paciente.index')->with('info','Plan de Tratamiento Deshabilitado, proceda a asignar un nuevo plan de tratamiento');
     }
+
+    public function cupo($id2,$id,$pacienteParameter,$planActual,$validador){
+        $paciente = Paciente::find($pacienteParameter);
+        $loggedUser=Auth::id();
+        $result =  DB::table('users')->join('role_user', 'users.id', '=', 'role_user.user_id')->where('users.id', '=', $loggedUser)->value('role_id');
+        if($result == 1 or $result == 3){
+            $encendido = true;
+        }else{
+            $encendido = false;
+        }
+        $procesos = Procedimiento::get();
+        $procedimiento = Procedimiento::pluck('nombre','id')->toArray();
+        $events = Events::select('id','paciente_id','start_date','end_date','descripcion','reprogramada')->where('paciente_id','<>', $pacienteParameter)->get();
+        $event_list= [];
+        foreach ($events as $key => $event) {
+            if($event->reprogramada !== true){
+                $event_list[] =Calendar::event(
+                    "Ocupado",
+                    false,
+                    new \DateTime($event->start_date),
+                    new \DateTime($event->end_date),
+                    $event->id,
+                    [
+                    'descripcion'       => $event->descripcion,
+                    'textColor'         => $event->textcolor,
+                    'durationEditable'  => false,
+                    ]
+                );
+            }else{
+                $event_list[] =Calendar::event(
+                    "Reprogramada",
+                    false,
+                    new \DateTime($event->start_date),
+                    new \DateTime($event->end_date),
+                    $event->id,
+                    [
+                    'descripcion'       => $event->descripcion,
+                    'textColor'         => $event->textcolor,
+                    'durationEditable'  => false,
+                    ]
+                );
+            }
+        }
+        
+        
+
+        $calendar_details = Calendar::addEvents($event_list)->setOptions([
+            'firstDay'      => 1,
+            'editable'      => false,
+            'themeSystem'   => 'bootstrap4',
+            'locale'        => 'es',
+            'defaultView' => 'agendaWeek',
+            'header'        => array(
+                        'left' => 'prev,next today', 
+                      'center' => 'title', 
+                       'right' => 'month,agendaWeek,agendaDay'
+            ),
+
+            ]);
+
+        return view('planTratamiento.cuposPlan',compact('procedimiento','procesos','calendar_details','paciente','encendido'));
+    }
 }
  

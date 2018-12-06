@@ -64,7 +64,7 @@
       </div>
       @elseif($errors->has('maxCita'))
       <div class="alert alert-warning">
-       {{$errors->first('maxCita')}}
+       {{$errors->first('maxCita')}} 
       </div>
       @elseif($errors->has('notRangoFree'))
       <div class="alert alert-warning">
@@ -168,7 +168,9 @@
         <input type="hidden" name="txtValidador" id="txtValidador" value="{{$validador}}">
         <input type="hidden" name="referencia" id="referencia" value="{{$planActual}}">
         <input type="hidden" name="txtSolvencia" id="txtSolvencia" value="{{$solvente}}">
-        
+        @can('pacientes.create')
+        <a class="btn btn-primary" href="{{route('planTratamiento.cupo', ['cita'=>$id2 ,'procedimiento'=> $id ,'paciente'=> $paciente,'planTratamiento'=> $planActual, 'validador' => $validador])}}" target="_blank" id="cupos" name="cupos"><i class="fa fa-outdent"></i> Ver Cupos</a>
+        @endcan
         <div class="form-row">
           <div class="col-md-12">
             <label for="txtFecha" id="fecha">Fecha:</label>

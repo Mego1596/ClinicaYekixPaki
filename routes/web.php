@@ -144,6 +144,10 @@ Route::middleware(['auth'])->group(function(){
 	Route::get('planTratamiento/{cita}/{procedimiento}/{paciente}/{planTratamiento}/{validador}/events','PlanTratamientoController@agendar2')->name('planTratamiento.agenda')
 	->middleware('permission:planTratamientos.index')->middleware('planTratamientoMiddleware:events');
 	
+	Route::get('planTratamiento/{cita}/{procedimiento}/{paciente}/{planTratamiento}/{validador}/events/cupos','PlanTratamientoController@cupo')->name('planTratamiento.cupo')
+	->middleware('permission:planTratamientos.index')->middleware('planTratamientoMiddleware:events');
+
+
 	Route::post('planTratamiento/events', 'PlanTratamientoController@addEvent')->name('planTratamiento.add')->middleware('permission:planTratamientos.index');
 
 	Route::post('planTratamiento/terminar/{planTratamiento}', 'PlanTratamientoController@terminar')->name('planTratamiento.terminar')->middleware('permission:planTratamientos.index');
