@@ -159,14 +159,14 @@
         <div class="row">
           <div class="col-md-4" style="margin-top: 10px">
               <a class="btn btn-sm btn-default bg-dark" href="#" style="color: white" name="receta" id="receta">
-              <i class="fa fa-file-text-o"></i> Gestionar Receta</a>
+              <i class="fas fa-file-medical"></i> Gestionar Receta</a>
           </div>
         </div>
         @endcan
         @can('pacientes.create')
           <div class="row">
             <div class="col-md-4" style="margin-top: 10px">
-              <a class="btn btn-sm btn-default bg-dark" href="#" style="color: white" name="modificar" id="modificar"><i class="fa fa-address-card-o"></i> Gestionar Cita</a>
+              <a class="btn btn-sm btn-default bg-dark" href="#" style="color: white" name="modificar" id="modificar"><i class="fas fa-address-card"></i> Gestionar Cita</a>
             </div>
           </div>
         @endcan
@@ -174,14 +174,14 @@
         <div class="row">
           <div class="col-md-4" style="margin-top: 10px">
               <a class="btn btn-sm btn-default bg-dark" href="#" style="color: white" name="pago" id="pago">
-              <i class="fa fa-file-text-o"></i> Gestionar Pago</a>
+              <i class="fas fa-file-medical"></i> Gestionar Pago</a>
           </div>
         </div>
         @endcan
         <br />
         @can('pacientes.create')
         <td>
-          <button id="reprogramacion" type="button" class="btn btn-sm btn-default bg-dark" data-toggle="modal" data-target="#ModalReprogramar" style="color:white"><i class="fa fa-calendar-times-o"></i> Reprogamar Cita</button>
+          <button id="reprogramacion" type="button" class="btn btn-sm btn-default bg-dark" data-toggle="modal" data-target="#ModalReprogramar" style="color:white"><i class="fas fa-calendar-times"></i> Reprogamar Cita</button>
         </td>
         @endcan
                         {!! Form::open() !!}

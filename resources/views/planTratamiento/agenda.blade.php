@@ -196,7 +196,7 @@
             {!! Form::text('start_date', null, ['class' => 'form-control']) !!}
             <span class="input-group-addon">
               <i class="btn btn-primary">
-              <span class="fa fa-clock-o"></span>
+              <span class="fas fa-clock"></span>
               </i>
             </span>
           </div>
@@ -208,7 +208,7 @@
             {!! Form::text('end_date', null, ['class' => 'form-control']) !!}
             <span class="input-group-addon">
               <i class="btn btn-primary">
-              <span class="fa fa-clock-o"></span>
+              <span class="fas fa-clock"></span>
               </i>
             </span>
           </div>

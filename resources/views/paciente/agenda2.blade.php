@@ -143,7 +143,7 @@ $(document).ready(function(){
             {!! Form::text('start_date', null, ['class' => 'form-control','required']) !!}
             <span class="input-group-addon">
               <i class="btn btn-primary">
-              <span class="fa fa-clock-o"></span>
+              <span class="fas fa-clock"></span>
               </i>
             </span>
           </div>
@@ -155,7 +155,7 @@ $(document).ready(function(){
             {!! Form::text('end_date', null, ['class' => 'form-control','required']) !!}
             <span class="input-group-addon">
               <i class="btn btn-primary">
-              <span class="fa fa-clock-o"></span>
+              <span class="fas fa-clock"></span>
               </i>
             </span>
           </div>

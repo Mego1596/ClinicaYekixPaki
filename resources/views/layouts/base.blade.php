@@ -46,7 +46,8 @@
     } 
     </style>
   {{-- iconos --}}
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">-->
+    <link rel="stylesheet" href="{{ asset('css/all.css') }}">
         @yield('javascript')
   </head>
   <script>
@@ -65,7 +66,7 @@
 
   <body id="page-top">
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-xl navbar-dark bg-dark">
       <a class="navbar-brand" href="{{ route('home') }}">
                 <li class="fa fa-home"></li> Clinica Odontologica YekixPaki</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
@@ -81,39 +82,39 @@
           @else
           @can('pacientes.trabajo')
             <li class="nav-item">
-              <a class="nav-link" id="nav-citas" href="{{route('events.index')}}"><i class="fa fa-calendar"></i> Agenda</a>
+              <a class="nav-link" id="nav-citas" href="{{route('events.index')}}"><i class="fas fa-calendar"></i> Agenda</a>
             </li>
           @endcan
           @can('procedimientos.index')
             <li class="nav-item">
-              <a class="nav-link" id="nav-procedimientos" href="{{route('procedimiento.index')}}"><i class="fa fa-list"></i> Procedimientos</a>
+              <a class="nav-link" id="nav-procedimientos" href="{{route('procedimiento.index')}}"><i class="fas fa-list"></i> Procedimientos</a>
             </li>
           @endcan
           @can('users.index')
             <li class="nav-item">
               <a class="nav-link" id="nav-doctores" href="{{route('user.index')}}">
-               <i class="fa fa-user-md"></i> Doctores</a>
+               <i class="fas fa-user-md"></i> Doctores</a>
             </li>
           @endcan
           @can('users.asistente')
             <li class="nav-item">
               <a class="nav-link" id="nav-asistentes" href="{{route('user.asistente')}}">
-              <i class="fa fa-handshake-o"></i> Asistentes</a>
+              <i class="fas fa-handshake"></i> Asistentes</a>
             </li>
           @endcan
           @can('pacientes.index')
             <li class="nav-item">
-              <a class="nav-link" id="nav-pacientes" href="{{route('paciente.index')}}"><i class="fa fa-group"></i> Pacientes</a>
+              <a class="nav-link" id="nav-pacientes" href="{{route('paciente.index')}}"><i class="fas fa-users"></i> Pacientes</a>
             </li>
           @endcan
           @can('roles.index')
             <li class="nav-item">
-              <a class="nav-link" id="nav-roles" href="{{route('roles.index')}}"><i class="fa fa-database"></i> Roles</a>
+              <a class="nav-link" id="nav-roles" href="{{route('roles.index')}}"><i class="fas fa-database"></i> Roles</a>
             </li>
           @endcan
           @can('users.usuarios')
             <li class="nav-item">
-              <a class="nav-link" id="nav-general" href="{{route('user.usuario')}}"><i class="fa fa-cog"></i> Configuracion de Usuarios</a>
+              <a class="nav-link" id="nav-general" href="{{route('user.usuario')}}"><i class="fas fa-cog"></i> Configuracion de Usuarios</a>
             </li>
           @endcan
           </ul>
@@ -122,7 +123,7 @@
           <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
             <li class="nav-item">
               <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-              <i class="fa fa-power-off"></i>    {{ Auth::user()->name }} <span class="caret"></span>
+              <i class="fas fa-power-off"></i>    {{ Auth::user()->name }} <span class="caret"></span>
               </a>
 
               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
@@ -157,7 +158,7 @@
         </li>
         <li class="nav-item">
           <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class=" fa fa-folder-open"></i>
+            <i class=" fas fa-folder-open"></i>
             <span>Navegar</span>
           </a>
           <div class="dropdown-menu" aria-labelledby="pagesDropdown">
