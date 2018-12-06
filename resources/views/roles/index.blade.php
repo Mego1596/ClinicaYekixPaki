@@ -41,7 +41,7 @@
 									<td width="232" colspan="3">
 										@can('roles.show')
 											<a href="{{ route('roles.show', $role->id) }}" class="btn btn-sm btn-block btn-default bg-info" style="color: white">
-			                					<i class="fa fa-folder-open-o"></i> Ver
+			                					<i class="fas fa-folder-open"></i> Ver
 											</a>
 										@endcan
 									</td>

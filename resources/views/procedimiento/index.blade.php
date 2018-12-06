@@ -57,7 +57,7 @@
 									<td>{{$proceso->nombre}}</td>
 									<td width="10px">
 										@can('procedimientos.show')
-											<a href="{{ route('procedimiento.show', $proceso->id) }}" class="btn btn-sm btn-default bg-info" style="color: white"><i class="fa fa-folder-open-o"></i> Ver
+											<a href="{{ route('procedimiento.show', $proceso->id) }}" class="btn btn-sm btn-default bg-info" style="color: white"><i class="fas fa-folder-open"></i> Ver
 											</a>
 										@endcan
 									</td>

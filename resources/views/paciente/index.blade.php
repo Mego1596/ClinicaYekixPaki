@@ -110,7 +110,7 @@
 																				@endcan
 																			<td width="10px">
 																			@can('pacientes.show')
-																				<a href="{{ route('paciente.show', $paciente->id) }}" class="btn btn-sm btn-default bg-info" style="color: white"><i class="fa fa-folder-open-o"></i> Expediente
+																				<a href="{{ route('paciente.show', $paciente->id) }}" class="btn btn-sm btn-default bg-info" style="color: white"><i class="fas fa-folder-open"></i> Expediente
 																				</a>
 																			@endcan
 																			</td>
@@ -133,7 +133,7 @@
 																			<td></td>
 																			<td width="10px">
 																				@can('pacientes.show')
-																					<a href="{{ route('paciente.show', $paciente->id) }}" class="btn btn-sm btn-default bg-info" style="color: white"><i class="fa fa-folder-open-o"></i> Expediente
+																					<a href="{{ route('paciente.show', $paciente->id) }}" class="btn btn-sm btn-default bg-info" style="color: white"><i class="fas fa-folder-open"></i> Expediente
 																					</a>
 																				@endcan
 																			</td>
@@ -162,7 +162,7 @@
 																			<td></td>
 																			<td width="10px" colspan="2">
 																				@can('pacientes.show')
-																					<a href="{{ route('paciente.show', $paciente->id) }}" class="btn btn-sm btn-default bg-info" style="color: white;width: 100%"><i class="fa fa-folder-open-o"></i> Expediente
+																					<a href="{{ route('paciente.show', $paciente->id) }}" class="btn btn-sm btn-default bg-info" style="color: white;width: 100%"><i class="fas fa-folder-open"></i> Expediente
 																					</a>
 																				@endcan
 																			</td>
@@ -173,7 +173,7 @@
 																			@endcan
 																			<td width="10px">
 																				@can('pacientes.show')
-																					<a href="{{ route('paciente.show', $paciente->id) }}" class="btn btn-sm btn-default bg-info" style="color: white"><i class="fa fa-folder-open-o"></i> Expediente
+																					<a href="{{ route('paciente.show', $paciente->id) }}" class="btn btn-sm btn-default bg-info" style="color: white"><i class="fas fa-folder-open"></i> Expediente
 																					</a>
 																				@endcan
 																			</td>
@@ -203,14 +203,14 @@
 																			@if($paciente->id == 1)
 																			<td width="10px" colspan="3">
 																				@can('pacientes.show')
-																					<a href="{{ route('paciente.show', $paciente->id) }}" class="btn btn-sm btn-default bg-info" style="color: white;width: 100%"><i class="fa fa-folder-open-o"></i> Expediente
+																					<a href="{{ route('paciente.show', $paciente->id) }}" class="btn btn-sm btn-default bg-info" style="color: white;width: 100%"><i class="fas fa-folder-open"></i> Expediente
 																					</a>
 																				@endcan
 																			</td>
 																			@else
 																			<td width="10px">
 																				@can('pacientes.show')
-																					<a href="{{ route('paciente.show', $paciente->id) }}" class="btn btn-sm btn-default bg-info" style="color: white"><i class="fa fa-folder-open-o"></i> Expediente
+																					<a href="{{ route('paciente.show', $paciente->id) }}" class="btn btn-sm btn-default bg-info" style="color: white"><i class="fas fa-folder-open"></i> Expediente
 																					</a>
 																				@endcan
 																			</td>

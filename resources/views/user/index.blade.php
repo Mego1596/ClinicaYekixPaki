@@ -85,7 +85,7 @@
 									<td>{{$user->name}}</td>
 									<td width="10px">
 										@can('users.show')
-											<a href="{{ route('user.show', ['user' => $user->id, 'idrol' => $sub]) }}" class="btn btn-sm btn-default bg-info" style="color: white"><i class="fa fa-folder-open-o"></i>  Ver
+											<a href="{{ route('user.show', ['user' => $user->id, 'idrol' => $sub]) }}" class="btn btn-sm btn-default bg-info" style="color: white"><i class="fas fa-folder-open"></i>  Ver
 											</a>
 										@endcan
 									</td>
