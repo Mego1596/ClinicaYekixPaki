@@ -77,7 +77,6 @@
  <div class="container">
   <div class="panel panel-primary">
     <div class="panel-heading">
-    <div class="panel-heading">
           <div class="row">
               <div class="col-md-2">
                 <a href="{{ route('planTratamiento.index',['cita'=> $id2, 'validador'=> $validador])}}" class="btn btn-block btn-secondary" style="width: 50%">
@@ -144,7 +143,6 @@
 				{!! $calendar_details->calendar() !!}
 					</div>
 				</div>
-			</div>
 		</div>
 	</div>
 <!-- Modal -->
@@ -169,17 +167,16 @@
         <input type="hidden" name="referencia" id="referencia" value="{{$planActual}}">
         <input type="hidden" name="txtSolvencia" id="txtSolvencia" value="{{$solvente}}">
         @can('pacientes.create')
-        <a class="btn btn-primary" href="{{route('planTratamiento.cupo', ['cita'=>$id2 ,'procedimiento'=> $id ,'paciente'=> $paciente,'planTratamiento'=> $planActual, 'validador' => $validador])}}" target="_blank" id="cupos" name="cupos"><i class="fa fa-outdent"></i> Ver Cupos</a>
+            <div class="col-md-12">
+                <a class="btn btn-primary" href="{{route('planTratamiento.cupo', ['cita'=>$id2 ,'procedimiento'=> $id ,'paciente'=> $paciente,'planTratamiento'=> $planActual, 'validador' => $validador])}}" target="_blank" id="cupos" name="cupos"><i class="fa fa-outdent"></i> Ver Cupos</a>
+            </div>
         @endcan
-        <div class="form-row">
           <div class="col-md-12">
             <label for="txtFecha" id="fecha">Fecha:</label>
           </div>
           <div class="col-md-12">
-            <input type="date" name="txtFecha" id="txtFecha"/>
+            <input type="date" class="form-control" style="width: 40%" name="txtFecha" id="txtFecha"/>
           </div>
-          </div>
-        </div>
 
       	<div class="form-row">	
       		<div class="col-md-12">
@@ -236,16 +233,21 @@
           </div>          
         @endcan
         <!-- EN EL SELECT VA LA VARIABLE PROCEDIMIENTO -->
-
-
-
-      <div class="modal-footer">
-		    {!! Form::submit('Añadir Cita', ['class' => 'btn btn-success','id' => 'btnAgregar', 'name' => 'btnAgregar']) !!}
-		    {!! Form::submit('Modificar Cita', ['class' => 'btn btn-success','id' => 'btnModificar','name' => 'btnModificar']) !!}
-        {!! Form::submit('Borrar', ['class' => 'btn btn-danger ','id' => 'btnEliminar','name' => 'btnEliminar']) !!}
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+        <div class="row justify-content-between">
+            <div class="col-md-3 col-sm-12 pr-md-1 text-center">
+                {!! Form::submit('Añadir Cita', ['class' => 'btn btn-success btn-block','id' => 'btnAgregar', 'name' => 'btnAgregar']) !!}
+            </div>
+            <div class="col-md-3 col-sm-12 px-md-0 my-1 my-md-0 text-center">
+                {!! Form::submit('Modificar Cita', ['class' => 'btn btn-success btn-block','id' => 'btnModificar','name' => 'btnModificar', 'style'=>'width=100%']) !!}
+            </div>
+            <div class="col-md-3 col-sm-12 px-md-1 mb-1 mb-md-0 text-center">
+                {!! Form::submit('Borrar', ['class' => 'btn btn-danger btn-block','id' => 'btnEliminar','name' => 'btnEliminar']) !!}
+            </div>
+            <div class="col-md-3 col-sm-12 pl-md-1 text-center">
+                <button type="button" class="btn btn-default btn-block" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
         {!! Form::close() !!}
-      </div>
     </div>
   </div>
 </div>
