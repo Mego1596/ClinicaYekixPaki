@@ -287,13 +287,7 @@ class EventsController extends Controller
                         }
                         $("#btnAsignar").hide();   
                     }
-                    if(calEvent.planTerminado != -1){
-                        let arrayTerminados='.$planesTerminados.';
-                        if(!arrayTerminados.includes(calEvent.id))
-                        {
-                            $("#plan").hide();
-                        }
-                    }
+                    
 				 	$("#txtColor").val(calEvent.color);
                     $("#txtExpediente").val(calEvent.expediente);
 				 	FechaHora= calEvent.start._i.split("T");
