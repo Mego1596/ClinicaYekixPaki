@@ -19,4 +19,10 @@ class Paciente extends Model
     {
         return $this->hasMany('App\Anexo', 'pacienteId');
     }
+
+    public function events()
+    {
+        return $this->hasMany('App\Events');
+    }
+
 }
