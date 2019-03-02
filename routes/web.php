@@ -125,6 +125,10 @@ Route::middleware(['auth'])->group(function(){
 	Route::delete('historiaMedica/{historia}', 'HistoriaMedicaController@destroy')->name('historia.destroy')->middleware('permission:admin.eliminarHistoria');
 
 
+	//Odontograma
+	Route::get('odontograma/{planTratamiento}/{validador}/create', 'OdontogramaController@create')->name('odontograma.create');
+	Route::post('odontograma/{planTratamiento}/{validador}/store', 'OdontogramaController@store')->name('odontograma.store');
+
 	//Plan de Tratamiento
 	Route::post('planTratamiento/store/', 'PlanTratamientoController@store')->name('planTratamiento.store')->middleware('permission:planTratamientos.create');
 

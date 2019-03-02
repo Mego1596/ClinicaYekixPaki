@@ -3,32 +3,50 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use App\Anexo;
+use App\Odontograma;
 use App\Paciente;
+use App\Plan_Tratamiento;
 use App\TipoAnexo;
 
 class OdontogramaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index(Paciente $paciente)
+    
+    public function create(Plan_Tratamiento $planTratamiento, $validador)
     {
-        //Provicional odontograma en la base de datos
-        $odontograma = $paciente->anexos()->where('tipoAnexoId', TipoAnexo::ODONTOGRAMA)->get()->last();
-        //$ultimoOdontograma = $paciente->anexos->last();
-        //$odontograma = null;
-        //if($ultimoOdontograma) {
-        //    if(\Storage::disk('dropbox')->exists($ultimoOdontograma->ruta)) {
-        //        $odontograma = \Storage::disk('dropbox')->get($ultimoOdontograma->ruta);
-        //    }else {
-        //        $ultimoOdontograma->delete();
-        //    }
-        //}
-        return view('odontograma.index')->with('paciente', $paciente)->with('odontograma', $odontograma);
+
+        $odontogramas = [];
+        $pacienteTieneOdontogramas = false;
+
+        $paciente = $planTratamiento->event->paciente;
+        $planes = $paciente->getPlanesTratamiento();
+
+        foreach($planes as $plan){
+            $pacienteTieneOdontogramas = (sizeof($plan->odontogramas) > 0) ? true : false;
+            if($pacienteTieneOdontogramas) break;
+        }
+
+        if($pacienteTieneOdontogramas) {
+            if(sizeof($planTratamiento->odontogramas))
+                $odontogramas = $planTratamiento->odontogramas;
+            else{
+                $contador = 1;
+                foreach($planes as $plan){
+                    if(sizeof($plan->odontogramas)){
+                        if(!$contador) $contador++;
+                        else{
+                            $odontogramas = $plan->odontogramas;
+                        }
+                    }
+                }
+            }
+        }
+
+        $puedeCrearOdontograma = (sizeof($planTratamiento->odontogramas)) ? false : true;
+
+        return view('odontograma.index')->with('planTratamiento', $planTratamiento)->with('odontogramas', $odontogramas)->with('validador', $validador)->with('puedeCrearOdontograma', $puedeCrearOdontograma);
     }
 
     /**
@@ -37,60 +55,51 @@ class OdontogramaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Paciente $paciente)
+    public function store(Request $request, Plan_Tratamiento $planTratamiento, $validador)
     {
-        //Guardado provicional de la imagen en la base de datos
-        //Borrar cualquier odontograma con fecha de HOY, para dejar solo uno por día
-        $hoy = Carbon::now()->toDateString();
-        $anexosHoy = $paciente->anexos()->where('tipoAnexoId', TipoAnexo::ODONTOGRAMA)->whereDate('created_at', $hoy)->get();
-        foreach ($anexosHoy as $anexoEliminar) {
-            $anexoEliminar->delete();
+        $paciente = $planTratamiento->event->paciente;
+        
+        $pacienteTieneOdontogramas = false;
+
+        $planes = $paciente->getPlanesTratamiento();
+
+        foreach($planes as $plan){
+            $pacienteTieneOdontogramas = (sizeof($plan->odontogramas) > 0) ? true : false;
+            if($pacienteTieneOdontogramas) break;
         }
 
-        $anexo = new Anexo();
-        $anexo->nombreOriginal = str_random(25) . '.png';
-        $anexo->ruta = $request->imagen;
-        $anexo->pacienteId = $paciente->id;
-        $anexo->tipoAnexoId = TipoAnexo::ODONTOGRAMA;
-        $anexo->save();
+        DB::transaction(function() use ($request, $planTratamiento, $pacienteTieneOdontogramas, $planes) {
+            $odontogramaAnteriorEncontrado = false;
+
+            if($pacienteTieneOdontogramas) {
+                foreach(array_reverse($planes) as $plan){
+                    if(sizeof($plan->odontogramas)){
+                        foreach($plan->odontogramas as $i => $odonto) {
+                            if(sizeof($plan->odontogramas) == 1) $i++;
+                            if($i){
+                                $planTratamiento->odontogramas()->attach($odonto->id, ['es_inicial' => true]);
+                                $odontogramaAnteriorEncontrado = true;
+                                break;
+                            }
+                        }
+                        if($odontogramaAnteriorEncontrado) break;
+                    }
+                }
+            }
+
+            $odontograma = new Odontograma();
+            $odontograma->data = $request->imagen;
+            $odontograma->save();
+
+            $planTratamiento->odontogramas()->attach($odontograma->id, ['es_inicial' => false]);
+
+        });
 
         return redirect()
-                    ->route('paciente.show', $paciente)
+                    ->route('odontograma.create', [$planTratamiento, $validador])
                     ->with('info','Odontograma guardado con exito')
                     ->with('tipo', 'success');
-
-
-        /*$tipoMensaje = "success";
-        $mensaje = "Odontograma guardado con éxito";
-        $image = $request->imagen;
-        $image = str_replace('data:image/png;base64,', '', $image);
-        $image = str_replace(' ', '+', $image);
-        $generado = str_random(25) . '.png';
-        $guardado = \Storage::disk('dropbox')->put($generado,  base64_decode($image));
-
-        if($guardado) {
-            $anexo = new Anexo();
-            $anexo->nombreOriginal = $generado;
-            $anexo->ruta = $generado;
-            $anexo->pacienteId = $paciente;
-            $anexo->tipoAnexoId = TipoAnexo::ODONTOGRAMA;
-            $anexo->save();
-
-            return redirect()
-                    ->route('paciente.show', $paciente)
-                    ->with('info','Odontograma guardado con exito')
-                    ->with('tipo', 'success');
-        }else {
-            return redirect()
-                    ->route('paciente.show', $paciente)
-                    ->with('error', 'No se pudo guardar el odontograma.')
-                    ->with('tipo', 'danger');
-        }   */     
+   
     }
 
-    public function historial(Paciente $paciente)
-    {
-        $odontogramas = $paciente->anexos()->where('tipoAnexoId', TipoAnexo::ODONTOGRAMA)->orderBy('id', 'DEC')->get();
-        return view('odontograma.historial')->with('paciente', $paciente)->with('odontogramas', $odontogramas);
-    }
 }

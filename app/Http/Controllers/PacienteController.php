@@ -1009,6 +1009,7 @@ class PacienteController extends Controller
     public function showPlan($cita)
     {
         $planTratamiento = Plan_Tratamiento::where('events_id',$cita)->orderBy('id')->get();
+        $odontogramas = $planTratamiento[0]->odontogramas;
         $evento = Events::where('id',$cita)->get();
         $eventos= Events::get();
         $cit = Events::find($cita);
@@ -1037,7 +1038,7 @@ class PacienteController extends Controller
 
         sort($arrayEventosPlan);
         $eventosAll = Events::get();
-        $pdf = PDF::loadView('planTratamiento.show',compact('procesos','planTratamiento','y','pagos','pagosGenerales','planTratamientoGeneral','evento','eventos','paciente','edad','historias_medicas','cit','nuevaFecha','arrayEventosPlan','eventosAll'));
+        $pdf = PDF::loadView('planTratamiento.show',compact('procesos','planTratamiento','y','pagos','pagosGenerales','planTratamientoGeneral','evento','eventos','paciente','edad','historias_medicas','cit','nuevaFecha','arrayEventosPlan','eventosAll', 'odontogramas'));
         $pdf->setPaper('A4','Portrait');
         return $pdf->stream();
     }

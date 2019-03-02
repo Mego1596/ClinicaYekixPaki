@@ -1,15 +1,13 @@
 @extends('layouts.base')
 @section('bread')
 <li class="breadcrumb-item">
-<a href="{{route('paciente.index')}}">Paciente</a>
+    <a href="/events">Citas</a>
 </li>
-
 <li class="breadcrumb-item">
-<a href="{{route('paciente.show', $paciente)}}" class="breadcrumb-item">Detalle Paciente</a>
+<a href="{{ route('planTratamiento.index', [$planTratamiento->event, $validador]) }}" class="breadcrumb-item">Plan de Tratamiento</a>
 </li>
-
 <li class="breadcrumb-item">
-    <a class="breadcrumb-item active">Odontogramas</a>
+    <a href="" class="breadcrumb-item active">Odontograma</a>
 </li>
 @endsection
 
@@ -21,7 +19,7 @@
 					<div class="card-header text-center">
 						<div class="row">
 							<div class="col-md-2 col-sm-12">
-								<a href="{{ route('paciente.show', $paciente) }}" class="btn btn-block btn-secondary" style="width: 100%"><i class="fa fa-arrow-circle-left"></i>
+								<a href="{{ route('planTratamiento.index', [$planTratamiento->event, $validador]) }}" class="btn btn-block btn-secondary" style="width: 100%"><i class="fa fa-arrow-circle-left"></i>
 								Atrás</a>
 							</div>
 							<div class="col-md-8">
@@ -30,15 +28,10 @@
 						</div>
                     </div>
                     <div class="card-body">
-                        <div class="row pt-3">
-                            @can('odontograma.historial')
-                            <div class="col-md-3 col-sm-12">
-                            <a href="{{route('odontograma.historial', $paciente)}}" class="btn btn-primary" role="button">Historial Odontogramas</a>
-                            </div>
-                            @endcan
-                        </div>
                         <div class="row">
                             @can('odontograma.store')
+
+                            @if($puedeCrearOdontograma)
                             <div class="col-md-4 col-sm-12">
                                 
                                 <!--Inicio del dibujo--> 
@@ -97,15 +90,18 @@
                                         </fieldset>
                                     </div>
                             </div>
+                            @endif
                             @endcan
                             <div class="col-md-8 col-sm-12">
                                     <div style="width: 100%; height: 400px; border: solid 2px" class="canvas"></div>
                             </div>
                            @can('odontograma.store') 
-                        <form method="POST" id="formCanvas" action="{{route('odontograma.store', $paciente)}}">
+                           @if($puedeCrearOdontograma)
+                        <form method="POST" id="formCanvas" action="{{ route('odontograma.store', [$planTratamiento, $validador]) }}">
                             {{ csrf_field() }}
                             <input type="hidden" name="imagen" id="imagen">
                         </form>
+                        @endif
                         @endcan
 
                         
@@ -162,11 +158,17 @@
         var ctx = canvas.getContext("2d");
 
         var img = new Image();
-        @if($odontograma)
-        img.src = "{{$odontograma->ruta}}"
+
+        @if(sizeof($odontogramas))
+            @foreach($odontogramas as $odontograma)
+                @if(!$odontograma->pivot->es_inicial)
+                    img.src = "{{$odontograma->data}}"
+                @endif
+            @endforeach
         @else
-        img.src = "{{asset('img/odontograma.png')}}";
+            img.src = "{{asset('img/odontograma.PNG')}}";
         @endif
+
         img.onload = function(){
             ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
         }

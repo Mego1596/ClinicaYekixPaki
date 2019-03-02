@@ -27,6 +27,7 @@ class PlanTratamientoController extends Controller
     public function index($id,$validador)
     {
         $citaGeneral = Events::find($id);
+        $planOdontograma = $citaGeneral->plan_tratamientos;
 
         $paciente = Paciente::select('id')->where('id',$citaGeneral->paciente_id)->value('id');
         $persona = Paciente::select('nombre1','nombre2','nombre3','apellido1','apellido2')->where('id',$citaGeneral->paciente_id)->get();
@@ -75,7 +76,7 @@ class PlanTratamientoController extends Controller
                 }
             }
         }
-        return view('planTratamiento.index',compact('planTratamiento','proc','id','paciente','persona','planValidador','validador','planValidador2','presupuesto','abono'));
+        return view('planTratamiento.index',compact('planTratamiento','proc','id','paciente','persona','planValidador','validador','planValidador2','presupuesto','abono', 'planOdontograma'));
     }
 
     /**

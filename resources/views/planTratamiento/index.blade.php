@@ -63,6 +63,10 @@
 													@endcan
 												</th>
 										@else
+										<th>
+											<a href="{{ route('odontograma.create', [$planOdontograma[0]->id, $validador]) }}" class="btn btn-block btn-info">
+											<i class="fa fa-check"></i> Odontograma</a>
+										</th>
 											@foreach($planTratamiento as $plan)
 												@if($loop->first)	
 													@if($plan->deshabilitado == true)

@@ -14,7 +14,7 @@ class Plan_Tratamiento extends Model
 
     public function event()
     {
-        return $this->belongsTo('App\Events');
+        return $this->belongsTo('App\Events', 'events_id');
     }
 
 }

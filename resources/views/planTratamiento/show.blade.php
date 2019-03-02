@@ -100,6 +100,7 @@
         .tg2 .tg-dfg12{font-size:10px;border-color:#ffffff;text-align:center;vertical-align:top}
         .tg2 .tg-401l2{font-size:11px;border-color:#ffffff;text-align:center;}
         .tg2 .tg-ior22{font-size:11px;border-color:#ffffff;text-align:center;vertical-align:top}
+        .odonto, .odonto2{border: 1px solid black}
         </style>
         <table class="tg2">
           <tr>
@@ -197,9 +198,30 @@
 <div>
         <p class="titulo" style="font-weight:bold">ODONTOGRAMA</p>
         <p class="titulo3" style="font-weight:bold">Inicial</p>
-        <img src="img/odontograma.png" alt="ODONTOGRAMA" width="660" height="210" class="odonto">
+        @if(sizeof($odontogramas))
+            @if(sizeof($odontogramas) == 1)
+            <img src="img/odontograma.PNG" alt="ODONTOGRAMA" width="660" height="210" class="odonto">
+            @else
+                @foreach ($odontogramas as $odontograma)
+                    @if ($odontograma->pivot->es_inicial)
+                        <img src="{{ $odontograma->data }}" alt="ODONTOGRAMA" width="660" height="210" class="odonto">
+                    @endif             
+                @endforeach
+            @endif    
+        @else
+            <img src="img/odontograma.PNG" alt="ODONTOGRAMA" width="660" height="210" class="odonto">               
+        @endif
         <p class="titulo3" style="font-weight:bold">Actual</p>
-        <img src="img/odontograma.png" alt="ODONTOGRAMA" width="660" height="210" class="odonto2">
+        @if(sizeof($odontogramas))
+            @foreach ($odontogramas as $odontograma)
+                @if (!$odontograma->pivot->es_inicial)
+                    <img src="{{ $odontograma->data }}" alt="ODONTOGRAMA" width="660" height="210" class="odonto">
+                @endif             
+            @endforeach    
+        @else
+            <img src="img/odontograma.PNG" alt="ODONTOGRAMA" width="660" height="210" class="odonto">               
+        @endif
+        
 </div>
 
 <div class="page_break">
