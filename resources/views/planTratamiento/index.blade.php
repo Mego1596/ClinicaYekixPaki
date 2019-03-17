@@ -44,6 +44,16 @@
 						</div>
 					</div>
 					<div class="card-body">
+						<div class="row">
+						<div class="col-md-12">
+							@if($validador == 1)
+								@if(sizeof($planTratamiento) != 0)
+									<a href="{{ route('odontograma.create', [$planOdontograma[0]->id, $validador]) }}" class="btn btn-block btn-info">
+									<i class="fa fa-check"></i> Odontograma</a>
+								@endif
+							@endif
+						</div>
+						</div>
 						<table class="table table-striped table-hover table-responsive-md">
 							<thead>
 								<tr>
@@ -63,10 +73,6 @@
 													@endcan
 												</th>
 										@else
-										<th>
-											<a href="{{ route('odontograma.create', [$planOdontograma[0]->id, $validador]) }}" class="btn btn-block btn-info">
-											<i class="fa fa-check"></i> Odontograma</a>
-										</th>
 											@foreach($planTratamiento as $plan)
 												@if($loop->first)	
 													@if($plan->deshabilitado == true)

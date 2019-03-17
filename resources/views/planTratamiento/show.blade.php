@@ -196,11 +196,17 @@
 
 
 <div>
+        @php
+        $verificarPrimerPlan = 1;
+        @endphp
         <p class="titulo" style="font-weight:bold">ODONTOGRAMA</p>
-        <p class="titulo3" style="font-weight:bold">Inicial</p>
         @if(sizeof($odontogramas))
             @if(sizeof($odontogramas) == 1)
+            <p class="titulo3" style="font-weight:bold">Inicial</p>
             <img src="img/odontograma.PNG" alt="ODONTOGRAMA" width="660" height="210" class="odonto">
+            @php
+             $verificarPrimerPlan = 0;
+            @endphp
             @else
                 @foreach ($odontogramas as $odontograma)
                     @if ($odontograma->pivot->es_inicial)
@@ -211,17 +217,24 @@
         @else
             <img src="img/odontograma.PNG" alt="ODONTOGRAMA" width="660" height="210" class="odonto">               
         @endif
-        <p class="titulo3" style="font-weight:bold">Actual</p>
         @if(sizeof($odontogramas))
             @foreach ($odontogramas as $odontograma)
                 @if (!$odontograma->pivot->es_inicial)
+                    @if($loop->first)
+                        @if($verificarPrimerPlan == 1)
+                            <p class="titulo3" style="font-weight:bold">Inicial</p>
+                        @else
+                            <p class="titulo3" style="font-weight:bold">Actual</p>
+                        @endif
+                    @else
+                        <p class="titulo3" style="font-weight:bold">Actual</p>
+                    @endif
                     <img src="{{ $odontograma->data }}" alt="ODONTOGRAMA" width="660" height="210" class="odonto">
                 @endif             
             @endforeach    
         @else
             <img src="img/odontograma.PNG" alt="ODONTOGRAMA" width="660" height="210" class="odonto">               
         @endif
-        
 </div>
 
 <div class="page_break">
