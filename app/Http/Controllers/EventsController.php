@@ -13,6 +13,7 @@ use App\Plan_Tratamiento;
 use App\Pago;
 use Calendar;
 use Validator;
+use Carbon\Carbon;
 
 class EventsController extends Controller
 {
@@ -255,7 +256,18 @@ class EventsController extends Controller
                             $("#plan").show();
                         }
                         if(calEvent.pago == "si"){
-                            $("#pago").show();
+                                
+                            let now= new Date("'.Carbon::now().'");
+                            let citaFecha=new Date(calEvent.start);
+
+                            if(now.getTime()<citaFecha.getTime())
+                            {
+                                $("#pago").hide();
+                            }
+                            else{
+                                $("#pago").show();                            
+                            }
+
                         }
                         if(calEvent.reprogramar == "si"){
                             $("#reprogramacion").show();

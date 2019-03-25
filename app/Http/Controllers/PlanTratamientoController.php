@@ -393,7 +393,6 @@ class PlanTratamientoController extends Controller
 
                     let now= new Date("'.Carbon::now().'");
                     let citaFecha=new Date(calEvent.end);
-                    citaFecha.setHours(citaFecha.getHours()+2);
                     if(now.getTime()>citaFecha.getTime())
                     {
                         $("#btnEliminar").hide();
