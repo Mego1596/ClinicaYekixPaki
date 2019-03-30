@@ -331,7 +331,7 @@ class PacienteController extends Controller
         foreach ($planes as $key => $value) {
             $ref = $value->id;
         }
-        return view('paciente.show', compact('paciente','historias','edad','nuevaFecha','x','planes','planT'));
+        return view('paciente.show', compact('paciente','historias','edad','nuevaFecha','x','planes'));
     }
 
     /**
