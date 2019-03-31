@@ -514,10 +514,10 @@ class PlanTratamientoController extends Controller
             $plan = Plan_Tratamiento::where('events_id',$event->id)->get();
             $eventoAux = Events::where('id', $request->txtID)->get();
 
-            foreach ($eventoAux as $key => $value) {
+            /*foreach ($eventoAux as $key => $value) {
                 $pagoPrincipal = Pago::where('events_id', $value->id);
                 $pagoPrincipal->delete();
-            }
+            }*/
 
             if(sizeof($planT)!=0){
                 $planT = Plan_Tratamiento::where('events_id',$event->id)->whereNull('referencia');
@@ -548,9 +548,85 @@ class PlanTratamientoController extends Controller
                 $event->delete(); 
                 return redirect()->route('paciente.index')->with('info','Cita Eliminada con exito');  
             }else{
-                $planT = Plan_Tratamiento::where('events_id',$event->id);
-                $planT->delete();
-                $event->delete();
+                //REFRESCAR LOS PAGOS EN CASO DE CAMBIOS INESPERADOS
+                $planTratamientoActual = Plan_Tratamiento::where('events_id',$event->id)->get();
+                $pagoActual = Pago::where('events_id',$request['txtID'])->get();
+                if(sizeof($pagoActual) == 0){
+                    $planTratamientoActual->delete();
+                    $event->delete();
+                }else{
+                    $pagoActualBorrar = Pago::where('events_id',$request['txtID'])->get();
+                    $idPago=0;
+                    $idCita=0;
+                    foreach ($pagoActualBorrar as $key => $value) {
+                        $idPago= $value->id;
+                        $idCita= $value->events_id;
+                        $value->delete();
+                    }
+                    //**********OBTENER EL ID DE LA CITA DEL PLAN DE TRATAMIENTO**************//
+                    $idCitaPlanTratamiento = 0;
+                    foreach ($planTratamientoActual as $key => $value) {
+                        $idCitaPlanTratamiento = Plan_Tratamiento::select('events_id')->where('id',$value->referencia)->value('events_id');
+                    }
+                    //**********FIN OBTENER EL ID DE LA CITA DEL PLAN DE TRATAMIENTO**************//
+
+                    //**********OBTENER EL PLAN DE TRATAMIENTO**************//
+                    $sql = "SELECT * FROM plan__tratamientos WHERE events_id= ".$idCitaPlanTratamiento.";";
+                    $planTratamiento = DB::select(DB::raw($sql));
+                    $honorarios = DB::select(DB::raw($sql));
+                    $pagos = DB::select(DB::raw("SELECT * FROM pagos"));
+                    foreach ($pagos as $key => $pagoActualizar) {
+                        foreach ($planTratamiento as $key2 => $planTratamientoActualizar) {
+                            if($pagoActualizar->id > $idPago){
+                                $pagoActual = Pago::find($pagoActualizar->id);
+                                
+                                //******************ALGORITMO PARA CONOCER SALDO****************************//
+                                $y = 0.0;
+                                foreach ($honorarios as $key3 => $value) {
+                                    $y+=$value->honorarios;
+                                }
+
+                                $planVigente = Plan_Tratamiento::where('events_id', $idCitaPlanTratamiento)->get();
+                                $planes = Plan_Tratamiento::get();
+                                
+                                $x=0.0;
+                                $contador =sizeof($planes);
+                                foreach ($planes as $llave => $planesAll) {
+                                    if($llave == $contador-1){
+                                    foreach ($planTratamiento as $planTratamientoVigente) {
+                                        if($planesAll->referencia == $planTratamientoVigente->id){
+                                            $sqlQuery = "SELECT pago.id,pago.events_id,pago.abono,pago.saldo FROM plan__tratamientos as plan1
+                                                         INNER JOIN plan__tratamientos as plan2
+                                                         ON plan2.referencia = plan1.id
+                                                         INNER JOIN pagos as pago
+                                                         ON pago.events_id=plan2.events_id
+                                                         WHERE pago.events_id < ".$planesAll->events_id." AND plan1.events_id=".$idCitaPlanTratamiento."
+                                                         GROUP BY pago.id,pago.events_id,pago.abono,pago.saldo ORDER BY pago.id ASC;";
+                                            $pagosIterados = DB::select(DB::raw($sqlQuery));
+                                            foreach ($pagosIterados as $key => $pagoParcial) {
+                                                if($pagoParcial->id < $pagoActual->id){
+                                                    $x += $pagoParcial->abono;
+                                                }
+                                                
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                                //******************ALGORITMO PARA CONOCER SALDO****************************//
+                                $pagoX = Pago::find($pagoActual->id);
+                                $pagoX->saldo = $y-$x-$pagoX->abono;
+                                $pagoX->save(); 
+                                $event->delete();
+                                break;
+                            }
+                        }
+                    }
+                    //**********FIN OBTENER EL PLAN DE TRATAMIENTO**************//
+
+                }
+
+                //FIN REFRESCAR LOS PAGOS EN CASO DE CAMBIOS INESPERADOS
                 return redirect()->route('planTratamiento.agenda',['procedimiento'=>$request['txtProcedimiento_id'], 'paciente' => $request['pacienteID'],'planTratamiento'=>$request->referencia,'validador'=> $request->txtValidador,'cita' => $request->cita])->with('info','Cita Eliminada con exito');
             }
             //hasta aqui termina

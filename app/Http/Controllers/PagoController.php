@@ -239,15 +239,90 @@ class PagoController extends Controller
                 foreach ($user as $key => $value) {
                     $pago->realizoTto  = $value->nombre1.' '.$value->nombre2.' '.$value->nombre3.' '.$value->apellido1.' '.$value->apellido2.'- '.$value->numeroJunta;
                 }
-                $abonoOld = $pago->abono;
-                $abonoNew = $request->abono;
-                if($abonoNew < $abonoOld)
-                    $pago->saldo = $pago->saldo + ($abonoOld - $abonoNew);
-                else
-                    $pago->saldo = $pago->saldo - ($abonoNew - $abonoOld);
-                $pago->abono = $abonoNew;
-                $pago->proximaCita = $request->proximaCita;
-                $pago->update();
+                //REFRESCAR LOS PAGOS EN CASO DE CAMBIOS INESPERADOS
+                    $planTratamientoActual = Plan_Tratamiento::where('events_id',$pago->events_id)->get();
+                    $abonoOld = $pago->abono;
+                    $abonoNew = $request->abono;
+                    if($abonoNew < $abonoOld)
+                        $pago->saldo = $pago->saldo + ($abonoOld - $abonoNew);
+                    else
+                        $pago->saldo = $pago->saldo - ($abonoNew - $abonoOld);
+                    $pago->abono = $abonoNew;
+                    $pago->proximaCita = $request->proximaCita;
+                    $pago->update();
+                    //**********OBTENER EL ID DE LA CITA DEL PLAN DE TRATAMIENTO**************//
+                    $idCitaPlanTratamiento = 0;
+                    foreach ($planTratamientoActual as $key => $value) {
+                        $idCitaPlanTratamiento = Plan_Tratamiento::select('events_id')->where('id',$value->referencia)->value('events_id');
+                    }
+                    //**********FIN OBTENER EL ID DE LA CITA DEL PLAN DE TRATAMIENTO**************//
+
+                    //**********OBTENER EL PLAN DE TRATAMIENTO**************//
+                    $sql = "SELECT * FROM plan__tratamientos WHERE events_id= ".$idCitaPlanTratamiento.";";
+                    $planTratamiento = DB::select(DB::raw($sql));
+                    $honorarios = DB::select(DB::raw($sql));
+                    $pagos = DB::select(DB::raw("SELECT * FROM pagos"));
+                    foreach ($pagos as $key => $pagoActualizar) {
+                        foreach ($planTratamiento as $key2 => $planTratamientoActualizar) {
+                            if($pagoActualizar->id > $pago->id){
+                                $pagoActual = Pago::find($pagoActualizar->id);
+                                
+                                //******************ALGORITMO PARA CONOCER SALDO****************************//
+                                $y = 0.0;
+                                foreach ($honorarios as $key3 => $value) {
+                                    $y+=$value->honorarios;
+                                }
+
+                                $planVigente = Plan_Tratamiento::where('events_id', $idCitaPlanTratamiento)->get();
+                                $planes = Plan_Tratamiento::get();
+                                
+                                $x=0.0;
+                                $contador =sizeof($planes);
+                                foreach ($planes as $llave => $planesAll) {
+                                    if($llave == $contador-1){
+                                        foreach ($planTratamiento as $planTratamientoVigente) {
+                                            if($planesAll->referencia == $planTratamientoVigente->id){
+                                                $sqlQuery = "SELECT pago.id,pago.events_id,pago.abono,pago.saldo FROM plan__tratamientos as plan1
+                                                             INNER JOIN plan__tratamientos as plan2
+                                                             ON plan2.referencia = plan1.id
+                                                             INNER JOIN pagos as pago
+                                                             ON pago.events_id=plan2.events_id
+                                                             WHERE pago.events_id < ".$planesAll->events_id." AND plan1.events_id=".$idCitaPlanTratamiento."
+                                                             GROUP BY pago.id,pago.events_id,pago.abono,pago.saldo ORDER BY pago.id ASC;";
+                                                $pagosIterados = DB::select(DB::raw($sqlQuery));
+                                                foreach ($pagosIterados as $key => $pagoParcial) {
+                                                    if($pagoParcial->id < $pagoActual->id){
+                                                        $x += $pagoParcial->abono;
+                                                        print_r($pagoParcial->abono);
+                                                        print_r("<br/>");
+                                                        }
+                                                        print_r("--------");
+                                                        print_r("<br/>");
+                                                    }
+                                            }
+                                        }
+                                    }
+                                }
+
+                                print_r("Total:");
+                                print_r($x);
+                                print_r("<br/>");
+                                print_r("--------");
+                                print_r("<br/>");
+                                print_r("SALDO NUEVO:");
+                                print_r($y-$x-$pagoActual->abono);
+                                //******************ALGORITMO PARA CONOCER SALDO****************************//
+                                $pagoX = Pago::find($pagoActual->id);
+                                $pagoX->saldo = $y-$x-$pagoX->abono;
+                                $pagoX->save(); 
+                                break;
+                            }
+                        }
+                    }
+                    //**********FIN OBTENER EL PLAN DE TRATAMIENTO**************//
+
+
+                //FIN REFRESCAR LOS PAGOS EN CASO DE CAMBIOS INESPERADOS
             }else {
                 $tipoMensaje = "error";
                 $mensaje = "Debe de seleccionar un Médico en el pago";
