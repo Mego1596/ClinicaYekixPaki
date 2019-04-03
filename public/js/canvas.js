@@ -293,10 +293,10 @@ CanvasRenderingContext2D.prototype.clear = function () {
             canvas.current.context = canvas.current.canvas.getContext('2d');
 
             // Mouse based interface
-            $(canvas.current.canvas).bind('mousedown', drawStart);
-            $(canvas.current.canvas).bind('mousemove', draw);
-            $(canvas.current.canvas).bind('mouseup', drawEnd);
-            $(canvas.current.canvas).bind('mouseleave', function () {
+            $(canvas.current.canvas).bind('vmousedown', drawStart);
+            $(canvas.current.canvas).bind('vmousemove', draw);
+            $(canvas.current.canvas).bind('vmouseup', drawEnd);
+            $(canvas.current.canvas).bind('vmouseleave', function () {
                     //ASPNETPaint.context.putImageData(ASPNETPaint.state.oldState, 0, 0);
             });
             $('body').bind('mouseup', drawEnd);
