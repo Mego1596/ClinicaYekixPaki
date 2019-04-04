@@ -62,6 +62,9 @@
           else
             e.preventDefault()
         })
+        
+        //Cancelar el envio de data por ajax en los links para la libreria de jquery mobile
+        $('a').attr('data-ajax', 'false');
       })
   </script>
 

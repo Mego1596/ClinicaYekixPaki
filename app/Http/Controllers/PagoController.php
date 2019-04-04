@@ -99,7 +99,7 @@ class PagoController extends Controller
                 }
             }*/
         
-        return view('pago.index',compact('pagos','procesoNombre','id','saldo','abonoValidar'));
+        return view('pago.index',compact('pagos','procesoNombre','id','abonoValidar'));
     }
 
     /**
