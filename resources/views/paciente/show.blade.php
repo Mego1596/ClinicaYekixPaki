@@ -13,6 +13,21 @@
 
 @section('javascript')
 <link href="{{ asset('css/dataTables.bootstrap4.css')}}" rel="stylesheet">
+<style type="text/css">
+	@media screen and (max-width: 767px) {
+    li.paginate_button.previous {
+        display: inline;
+    }
+ 
+    li.paginate_button.next {
+        display: inline;
+    }
+ 
+    li.paginate_button {
+        display: none;
+    }
+}
+</style>
 @endsection
 
 @section('content')
