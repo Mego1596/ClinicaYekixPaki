@@ -25,7 +25,6 @@ class PagoRequest extends FormRequest
     {
         return [
             'abono'=>'required|int|max:900|min:0',
-            'proximaCita'=>'required|after:today',
             'realizoTto'=>'required'
         ];
     }
