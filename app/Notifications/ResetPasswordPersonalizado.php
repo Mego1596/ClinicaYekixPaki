@@ -60,13 +60,13 @@ class ResetPasswordPersonalizado extends Notification
         }
 
         return (new MailMessage)
-            ->from('clinicaYekixPaki@gmail.com','Yekixpaki')
+            ->from('clinicasanadental@gmail.com','Sana Dental')
             ->subject(Lang::getFromJson('Reestablecimiento de contraseña'))
-            ->greeting('Hola '.$notifiable->name)
+            ->greeting('Hola '.$notifiable->persona->primer_nombre." ".$notifiable->persona->primer_apellido)
             ->line(Lang::getFromJson('Recibes este email porque se solicitó un reestablecimiento de contraseña para tu cuenta.'))
             ->action(Lang::getFromJson('Reestablecer contraseña'), url(config('app.url').route('password.reset', $this->token, false)))
             ->line(Lang::getFromJson('Si tú no has realizado esta actividad, solo ignora el mensaje'))
-            ->salutation('Saludos, clinica odontologica Yekixpaki');
+            ->salutation('Saludos, clinica odontologica Sana Dental');
     }
 
     /**
